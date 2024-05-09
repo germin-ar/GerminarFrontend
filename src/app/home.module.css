@@ -27,3 +27,46 @@
 .botonCards{
     background-color: #88BC43;
 }
+
+
+
+
+/****************Nuestra propuesta****************/
+.nuestraPropuesta{
+
+    max-width: 1108px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.contenidoPropuesta, .imagenPropuesta{
+    flex: 1;
+    padding: 20px 20px;
+}
+
+/***Recomendacion***/
+.contenedorPropuesta{
+    background-color: #EFE8D6;
+
+    max-width: 1108px;
+    margin: 20px auto;
+}
+.tamanoRecomendacionCards{
+    width: 92%;
+    min-height: 380px;
+    min-width: 470px;
+
+}
+
+.recomendacionCards{
+    flex: 1;
+}
+.imagenes{
+    object-fit: cover;
+    width: 250px;
+    height: 250px;
+    border-radius: 0 50px 0 50px;
+}
+.tituloCardsRecomendacion{
+    font-size: 19px;
+}

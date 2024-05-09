@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import {BalooBhaina2} from "@/app/ui/fonts";
+import {BalooBhaina2, PoppinsTexto} from "@/app/ui/fonts";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-    <body className={`${inter.className}  antialiased `}>
+    <body className={`${inter.className} ${PoppinsTexto.className}  antialiased `}>
     <header className="bg-gray-800 py-4">
       <nav className="container mx-auto">
         <ul className="flex justify-between items-center">
