@@ -1,0 +1,29 @@
+.fondoCards{
+    background-color: #EFE8D6;
+    padding: 60px 30px;
+    margin: 40px 0;
+
+}
+
+.tituloSecundario{
+    font-size: 50px;
+    color: #88BC43;
+}
+.cards{
+    border-radius: 0 50px 0 50px;
+    max-width: 250px;
+    padding: 40px;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+.tituloCards{
+    font-size: 20px;
+}
+
+.botonCards{
+    background-color: #88BC43;
+}
