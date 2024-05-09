@@ -74,9 +74,8 @@ export default function Home() {
 
 
 
-            <section
-                className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center`}>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center items-center gap-3`}>
+            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
                     <div className="flex-1">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
@@ -94,7 +93,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center items-center gap-3`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
                     <div className="flex-1">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
@@ -113,7 +112,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center items-center gap-3`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
                     <div className="flex-1">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
@@ -131,7 +130,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center items-center gap-3`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
                     <div className={`${styles} flex-1`}>
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
