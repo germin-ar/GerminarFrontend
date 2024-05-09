@@ -1,0 +1,60 @@
+.container{
+    height: 120px;
+    background-color: #EFE8D6;
+
+}
+
+.nav{
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.lista{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.titulo{
+    color: #88BC43;
+    font-size: 64px;
+    height: 100%;
+    padding-top: 10px;
+}
+.ar{
+    color: #275F08;
+}
+.li{
+    font-size: 24px;
+    font-weight: bold;
+
+}
+
+.marca{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.campana{
+    width: 25px;
+    height: 100%;
+}
+.corona{
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%) rotate(50deg);
+    width: 30px;
+    height: 30px;
+}
+.liUser{
+    position: relative;
+}
+.infoUsuario{
+    width: 45px;
+    height: 100%;
+    padding: 0 0 0 10px;
+    color: #88BC43;
+}
