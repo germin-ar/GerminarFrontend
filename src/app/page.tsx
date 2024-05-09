@@ -13,38 +13,54 @@ export default function Home() {
 
                     <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4`}>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  mb-2`}>¿Cómo
-                                identifico mi planta?</p>
-                            <button
-                                className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                Diagnosticar
-                            </button>
+                            <div className="flex-1 flex justify-center items-center">
+                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Cómo
+                                    identifico mi planta?</p>
+                            </div>
+                            <div className="flex-1 flex justify-center items-center">
+                                <button
+                                    className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
+                                    Identificar
+                                </button>
+                            </div>
                         </div>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  mb-2`}>¿Qué
-                                puedo plantar hoy?</p>
-                            <button
-                                className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                Diagnosticar
-                            </button>
+                            <div className="flex-1 flex justify-center items-center">
+                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Qué
+                                    puedo plantar hoy?</p>
+                            </div>
+                            <div className="flex-1 flex justify-center items-center">
+                                <button
+                                    className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
+                                    Descubrir
+                                </button>
+                            </div>
                         </div>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg mb-2`}>¿Qué
-                                puedo plantar en
-                                este espacio?</p>
-                            <button
-                                className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                Diagnosticar
-                            </button>
+                            <div className="flex-1 flex justify-center items-center">
+                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg `}>¿Qué
+                                    puedo plantar en
+                                    este espacio?</p>
+                            </div>
+                            <div className="flex-1 flex justify-center items-center">
+                                <button
+                                    className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
+                                    Analizar
+                                </button>
+                            </div>
                         </div>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  mb-2`}>¿Qué
+                            <div className="flex-1 flex justify-center items-center">
+                            <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  `}>¿Qué
                                 le sucede a mi
                                 planta?</p>
+                            </div>
+                            <div className="flex-1 flex justify-center items-center">
                             <button
                                 className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
                                 Diagnosticar
                             </button>
+                            </div>
                         </div>
                     </div>
 
