@@ -53,6 +53,7 @@
 }
 .tamanoRecomendacionCards{
     width: 92%;
+    height: 100%;
 }
 
 .recomendacionCards{
@@ -66,4 +67,11 @@
 }
 .tituloCardsRecomendacion{
     font-size: 19px;
+}
+
+.cardsPropuesta{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
 }

@@ -74,14 +74,14 @@ export default function Home() {
 
 
 
-            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center`}>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
-                    <div className="flex-1">
+            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
+                    <div className="flex-1 flex items-center">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-col">
+                        <div className={`${styles.cardsPropuesta}`}>
                             <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Administra
                                 tus propias notificaciones</h2>
                             <p>
@@ -93,13 +93,13 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
-                    <div className="flex-1">
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
+                    <div className="flex-1 flex items-center">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-col gap-1">
+                        <div className={`${styles.cardsPropuesta}`}>
                             <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Haz un
                                 seguimiento de tu
                                 progreso</h2>
@@ -108,17 +108,19 @@ export default function Home() {
                                 Anota cuándo plantas, riegas y cosechas, y recibe recordatorios automáticos para las
                                 tareas
                                 de cuidado de tus plantas. </p>
-                            <button className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Seguir</button>
+                            <button
+                                className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Seguir
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
-                    <div className="flex-1">
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
+                    <div className="flex-1 flex items-center">
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-col gap-1">
+                        <div className={`${styles.cardsPropuesta}`}>
                             <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Busca y
                                 aprende
                                 tutoriales</h2>
@@ -126,24 +128,28 @@ export default function Home() {
                                 cómo
                                 cuidar de tus plantas, identificar y solucionar problemas, y maximizar tus cosechas. Los
                                 tutoriales son fáciles de seguir y adecuados para todos.</p>
-                            <button className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Biblioteca</button>
+                            <button
+                                className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Biblioteca
+                            </button>
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3`}>
-                    <div className={`${styles} flex-1`}>
+                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
+                    <div className={`flex-1 flex items-center`}>
                         <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-col gap-1">
+                        <div className={`${styles.cardsPropuesta}`}>
                             <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Descubre Tu
                                 planta Ideal para
                                 tu jardín</h2>
                             <p>Encuentra las plantas perfectas para tu espacio con nuestra herramienta de recomendación
                                 personalizada. Simplemente ingresa tus preferencias y te ayudaremos a seleccionar las
                                 plantas que mejor se adapten a tu situación.</p>
-                            <button className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Descubrir</button>
+                            <button
+                                className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Descubrir
+                            </button>
                         </div>
                     </div>
                 </div>
