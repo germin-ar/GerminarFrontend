@@ -81,7 +81,7 @@ export default function Home() {
                                height="200"/>
                     </div>
                     <div className="flex-1">
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col">
                             <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Administra
                                 tus propias notificaciones</h2>
                             <p>
