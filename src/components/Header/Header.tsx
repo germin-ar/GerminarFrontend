@@ -25,7 +25,7 @@ export default function Header(){
                         </h1>
                     </div>
                     <div className="flex-1 flex items-center justify-end">
-                        <li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Mi Jardín</a></li>
+                        <li><Link href="/jardin" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Mi Jardín</Link></li>
                         <li><FaBell className={`${stylesHeader.campana}`}/></li>
                         <li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>
                         <li className={`${stylesHeader.liUser}`}>
