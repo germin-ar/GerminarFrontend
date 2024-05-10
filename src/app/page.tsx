@@ -109,7 +109,7 @@ export default function Home() {
             <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center`}>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
                     <div className="flex-1 flex items-center">
-                        <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
+                        <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
@@ -127,7 +127,7 @@ export default function Home() {
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
                     <div className="flex-1 flex items-center">
-                        <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
+                        <Image className={`${styles.imagenes}`} src="/seguimiento.jfif" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
@@ -148,7 +148,7 @@ export default function Home() {
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
                     <div className="flex-1 flex items-center">
-                        <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
+                        <Image className={`${styles.imagenes}`} src="/tutoriales.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">
@@ -168,7 +168,7 @@ export default function Home() {
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
                     <div className={`flex-1 flex items-center`}>
-                        <Image className={`${styles.imagenes}`} src="/ecosistema.jpg" alt="Ecosistema" width="200"
+                        <Image className={`${styles.imagenes}`} src="/ideal.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1">

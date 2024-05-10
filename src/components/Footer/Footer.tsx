@@ -1,20 +1,30 @@
 "use client"
+import stylesFooter from "@/components/Footer/footer.module.css";
+import { FaInstagram, FaYoutube, FaTwitter} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
+import Image from "next/image";
+import {BalooBhaina2} from "@/app/ui/fonts";
+
 export default function Footer(){
     return (
-        <footer className="bg-gray-900 text-white py-8">
-            <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4">
-                <div className="mb-4 md:mb-0">
-                    <h3 className="text-lg font-semibold">¡Síguenos en redes sociales!</h3>
-                    <div className="flex mt-2">
-                        <a href="#" className="text-gray-400 hover:text-white mr-4"><i className="fab fa-facebook"></i></a>
-                        <a href="#" className="text-gray-400 hover:text-white mr-4"><i
-                            className="fab fa-twitter"></i></a>
-                        <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                <div>
-                    <p className="text-sm">&copy; 2024 Nombre de la Empresa. Todos los derechos reservados.</p>
-                </div>
+        <footer className={`${stylesFooter.footer}`}>
+            <div className={`${stylesFooter.borde} flex-1 flex flex-col gap-1 items-center justify-center`}>
+                <Image className={`${stylesFooter.marca} `} src="/logo.png" alt="usuario prueba" width="70" height="70"/>
+                <h2 className={`${stylesFooter.marcaTexto} ${BalooBhaina2.className}`}>GERMIN.AR</h2>
+            </div>
+            <div className="flex-1 flex items-center justify-center">
+                <ul className="flex items-center justify-center gap-5">
+                    <li className="text-white">home</li>
+                    <li className="text-white">home</li>
+                    <li className="text-white">home</li>
+                    <li className="text-white">home</li>
+                </ul>
+            </div>
+            <div className="flex-1 flex gap-5 items-center justify-center">
+                <FaInstagram className={`${stylesFooter.iconosRedes}`}/>
+                <FaXTwitter className={`${stylesFooter.iconosRedes}`}/>
+                <FaYoutube className={`${stylesFooter.iconosRedes}`}/>
             </div>
         </footer>
     )
