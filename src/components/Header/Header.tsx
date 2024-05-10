@@ -15,7 +15,7 @@ export default function Header(){
             <nav className={`${stylesHeader.nav}`}>
                 <ul className={`${stylesHeader.lista}`}>
                     <div className="flex-1 flex items-center">
-                        <li><Link href="/public" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Inicio</Link></li>
+                        <li><Link href="/" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Inicio</Link></li>
                         <li><Link href="/biblioteca" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Biblioteca
                             Hortícola</Link></li>
                     </div>

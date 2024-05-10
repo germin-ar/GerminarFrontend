@@ -1,70 +1,8 @@
-.imagenIdentificar {
-    position: relative;
-    width: 100%;
-    height: 700px;
-    overflow: hidden;
-    background-color: black;
-    border-radius: 0 0 80px 80px;
-}
 
-.imagenIdentificar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url("/jardin-home.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    opacity: 0.4;
-}
+/*espacio*/
 
-.contenidoIdentificar {
-    position: relative;
-    z-index: 1;
-    color: white;
-    height: 100%;
-}
 
-.subirIdentificar{
-    border: 2px solid #275F08;
-    padding: 10px 20px;
-    background-color: #323331;
-}
-.botonIdentificar{
-    background-color: #88BC43;
-    color: white;
 
-}
-.seleccionarIdentificar{
-    font-weight: bold;
-    color: #275F08;
-}
-.textoSubirIdentificar{
-    font-weight: bold;
-    font-size: 35px;
-}
-.textoIdentificar{
-    font-weight: bold;
-    font-size: 40px;
-    flex: 1;
-}
-.marca{
-    right: 100%;
-    border-radius: 100%;
-    flex: 0.1;
-    margin-right: 25px;
-}
-.logoIdentificar{
-
-}
-@media (min-width: 1360px){
-    .logoIdentificar{
-
-    }
-}
 
 
 
