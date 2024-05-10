@@ -1,0 +1,35 @@
+.imagen{
+    height: 250px;
+    width: 500px;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+}
+.titulo{
+    font-size: 25px;
+}
+
+
+
+.contenedor{
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    min-height: calc(100vh - 270px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check{
+    width: 25px;
+    height: 25px;
+    color: #275F08;
+    margin: 0 0 4px 0;
+}
+.planta{
+    color: #275F08;
+    font-size: 25px;
+}

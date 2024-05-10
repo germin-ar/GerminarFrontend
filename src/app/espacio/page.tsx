@@ -8,11 +8,12 @@ import { BsCloudSun } from "react-icons/bs";
 
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
+import Link from "next/link";
 
 export default  function EspacioPage(){
     return(
         <>
-            <IdentificarImagen imagen="imagenIdentificarEspacio" pagina="/espacio"/>
+            <IdentificarImagen imagen="imagenIdentificarEspacio" pagina="espacio/recomendacion"/>
             <main className={`${stylesEspacio.contenedorEspacio}`}>
                 <div className="flex-1">
                     <div>
@@ -85,7 +86,7 @@ export default  function EspacioPage(){
                 </div>
             </main>
             <div className={`${stylesEspacio.botonContenedor}`}>
-            <button className={`${stylesEspacio.boton} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Analizar</button>
+            <Link href="espacio/recomendacion" className={`${stylesEspacio.boton} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Analizar</Link>
             </div>
         </>
 
