@@ -1,0 +1,28 @@
+.contenedor{
+    width: 70%;
+    max-width: 1300px;
+    margin: 45px auto;
+}
+.titulo{
+    color: #88BC43;
+    font-size: 50px;
+    text-align: center;
+}
+.botones{
+    background-color: #88BC43;
+    font-size: 20px;
+}
+.iconos{
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+
+/*****/
+
+
+
+.contenedorPlantas{
+    max-width: 1800px;
+    margin: 0 auto;
+}
