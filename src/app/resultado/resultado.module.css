@@ -1,0 +1,23 @@
+.table-container {
+    overflow-x: auto;
+}
+
+.vertical-header-table {
+    border-collapse: collapse;
+}
+
+.vertical-header-table th,
+.vertical-header-table td {
+    border: 2px solid #275F08;
+    padding: 8px;
+    text-align: left;
+}
+
+.vertical-header-table th {
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+
+.texto {
+    width: 445px;
+}
