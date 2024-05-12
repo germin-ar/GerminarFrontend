@@ -1,0 +1,12 @@
+.contenedor{
+    max-width: 1300px;
+    margin:  0 auto;
+}
+
+.fondo {
+    background-color: #D1DBC7;
+}
+
+.espaciado {
+    line-height: 55px;
+}
