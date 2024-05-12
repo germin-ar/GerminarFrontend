@@ -7,7 +7,7 @@ import styles from "@/app/home.module.css";
 export default function ResultadoPage() {
     return (
         <>
-            <main>
+            <main className={`${stylesResultado.contenedor}`}>
                 <section>
                     <div className={'flex justify-center items-center gap-64 my-12'}>
 
