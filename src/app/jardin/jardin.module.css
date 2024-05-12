@@ -7,6 +7,7 @@
     color: #88BC43;
     font-size: 50px;
     text-align: center;
+    font-weight: bold;
 }
 .botones{
     background-color: #88BC43;
@@ -25,4 +26,18 @@
 .contenedorPlantas{
     max-width: 1800px;
     margin: 0 auto;
+}
+.tituloContenedor{
+    color: #88BC43;
+    font-size: 40px;
+
+    font-weight: bold;
+}
+.plantasJardin{
+    width: 250px;
+    height: 100px;
+    display: flex;
+    gap: 15px;
+    background-color: #275F08;
+    color: white;
 }
