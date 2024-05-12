@@ -55,19 +55,19 @@ export default function ResultadoPage() {
                 </section>
 
                 <section>
-                    <div className={'m-32'}>
+                    <div className={'my-32'}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Estado
                             de salud</h1>
-                        <div className={'flex justify-start items-center gap-10 mt-10'}>
+                        <div className={'flex justify-start items-center gap-8 mt-10'}>
                             <div>
-                                <Image src="/resultado/planta-sana-icon.jpg" alt="Albahaca-sana" width="90"
-                                       height="90"/>
+                                <Image src="/resultado/planta-sana-icon.jpg" alt="Albahaca-sana" width="50"
+                                       height="50"/>
                             </div>
                             <p className={'text-3xl'}>¡Tu planta parece sana!</p>
                         </div>
                     </div>
 
-                    <div className={'m-32'}>
+                    <div className={'my-32'}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Descripción
                             general</h1>
                         <p className={'text-3xl text-justify'}>
@@ -77,7 +77,7 @@ export default function ResultadoPage() {
                             en la cocina, hierba saludable y protección para otras plantas del jardín y el huerto.</p>
                     </div>
 
-                    <div className={'m-32'}>
+                    <div className={'my-32'}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Características</h1>
 
                         {/*div grande*/}
@@ -211,7 +211,7 @@ export default function ResultadoPage() {
                         </div>
                     </div>
 
-                    <div className={'m-32'}>
+                    <div className={'my-32'}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Guía
                             de siembra</h1>
                         <ul className={`list-decimal list-inside text-3xl flex flex-col gap-8 text-justify`}>
@@ -270,7 +270,7 @@ export default function ResultadoPage() {
                         
                     </div>
 
-                    <div className={'m-32'}>
+                    <div className={'my-32'}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Consejos</h1>
                         <ul className={`list-disc list-inside text-3xl flex flex-col gap-8`}>
                             <li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
