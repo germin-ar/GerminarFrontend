@@ -39,7 +39,7 @@
 }
 .tituloContenedor{
     color: #88BC43;
-    font-size: 40px;
+    font-size: 50px;
 
     font-weight: bold;
 }
@@ -59,3 +59,22 @@
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
 }
 /*****/
+.popup{
+    height: 80vh;
+}
+.imagenADetallePlantas{
+    height: 150px;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+}
+.boton{
+    background-color: #88BC43;
+}
+
+.colorText{
+    color: #88BC43;
+}
