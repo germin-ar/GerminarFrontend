@@ -9,6 +9,11 @@ import { PiPottedPlantFill } from "react-icons/pi";
 import { FaClock } from "react-icons/fa";
 import Image from "next/image";
 
+interface Planta {
+    nombre: string;
+    foto: string;
+    especifico: { nombre: string; foto: string; }[];
+}
 export default function JardinPage() {
     const data = [
         {
@@ -16,11 +21,27 @@ export default function JardinPage() {
             plantas: [
                 {
                     nombre: 'Tomate',
-                    foto: '/recomendacion/tomate.png'
+                    foto: '/recomendacion/tomate.png',
+                    especifico: [
+                        {
+                            nombre: 'Tomate',
+                            foto: '/recomendacion/tomate.png'
+                        },
+                        {
+                            nombre: 'Carlos',
+                            foto: '/recomendacion/tomate2.jpg'
+                        }
+                    ]
                 },
                 {
                     nombre: 'Rúcula',
-                    foto: '/recomendacion/rucula.jpg'
+                    foto: '/recomendacion/rucula.jpg',
+                    especifico: [
+                        {
+                            nombre: 'Rúcula',
+                            foto: '/recomendacion/rucula.jpg'
+                        }
+                    ]
                 },
             ]
         },
@@ -29,7 +50,13 @@ export default function JardinPage() {
             plantas: [
                 {
                     nombre: 'Lechuga',
-                    foto: '/recomendacion/lechuga.png'
+                    foto: '/recomendacion/lechuga.png',
+                    especifico: [
+                        {
+                            nombre: 'Lechuga',
+                            foto: '/recomendacion/lechuga.png'
+                        }
+                    ]
                 }
 
             ]
@@ -39,11 +66,23 @@ export default function JardinPage() {
             plantas: [
                 {
                     nombre: 'morrón',
-                    foto: '/recomendacion/morron.png'
+                    foto: '/recomendacion/morron.png',
+                    especifico: [
+                        {
+                            nombre: 'morrón',
+                            foto: '/recomendacion/morron.png'
+                        }
+                    ]
                 },
                 {
                     nombre: 'albahaca',
-                    foto: '/recomendacion/albahaca.png'
+                    foto: '/recomendacion/albahaca.png',
+                    especifico: [
+                        {
+                            nombre: 'albahaca',
+                            foto: '/recomendacion/albahaca.png'
+                        }
+                    ]
                 }
             ]
         }
@@ -76,7 +115,19 @@ export default function JardinPage() {
     };
 
 
-    /**/
+
+/****/
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [plantaSeleccionada, setPlantaSeleccionada] = useState<Planta | null>(null); //
+    const [cat, setCat] = useState("");
+
+
+    const mostrarPopup = (planta: Planta, categoria:string) => {
+        setPopupVisible(true);
+        setPlantaSeleccionada(planta);
+        setCat(categoria);
+        console.log(planta)
+    };
 
 
     return (
@@ -168,7 +219,7 @@ export default function JardinPage() {
                             </div>
                         </ul>
                     </div>
-                    <div className="flex-1 flex gap-10 flex-col pl-10 pt-10 pb-10">
+                    <section className="flex-1 flex gap-10 flex-col pl-10 pt-10 pb-10">
                         {filteredData.map((categoria, index) => (
                                 <div className="flex flex-col flex-wrap" key={index}>
                                     <h3 className={`${stylesJardin.tituloContenedor} ${BalooBhaina2.className}`}>
@@ -177,17 +228,45 @@ export default function JardinPage() {
                                     <div className={`flex gap-10 flex-wrap`}>
                                         {categoria.plantas.map((planta, idx) => (
                                             <div key={idx}> {/* Aquí he agregado un div contenedor */}
-                                                <p className={`${stylesJardin.plantasJardin} ${BalooBhaina2.className} text-[25px] font-bold text-center`}>{planta.nombre}</p>
+                                                <p className={`${stylesJardin.plantasJardin} ${BalooBhaina2.className} text-[25px] font-bold text-center`}>{planta.nombre} {planta.especifico ? planta.especifico.length : 0} </p>
                                                 <div className={`${stylesJardin.imagen}`}>
-                                                    <Image src={`${planta.foto}`} alt={`${planta.nombre}`} width="500" height="250" />
+                                                    <Image className="cursor-pointer" onClick={() => mostrarPopup(planta, categoria.categoria)} src={`${planta.foto}`} alt={`${planta.nombre}`} width="500" height="250" />
                                                 </div>
 
                                             </div>
                                         ))}
+
                                     </div>
                                 </div>
                             ))}
-                    </div>
+                        {popupVisible && plantaSeleccionada && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                                <div className="bg-white p-8 rounded-lg ">
+                                    <div>
+                                        <h2 className={`${BalooBhaina2.className} ${stylesJardin.colorText} text-[50px]  text-2xl font-bold mb-4`}>{cat}:</h2>
+                                        <p className=" text-[30px]  text-2xl font-bold mb-4 text-[#275F08]">{plantaSeleccionada.nombre}:</p>
+                                        <ul  className="flex items-center justify-center gap-5">
+                                            {plantaSeleccionada.especifico.map((detalle, index) => (
+                                                <li key={index} className="mb-2">
+                                                    <p className=" text-[24px] font-bold text-[#275F08]">{detalle.nombre}</p>
+                                                    <div className={`${stylesJardin.imagenADetallePlantas}`}>
+                                                        <Image src={`${detalle.foto}`} alt={`${detalle.nombre}`}
+                                                               width="300" height="150"/>
+                                                    </div>
+                                                </li>
+                                                ))}
+                                        </ul>
+                                    </div>
+                                    <button className={`${stylesJardin.boton} font-bold mt-3 py-2 px-4 rounded text-white`}
+                                            onClick={() => setPopupVisible(false)}>Cerrar
+                                    </button>
+                                </div>
+
+                            </div>
+                        )}
+
+
+                    </section>
                 </div>
             </main>
         </>
