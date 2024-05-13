@@ -19,13 +19,23 @@
     color: white;
 }
 
+/***Sidebar***/
+
+
+
+
+/***Sidebar***/
 /*****/
 
 
 
 .contenedorPlantas{
     max-width: 1800px;
+    min-height: calc(100vh - 481px);
     margin: 0 auto;
+}
+.contenidoAjustado{
+    min-height: calc(100vh - 532px);
 }
 .tituloContenedor{
     color: #88BC43;
@@ -34,10 +44,18 @@
     font-weight: bold;
 }
 .plantasJardin{
-    width: 250px;
-    height: 100px;
-    display: flex;
-    gap: 15px;
-    background-color: #275F08;
-    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    color: #275F08;
 }
+
+.imagen{
+    height: 250px;
+    width: 500px;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+}
+/*****/
