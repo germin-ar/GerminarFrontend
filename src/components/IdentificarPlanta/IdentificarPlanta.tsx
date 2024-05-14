@@ -1,10 +1,18 @@
 import stylesHeader from "../../components/Header/header.module.css";
-import stylesIdentificar from "./identificar.module.css";
+import stylesIdentificar from "./identificarPlanta.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function ResultadoPage() {
+interface IdentificarPlanta{
+    enlace:string;
+}
+
+
+export default function IdentificarPlanta(props:IdentificarPlanta) {
+    const { enlace: string } = props;
+
     return (
         <>
             <main className={`${stylesIdentificar.contenedor}`}>
@@ -42,10 +50,10 @@ export default function ResultadoPage() {
                             </div>
                         </div>
                         <div>
-                            <button
+                            <Link href={`/${props.enlace}`}
                                 className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 Identificar
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </section>
