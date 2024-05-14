@@ -8,6 +8,7 @@ import {IoIosHome} from "react-icons/io";
 import { PiPottedPlantFill } from "react-icons/pi";
 import { FaClock } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Planta {
     nombre: string;
@@ -25,21 +26,24 @@ export default function JardinPage() {
                     especifico: [
                         {
                             nombre: 'Tomate',
-                            foto: '/recomendacion/tomate.png'
+                            foto: '/recomendacion/tomate.png',
+                            codigo: "2580"
                         },
                         {
                             nombre: 'Carlos',
-                            foto: '/recomendacion/tomate2.jpg'
+                            foto: '/recomendacion/carlos.png',
+                            codigo: "2581"
                         }
                     ]
                 },
                 {
                     nombre: 'Rúcula',
-                    foto: '/recomendacion/rucula.jpg',
+                    foto: '/recomendacion/rucula.png',
                     especifico: [
                         {
-                            nombre: 'Rúcula',
-                            foto: '/recomendacion/rucula.jpg'
+                            nombre: 'Rucula',
+                            foto: '/recomendacion/rucula.png',
+                            codigo: "2582"
                         }
                     ]
                 },
@@ -54,7 +58,8 @@ export default function JardinPage() {
                     especifico: [
                         {
                             nombre: 'Lechuga',
-                            foto: '/recomendacion/lechuga.png'
+                            foto: '/recomendacion/lechuga.png',
+                            codigo: "2583"
                         }
                     ]
                 }
@@ -249,9 +254,11 @@ export default function JardinPage() {
                                             {plantaSeleccionada.especifico.map((detalle, index) => (
                                                 <li key={index} className="mb-2">
                                                     <p className=" text-[24px] font-bold text-[#275F08]">{detalle.nombre}</p>
-                                                    <div className={`${stylesJardin.imagenADetallePlantas}`}>
-                                                        <Image src={`${detalle.foto}`} alt={`${detalle.nombre}`}
-                                                               width="300" height="150"/>
+                                                    <div className={`${stylesJardin.imagenADetallePlantas}`} key={detalle.nombre}>
+                                                        <Link href={`/jardin/${detalle.nombre}`}>
+                                                            <Image src={`${detalle.foto}`} alt={`${detalle.nombre}`}
+                                                                           width="300" height="150"/>
+                                                        </Link>
                                                     </div>
                                                 </li>
                                                 ))}
