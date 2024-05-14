@@ -29,7 +29,7 @@ export default function RecomendacionPage() {
                     <div className="pt-10">
                         <p className={`${stlyesRecomendacion.planta} ${BalooBhaina2.className} text-center`}>Morrón</p>
                         <div className={`${stlyesRecomendacion.imagen}`}>
-                            <Image src="/recomendacion/morron.png" alt="morron" width="500" height="500"/>
+                            <Image src="/recomendacion/morrón.png" alt="morron" width="500" height="500"/>
                         </div>
                     </div>
                     <div className="pt-10">

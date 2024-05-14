@@ -21,10 +21,10 @@ export default function Home() {
                                     identifico mi planta?</p>
                             </div>
                             <div className="flex-1 flex justify-center items-center">
-                                <button
+                                <Link href="/diagnosticar"
                                     className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
                                     Identificar
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
@@ -33,10 +33,10 @@ export default function Home() {
                                     puedo plantar hoy?</p>
                             </div>
                             <div className="flex-1 flex justify-center items-center">
-                                <button
+                                <Link href="/descubrir"
                                     className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
                                     Descubrir
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
@@ -59,10 +59,10 @@ export default function Home() {
                                 planta?</p>
                             </div>
                             <div className="flex-1 flex justify-center items-center">
-                            <button
+                            <Link href={`/dianosticarEstado`}
                                 className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
                                 Diagnosticar
-                            </button>
+                            </Link>
                             </div>
                         </div>
                     </div>
