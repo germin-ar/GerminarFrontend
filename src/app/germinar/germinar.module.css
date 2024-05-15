@@ -1,0 +1,23 @@
+.video{
+    flex: 2
+}
+.video1{
+    flex: 1
+}
+.contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 35px;
+    gap: 35px;
+    justify-items: center;
+    align-items: center;
+}
+@media (max-width: 1000px) {
+    .contenedor{
+        flex-direction: column;
+    }
+}
+.contImg{
+    width: 100%;
+    margin: 0 auto;
+}

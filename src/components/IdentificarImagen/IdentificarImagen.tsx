@@ -14,7 +14,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
         <section className={`${styles[imagen]}`}>
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center `}>
-                    <Image className={`${styles.marca} `} src={`/logo.png`} alt="usuario prueba" width="150"
+                    <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba" width="150"
                            height="150"/>
                     <h2 className={`${styles.textoIdentificar}`}>Identifica tu planta y su estado de salud ¡Es
                         gratis!</h2>
