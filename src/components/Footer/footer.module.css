@@ -1,24 +1,40 @@
-.footer{
+.footer {
     background-color: #88BC43;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 200px;
 }
-.marca{
-    border-radius: 100%;
 
+.borde {
+    border-right: 1px solid white;
+    height: 75%;
 }
-.iconosRedes{
+
+@media (max-width: 1024px) {
+    .borde {
+        border: none;  /* Removes the border on small screens */
+    }
+}
+
+.menu li a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.social_icon {
+    position: relative;
+}
+
+.social_icon li a {
+    display: inline-block;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.social_icon li a:hover {
+    transform: translateY(-10px);
+}
+
+.iconosRedes {
     width: 50px;
     height: 50px;
     color: white;
-}
-.marcaTexto{
-    font-weight: bold;
-    color: white;
-    font-size: 40px;
-}
-.borde{
-    border-right: 1px solid white;
 }
