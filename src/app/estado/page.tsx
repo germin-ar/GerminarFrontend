@@ -7,13 +7,13 @@ export default function EstadoPage() {
     return (
         <>
             <main className={`${styles.contenedor} p-10`}>
-                <section>
-                    <div className={'flex justify-center items-center gap-10 md:gap-64 my-12 flex-col md:flex-row'}>
-                        <div className={'flex-1 flex flex-col items-center gap-10'}>
+                <section className={``}>
+                    <div className={`${styles.contenedorResponsive} flex justify-center items-center gap-10 md:gap-64 my-12`}>
+                        <div className={' flex-1 flex flex-col items-center gap-10'}>
                             <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Albahaca</h1>
-                            <div className="flex-1 flex items-start flex-col gap-5">
+                            <div className={` flex-1 flex items-start flex-col gap-5`}>
                                 <div>
-                                    <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
+                                    <Image className={`${styles.contenedorImagen}`} src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                            height="500"/>
                                 </div>
                                 <div className="flex w-full gap-5 justify-between">
@@ -36,24 +36,24 @@ export default function EstadoPage() {
                         </div>
 
 
-                        <div className={'table-container text-2xl flex-1'}>
+                        <div className={`${styles.tabla} flex-1  text-2xl`}>
                             <table className={'vertical-header-table'}>
                                 <tbody>
                                 <tr>
-                                    <th className={'p-10 border'}>Nombre científico</th>
-                                    <td className={'p-10 border'}>Ocimum basilicum</td>
+                                    <th className={`${styles.tablaCampos} p-10 border`}>Nombre científico</th>
+                                    <td className={`${styles.tablaCampos} p-10 border`}>Ocimum basilicum</td>
                                 </tr>
                                 <tr>
-                                    <th className={'p-10 border'}>Nombres comunes</th>
-                                    <td className={'p-10 border'}>Albahaca, Alhábega, Alfábega, Basílico</td>
+                                    <th className={`${styles.tablaCampos} p-10 border`}>Nombres comunes</th>
+                                    <td className={`${styles.tablaCampos} p-10 border`}>Albahaca, Alhábega, Alfábega, Basílico</td>
                                 </tr>
                                 <tr>
-                                    <th className={'p-10 border'}>Género</th>
-                                    <td className={'p-10 border'}>Ocimum</td>
+                                    <th className={`${styles.tablaCampos} p-10 border`}>Género</th>
+                                    <td className={`${styles.tablaCampos} p-10 border`}>Ocimum</td>
                                 </tr>
                                 <tr>
-                                    <th className={'p-10 border'}>Familia</th>
-                                    <td className={'p-10 border'}>Lamiaceae</td>
+                                    <th className={`${styles.tablaCampos} p-10 border`}>Familia</th>
+                                    <td className={`${styles.tablaCampos} p-10 border`}>Lamiaceae</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -63,12 +63,14 @@ export default function EstadoPage() {
                 <div>
                     <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43] font-bold`}>Estado de
                         salud</h1>
-                    <div className="flex items-center gap-5 flex-wrap justify-center lg:justify-start">
-                        <div>
-                            <Image src="/estado/planta.png" alt="planta enferma" width="50" height="50"/>
+                    <div className={`${styles.estadoSalud} flex items-center gap-5 flex-wrap`}>
+                        <div className={`${styles.div1}`}>
+                            <Image className={`${styles.imagenEstadoDeSalud}`} src="/estado/planta.png" alt="planta enferma" width="50" height="50"/>
                         </div>
-                        <p className="text-[24px]">¡Tu planta necesita ayuda!</p>
-                        <div>
+                        <div className={`${styles.div2}`}>
+                            <p className="text-[24px]">¡Tu planta necesita ayuda!</p>
+                        </div>
+                        <div className={`${styles.div3}`}>
                             <Image src="/estado/insecticida.png" alt="insecticida" width="100" height="100"/>
                         </div>
                     </div>

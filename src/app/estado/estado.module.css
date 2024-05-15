@@ -2,3 +2,52 @@
     max-width: 1300px;
     margin: 0 auto;
 }
+@media (max-width: 1300px) {
+    .contenedorResponsive {
+
+        gap: 10px;
+
+    }
+}
+@media (max-width: 1100px) {
+    .contenedorResponsive {
+
+        gap: 10px;
+        flex-direction: column;
+    }
+    .contenedorImagen{
+
+        width: 700px;
+        height: 100%;
+    }
+}
+@media (max-width: 590px) {
+    .estadoSalud{
+
+        align-items: flex-start;
+    }
+    .div1{
+        order: 2;
+    }
+    .div2{
+        order: 1;
+        width: 100%;
+    }
+    .div3{
+        order: 2;
+    }
+    .imagenEstadoDeSalud{
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+@media (max-width: 490px) {
+    .tabla{
+        width: 100%;
+    }
+    .tablaCampos{
+        padding: 5px;
+    }
+}

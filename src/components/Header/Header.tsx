@@ -16,8 +16,7 @@ export default function Header(){
                 <ul className={`${stylesHeader.lista}`}>
                     <div className="flex-1 flex items-center">
                         <li><Link href="/" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Inicio</Link></li>
-                        <li><Link href="/biblioteca" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Biblioteca
-                            Hortícola</Link></li>
+                        <li><Link href="/biblioteca" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Biblioteca</Link></li>
                     </div>
                     <div className={`${stylesHeader.marca} flex-1`}>
                         <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className}`}>GERMIN.<span
@@ -29,7 +28,7 @@ export default function Header(){
                         <li><FaBell className={`${stylesHeader.campana}`}/></li>
                         <li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>
                         <li className={`${stylesHeader.liUser}`}>
-                            <Image className="rounded-full" src="/usuario.PNG" width="75" height="75" alt="usuario logueado" />
+                            <Image className="rounded-full min-w-[75px]" src="/usuario.PNG" width="75" height="75" alt="usuario logueado" />
                             <FaCrown className={`${stylesHeader.corona}`}/>
                         </li>
                         <li>
