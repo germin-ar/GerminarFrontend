@@ -1,7 +1,11 @@
 import Image from "next/image";
 
 
-export default function Layout({children} : { children: React.ReactNode}){
+export default function Layout({
+                                   children,
+                               }: Readonly<{
+    children: React.ReactNode;
+}>){
     return(
         <>
             <header className="flex items-center py-4 justify-center bg-[#EFE8D6]">

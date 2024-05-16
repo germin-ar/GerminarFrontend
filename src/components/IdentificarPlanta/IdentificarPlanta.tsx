@@ -66,7 +66,7 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
                         <div className={"flex items-center gap-10"}>
                             <p className={'text-3xl text-justify w-3/5'}>Para comenzar, selecciona una planta en tu jardín o
                                 maceta que desees evaluar. Luego, abre nuestra aplicación en tu teléfono o computadora y
-                                accede a la opción 'Escanear Plantas'. Toma una foto clara de la planta, asegurándote de
+                                accede a la opción -Escanear Plantas-. Toma una foto clara de la planta, asegurándote de
                                 capturar todos sus detalles, desde las hojas hasta el tallo. Cuanta más claridad tenga
                                 la imagen, mejor será nuestra evaluación. En cuestión de segundos, la aplicación
                                 analizará la foto y te proporcionará información sobre la planta, incluyendo su nombre y

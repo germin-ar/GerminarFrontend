@@ -18,6 +18,9 @@ import {FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
 import {FaTrash} from "react-icons/fa";
 
+export async function generateStaticParams(){
+    return[{id: '1'}]
+}
 
 export default function JardinPage({params: {id}}: { params: { id: string } }) {
 
