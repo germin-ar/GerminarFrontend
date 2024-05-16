@@ -1,146 +1,178 @@
+"use client"
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import styles from "@/app/home.module.css";
 import stylesVideoSection from "@/app/germinar/germinar.module.css";
-import {BalooBhaina2} from "@/app/ui/fonts";
-import Link from "next/link";
+
 import Image from "next/image";
+import {useState} from "react";
+import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 
 export default function GerminarPage() {
+    const [showForm, setShowForm] = useState(false);
+
+    const handleFormButtonClick = () => {
+        setShowForm(true);
+    };
+
+    const handleCloseFormButtonClick = () => {
+        setShowForm(false);
+    }
+
+
+
+    const [activeSection, setActiveSection] = useState("")
+    function handleScrollToSection(sectionId: string) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            setActiveSection(sectionId);
+
+        }
+    }
+
+
     return (
         <>
-            <section className={`${stylesVideoSection.contenedor} p-10`}>
-                <div className={`${stylesVideoSection.video}  w-full`}>
-                    <video controls className="w-full rounded-[10px]">
+            <nav
+                className="select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10">
+                <div className="font-bold flex flex-col gap-3 justify-center w-[75%]">
+                    <button
+                        onClick={() => handleScrollToSection("presentacion")}
+                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'presentacion' ? 'bg-[#275F08] text-white' : ''}`}
+                    >
+                        Presentación
+                    </button>
+                    <button
+                        onClick={() => handleScrollToSection("identificar")}
+                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'identificar' ? 'bg-[#275F08] text-white' : ''}`}
+                    >
+                        Identificar
+                    </button>
+                    <button
+                        onClick={() => handleScrollToSection("herramientas")}
+                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'herramientas' ? 'bg-[#275F08] text-white' : ''}`}
+                    >
+                        Herramientas
+                    </button>
+                    <button
+                        onClick={() => handleScrollToSection("propuesta")}
+                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                    >
+                        Nuestra Propuesta
+                    </button>
+                    <button
+                        onClick={() => handleScrollToSection("premium")}
+                        className={`rounded font-bold bg-[#EFE8D6] py-2 px-4 ${activeSection === 'premium' ? 'bg-[#275F08] text-white' : ''}`}
+                    >
+                        Premium
+                    </button>
+                </div>
+            </nav>
+
+            <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
+
+                <div
+                    className={`${stylesVideoSection.video}  absolute inset-0 w-full h-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
+                    <video autoPlay loop muted className={`${stylesVideoSection.reproductor}`}>
                         <source src="/videolanding/landing.mp4" type="video/mp4"/>
                     </video>
                 </div>
-                <div className={`${stylesVideoSection.video1}`}>
-                    <section>
-                        <div
-                            className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+
+                {showForm && (
+
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+
+                        <section>
+                            <button onClick={handleCloseFormButtonClick}
+                                    className="font-bold mb-1 bg-[#EFE8D6]  py-2 px-4 rounded">
+                                X
+                            </button>
                             <div
                                 className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                        Crear una cuenta
-                                    </h1>
                                     <form className="space-y-4 md:space-y-6" action="#">
                                         <div>
                                             <label htmlFor="email"
-                                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                                   className="">Email</label>
                                             <input type="email" name="email" id="email"
                                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                   placeholder="ingrese su correo" />
+                                                   placeholder="ingrese su correo"/>
                                         </div>
                                         <div>
                                             <label htmlFor="password"
-                                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                                            <input type="password" name="password" id="password" placeholder="••••••••"
+                                                   className="">Contraseña</label>
+                                            <input type="password" name="password" id="password"
+                                                   placeholder="••••••••"
                                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                   />
+                                            />
                                         </div>
                                         <div>
                                             <label htmlFor="confirm-password"
-                                                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar
+                                                   className="block ">Confirmar
                                                 contraseña</label>
-                                            <input type="confirm-password" name="confirm-password" id="confirm-password"
+                                            <input type="confirm-password" name="confirm-password"
+                                                   id="confirm-password"
                                                    placeholder="••••••••"
                                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                   />
+                                            />
                                         </div>
                                         <div className="flex items-start">
                                             <div className="flex items-center h-5">
                                                 <input id="terms" aria-describedby="terms" type="checkbox"
                                                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                                       />
+                                                />
                                             </div>
-                                            <div className="ml-3 text-sm">
+                                            <div className="ml-3 ">
                                                 <label htmlFor="terms"
-                                                       className="font-light text-gray-500 dark:text-gray-300">Acepto <a
-                                                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                                                       className="">Acepto <a
+                                                    className=""
                                                     href="#">Terminos y condiciones</a></label>
                                             </div>
                                         </div>
                                         <button type="submit"
-                                                className="w-full text-black bg-sky-300
-                                                hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300
-                                                font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600
-                                                dark:hover:bg-primary-700 dark:focus:ring-primary-800">Registrate
+                                                className="bg-[#EFE8D6] py-2 px-4 text-black  font-bold rounded">Registrate
                                         </button>
-                                        <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                        <p className="">
                                             ¿Ya tenes una cuenta? <a href="#"
-                                                                     className="font-medium text-primary-600 hover:underline dark:text-primary-500">Logueate</a>
+                                                                     className="hover:underline ">Logueate</a>
                                         </p>
+                                        <p>o iniciar sesión con:</p>
+                                        <div>
+
+                                            <div className="flex items-center justify-center gap-5">
+                                                <p>google</p>
+                                                <p>facebook</p>
+                                            </div>
+                                        </div>
                                     </form>
+
                                 </div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </section>
-            <IdentificarImagen imagen="imagenIdentificar" pagina="/"/>
-            <main className="flex justify-center items-center">
-                {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
-                <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5`}>
-                    <p className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
-                        inteligentes</p>
 
-                    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4`}>
-                        <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <div className="flex-1 flex justify-center items-center">
-                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Cómo
-                                    identifico mi planta?</p>
                             </div>
-                            <div className="flex-1 flex justify-center items-center">
-                                <Link href="/diagnosticar"
-                                      className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                    Identificar
-                                </Link>
-                            </div>
-                        </div>
-                        <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <div className="flex-1 flex justify-center items-center">
-                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Qué
-                                    puedo plantar hoy?</p>
-                            </div>
-                            <div className="flex-1 flex justify-center items-center">
-                                <Link href="/descubrir"
-                                      className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                    Descubrir
-                                </Link>
-                            </div>
-                        </div>
-                        <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <div className="flex-1 flex justify-center items-center">
-                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg `}>¿Qué
-                                    puedo plantar en
-                                    este espacio?</p>
-                            </div>
-                            <div className="flex-1 flex justify-center items-center">
-                                <Link href="/espacio"
-                                      className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                    Analizar
-                                </Link>
-                            </div>
-                        </div>
-                        <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
-                            <div className="flex-1 flex justify-center items-center">
-                                <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  `}>¿Qué
-                                    le sucede a mi
-                                    planta?</p>
-                            </div>
-                            <div className="flex-1 flex justify-center items-center">
-                                <Link href={`/dianosticarEstado`}
-                                      className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>
-                                    Diagnosticar
-                                </Link>
-                            </div>
-                        </div>
+
+
+                        </section>
                     </div>
+                )}
+                {!showForm && (
+                    <>
+                        <button onClick={handleFormButtonClick}
+                                className="absolute bottom-8 right-8 bg-[#EFE8D6] py-2 px-4 text-black  font-bold rounded-lg shadow-md focus:outline-none">
+                            Crear una cuenta
+                        </button>
 
-                </section>
+                    </>
+                )}
+            </section>
+            <section id="identificar">
+                <IdentificarImagen imagen="imagenIdentificar" pagina="/"/>
+            </section>
+            <main id="herramientas" className="flex justify-center items-center">
+                {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
+                <HerramientasDeCultivo/>
             </main>
-            <section className={`${styles.nuestraPropuesta} flex justify-center items-center flex-col md:flex-row`}>
+            <section id="propuesta"
+                     className={`${styles.nuestraPropuesta} flex justify-center items-center flex-col md:flex-row`}>
                 <div className="md:w-1/2">
                     <div
                         className={`${styles.contenidoPropuesta} flex flex-col items-center md:items-start text-center md:text-left`}>
@@ -157,7 +189,7 @@ export default function GerminarPage() {
                     </div>
                 </div>
             </section>
-            <section className={`${stylesVideoSection.contImg} max-w-[1300px] py-[30px]`}>
+            <section id="premium" className={`${stylesVideoSection.contImg} max-w-[1300px] py-[30px]`}>
                 <Image src="/videolanding/recomendacion.jpeg" alt="recomendaciones" width={1500} height='1500'/>
             </section>
 
