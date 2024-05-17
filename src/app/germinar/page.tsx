@@ -4,12 +4,14 @@ import styles from "@/app/home.module.css";
 import stylesVideoSection from "@/app/germinar/germinar.module.css";
 
 import Image from "next/image";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import {BalooBhaina2} from "@/app/ui/fonts";
 
-import { FaCrown } from "react-icons/fa";
+import {FaArrowDown, FaCrown} from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
+import {Simulate} from "react-dom/test-utils";
+import play = Simulate.play;
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
@@ -24,62 +26,121 @@ export default function GerminarPage() {
 
 
     const [activeSection, setActiveSection] = useState("")
+    const [showNavbar, setShowNavbar] = useState(true);
+    const videoRef = useRef<HTMLVideoElement>(null); // Añadimos el tipo HTMLVideoElement
+
+    useEffect(() => {
+
+        const handleScroll = () => {
+            const presentacionSection = document.getElementById('presentacion');
+            if (presentacionSection) {
+                const rect = presentacionSection.getBoundingClientRect();
+                if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+                    setShowNavbar(false);
+                } else {
+                    setShowNavbar(true);
+                }
+            }
+
+            // Obtener el video
+            const video = videoRef.current;
+
+            // Obtener la sección actual en función del desplazamiento
+            let currentSection = '';
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.1) {
+                    currentSection = section.id
+                    if (currentSection !== 'presentacion' && video) {
+                            setAudioEnabled(false);
+
+
+                    } else if (video) {
+                            setAudioEnabled(true);
+
+
+
+                    }
+
+                }
+            });
+
+
+        };
+
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     function handleScrollToSection(sectionId: string) {
         const section = document.getElementById(sectionId);
         if (section) {
-            section.scrollIntoView({behavior: 'smooth'});
+            section.scrollIntoView({ behavior: 'smooth' });
             setActiveSection(sectionId);
-
         }
     }
-
+    const [audioEnabled, setAudioEnabled] = useState(false);
+    const handleToggleAudio = () => {
+        setAudioEnabled(!audioEnabled);
+    };
 
     return (
         <>
-            <nav
-                className={`${stylesVideoSection.navLateral} select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10`}>
-                <div className="font-bold flex flex-col gap-3 justify-center w-[75%]">
-                    <button
-                        onClick={() => handleScrollToSection("presentacion")}
-                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'presentacion' ? 'bg-[#275F08] text-white' : ''}`}
-                    >
-                        Presentación
-                    </button>
-                    <button
-                        onClick={() => handleScrollToSection("identificar")}
-                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'identificar' ? 'bg-[#275F08] text-white' : ''}`}
-                    >
-                        Identificar
-                    </button>
-                    <button
-                        onClick={() => handleScrollToSection("herramientas")}
-                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'herramientas' ? 'bg-[#275F08] text-white' : ''}`}
-                    >
-                        Herramientas
-                    </button>
-                    <button
-                        onClick={() => handleScrollToSection("propuesta")}
-                        className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
-                    >
-                        Nuestra Propuesta
-                    </button>
-                    <button
-                        onClick={() => handleScrollToSection("premium")}
-                        className={`rounded font-bold bg-[#EFE8D6] py-2 px-4 ${activeSection === 'premium' ? 'bg-[#275F08] text-white' : ''}`}
-                    >
-                        Premium
-                    </button>
-                </div>
-            </nav>
+            {showNavbar && (
+                <nav
+                    className={`${stylesVideoSection.navLateral} select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10 `}>
+                    <div className="font-bold flex flex-col gap-3 justify-center w-[75%]">
+                        <button
+                            onClick={() => handleScrollToSection("presentacion")}
+                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'presentacion' ? 'bg-[#275F08] text-white' : ''}`}
+                        >
+                            Presentación
+                        </button>
+                        <button
+                            onClick={() => handleScrollToSection("identificar")}
+                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'identificar' ? 'bg-[#275F08] text-white' : ''}`}
+                        >
+                            Identificar
+                        </button>
+                        <button
+                            onClick={() => handleScrollToSection("herramientas")}
+                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'herramientas' ? 'bg-[#275F08] text-white' : ''}`}
+                        >
+                            Herramientas
+                        </button>
+                        <button
+                            onClick={() => handleScrollToSection("propuesta")}
+                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                        >
+                            Nuestra Propuesta
+                        </button>
+                        <button
+                            onClick={() => handleScrollToSection("premium")}
+                            className={`rounded font-bold bg-[#EFE8D6] py-2 px-4 ${activeSection === 'premium' ? 'bg-[#275F08] text-white' : ''}`}
+                        >
+                            Premium
+                        </button>
+                    </div>
+                </nav>
+            )}
 
             <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
 
                 <div
-                    className={`${stylesVideoSection.video}  absolute inset-0 w-full h-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
-                    <video autoPlay loop muted className={`${stylesVideoSection.reproductor}`}>
+                    className={`${stylesVideoSection.video} absolute inset-0 rounded-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
+                    <video ref={videoRef} autoPlay={true} loop muted={!audioEnabled}
+                           className={`${stylesVideoSection.reproductor}`}>
                         <source src="/videolanding/landing.mp4" type="video/mp4"/>
                     </video>
+                    <div className="absolute top-2 right-2 flex">
+                        <button onClick={handleToggleAudio}
+                                className="text-white bg-gray-700 rounded-md px-2 py-1 mr-2">
+                            {audioEnabled ? 'Desactivar audio' : 'Activar audio'}
+                        </button>
+                        {/* Aquí puedes agregar más botones si lo necesitas */}
+                    </div>
                 </div>
 
                 {showForm && (
@@ -162,8 +223,19 @@ export default function GerminarPage() {
                         </section>
                     </div>
                 )}
+                {!showNavbar && (
+                    <>
+                        <div
+                            className="fixed bottom-8 left-1/2 transform -translate-x-3/4 wiggle border-b-2  border-b-[#EFE8D6]">
+                            <FaArrowDown
+                                className="text-[#EFE8D6] text-4xl animate-bounce bg-[#275F08] rounded-full p-1"
+                                onClick={() => handleScrollToSection('identificar')}/>
+                        </div>
+                    </>
+                )}
                 {!showForm && (
                     <>
+
                         <button onClick={handleFormButtonClick}
                                 className="absolute bottom-8 right-8 bg-[#EFE8D6] py-2 px-4 text-black  font-bold rounded-lg shadow-md focus:outline-none">
                             Crear una cuenta
