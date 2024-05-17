@@ -6,6 +6,10 @@ import stylesVideoSection from "@/app/germinar/germinar.module.css";
 import Image from "next/image";
 import {useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
+import {BalooBhaina2} from "@/app/ui/fonts";
+
+import { FaCrown } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
@@ -19,12 +23,12 @@ export default function GerminarPage() {
     }
 
 
-
     const [activeSection, setActiveSection] = useState("")
+
     function handleScrollToSection(sectionId: string) {
         const section = document.getElementById(sectionId);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({behavior: 'smooth'});
             setActiveSection(sectionId);
 
         }
@@ -34,7 +38,7 @@ export default function GerminarPage() {
     return (
         <>
             <nav
-                className="select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10">
+                className={`${stylesVideoSection.navLateral} select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10`}>
                 <div className="font-bold flex flex-col gap-3 justify-center w-[75%]">
                     <button
                         onClick={() => handleScrollToSection("presentacion")}
@@ -83,10 +87,12 @@ export default function GerminarPage() {
                     <div className="absolute inset-0 flex items-center justify-center z-10">
 
                         <section>
-                            <button onClick={handleCloseFormButtonClick}
-                                    className="font-bold mb-1 bg-[#EFE8D6]  py-2 px-4 rounded">
-                                X
-                            </button>
+                            <div className="text-end">
+                                <button onClick={handleCloseFormButtonClick}
+                                        className="font-bold mb-1 bg-[#EFE8D6]  py-2 px-4 rounded">
+                                    X
+                                </button>
+                            </div>
                             <div
                                 className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -136,12 +142,14 @@ export default function GerminarPage() {
                                             ¿Ya tenes una cuenta? <a href="#"
                                                                      className="hover:underline ">Logueate</a>
                                         </p>
-                                        <p>o iniciar sesión con:</p>
+                                        <p>o inicia sesión con:</p>
                                         <div>
 
-                                            <div className="flex items-center justify-center gap-5">
-                                                <p>google</p>
-                                                <p>facebook</p>
+                                            <div className="flex items-center justify-center gap-10">
+                                                <Image src="/videolanding/google.png" alt="google" width="40"
+                                                       height="40"/>
+                                                <Image src="/videolanding/facebook.png" alt="facebook" width="40"
+                                                       height="40"/>
                                             </div>
                                         </div>
                                     </form>
@@ -189,9 +197,119 @@ export default function GerminarPage() {
                     </div>
                 </div>
             </section>
-            <section id="premium" className={`${stylesVideoSection.contImg} max-w-[1300px] py-[30px]`}>
-                <Image src="/videolanding/recomendacion.jpeg" alt="recomendaciones" width={1500} height='1500'/>
+            <section id="premium" className={`${styles.contenedorPropuesta}`}>
+                <section
+                    className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center`}>
+                    <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
+                        <div className="flex-1 flex items-center justify-center">
+                            <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
+                                   height="200"/>
+                        </div>
+                        <div className="flex-1">
+                            <div className={`${styles.cardsPropuesta} `}>
+                                <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
+                                    <FaCrown className={`${stylesVideoSection.icono}`}/>
+                                    <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Administra
+                                    tus propias notificaciones</h2>
+
+                                </div>
+                                <p>
+                                    Personalizar alertas para el cuidado de tus plantas. Configura recordatorios para
+                                    riego,
+                                    fertilización, poda y otras tareas según tu horario. Personaliza el contenido y el
+                                    método de
+                                    notificación para una gestión eficiente de tus plantas</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10 `}>
+                        <div className="flex-1 flex items-center justify-center">
+                            <Image className={`${styles.imagenes}`} src="/seguimiento.jfif" alt="Ecosistema" width="200"
+                                   height="200"/>
+                        </div>
+                        <div className="flex-1">
+                            <div className={`${styles.cardsPropuesta}`}>
+                                <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
+                                    <FaCrown className={`${stylesVideoSection.icono}`}/>
+                                    <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Haz
+                                        un
+                                        seguimiento de tu
+                                        progreso</h2>
+                                </div>
+                                <p>Lleva un registro detallado de tu experiencia de cultivo con nuestra función de
+                                    seguimiento.
+                                    Anota cuándo plantas, riegas y cosechas, y recibe recordatorios automáticos para las
+                                    tareas
+                                    de cuidado de tus plantas. </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10 `}>
+                        <div className="flex-1 flex items-center justify-center">
+                            <Image className={`${styles.imagenes}`} src="/tutoriales.png" alt="Ecosistema" width="200"
+                                   height="200"/>
+                        </div>
+                        <div className="flex-1">
+                            <div className={`${styles.cardsPropuesta}`}>
+                                <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
+                                    <FaUser className={`${stylesVideoSection.icono}`}/>
+                                <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Busca y
+                                    aprende
+                                    tutoriales</h2>
+                                </div>
+                                <p>Domina el arte de la horticultura urbana con nuestros tutoriales paso a paso. Aprende
+                                    cómo
+                                    cuidar de tus plantas, identificar y solucionar problemas, y maximizar tus cosechas.
+                                    Los
+                                    tutoriales son fáciles de seguir y adecuados para todos.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10 `}>
+                        <div className={`flex-1 flex items-center justify-center`}>
+                            <Image className={`${styles.imagenes}`} src="/ideal.png" alt="Ecosistema" width="200"
+                                   height="200"/>
+                        </div>
+                        <div className="flex-1">
+                            <div className={`${styles.cardsPropuesta}`}>
+                                <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
+                                    <FaCrown className={`${stylesVideoSection.icono}`}/>
+                                <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Descubre
+                                    Tu
+                                    planta Ideal para
+                                    tu jardín</h2>
+                                </div>
+                                <p>Encuentra las plantas perfectas para tu espacio con nuestra herramienta de
+                                    recomendación
+                                    personalizada. Simplemente ingresa tus preferencias y te ayudaremos a seleccionar
+                                    las
+                                    plantas que mejor se adapten a tu situación.</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+                <div className="flex items-center justify-center gap-2 py-5 flex-wrap">
+                    <p className="font-bold">¿Queres disfrutar de estos beneficios?</p>
+                    <button
+                        className="bg-[#88BC43] py-2 px-4 text-white  font-bold rounded">
+                        Registrarse
+                    </button>
+                    <p className="font-bold">o</p>
+                    <button
+                        className="bg-[#88BC43] py-2 px-4 text-white  font-bold rounded">
+                        Iniciar sesión
+                    </button>
+                </div>
             </section>
+
+
 
 
         </>

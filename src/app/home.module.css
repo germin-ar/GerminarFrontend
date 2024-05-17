@@ -19,11 +19,17 @@
 
 .fondoCards{
     background-color: #EFE8D6;
-    padding: 60px 30px;
+    padding: 50px 30px;
     margin: 40px 0;
 
 }
+@media (max-width: 375px){
+    .fondoCards{
 
+        padding: 40px 20px;
+
+    }
+}
 .tituloSecundario{
     font-size: 50px;
     color: #88BC43;
@@ -76,6 +82,16 @@
     height: 100%;
 }
 
+@media (max-width: 530px){
+    .tamanoRecomendacionCards{
+        flex-direction: column;
+    }
+}
+@media (max-width: 375px){
+    .tamanoRecomendacionCards{
+        padding: 20px 0;
+    }
+}
 .recomendacionCards{
     flex: 1;
 }

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function HerramientasDeCultivo(){
     return (
-        <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5`}>
+        <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5 `}>
             <p className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
                 inteligentes</p>
 
