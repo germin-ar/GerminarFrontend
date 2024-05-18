@@ -8,8 +8,8 @@ import {useEffect, useRef, useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import {BalooBhaina2} from "@/app/ui/fonts";
 
-import {FaArrowDown, FaCrown} from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import {FaArrowDown, FaBars, FaCrown} from "react-icons/fa";
+import {FaUser} from "react-icons/fa";
 import {Simulate} from "react-dom/test-utils";
 import play = Simulate.play;
 
@@ -26,7 +26,7 @@ export default function GerminarPage() {
 
 
     const [activeSection, setActiveSection] = useState("")
-    const [showNavbar, setShowNavbar] = useState(true);
+    const [showNavbar, setShowNavbar] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null); // Añadimos el tipo HTMLVideoElement
 
     useEffect(() => {
@@ -53,16 +53,9 @@ export default function GerminarPage() {
                 if (rect.top <= window.innerHeight * 0.1 && rect.bottom >= window.innerHeight * 0.1) {
                     currentSection = section.id
                     if (currentSection !== 'presentacion' && video) {
-                            setAudioEnabled(false);
-
-
-                    } else if (video) {
-                            setAudioEnabled(true);
-
-
-
+                        setAudioEnabled(false);
                     }
-
+                    console.log(currentSection)
                 }
             });
 
@@ -77,54 +70,98 @@ export default function GerminarPage() {
     function handleScrollToSection(sectionId: string) {
         const section = document.getElementById(sectionId);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({behavior: 'smooth'});
             setActiveSection(sectionId);
         }
     }
+
     const [audioEnabled, setAudioEnabled] = useState(false);
     const handleToggleAudio = () => {
         setAudioEnabled(!audioEnabled);
     };
+    const [menuOpen, setMenuOpen] = useState(true);
 
+    const handleToggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
     return (
         <>
-            {showNavbar && (
-                <nav
-                    className={`${stylesVideoSection.navLateral} select-none fixed top-0 left-0 z-50 h-full w-[332px]  flex flex-col items-start justify-center  gap-3 pl-10 `}>
-                    <div className="font-bold flex flex-col gap-3 justify-center w-[75%]">
-                        <button
-                            onClick={() => handleScrollToSection("presentacion")}
-                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'presentacion' ? 'bg-[#275F08] text-white' : ''}`}
-                        >
-                            Presentación
-                        </button>
-                        <button
-                            onClick={() => handleScrollToSection("identificar")}
-                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'identificar' ? 'bg-[#275F08] text-white' : ''}`}
-                        >
-                            Identificar
-                        </button>
-                        <button
-                            onClick={() => handleScrollToSection("herramientas")}
-                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'herramientas' ? 'bg-[#275F08] text-white' : ''}`}
-                        >
-                            Herramientas
-                        </button>
-                        <button
-                            onClick={() => handleScrollToSection("propuesta")}
-                            className={`rounded font-bold py-2 px-4 bg-[#EFE8D6] ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
-                        >
-                            Nuestra Propuesta
-                        </button>
-                        <button
-                            onClick={() => handleScrollToSection("premium")}
-                            className={`rounded font-bold bg-[#EFE8D6] py-2 px-4 ${activeSection === 'premium' ? 'bg-[#275F08] text-white' : ''}`}
-                        >
-                            Premium
-                        </button>
+
+
+                    <div className={`{relative flex h-screen}`}>
+                        {/* Menú lateral */}
+                        <div
+                            className={`fixed left-0 top-0 h-full bg-[#EFE8D6] w-64 ${menuOpen ? '' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-50`}>
+                            <div className="absolute bottom-1 right-1">
+                                <div>
+                                    <div>
+                                        <Image src="/isotipo-fondo-claro.png" alt="isotipo" height="100" width="100"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col justify-center items-center h-full">
+
+
+                                <ul className=" flex flex-col gap-3 ">
+
+                                    <li>
+                                        <button
+                                            onClick={() => handleScrollToSection("presentacion")}
+                                            className={`rounded font-bold py-2 px-4   ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
+                                        >
+                                            Presentación
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() => handleScrollToSection("identificar")}
+                                            className={`rounded font-bold py-2 px-4  ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
+                                        >Identificación
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() => handleScrollToSection("herramientas")}
+                                            className={`rounded font-bold py-2 px-4   ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
+                                        >
+                                            Herramientas
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() => handleScrollToSection("propuesta")}
+                                            className={`rounded font-bold py-2 px-4    ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                                        >
+                                            Nuestra Propuesta
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button
+                                            onClick={() => handleScrollToSection("premium")}
+                                            className={`rounded font-bold   py-2 px-4 ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
+                                        >
+                                            Premium
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <div className="flex-grow">
+
+                            <div className="relative z-40">
+
+                            </div>
+
+
+                            <button onClick={handleToggleMenu}
+                                    className="fixed top-4 left-4 z-50 block text-gray-500 focus:outline-none bg-white rounded-full p-2">
+                                <FaBars className="h-8 w-8"/>
+                            </button>
+                        </div>
                     </div>
-                </nav>
-            )}
+
 
             <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
 
@@ -139,7 +176,6 @@ export default function GerminarPage() {
                                 className="text-white bg-gray-700 rounded-md px-2 py-1 mr-2">
                             {audioEnabled ? 'Desactivar audio' : 'Activar audio'}
                         </button>
-                        {/* Aquí puedes agregar más botones si lo necesitas */}
                     </div>
                 </div>
 
@@ -282,7 +318,7 @@ export default function GerminarPage() {
                                 <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
                                     <FaCrown className={`${stylesVideoSection.icono}`}/>
                                     <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Administra
-                                    tus propias notificaciones</h2>
+                                        tus propias notificaciones</h2>
 
                                 </div>
                                 <p>
@@ -327,9 +363,10 @@ export default function GerminarPage() {
                             <div className={`${styles.cardsPropuesta}`}>
                                 <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
                                     <FaUser className={`${stylesVideoSection.icono}`}/>
-                                <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Busca y
-                                    aprende
-                                    tutoriales</h2>
+                                    <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Busca
+                                        y
+                                        aprende
+                                        tutoriales</h2>
                                 </div>
                                 <p>Domina el arte de la horticultura urbana con nuestros tutoriales paso a paso. Aprende
                                     cómo
@@ -349,10 +386,10 @@ export default function GerminarPage() {
                             <div className={`${styles.cardsPropuesta}`}>
                                 <div className="flex items-center justify-center gap-3 w-full flex-wrap flex-col">
                                     <FaCrown className={`${stylesVideoSection.icono}`}/>
-                                <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Descubre
-                                    Tu
-                                    planta Ideal para
-                                    tu jardín</h2>
+                                    <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Descubre
+                                        Tu
+                                        planta Ideal para
+                                        tu jardín</h2>
                                 </div>
                                 <p>Encuentra las plantas perfectas para tu espacio con nuestra herramienta de
                                     recomendación
@@ -380,8 +417,6 @@ export default function GerminarPage() {
                     </button>
                 </div>
             </section>
-
-
 
 
         </>

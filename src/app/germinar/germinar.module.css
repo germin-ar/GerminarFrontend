@@ -13,6 +13,7 @@
     height: 100%;
     object-fit: contain;
 }
+
 .contenedor{
     /*min-height: calc(100vh - 132px);*/
     height: 100vh;
@@ -28,9 +29,11 @@
 }
 
 @media (max-width: 1640px){
-    .navLateral{
-        display: none;
-    }
+
+
+
+
+
 }
 
 
