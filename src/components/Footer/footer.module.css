@@ -1,22 +1,22 @@
 .footer {
     background-color: #88BC43;
-    min-height: 200px;
+    min-height: 100px;
 }
 
 .borde {
-    border-right: 1px solid white;
+    border-right: 1px solid #EFE8D6;
     height: 75%;
 }
 
 @media (max-width: 1024px) {
     .borde {
-        border: none;  /* Removes the border on small screens */
+        border: none;
     }
 }
 
 .menu li a:hover {
     opacity: 1;
-    text-decoration: underline;
+    text-decoration: underline #EFE8D6;
 }
 
 .social_icon {
@@ -34,7 +34,7 @@
 }
 
 .iconosRedes {
-    width: 50px;
-    height: 50px;
-    color: white;
+    width: 25px;
+    height: 25px;
+    color: #EFE8D6;
 }
