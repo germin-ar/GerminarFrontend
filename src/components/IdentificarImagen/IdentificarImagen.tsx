@@ -20,7 +20,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                         gratis!</h2>
                 </div>
                 <div className="flex-1 flex  items-center flex-col gap-16">
-                    <h2 className={`${styles.textoSubirIdentificar}`}>Sube o arraste tu foto</h2>
+                    <h2 className={`${styles.textoSubirIdentificar}`}>Sube o arrastre tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8`}>
                         <p className={`${styles.seleccionarIdentificar}`}>Selecciona Archivo</p>
                         <p>Sin archivo seleccionado</p>

@@ -23,11 +23,12 @@ export default function RootLayout({
             <title>Home</title>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </head>
-        <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased `}>
+        <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased`}>
 
         <div className={`${styles.content}`}>
             {children}
         </div>
+
         <Footer/>
         </body>
         </html>
