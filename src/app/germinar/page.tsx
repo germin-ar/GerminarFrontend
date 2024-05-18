@@ -7,22 +7,29 @@ import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import {BalooBhaina2} from "@/app/ui/fonts";
+import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
-import {FaArrowDown, FaBars, FaCrown} from "react-icons/fa";
+import {FaArrowDown, FaBars, FaCrown, FaTimes} from "react-icons/fa";
 import {FaUser} from "react-icons/fa";
 import {Simulate} from "react-dom/test-utils";
 import play = Simulate.play;
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
-
+    const [videoEnded, setVideoEnded] = useState(false);
     const handleFormButtonClick = () => {
         setShowForm(true);
     };
 
     const handleCloseFormButtonClick = () => {
         setShowForm(false);
-    }
+        // Reiniciar el video si ha terminado
+        if (videoEnded && videoRef.current) {
+            videoRef.current.currentTime = 0; // Reiniciar el tiempo del video
+            videoRef.current.play(); // Reproducir el video
+            setVideoEnded(false); // Restablecer el estado de video terminado
+        }
+    };
 
 
     const [activeSection, setActiveSection] = useState("")
@@ -60,7 +67,8 @@ export default function GerminarPage() {
             });
 
 
-        };
+        }
+
 
 
         window.addEventListener('scroll', handleScroll);
@@ -74,12 +82,16 @@ export default function GerminarPage() {
             setActiveSection(sectionId);
         }
     }
+    const handleVideoEnded = () => {
+        setVideoEnded(true);
+        handleFormButtonClick();
+    };
 
     const [audioEnabled, setAudioEnabled] = useState(false);
     const handleToggleAudio = () => {
         setAudioEnabled(!audioEnabled);
     };
-    const [menuOpen, setMenuOpen] = useState(true);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const handleToggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -88,93 +100,89 @@ export default function GerminarPage() {
         <>
 
 
-                    <div className={`{relative flex h-screen}`}>
-                        {/* Menú lateral */}
-                        <div
-                            className={`fixed left-0 top-0 h-full bg-[#EFE8D6] w-64 ${menuOpen ? '' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-50`}>
-                            <div className="absolute bottom-1 right-1">
-                                <div>
-                                    <div>
-                                        <Image src="/isotipo-fondo-claro.png" alt="isotipo" height="100" width="100"/>
-                                    </div>
-                                </div>
+            <div className={`{relative flex h-screen}`}>
+                <div
+                    className={`fixed left-0 top-0 h-full bg-[#EFE8D6] w-64 ${menuOpen ? '' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-50`}>
+                    <div className="absolute bottom-1 right-1">
+                        <div>
+                            <div>
+                                <Image src="/isotipo-fondo-claro.png" alt="isotipo" height="100" width="100"/>
                             </div>
-                            <div className="flex flex-col justify-center items-center h-full">
-
-
-                                <ul className=" flex flex-col gap-3 ">
-
-                                    <li>
-                                        <button
-                                            onClick={() => handleScrollToSection("presentacion")}
-                                            className={`rounded font-bold py-2 px-4   ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
-                                        >
-                                            Presentación
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            onClick={() => handleScrollToSection("identificar")}
-                                            className={`rounded font-bold py-2 px-4  ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
-                                        >Identificación
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            onClick={() => handleScrollToSection("herramientas")}
-                                            className={`rounded font-bold py-2 px-4   ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
-                                        >
-                                            Herramientas
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            onClick={() => handleScrollToSection("propuesta")}
-                                            className={`rounded font-bold py-2 px-4    ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
-                                        >
-                                            Nuestra Propuesta
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button
-                                            onClick={() => handleScrollToSection("premium")}
-                                            className={`rounded font-bold   py-2 px-4 ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
-                                        >
-                                            Premium
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <div className="flex-grow">
-
-                            <div className="relative z-40">
-
-                            </div>
-
-
-                            <button onClick={handleToggleMenu}
-                                    className="fixed top-4 left-4 z-50 block text-gray-500 focus:outline-none bg-white rounded-full p-2">
-                                <FaBars className="h-8 w-8"/>
-                            </button>
                         </div>
                     </div>
+                    <div className="flex flex-col justify-center items-center h-full">
+
+
+                        <ul className=" flex flex-col gap-3 ">
+
+                            <li>
+                                <button
+                                    onClick={() => handleScrollToSection("presentacion")}
+                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
+                                >
+                                    Presentación
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => handleScrollToSection("identificar")}
+                                    className={`rounded font-bold py-2 px-4  ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
+                                >Identificación
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => handleScrollToSection("herramientas")}
+                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
+                                >
+                                    Herramientas
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => handleScrollToSection("propuesta")}
+                                    className={`rounded font-bold py-2 px-4    ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                                >
+                                    Nuestra Propuesta
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => handleScrollToSection("premium")}
+                                    className={`rounded font-bold   py-2 px-4 ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
+                                >
+                                    Premium
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div className="flex-grow">
+                    <div className="relative z-40"></div>
+                    <button onClick={handleToggleMenu}
+                            className="fixed top-4 left-4 z-50 block text-white focus:outline-none bg-[#275F08] rounded-full p-2">
+                        {menuOpen ? <FaTimes className="h-8 w-8"/> : <FaBars className="h-8 w-8"/>}
+                    </button>
+                </div>
+            </div>
 
 
             <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
 
                 <div
                     className={`${stylesVideoSection.video} absolute inset-0 rounded-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
-                    <video ref={videoRef} autoPlay={true} loop muted={!audioEnabled}
+                <video ref={videoRef} autoPlay={true} loop={false} muted={!audioEnabled} onEnded={handleVideoEnded}
                            className={`${stylesVideoSection.reproductor}`}>
                         <source src="/videolanding/landing.mp4" type="video/mp4"/>
                     </video>
-                    <div className="absolute top-2 right-2 flex">
+                    <div className="absolute top-2 right-2 flex p-2">
                         <button onClick={handleToggleAudio}
-                                className="text-white bg-gray-700 rounded-md px-2 py-1 mr-2">
-                            {audioEnabled ? 'Desactivar audio' : 'Activar audio'}
+                                className="rounded font-bold p-2 text-black bg-[#EFE8D6] flex items-center gap-2">
+                            {audioEnabled ? <FaVolumeUp className="w-8 h-8"/> :
+                                <FaVolumeMute className="w-8 h-8"/>}
+
                         </button>
                     </div>
                 </div>
