@@ -1,41 +1,31 @@
-
 /*espacio*/
-
-
-
-
-
 
 
 /***************/
 
 
-
-
-
-
-
-
-
-.fondoCards{
+.fondoCards {
     background-color: #EFE8D6;
     padding: 50px 30px;
     margin: 40px 0;
 
 }
-@media (max-width: 375px){
-    .fondoCards{
+
+@media (max-width: 375px) {
+    .fondoCards {
 
         padding: 40px 20px;
 
     }
 }
-.tituloSecundario{
+
+.tituloSecundario {
     font-size: 50px;
     color: #88BC43;
     font-weight: bold;
 }
-.cards{
+
+.cards {
     border-radius: 0 50px 0 50px;
     max-width: 230px;
     padding: 40px 20px;
@@ -46,68 +36,76 @@
     align-items: center;
     flex-direction: column;
 }
-.tituloCards{
+
+.tituloCards {
     font-size: 20px;
 }
 
-.botonCards{
+.botonCards {
     background-color: #88BC43;
 }
 
 
-
-
 /****************Nuestra propuesta****************/
-.nuestraPropuesta{
+.nuestraPropuesta {
 
     max-width: 1108px;
     width: 100%;
     margin: 0 auto;
 }
 
-.contenidoPropuesta, .imagenPropuesta{
+.contenidoPropuesta, .imagenPropuesta {
     flex: 1;
     padding: 20px 20px;
 }
 
 /***Recomendacion***/
-.contenedorPropuesta{
+.contenedorPropuesta {
     background-color: #EFE8D6;
 
     max-width: 1108px;
     margin: 20px auto;
 }
-.tamanoRecomendacionCards{
+
+.tamanoRecomendacionCards {
     width: 92%;
     height: 100%;
 }
 
-@media (max-width: 530px){
-    .tamanoRecomendacionCards{
+@media (max-width: 530px) {
+    .tamanoRecomendacionCards {
         flex-direction: column;
     }
 }
-@media (max-width: 375px){
-    .tamanoRecomendacionCards{
+
+@media (max-width: 375px) {
+    .tamanoRecomendacionCards {
         padding: 20px 0;
     }
 }
-.recomendacionCards{
+
+.recomendacionCards {
     flex: 1;
 }
-.imagenes{
+
+.imagenes {
     object-fit: cover;
     width: 250px;
     height: 250px;
     border-radius: 0 50px 0 50px;
 }
-.tituloCardsRecomendacion{
+
+.tituloCardsRecomendacion {
     font-size: 19px;
 }
 
-.cardsPropuesta{
+.cardsPropuesta {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     height: 100%;
+}
+
+.content {
+    min-height: calc(100vh - 70px);
 }

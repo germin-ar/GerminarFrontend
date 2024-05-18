@@ -1,7 +1,10 @@
 .footer {
     background-color: #88BC43;
     min-height: 100px;
+
+    height: 50px;
 }
+
 
 .borde {
     border-right: 1px solid #EFE8D6;
