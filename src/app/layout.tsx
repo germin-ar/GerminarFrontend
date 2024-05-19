@@ -2,7 +2,7 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
 import {PoppinsTexto} from "@/app/ui/fonts";
-import Header from "@/components/Header/Header";
+import styles from "./home.module.css";
 import Footer from "@/components/Footer/Footer";
 
 const inter = Inter({subsets: ["latin"]});
@@ -23,10 +23,13 @@ export default function RootLayout({
             <title>Home</title>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </head>
-        <body className={`${inter.className} ${PoppinsTexto.className}  antialiased `}>
+        <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased`}>
 
-        {children}
-        <Footer />
+        <div className={`${styles.content}`}>
+            {children}
+        </div>
+
+        <Footer/>
         </body>
         </html>
     );
