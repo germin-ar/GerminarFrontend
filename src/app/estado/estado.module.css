@@ -10,6 +10,13 @@
     }
 }
 
-.list-number::marker {
+ol.listNumber li::marker {
     font-weight: bold;
+    font-size: 30px;
+}
+
+@media (max-width: 640px) {
+    ol.listNumber li::marker {
+        font-size: 25px;
+    }
 }
