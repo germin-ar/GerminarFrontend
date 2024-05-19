@@ -6,40 +6,54 @@ import {FaRegCheckCircle} from "react-icons/fa";
 export default function RecomendacionPage() {
     return (
         <main className={`${stlyesRecomendacion.contenedor}`}>
-            <div>
-                <div className="flex items-center pt-10 pl-5">
-                    <FaRegCheckCircle className={`${stlyesRecomendacion.check}`}/>
-                    <h2 className={`${BalooBhaina2.className} ${stlyesRecomendacion.titulo} `}>Aquí
-                        tienes algunas opciones para tu Patio trasero</h2>
-                </div>
+            <section className={"m-10"}>
+                <div>
+                    <div className="flex items-center pt-10 pl-5 gap-3">
+                        <FaRegCheckCircle className={`${stlyesRecomendacion.check}`}/>
+                        <p className={`${BalooBhaina2.className}`}>Aquí
+                            tienes algunas opciones para tu <span className={"text-green-800"}>Patio trasero</span></p>
+                    </div>
 
-                <div className="flex flex-wrap justify-center items-center gap-10 mb-10">
-                    <div className="pt-10">
-                        <p className={`${stlyesRecomendacion.planta} ${BalooBhaina2.className} text-center`}>Albahaca</p>
-                        <div className={`${stlyesRecomendacion.imagen}`}>
-                            <Image src="/recomendacion/albahaca.png" alt="albahaca" width="500" height="500"/>
+                    <div className="flex flex-wrap justify-center items-center gap-10">
+                        <div className="pt-10">
+                            <h3 className={`${BalooBhaina2.className} text-center`}>Albahaca</h3>
+                            <div>
+                                <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                                       src="/recomendacion/albahaca.png"
+                                       alt="Albahaca" width="250"
+                                       height="250"/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pt-10">
-                        <p className={`${stlyesRecomendacion.planta} ${BalooBhaina2.className} text-center`}>Lechuga</p>
-                        <div className={`${stlyesRecomendacion.imagen}`}>
-                            <Image src="/recomendacion/lechuga.png" alt="lechuga" width="500" height="500"/>
+                        <div className="pt-10">
+                            <h3 className={`${BalooBhaina2.className} text-center`}>Lechuga</h3>
+                            <div>
+                                <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                                       src="/recomendacion/lechuga.png"
+                                       alt="Lechuga" width="250"
+                                       height="250"/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pt-10">
-                        <p className={`${stlyesRecomendacion.planta} ${BalooBhaina2.className} text-center`}>Morrón</p>
-                        <div className={`${stlyesRecomendacion.imagen}`}>
-                            <Image src="/recomendacion/morrón.png" alt="morron" width="500" height="500"/>
+                        <div className="pt-10">
+                            <h3 className={`${BalooBhaina2.className} text-center`}>Morrón</h3>
+                            <div>
+                                <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                                       src="/recomendacion/morrón.png"
+                                       alt="Morrón" width="250"
+                                       height="250"/>
+                            </div>
                         </div>
-                    </div>
-                    <div className="pt-10">
-                        <p className={`${stlyesRecomendacion.planta} ${BalooBhaina2.className} text-center`}>Tomate</p>
-                        <div className={`${stlyesRecomendacion.imagen}`}>
-                            <Image src="/recomendacion/tomate.png" alt="tomate" width="500" height="500"/>
+                        <div className="pt-10">
+                            <h3 className={`${BalooBhaina2.className} text-center`}>Tomate</h3>
+                            <div>
+                                <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                                       src="/recomendacion/tomate.png"
+                                       alt="Tomate" width="250"
+                                       height="250"/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </main>
     )
 }

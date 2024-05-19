@@ -8,13 +8,13 @@ export default function DescubrirPage() {
     return (
         <>
             <main className={`${stylesDescubrir.contenedor}`}>
-                <section>
-                    <div className={'flex flex-col justify-center items-start gap-4 my-12'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4 ${stylesDescubrir.espaciado}`}>
+                <section className={"m-10"}>
+                    <div className={'flex flex-col justify-center items-start gap-4 mt-12'}>
+                        <h1 className={`${BalooBhaina2.className} ${stylesDescubrir.espaciado} text-[#88BC43] font-bold mb-4`}>
                             Encuentra las plantas perfectas
                             <br/>para cada estación del año</h1>
 
-                        <p className={'text-3xl text-justify'}>Utilizando tu ubicación real, nuestra aplicación
+                        <p className={'text-justify'}>Utilizando tu ubicación real, nuestra aplicación
                             identifica la época en la que te encuentras y te proporciona recomendaciones personalizadas
                             de plantas para sembrar y cosechar. Desde cultivos frescos de primavera hasta cosechas de
                             invierno abundantes, nuestra guía te ayudará a cultivar alimentos deliciosos durante todo el
@@ -27,7 +27,7 @@ export default function DescubrirPage() {
                                 <Image src="/descubrir/ubicacion-icon.png" alt="ubicacion-icon" width="30"
                                        height="30"/>
                             </div>
-                            <a  href="" className={'cursor-pointer text-2xl underline font-semibold'}>Activar ubicación</a>
+                            <a  href="" className={'cursor-pointer underline font-semibold'}>Activar ubicación</a>
                         </div>
                         <div>
                             <button

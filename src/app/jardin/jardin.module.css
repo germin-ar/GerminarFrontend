@@ -1,19 +1,10 @@
-.contenedor{
+.contenedor {
     width: 70%;
     max-width: 1300px;
     margin: 45px auto;
 }
-.titulo{
-    color: #88BC43;
-    font-size: 50px;
-    text-align: center;
-    font-weight: bold;
-}
-.botones{
-    background-color: #88BC43;
-    font-size: 20px;
-}
-.iconos{
+
+.iconos {
     width: 25px;
     height: 25px;
     color: white;
@@ -22,59 +13,40 @@
 /***Sidebar***/
 
 
-
-
 /***Sidebar***/
 /*****/
 
-
-
-.contenedorPlantas{
+.contenedorPlantas {
     max-width: 1800px;
     min-height: calc(100vh - 481px);
     margin: 0 auto;
 }
-.contenidoAjustado{
+
+.contenidoAjustado {
     min-height: calc(100vh - 532px);
 }
-.tituloContenedor{
-    color: #88BC43;
-    font-size: 50px;
 
-    font-weight: bold;
-}
-.plantasJardin{
-    font-weight: bold;
-    font-size: 25px;
-    color: #275F08;
-}
-
-.imagen{
+.imagen {
     height: 250px;
     width: 500px;
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
 }
+
 /*****/
-.popup{
+.popup {
     height: 80vh;
 }
-.imagenADetallePlantas{
+
+.imagenADetallePlantas {
     height: 150px;
     width: 300px;
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-}
-.boton{
-    background-color: #88BC43;
-}
-
-.colorText{
-    color: #88BC43;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
 }

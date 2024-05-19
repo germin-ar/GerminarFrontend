@@ -22,7 +22,7 @@ export default function EstadoPage() {
                                 <div className="flex w-full gap-5 justify-between">
 
                                     <button
-                                        className={`${styles.botonCards} bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                        className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                         <div>
                                             <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                                    height="20"/>
@@ -31,7 +31,7 @@ export default function EstadoPage() {
                                     </button>
 
                                     <button
-                                        className={`${styles.botonCards} bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                        className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                         Detalles
                                     </button>
                                 </div>
@@ -65,7 +65,7 @@ export default function EstadoPage() {
                         {/*</div>*/}
                     </div>
                 </section>
-                <section className={'flex flex-col gap-12 m-10'}>
+                <section className={'flex flex-col gap-12 m-20'}>
                     <div>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
                             salud</h2>

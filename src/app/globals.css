@@ -30,7 +30,17 @@ h1, h2 {
     font-size: 35px;
 }
 
-p, li {
+h3 {
+    color: #275F08;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+p, li{
     font-size: 18px;
 }
 
@@ -50,6 +60,6 @@ p, li {
 
 @media (min-width: 768px) {
     p, li {
-        font-size: 22px;
+        font-size: 21px;
     }
 }
