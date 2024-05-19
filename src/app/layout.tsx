@@ -4,6 +4,7 @@ import "./globals.css";
 import {PoppinsTexto} from "@/app/ui/fonts";
 import styles from "./home.module.css";
 import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({subsets: ["latin"]});
 
