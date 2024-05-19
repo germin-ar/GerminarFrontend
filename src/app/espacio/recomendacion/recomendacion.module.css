@@ -1,19 +1,12 @@
-.imagen{
-    height: 250px;
-    width: 500px;
+.imagen {
     overflow: hidden;
     border-radius: 5px;
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.29);
-}
-.titulo{
-    font-size: 25px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.29);
 }
 
-
-
-.contenedor{
+.contenedor {
     width: 100%;
     max-width: 1600px;
     margin: 0 auto;
@@ -23,13 +16,9 @@
     align-items: center;
 }
 
-.check{
+.check {
     width: 25px;
     height: 25px;
     color: #275F08;
     margin: 0 0 4px 0;
-}
-.planta{
-    color: #275F08;
-    font-size: 25px;
 }

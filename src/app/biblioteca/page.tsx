@@ -74,11 +74,11 @@ export default function BibliotecaPage() {
                     <section>
                         <div className={'my-10 flex flex-col gap-10'}>
 
-                            <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Tutoriales</h2>
+                            <h3 className={`${BalooBhaina2.className}`}>Tutoriales</h3>
 
                             <div className={'flex flex-wrap gap-20'}>
                                 <div>
-                                    <p className={'text-center text-lg'}>Germinación de semillas de albahaca</p>
+                                    <p className={'text-center'}>Germinación de semillas de albahaca</p>
                                     <a href="">
                                         <video width="400" height="400" controls>
                                             <source src="/biblioteca/tutorial.mp4" type="video/mp4"/>
@@ -87,7 +87,7 @@ export default function BibliotecaPage() {
                                     </a>
                                 </div>
                                 <div>
-                                    <p className={'text-center text-lg'}>Germinación de semillas de menta</p>
+                                    <p className={'text-center'}>Germinación de semillas de menta</p>
                                     <a href="">
                                         <video width="400" height="400" controls>
                                             <source src="/biblioteca/tutorial.mp4" type="video/mp4"/>

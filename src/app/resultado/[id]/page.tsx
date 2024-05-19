@@ -60,29 +60,28 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                     </div>
                 )}
             </section>
-            <main className={`${stylesResultado.contenedor} p-10`}>
-                <section>
-                    <div className={'flex justify-center items-center gap-64 my-12'}>
+            <main className={`${styles.contenedor}`}>
+                <section className={"m-10"}>
+                    <div
+                        className={`flex flex-col sm:flex-col md:flex-col lg:flex-row justify-center items-center m-12 gap-12`}>
 
 
                         <div className={'flex flex-col items-center gap-10'}>
-                            <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>{datosPlanta[0].commonNames[0]}</h1>
+                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{datosPlanta[0].commonNames[0]}</h1>
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                        height="500"/>
                                 <button
-                                    className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                    className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                     <div>
-                                        <Image src="/resultado/mas-icon.png" alt="mas-icon" width="30"
-                                               height="30"/>
+                                        <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
+                                               height="20"/>
                                     </div>
-                                    Guardar planta
+                                    Guardar
                                 </button>
                             </div>
                         </div>
-
-
-                        <div className={'table-container text-2xl'}>
+                        <div className={'table-container'}>
                             <table className={'vertical-header-table'}>
                                 <tbody>
                                 <tr>
@@ -111,33 +110,32 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                     </div>
                 </section>
 
-                <section>
-                    <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Estado
-                            de salud</h1>
-                        <div className={'flex justify-start items-center gap-8 mt-10'}>
+                <section className={'flex flex-col gap-12 m-20'}>
+                    <div>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
+                            salud</h2>
+                        <div className={`flex items-center gap-5`}>
                             <div>
-                                <Image src="/resultado/planta-sana-icon.jpg" alt="Albahaca-sana" width="50"
-                                       height="50"/>
+                                <Image className={`w-14 sm:w-20`} src="/resultado/planta-sana-icon.png"
+                                       alt="Planta-sana-icon" width="80" height="80"/>
                             </div>
-                            <p className={'text-3xl'}>¡Tu planta parece sana!</p>
+                            <div>
+                                <p>¡Tu planta parece sana!</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Descripción
-                            general</h1>
-                        <p className={'text-3xl text-justify'}>
+                    <div>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Descripción general</h2>
+                        <p className={'text-justify'}>
                             La albahaca, conocida científicamente como Ocium Basilicum, es una hierba aromática
                             originaria de la India, Irán y de otras regiones de Asia, de intenso aroma y color. Además
                             de proporcionar belleza al jardín y la terraza, ofrece numerosos beneficios como condimento
                             en la cocina, hierba saludable y protección para otras plantas del jardín y el huerto.</p>
                     </div>
 
-                    <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Características</h1>
-
-                        {/*div grande*/}
+                    <div>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Características</h2>
                         <div className={'flex flex-wrap'}>
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
@@ -145,8 +143,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col items-start'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Tamaño</h2>
-                                    <ul className={` ${stylesResultado.texto} list-disc list-inside text-2xl`}>
+                                    <h3 className={`${BalooBhaina2.className}`}>Tamaño</h3>
+                                    <ul className={`${stylesResultado.texto} list-disc list-inside`}>
                                         <li>Tallo de 30 a 50 cm de altura</li>
                                         <li>Hojas de 3 a 5 cm de longitud</li>
                                     </ul>
@@ -159,8 +157,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Fertilizante</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Aplicar un fertilizante
+                                    <h3 className={`${BalooBhaina2.className}`}>Fertilizante</h3>
+                                    <p className={`${stylesResultado.texto}`}>Aplicar un fertilizante
                                         equilibrado una vez al mes durante la temporada de crecimiento.</p>
                                 </div>
                             </div>
@@ -171,8 +169,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Riego</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Mantener el suelo ligeramente
+                                    <h3 className={`${BalooBhaina2.className}`}>Riego</h3>
+                                    <p className={`${stylesResultado.texto}`}>Mantener el suelo ligeramente
                                         húmedo, evitando el encharcamiento.</p>
                                 </div>
                             </div>
@@ -183,8 +181,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Tierra</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Requiere un suelo bien drenado y
+                                    <h3 className={`${BalooBhaina2.className}`}>Tierra</h3>
+                                    <p className={`${stylesResultado.texto}`}>Requiere un suelo bien drenado y
                                         fértil, preferiblemente con un pH entre 6.0 y 7.5.</p>
                                 </div>
                             </div>
@@ -195,9 +193,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Exposición
-                                        solar</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Luz solar directa por la mañana
+                                    <h3 className={`${BalooBhaina2.className}`}>Exposición solar</h3>
+                                    <p className={`${stylesResultado.texto}`}>Luz solar directa por la mañana
                                         y sombra parcial por la tarde.</p>
                                 </div>
                             </div>
@@ -208,8 +205,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Insecticida</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Controlar plagas con
+                                    <h3 className={`${BalooBhaina2.className}`}>Insecticida</h3>
+                                    <p className={`${stylesResultado.texto}`}>Controlar plagas con
                                         insecticidas naturales como jabón insecticida o aceite de neem.</p>
                                 </div>
                             </div>
@@ -220,9 +217,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Temperatura
-                                        adecuada</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Prefiere temperaturas cálidas
+                                    <h3 className={`${BalooBhaina2.className}`}>Temperatura adecuada</h3>
+                                    <p className={`${stylesResultado.texto}`}>Prefiere temperaturas cálidas
                                         entre 18-25°C, evitando temperaturas extremadamente frías.</p>
                                 </div>
                             </div>
@@ -233,8 +229,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Temporada</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Se puede sembrar en primavera
+                                    <h3 className={`${BalooBhaina2.className}`}>Temporada</h3>
+                                    <p className={`${stylesResultado.texto}`}>Se puede sembrar en primavera
                                         después de que haya pasado el
                                         riesgo de heladas.</p>
                                 </div>
@@ -246,9 +242,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Ubicaciones
-                                        posibles</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Ventana, balcón, terraza, patio
+                                    <h3 className={`${BalooBhaina2.className}`}>Ubicaciones posibles</h3>
+                                    <p className={`${stylesResultado.texto}`}>Ventana, balcón, terraza, patio
                                         trasero, porche.</p>
                                 </div>
                             </div>
@@ -259,8 +254,8 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
-                                    <h2 className={`${BalooBhaina2.className} uppercase text-green-800 text-3xl`}>Podado</h2>
-                                    <p className={` ${stylesResultado.texto} text-2xl`}>Podar cada 15 días
+                                    <h3 className={`${BalooBhaina2.className}`}>Podado</h3>
+                                    <p className={`${stylesResultado.texto}`}>Podar cada 15 días
                                         aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
                                         abundante.</p>
                                 </div>
@@ -268,9 +263,9 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                         </div>
                     </div>
 
-                    <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Consejos</h1>
-                        <ul className={`list-disc list-inside text-3xl flex flex-col gap-8`}>
+                    <div className={''}>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Consejos</h2>
+                        <ul className={`list-disc list-inside flex flex-col gap-8`}>
                             <li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
                                 antes de usarlas para obtener el mejor sabor y aroma.
                             </li>
@@ -286,20 +281,18 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                             </li>
                         </ul>
 
-                        <div className={'mt-20'}>
+                        <div className={'mt-14'}>
                             <button
-                                className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 <div>
-                                    <Image src="/resultado/mas-icon.png" alt="Albahaca-sana" width="30"
-                                           height="30"/>
+                                    <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
+                                           height="20"/>
                                 </div>
-                                Guardar planta
+                                Guardar
                             </button>
                         </div>
                     </div>
                 </section>
-
-
             </main>
 
         </>

@@ -1,24 +1,28 @@
-import stylesHeader from "@/components/Header/header.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
-import stylesGuia from "./guia.module.css";
+import styles from "@/app/guia/guia.module.css";
 
 export default function GuiaPage() {
     return (
         <>
-            <main className={`${stylesGuia.contenedor}`}>
+            <main className={`${styles.contenedor}`}>
                 <section>
-                    <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Albahaca</h1>
-                        <div className={'flex justify-center'}>
-                            <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca" width="500"
-                                   height="500"/>
+                    <div className={'flex-1 flex flex-col items-center gap-5 my-12'}>
+                        <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Albahaca</h1>
+                        <div className={`flex-1 flex items-start flex-col gap-5`}>
+                            <div>
+                                <Image className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
+                                       src="/resultado/albahaca-sana.jpg"
+                                       alt="Albahaca" width="250"
+                                       height="250"/>
+                            </div>
                         </div>
                     </div>
+                </section>
+                <section className={"m-20"}>
                     <div className={'my-32'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Guía
-                            de siembra</h1>
-                        <ul className={`list-decimal list-inside text-3xl flex flex-col gap-8 text-justify`}>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Guía de siembra</h2>
+                        <ol className={`${styles.listNumber} list-decimal list-inside pl-5 text-justify flex flex-col gap-8 text-justify`}>
                             <li>Las semillas puedes recogerlas en otoño extrayéndolas de una planta adulta, y
                                 guardándolas para la siembra en una bolsa de papel, o bien comprándolas en un centro de
                                 horticultura o jardinería.
@@ -70,8 +74,7 @@ export default function GuiaPage() {
                                 <Image src="/resultado/maceta.jpg" alt="Maceta" width="500"
                                        height="500"/>
                             </div>
-                        </ul>
-
+                        </ol>
                     </div>
                 </section>
             </main>
