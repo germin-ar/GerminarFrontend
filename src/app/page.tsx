@@ -10,10 +10,10 @@ export default function Home() {
     return (
         <>
             <IdentificarImagen imagen="imagenIdentificar" pagina="resultado"/>
-            <main className="flex justify-center items-center">
+            <section className="flex justify-center items-center">
                 {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
                 <HerramientasDeCultivo />
-            </main>
+            </section>
             <section className={`${styles.nuestraPropuesta} flex justify-center items-center flex-col md:flex-row`}>
                 <div className="md:w-1/2">
                     <div

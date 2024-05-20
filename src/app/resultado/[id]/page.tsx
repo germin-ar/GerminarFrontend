@@ -4,7 +4,8 @@ import stylesHeader from "../../../components/Header/header.module.css";
 import stylesResultado from "./resultado.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
+import Loading from "@/app/resultado/[id]/loading";
 
 interface PlantData {
     scientificName: string;
@@ -16,7 +17,7 @@ interface PlantData {
 export default function ResultadoPage({params: {id}}: { params: { id: string } }) {
 
     const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         fetch(`http://localhost:8080/api/v1/candidates/${id}`)
             .then((response) => response.json())
@@ -31,16 +32,20 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                 candidates.sort((a:any, b:any) => b.score - a.score);
                 setDatosPlanta(candidates);
                 console.log(candidates)
+                setLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
+                setLoading(false);
             });
     }, [id]);
 
-
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
-        <>
+        <section className="max-w-[1300px] m-auto">
             <section className="max-w-lg mx-auto mt-10 p-5 bg-white shadow-md rounded-lg overflow-x-auto">
                 <h1 className="text-2xl font-bold mb-5">Información de la planta</h1>
                 {datosPlanta.length === 0 ? (
@@ -295,7 +300,7 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                 </section>
             </main>
 
-        </>
+        </section>
 
     )
 }

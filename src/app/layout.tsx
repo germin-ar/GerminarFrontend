@@ -25,10 +25,10 @@ export default function RootLayout({
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
         </head>
         <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased`}>
-
-        <div className={`${styles.content}`}>
+        <Header />
+        <main className={`${styles.content}`}>
             {children}
-        </div>
+        </main>
 
         <Footer/>
         </body>
