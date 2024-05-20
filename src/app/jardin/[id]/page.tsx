@@ -17,6 +17,7 @@ import {FaImages} from "react-icons/fa";
 import {FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
 import {FaTrash} from "react-icons/fa";
+import Link from "next/link";
 
 export async function generateStaticParams(){
     return[{id: '1'}]
@@ -33,16 +34,20 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                         <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43]`}>{id}</h1>
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
-                        <button
+                        <Link href={`/jardin/${id}/editar`}
                             className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
                             <LuPencilLine className="w-[15px] h-[15px] "/>
                             Editar
-                        </button>
+                        </Link>
                         <button
                             className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#BC4388]">
                             <FaTrash className="w-[15px] h-[15px] "/>
                             Borrar
                         </button>
+                        <Link href={`/jardin`}
+                              className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
+                            Volver al jardín
+                        </Link>
                     </div>
                 </div>
                 <div className={`${stylesDescriptionPlants.planta} mt-4`}>
