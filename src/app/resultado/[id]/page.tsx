@@ -15,23 +15,34 @@ interface PlantData {
     commonNames: string[];
 }
 export default function ResultadoPage({params: {id}}: { params: { id: string } }) {
-
+    const defaultPlantData: PlantData = {
+        scientificName: '',
+        genusName: '',
+        familyName: '',
+        score: 0,
+        commonNames: [],
+    };
     const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         fetch(`http://localhost:8080/api/v1/candidates/${id}`)
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then((data) => {
-                const candidates = data.candidates.map((candidate:any) => ({
+                const candidates = data.candidates.map((candidate: any) => ({
                     scientificName: candidate.specie.scientific_name,
                     genusName: candidate.specie.genus_name,
                     familyName: candidate.specie.family_name,
                     commonNames: candidate.specie.common_names,
                     score: candidate.score,
                 }));
-                candidates.sort((a:any, b:any) => b.score - a.score);
+                candidates.sort((a: any, b: any) => b.score - a.score);
                 setDatosPlanta(candidates);
-                console.log(candidates)
+                console.log(candidates);
                 setLoading(false);
             })
             .catch((error) => {
