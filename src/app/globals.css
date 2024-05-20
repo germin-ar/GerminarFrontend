@@ -20,6 +20,7 @@ body {
     background-color: #FAFFF8;
 }
 
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;

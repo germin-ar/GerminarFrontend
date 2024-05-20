@@ -1,18 +1,78 @@
+"use client"
 import Image from "next/image";
-import stylesHeader from "../../components/Header/header.module.css";
+import stylesHeader from "../../../components/Header/header.module.css";
 import stylesResultado from "./resultado.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
+import {Suspense, useEffect, useState} from "react";
+import Loading from "@/app/resultado/[id]/loading";
 
-export default function ResultadoPage() {
+interface PlantData {
+    scientificName: string;
+    genusName: string;
+    familyName: string;
+    score: number;
+    commonNames: string[];
+}
+export default function ResultadoPage({params: {id}}: { params: { id: string } }) {
+
+    const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/v1/candidates/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                const candidates = data.candidates.map((candidate:any) => ({
+                    scientificName: candidate.specie.scientific_name,
+                    genusName: candidate.specie.genus_name,
+                    familyName: candidate.specie.family_name,
+                    commonNames: candidate.specie.common_names,
+                    score: candidate.score,
+                }));
+                candidates.sort((a:any, b:any) => b.score - a.score);
+                setDatosPlanta(candidates);
+                console.log(candidates)
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            });
+    }, [id]);
+
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
-        <>
+        <section className="max-w-[1300px] m-auto">
+            <section className="max-w-lg mx-auto mt-10 p-5 bg-white shadow-md rounded-lg overflow-x-auto">
+                <h1 className="text-2xl font-bold mb-5">Información de la planta</h1>
+                {datosPlanta.length === 0 ? (
+                    <p>Cargando...</p>
+                ) : (
+                    <div className="flex">
+                        {datosPlanta.map((planta, index) => (
+                            <div key={index} className="flex-shrink-0 mr-5">
+                                <h2 className="text-xl font-bold mb-2">{planta.scientificName}</h2>
+                                <p><span className="font-bold">Género:</span> {planta.genusName}</p>
+                                <p><span className="font-bold">Familia:</span> {planta.familyName}</p>
+                                <p><span className="font-bold">Nombres comunes:</span> {planta.commonNames.join(', ')}
+                                </p>
+                                <p><span className="font-bold">Score:</span> {planta.score}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
             <main className={`${styles.contenedor}`}>
                 <section className={"m-10"}>
                     <div
                         className={`flex flex-col sm:flex-col md:flex-col lg:flex-row justify-center items-center m-12 gap-12`}>
+
+
                         <div className={'flex flex-col items-center gap-10'}>
-                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Albahaca</h1>
+                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{datosPlanta[0].commonNames[0]}</h1>
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                        height="500"/>
@@ -31,19 +91,23 @@ export default function ResultadoPage() {
                                 <tbody>
                                 <tr>
                                     <th className={'p-10 border'}>Nombre científico</th>
-                                    <td className={'p-10 border'}>Ocimum basilicum</td>
+                                    <td className={'p-10 border'}>{datosPlanta[0].scientificName}</td>
                                 </tr>
                                 <tr>
                                     <th className={'p-10 border'}>Nombres comunes</th>
-                                    <td className={'p-10 border'}>Albahaca, Alhábega, Alfábega, Basílico</td>
+                                    <td className={'p-10 border'}>
+                                        {datosPlanta[0].commonNames && datosPlanta[0].commonNames.length > 0
+                                            ? datosPlanta[0].commonNames.join(', ')
+                                            : 'No hay nombres comunes disponibles'}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th className={'p-10 border'}>Género</th>
-                                    <td className={'p-10 border'}>Ocimum</td>
+                                    <td className={'p-10 border'}>{datosPlanta[0].genusName}</td>
                                 </tr>
                                 <tr>
                                     <th className={'p-10 border'}>Familia</th>
-                                    <td className={'p-10 border'}>Lamiaceae</td>
+                                    <td className={'p-10 border'}>{datosPlanta[0].familyName}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -236,7 +300,7 @@ export default function ResultadoPage() {
                 </section>
             </main>
 
-        </>
+        </section>
 
     )
 }
