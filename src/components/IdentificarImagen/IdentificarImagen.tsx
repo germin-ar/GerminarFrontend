@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import {ChangeEvent, useState} from "react";
 import {useRouter} from "next/navigation";
+import {id} from "postcss-selector-parser";
 
 
 
@@ -39,14 +40,14 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
         formData.append("image", archivoSeleccionado);
 
 
-            await fetch(
+            /*await fetch(
                 "http://localhost:8080/api/v1/image",
                 {
                     method: "POST",
                     body: formData,
-                    /*headers:{
+                    headers:{
                         "Content-Type": "multipart/form-data"
-                    }*/
+                    }
                 }
             )
                 .then(res => {
@@ -56,7 +57,34 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                     //redirect()
                     router.push(`/resultado/${json.id}`)
                 })
-                .catch(err => console.error("Error", err))
+                .catch(err => console.error("Error", err))*/
+
+        await fetch(
+            "http://127.0.0.1:5000/upload",
+            {
+                method: "POST",
+                body: formData,
+                /*headers:{
+                    "Content-Type": "multipart/form-data"
+                }*/
+            }
+        )
+            .then(res => {
+                return res.json();
+            })
+            .then(json => {
+                //router.push(`/resultado/${id}`);
+                //redirect()
+                console.log(json)
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    localStorage.setItem('imagen', reader.result as string);
+                };
+                reader.readAsDataURL(archivoSeleccionado);
+                router.push(`/resultado/${json.predictions[0].label}`)
+
+            })
+            .catch(err => console.error("Error", err))
     };
 
     return (

@@ -1,0 +1,46 @@
+[
+  {
+    "nombre": "tomate_sano",
+    "propiedad": {
+      "nombre_comun": "Tomate",
+      "nombre_cientifico": "Solanum lycopersicum",
+      "genero": "Solanum",
+      "familia": "Solanaceae",
+      "descripcion_general": "La planta de tomate es una planta herbácea anual de la familia Solanaceae. Tiene tallos erectos y hojas compuestas. Produce frutos comestibles que varían en color, tamaño y forma.",
+      "estado_de_salud": "¡Tu planta se ve genial!"
+    }
+  },
+  {
+    "nombre": "tomate_enfermo",
+    "propiedad": {
+      "nombre_comun": "Tomate",
+      "nombre_cientifico": "Solanum lycopersicum",
+      "genero": "Solanum",
+      "familia": "Solanaceae",
+      "descripcion_general": "La planta de tomate es susceptible a diversas enfermedades que pueden afectar su crecimiento y producción de frutos. Estas enfermedades pueden ser causadas por hongos, bacterias, virus o condiciones ambientales adversas.",
+      "estado_de_salud": "¡Tu planta necesita ayuda!"
+    }
+  },
+  {
+    "nombre": "lechuga_sana",
+    "propiedad": {
+      "nombre_comun": "Lechuga",
+      "nombre_cientifico": "Lactuca sativa",
+      "genero": "Lactuca",
+      "familia": "Asteraceae",
+      "descripcion_general": "La planta de lechuga es una planta anual de la familia Asteraceae. Se cultiva principalmente por sus hojas, que se utilizan en ensaladas y otros platos.",
+      "estado_de_salud": "¡Tu planta se ve genial!"
+    }
+  },
+  {
+    "nombre": "lechuga_enferma",
+    "propiedad": {
+      "nombre_comun": "Lechuga",
+      "nombre_cientifico": "Lactuca sativa",
+      "genero": "Lactuca",
+      "familia": "Asteraceae",
+      "descripcion_general": "La planta de lechuga puede verse afectada por varias enfermedades, como mildiu, podredumbre y pulgones, que pueden comprometer la calidad de sus hojas.",
+      "estado_de_salud": "¡Tu planta necesita ayuda!"
+    }
+  }
+]
