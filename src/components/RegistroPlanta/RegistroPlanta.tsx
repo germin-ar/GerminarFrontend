@@ -20,6 +20,7 @@ import {FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
 import {FaTrash} from "react-icons/fa";
 import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export async function generateStaticParams() {
     return [{id: '1'}]
@@ -107,16 +108,22 @@ export default function RegistroPlanta({params: {id}}: { params: { id: string } 
             console.log(hasChanges)
         } else {
 
-            alert("No se realizaron cambios. handle submit");
+            //alert("No se realizaron cambios. handle submit");
         }
     };
+    const router = useRouter()
     const submitForm = () => {
         // Aquí puedes realizar la lógica para enviar el formulario
         console.log("Formulario enviado");
+        router.push(`/jardin`)
     };
 
     useEffect(() => {
         setFormValues(initialValues);
+        const imagenGuardada = localStorage.getItem('imagen');
+        if (imagenGuardada) {
+            setImagenDataUrl(imagenGuardada);
+        }
     }, [id]);
 
     const [showPopup, setShowPopup] = useState(false);
@@ -133,6 +140,9 @@ export default function RegistroPlanta({params: {id}}: { params: { id: string } 
             alert("No se realizaron cambios.");
         }
     };
+
+    const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
+
 
     return (
         <form className={`${stylesDescriptionPlants.contenedor}`} onSubmit={handleSubmit}>
@@ -154,9 +164,11 @@ export default function RegistroPlanta({params: {id}}: { params: { id: string } 
                 </div>
                 <div className={`${stylesDescriptionPlants.planta} mt-4`}>
                     <div className={`${stylesDescriptionPlants.item1}`}>
-                    <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                               src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
-                               height="200"/>
+                        <div className="h-[500px] overflow-hidden flex items-center justify-center">
+                            <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                 alt="imagen" width="500"
+                                 height="500"/>
+                        </div>
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
                         <div>
@@ -410,12 +422,15 @@ export default function RegistroPlanta({params: {id}}: { params: { id: string } 
                         <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Imágenes</p>
                     </div>
                     <div className={`${stylesDescriptionPlants.item1}`}>
-                    <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                               src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
-                               height="200"/>
+                        <div className="h-[500px] overflow-hidden flex items-center justify-center">
+                            <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                 alt="Albahaca-sana" width="500"
+                                 height="500"/>
+                        </div>
 
                     </div>
-                    <button className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Subir más imágenes</button>
+                    <button className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Subir más imágenes
+                    </button>
                 </div>
                 <div className="flex-1 flex gap-2 flex-col">
                     <div className="flex gap-2">

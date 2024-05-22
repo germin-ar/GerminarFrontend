@@ -8,6 +8,7 @@ import {Suspense, useEffect, useState} from "react";
 import Loading from "@/app/resultado/[id]/loading";
 
 import datos from '../../../../public/json/datos.json';
+import Link from "next/link";
 
 interface PlantData {
     scientificName: string;
@@ -361,14 +362,14 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                                          alt="Albahaca-sana" width="500"
                                          height="500"/>
                                 </div>
-                                <button
-                                    className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                <Link href="/registro"
+                                    className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                     <div>
                                         <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                                height="20"/>
                                     </div>
                                     Guardar
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className={'table-container'}>
@@ -566,15 +567,15 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
                             </li>
                         </ul>
 
-                        <div className={'mt-14'}>
-                            <button
-                                className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                        <div className={'mt-14 flex'}>
+                            <Link href="/registro"
+                                  className={`bg-[#88BC43]  text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 <div>
                                     <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                            height="20"/>
                                 </div>
                                 Guardar
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </section>
