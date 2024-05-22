@@ -26,7 +26,10 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
         }
     };
 
-    const handleIdentificarClick = async () => {
+    const handleIdentificarClick = async (event?: React.FormEvent<HTMLFormElement>) => {
+        if (event) {
+            event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+        }
         if (!archivoSeleccionado) {
             alert("Por favor selecciona un archivo primero.");
             return;
@@ -61,12 +64,11 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center `}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
-                           width="150"
-                           height="150"/>
+                           width="150" height="150"/>
                     <h2 className={`${styles.textoIdentificar}`}>Identifica tu planta y su estado de salud ¡Es
                         gratis!</h2>
                 </div>
-                <div className="flex-1 flex  items-center flex-col gap-16">
+                <form className="flex-1 flex items-center flex-col gap-16" onSubmit={handleIdentificarClick}>
                     <h2 className={`${styles.textoSubirIdentificar}`}>Sube o arrastre tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8`}>
                         <label htmlFor="archivoInput" className={`${styles.seleccionarIdentificar}`}>
@@ -76,10 +78,9 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                                style={{display: 'none'}}/>
                         <p>{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                     </div>
-                    <button onClick={handleIdentificarClick}
-                            className={`${styles.botonIdentificar} py-2 px-4 rounded`}>Identificar
+                    <button type="submit" className={`${styles.botonIdentificar} py-2 px-4 rounded`}>Identificar
                     </button>
-                </div>
+                </form>
             </div>
         </section>
     )
