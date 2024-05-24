@@ -38,9 +38,9 @@ export default function Home() {
 
 
 
-            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4 justify-items-center`}>
+            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center`}>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center">
+                    <div className="flex-1 flex items-center w-full justify-center">
                         <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -58,7 +58,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center">
+                    <div className="flex-1 flex items-center w-full justify-center">
                         <Image className={`${styles.imagenes}`} src="/seguimiento.jfif" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -79,7 +79,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center">
+                    <div className="flex-1 flex items-center w-full justify-center">
                         <Image className={`${styles.imagenes}`} src="/tutoriales.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -99,7 +99,7 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className={`flex-1 flex items-center`}>
+                    <div className={`flex-1 flex items-center w-full justify-center`}>
                         <Image className={`${styles.imagenes}`} src="/ideal.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -112,7 +112,7 @@ export default function Home() {
                                 personalizada. Simplemente ingresa tus preferencias y te ayudaremos a seleccionar las
                                 plantas que mejor se adapten a tu situación.</p>
                             <button
-                                className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Descubrir
+                                className={`${styles.botonCards} w-1/2  text-white font-bold py-2 px-4 rounded`}>Descubrir
                             </button>
                         </div>
                     </div>
