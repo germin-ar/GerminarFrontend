@@ -38,12 +38,13 @@ export default function Header() {
                         </h1>
                     </div>
                     <div className={`${stylesHeader.usuario} flex-1 flex items-center justify-end`}>
-                        <div className={`${stylesHeader.menu} flex items-center justify-end`}>
-                            <li><Link href="/jardin" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Mi
+                        <div className={`${stylesHeader.menu} flex items-center justify-end gap-8`}>
+                            <li><Link href="/jardin" className={`${stylesHeader.li} hover:text-gray-300 `}>Mi
                                 Jardín</Link></li>
                             <li><FaBell className={`${stylesHeader.campana}`}/></li>
-                            <li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>
-                            <li className={`${stylesHeader.liUser}`}>
+                            {/*<li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>*/}
+                            <div className="flex gap-2">
+                            <li className={`${stylesHeader.liUser} `}>
                                 <Image className="rounded-full min-w-[75px]" src="/usuario.PNG" width="75" height="75"
                                        alt="usuario logueado"/>
                                 <FaCrown className={`${stylesHeader.corona}`}/>
@@ -51,6 +52,7 @@ export default function Header() {
                             <li>
                                 <GoTriangleDown className={`${stylesHeader.infoUsuario}`}/>
                             </li>
+                            </div>
                         </div>
                     </div>
                     <div className={`flex-1 flex items-center justify-center ${stylesHeader.menuR}`}>

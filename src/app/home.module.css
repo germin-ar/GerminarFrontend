@@ -20,7 +20,6 @@
 }
 
 .tituloSecundario {
-    font-size: 50px;
     color: #88BC43;
     font-weight: bold;
 }
@@ -48,10 +47,6 @@
 }
 
 
-.tituloCards {
-    font-size: 20px;
-}
-
 .botonCards {
     background-color: #88BC43;
 }
@@ -61,7 +56,7 @@
         margin-top: 10px;
     }
     .tituloSecundario{
-        font-size: 35px;
+
     }
 }
 
@@ -122,9 +117,7 @@
     }
 }
 
-.tituloCardsRecomendacion {
-    font-size: 19px;
-}
+
 
 .cardsPropuesta {
     display: flex;

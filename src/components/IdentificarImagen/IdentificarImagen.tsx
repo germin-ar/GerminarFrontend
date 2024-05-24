@@ -93,13 +93,13 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center `}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
                            width="150" height="150"/>
-                    <h2 className={`${styles.textoIdentificar} ${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
+                    <h2 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
                         gratis!</h2>
-                    <h2 className={`${styles.textoIdentificar} ${styles.textoSecundario}`}>Identifica tu planta y su estado !Gratis!</h2>
+                    <h2 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado !Gratis!</h2>
                 </div>
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
                       onSubmit={handleIdentificarClick}>
-                    <h2 className={`${styles.textoSubirIdentificar}`}>Sube o arrastre tu foto</h2>
+                    <h2 className={``}>Sube o arrastre tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8`}>
                         <label htmlFor="archivoInput" className={`${styles.seleccionarIdentificar}`}>
                             Selecciona Archivo

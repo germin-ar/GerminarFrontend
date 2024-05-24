@@ -18,7 +18,7 @@ export default function Home() {
                 <div className="md:w-1/2">
                     <div
                         className={`${styles.contenidoPropuesta} flex flex-col items-center md:items-start text-center md:text-left`}>
-                        <h2 className={`${styles.tituloSecundario} text-2xl font-semibold mb-4`}>Nuestra propuesta</h2>
+                        <h2 className={`${styles.tituloSecundario} mb-4`}>Nuestra propuesta</h2>
                         <p>¿Sueñas con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
                             rincón de tu hogar en un jardín próspero. Olvídate de las limitaciones de espacio y la falta
                             de experiencia. Te guiaremos paso a paso para cultivar con éxito en balcones, terrazas y
@@ -46,8 +46,8 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                         <div className={`${styles.cardsPropuesta}`}>
-                            <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Administra
-                                tus propias notificaciones</h2>
+                            <h3 className={`${BalooBhaina2.className}`}>Administra
+                                tus propias notificaciones</h3>
                             <p>
                                 Personalizar alertas para el cuidado de tus plantas. Configura recordatorios para riego,
                                 fertilización, poda y otras tareas según tu horario. Personaliza el contenido y el
@@ -64,9 +64,9 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                         <div className={`${styles.cardsPropuesta}`}>
-                            <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Haz un
+                            <h3 className={`${BalooBhaina2.className}`}>Haz un
                                 seguimiento de tu
-                                progreso</h2>
+                                progreso</h3>
                             <p>Lleva un registro detallado de tu experiencia de cultivo con nuestra función de
                                 seguimiento.
                                 Anota cuándo plantas, riegas y cosechas, y recibe recordatorios automáticos para las
@@ -85,9 +85,9 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                         <div className={`${styles.cardsPropuesta}`}>
-                            <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Busca y
+                            <h3 className={`${BalooBhaina2.className}`}>Busca y
                                 aprende
-                                tutoriales</h2>
+                                tutoriales</h3>
                             <p>Domina el arte de la horticultura urbana con nuestros tutoriales paso a paso. Aprende
                                 cómo
                                 cuidar de tus plantas, identificar y solucionar problemas, y maximizar tus cosechas. Los
@@ -105,9 +105,9 @@ export default function Home() {
                     </div>
                     <div className="flex-1">
                         <div className={`${styles.cardsPropuesta}`}>
-                            <h2 className={`${BalooBhaina2.className} ${styles.tituloCardsRecomendacion}`}>Descubre Tu
+                            <h3 className={`${BalooBhaina2.className}`}>Descubre Tu
                                 planta Ideal para
-                                tu jardín</h2>
+                                tu jardín</h3>
                             <p>Encuentra las plantas perfectas para tu espacio con nuestra herramienta de recomendación
                                 personalizada. Simplemente ingresa tus preferencias y te ayudaremos a seleccionar las
                                 plantas que mejor se adapten a tu situación.</p>
