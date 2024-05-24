@@ -90,12 +90,12 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
     return (
         <section className={`${styles[imagen]}`}>
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
-                <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center `}>
+                <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
                            width="150" height="150"/>
-                    <h2 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
-                        gratis!</h2>
-                    <h2 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado !Gratis!</h2>
+                    <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
+                        gratis!</h1>
+                    <h1 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado !Gratis!</h1>
                 </div>
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
                       onSubmit={handleIdentificarClick}>
