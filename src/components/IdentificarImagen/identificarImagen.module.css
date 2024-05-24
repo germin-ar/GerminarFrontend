@@ -43,6 +43,9 @@
     background-position: center center;
     opacity: 0.4;
 }
+@media (min-width: 520px){
+
+}
 
 .contenidoIdentificar {
     position: relative;
@@ -81,11 +84,50 @@
     flex: 0.1;
     margin-right: 25px;
 }
-.logoIdentificar{
 
-}
-@media (min-width: 1360px){
+@media (max-width: 520px){
     .logoIdentificar{
+        flex-direction: column;
+        width: 90%;
+        flex: 0;
 
     }
+    .marca{
+        margin-top: 10px;
+        width: 20%;
+    }
+    .textoIdentificar{
+        font-size: 35px;
+    }
+    .textoSubirIdentificar{
+        font-size: 35px;
+    }
+    .subirIdentificar{
+        flex-direction: column;
+        gap: 0;
+    }
+    .form{
+        gap: 25px;
+        flex: 0;
+    }
+    .contenidoIdentificar{
+        gap: 30px;
+    }
+    .imagenIdentificar{
+        height: calc(100vh - 116px);
+        padding: 40px 0;
+        max-height: 700px;
+        border-radius: 0;
+    }
+    .textoPrimario{
+        display: none;
+    }
+    .textoSecundario{
+        display: block!important;
+    }
+
 }
+.textoSecundario{
+    display: none;
+}
+
