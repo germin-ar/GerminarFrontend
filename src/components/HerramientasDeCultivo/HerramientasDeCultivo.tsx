@@ -5,13 +5,13 @@ import Link from "next/link";
 export default function HerramientasDeCultivo(){
     return (
         <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5 `}>
-            <p className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
-                inteligentes</p>
+            <h2 className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
+                inteligentes</h2>
 
             <div className={`flex justify-center items-center flex-wrap gap-5`}>
                 <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
-                        <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Cómo
+                        <p className={`${BalooBhaina2.className} text-center`}>¿Cómo
                             identifico mi planta?</p>
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
@@ -23,7 +23,7 @@ export default function HerramientasDeCultivo(){
                 </div>
                 <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
-                        <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg`}>¿Qué
+                        <p className={`${BalooBhaina2.className} text-center`}>¿Qué
                             puedo plantar hoy?</p>
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
@@ -35,7 +35,7 @@ export default function HerramientasDeCultivo(){
                 </div>
                 <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
-                        <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg `}>¿Qué
+                        <p className={`${BalooBhaina2.className} text-center  `}>¿Qué
                             puedo plantar en
                             este espacio?</p>
                     </div>
@@ -48,7 +48,7 @@ export default function HerramientasDeCultivo(){
                 </div>
                 <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center ">
-                        <p className={`${BalooBhaina2.className} ${styles.tituloCards} text-center text-lg  `}>¿Qué
+                        <p className={`${BalooBhaina2.className} text-center `}>¿Qué
                             le sucede a mi
                             planta?</p>
                     </div>

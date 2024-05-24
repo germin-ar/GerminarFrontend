@@ -21,11 +21,11 @@ export default function Footer() {
             </div>
             <div className="flex-1 w-full lg:w-2/3 flex flex-col lg:flex-row justify-around items-center">
                 <ul className={`${stylesFooter.menu} flex flex-col lg:flex-row items-center justify-around text-center text-wrap w-full gap-1`}>
-                    <li className="text-white text-lg w-full lg:w-32"><a href="#">Home</a></li>
-                    <li className="text-white text-lg w-full lg:w-32"><a href="#">Servicios</a></li>
-                    <li className="text-white text-lg w-full lg:w-32"><a href="#">Sobre nosotros</a></li>
-                    <li className="text-white text-lg w-full lg:w-32"><a href="#">Centro de ayuda</a></li>
-                    <li className="text-white text-lg w-full lg:w-32"><a href="#">Contacto</a></li>
+                    <li className="text-white  w-full lg:w-32"><a href="#">Home</a></li>
+                    <li className="text-white  w-full lg:w-32"><a href="#">Servicios</a></li>
+                    <li className="text-white  w-full lg:w-32"><a href="#">Sobre nosotros</a></li>
+                    <li className="text-white  w-full lg:w-32"><a href="#">Centro de ayuda</a></li>
+                    <li className="text-white  w-full lg:w-32"><a href="#">Contacto</a></li>
                 </ul>
             </div>
             <div className="flex-1">

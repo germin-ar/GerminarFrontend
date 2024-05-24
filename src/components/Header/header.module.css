@@ -19,7 +19,6 @@
 
 .titulo{
     color: #88BC43;
-    font-size: 64px;
     height: 100%;
     padding-top: 10px;
 }
@@ -27,9 +26,7 @@
     color: #275F08;
 }
 .li{
-    font-size: 24px;
     font-weight: bold;
-
 }
 
 .marca{

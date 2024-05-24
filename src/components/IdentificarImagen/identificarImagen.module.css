@@ -43,9 +43,7 @@
     background-position: center center;
     opacity: 0.4;
 }
-@media (min-width: 520px){
 
-}
 
 .contenidoIdentificar {
     position: relative;
@@ -71,11 +69,10 @@
 }
 .textoSubirIdentificar{
     font-weight: bold;
-    font-size: 35px;
+
 }
 .textoIdentificar{
     font-weight: bold;
-    font-size: 40px;
     flex: 1;
 }
 .marca{
@@ -95,12 +92,6 @@
     .marca{
         margin-top: 10px;
         width: 20%;
-    }
-    .textoIdentificar{
-        font-size: 35px;
-    }
-    .textoSubirIdentificar{
-        font-size: 35px;
     }
     .subirIdentificar{
         flex-direction: column;
