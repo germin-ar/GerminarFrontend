@@ -100,7 +100,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
                       onSubmit={handleIdentificarClick}>
                     <h2 className={``}>Sube o arrastre tu foto</h2>
-                    <div className={`${styles.subirIdentificar} flex gap-8`}>
+                    <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
                         <label htmlFor="archivoInput" className={`${styles.seleccionarIdentificar}`}>
                             Selecciona Archivo
                         </label>
