@@ -15,12 +15,12 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
 
     return (
         <>
-            <main className={`${stylesIdentificar.contenedor}`}>
+            <section className={`${stylesIdentificar.contenedor}`}>
                 <section>
                     <div className={'flex flex-col justify-center items-start gap-4 my-12'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4`}>Identificar
+                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} mb-4`}>Identificar
                             planta</h1>
-                        <p className={'text-3xl text-justify'}>¿Querés asegurarte de que tus vegetales, hierbas y
+                        <p>¿Querés asegurarte de que tus vegetales, hierbas y
                             cultivos estén siempre en su mejor estado? ¡Con nuestra aplicación puedes hacerlo
                             fácilmente! Escanea tus plantas y descubre si están sanas y felices, o si necesitan un poco
                             más de atención.</p>
@@ -28,7 +28,7 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
                     <div className={"my-5 flex flex-col items-center gap-5"}>
                         <div className="col-span-full flex justify-center w-full">
                             <div
-                                className={`mt-2 flex justify-center rounded-lg border border-4 border-dashed border-green-900 px-6 py-10 w-2/5 ${stylesIdentificar.fondo}`}>
+                                className={`${stylesIdentificar.subirFoto} flex justify-center rounded-lg border-4 border-dashed border-green-900 px-10 py-10    ${stylesIdentificar.fondo}`}>
                                 <div className="text-center">
                                     <svg className="mx-auto h-24 w-24 text-slate-400" viewBox="0 0 24 24"
                                          fill="currentColor" aria-hidden="true">
@@ -60,11 +60,11 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
 
                 <section>
                     <div className={'flex flex-col justify-center items-start gap-4 my-12'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} text-2xl font-semibold mb-4 ${stylesIdentificar.espaciado}`}>¿Cómo
+                        <h2 className={`${stylesHeader.titulo} ${BalooBhaina2.className}`}>¿Cómo
                             funciona
-                            <br/> nuestro escaneo de plantas?</h1>
-                        <div className={"flex items-center gap-10"}>
-                            <p className={'text-3xl text-justify w-3/5'}>Para comenzar, selecciona una planta en tu jardín o
+                            <br/> nuestro escaneo de plantas?</h2>
+                        <div className={`${stylesIdentificar.procesoSubirFoto} flex items-center gap-10`}>
+                            <p className={`${stylesIdentificar.textoProceso} w-3/5`}>Para comenzar, selecciona una planta en tu jardín o
                                 maceta que desees evaluar. Luego, abre nuestra aplicación en tu teléfono o computadora y
                                 accede a la opción -Escanear Plantas-. Toma una foto clara de la planta, asegurándote de
                                 capturar todos sus detalles, desde las hojas hasta el tallo. Cuanta más claridad tenga
@@ -79,7 +79,7 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
                         </div>
                     </div>
                 </section>
-            </main>
+            </section>
 
         </>
 
