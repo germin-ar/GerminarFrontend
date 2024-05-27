@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function RecomendacionPage() {
     return (
-        <main className={`${stlyesRecomendacion.contenedor}`}>
+        <section className={`${stlyesRecomendacion.contenedor}`}>
             <section className={"m-10"}>
                 <div>
                     <div className="flex items-center pt-10 pl-5 gap-3">
@@ -55,6 +55,6 @@ export default function RecomendacionPage() {
                     </div>
                 </div>
             </section>
-        </main>
+        </section>
     )
 }

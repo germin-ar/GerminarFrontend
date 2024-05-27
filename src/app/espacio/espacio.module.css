@@ -1,6 +1,5 @@
 .contenedorEspacio {
     max-width: 1108px;
-    width: 80%;
     background-color: #EFE8D6;
     margin: 30px auto;
     border-radius: 5px;
@@ -56,5 +55,14 @@
     justify-content: flex-end;
 }
 
+@media (max-width: 400px) {
+    .ubicacionResp {
+        justify-content: flex-start;
+        width: 100%;
+    }
+    .botonUbicacion{
+        flex: 1;
 
+    }
+}
 

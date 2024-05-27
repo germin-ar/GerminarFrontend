@@ -92,6 +92,7 @@
     .marca{
         margin-top: 10px;
         width: 20%;
+        margin-right: 0;
     }
     .subirIdentificar{
         flex-direction: column;
@@ -105,6 +106,12 @@
         gap: 30px;
     }
     .imagenIdentificar{
+        height: calc(100vh - 116px);
+        padding: 40px 0;
+        max-height: 700px;
+        border-radius: 0;
+    }
+    .imagenIdentificarEspacio{
         height: calc(100vh - 116px);
         padding: 40px 0;
         max-height: 700px;

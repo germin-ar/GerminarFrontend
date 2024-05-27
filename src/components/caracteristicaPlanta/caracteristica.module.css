@@ -1,0 +1,22 @@
+.caracteristicas{
+    display: flex;
+    flex-wrap: wrap;
+}
+.imagenesCaracteristicas{
+    min-width: 100px;
+    min-height: 100px;
+    margin: 0 auto;
+    width: 100%;
+}
+.grilla{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
+    margin-top: 30px;
+}
+@media (max-width: 900px){
+    .grilla{
+        grid-template-columns: 1fr;
+    }
+}
+
