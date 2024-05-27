@@ -1,9 +1,7 @@
 "use client"
 import Link from "next/link";
 import stylesHeader from "./header.module.css";
-import {BalooBhaina2} from "@/app/ui/fonts";
-import {FaBell} from "react-icons/fa";
-import {FaCrown} from "react-icons/fa";
+import {FaBell, FaCrown} from "react-icons/fa";
 import {GoTriangleDown} from "react-icons/go";
 
 
@@ -33,9 +31,9 @@ export default function Header() {
 
                     </div>
                     <div className={`${stylesHeader.marca} flex-1`}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className}`}>GERMIN.<span
-                            className={`${stylesHeader.ar}`}>AR</span>
-                        </h1>
+                        <div className="w-32 sm:w-34 md:w-26 lg:w-48">
+                            <Image src="/logotipo.png" alt="Germin.ar" width={250} height={50} layout="responsive"/>
+                        </div>
                     </div>
                     <div className={`${stylesHeader.usuario} flex-1 flex items-center justify-end`}>
                         <div className={`${stylesHeader.menu} flex items-center justify-end gap-8`}>
@@ -44,14 +42,15 @@ export default function Header() {
                             <li><FaBell className={`${stylesHeader.campana}`}/></li>
                             {/*<li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>*/}
                             <div className="flex gap-2">
-                            <li className={`${stylesHeader.liUser} `}>
-                                <Image className="rounded-full min-w-[75px]" src="/usuario.PNG" width="75" height="75"
-                                       alt="usuario logueado"/>
-                                <FaCrown className={`${stylesHeader.corona}`}/>
-                            </li>
-                            <li>
-                                <GoTriangleDown className={`${stylesHeader.infoUsuario}`}/>
-                            </li>
+                                <li className={`${stylesHeader.liUser} `}>
+                                    <Image className="rounded-full min-w-[75px]" src="/usuario.PNG" width="75"
+                                           height="75"
+                                           alt="usuario logueado"/>
+                                    <FaCrown className={`${stylesHeader.corona}`}/>
+                                </li>
+                                <li>
+                                    <GoTriangleDown className={`${stylesHeader.infoUsuario}`}/>
+                                </li>
                             </div>
                         </div>
                     </div>
