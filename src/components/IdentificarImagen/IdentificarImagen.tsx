@@ -39,6 +39,11 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
         const formData = new FormData();
         formData.append("image", archivoSeleccionado);
 
+        if (props.imagen === "imagenIdentificarEspacio") {
+            // Si es igual a "imagenIdentificarEspacio", no hacer fetch
+            router.push("/espacio/recomendacion");
+            return;
+        }
 
             /*await fetch(
                 "http://localhost:8080/api/v1/image",
@@ -93,9 +98,16 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
                            width="150" height="150"/>
-                    <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
-                        gratis!</h1>
-                    <h1 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado !Gratis!</h1>
+                    {imagen === 'imagenIdentificarEspacio' ? (
+                        <>
+                            <h1>Identifica tu Espacio ¡Es gratis!</h1>
+                        </>
+                    ) : (
+                        <>
+                            <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es gratis!</h1>
+                            <h1 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado ¡Gratis!</h1>
+                        </>
+                    )}
                 </div>
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
                       onSubmit={handleIdentificarClick}>
