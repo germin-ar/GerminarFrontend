@@ -5,7 +5,7 @@ import {CiCalendar} from "react-icons/ci";
 import {useState} from "react";
 import {IoIosHome} from "react-icons/io";
 import {PiPottedPlantFill} from "react-icons/pi";
-import {FaClock} from "react-icons/fa";
+import {FaClock, FaHeart} from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -71,7 +71,7 @@ export default function JardinPage() {
             plantas: [
                 {
                     nombre: 'morrón',
-                    foto: '/recomendacion/morron.png',
+                    foto: '/recomendacion/morrón.png',
                     especifico: [
                         {
                             nombre: 'morrón',
@@ -166,35 +166,70 @@ export default function JardinPage() {
                     </div>
                 </section>
                 <div className={`${stylesJardin.contenidoAjustado} flex mb-10`}>
-                    <div className="bg-gray-300 w-72 flex-shrink-0">
+                    <div className="w-72 flex-shrink-0">
                         <ul className="pl-5 pt-5 select-none">
                             <div>
                                 <div className="flex items-center gap-1 ">
-                                    <IoIosHome/>
-                                    <p className="cursor-pointer font-bold"
-                                       onClick={() => setUbicacionVisible(!ubicacionVisible)}>Ubicación</p>
+                                    <button type="button"
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                        <IoIosHome size={25}/>
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
+                                            onClick={() => setUbicacionVisible(!ubicacionVisible)}>Ubicación</span>
+                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                             fill="none" viewBox="0 0 10 6">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
+                                                  strokeWidth="2" d="m1 1 4 4 4-4"/>
+                                        </svg>
+                                    </button>
                                 </div>
                                 {ubicacionVisible && (
                                     <ul className="pl-5">
                                         <li className="cursor-pointer"
-                                            onClick={() => handleUbicacionFilter('Todos')}>Todos
+                                            onClick={() => handleUbicacionFilter('Todos')}>
+                                            <button type="button"
+                                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                <span
+                                                    className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Todos</span>
+                                            </button>
+
                                         </li>
                                         <li className="cursor-pointer"
-                                            onClick={() => handleUbicacionFilter('Balcón')}>Balcón
+                                            onClick={() => handleUbicacionFilter('Balcón')}>
+                                            <button type="button"
+                                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                <span
+                                                    className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Balcón</span>
+                                            </button>
                                         </li>
                                         <li className="cursor-pointer"
-                                            onClick={() => handleUbicacionFilter('Patio trasero')}>Patio trasero
+                                            onClick={() => handleUbicacionFilter('Patio trasero')}>
+                                            <button type="button"
+                                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                <span
+                                                    className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Patio trasero</span>
+                                            </button>
                                         </li>
                                         <li className="cursor-pointer"
-                                            onClick={() => handleUbicacionFilter('cocina')}>Cocina
+                                            onClick={() => handleUbicacionFilter('cocina')}>
+                                            <button type="button"
+                                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                                <span
+                                                    className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Cocina</span>
+                                            </button>
                                         </li>
                                     </ul>
                                 )}
                             </div>
                             <div>
                                 <div className="flex items-center gap-1 ">
-                                    <p className="cursor-pointer font-bold"
-                                       onClick={() => setPrioridadVisible(!prioridadVisible)}>Prioridad</p>
+                                    <button type="button"
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                        <FaHeart size={25}/>
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
+                                            onClick={() => setPrioridadVisible(!prioridadVisible)}>Favoritos</span>
+                                    </button>
                                 </div>
                                 {prioridadVisible && (
                                     <div className="pl-5">
@@ -204,9 +239,13 @@ export default function JardinPage() {
                             </div>
                             <div>
                                 <div className="flex items-center gap-1 ">
-                                    <PiPottedPlantFill/>
-                                    <p className="cursor-pointer font-bold"
-                                       onClick={() => setTipoVisible(!tipoVisible)}>Tipo</p>
+                                    <button type="button"
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                        <PiPottedPlantFill size={25}/>
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
+                                            onClick={() => setTipoVisible(!tipoVisible)}>Tipo</span>
+                                    </button>
                                 </div>
                                 {tipoVisible && (
                                     <div className="pl-5">
@@ -215,9 +254,13 @@ export default function JardinPage() {
                             </div>
                             <div>
                                 <div className="flex items-center gap-1 ">
-                                    <FaClock/>
-                                    <p className="cursor-pointer font-bold"
-                                       onClick={() => setAntiguedadVisible(!antiguedadVisible)}>Antigüedad</p>
+                                    <button type="button"
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                        <FaClock size={25}/>
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
+                                            onClick={() => setAntiguedadVisible(!antiguedadVisible)}>Antigüedad</span>
+                                    </button>
                                 </div>
                                 {antiguedadVisible && (
                                     <div className="pl-5">
