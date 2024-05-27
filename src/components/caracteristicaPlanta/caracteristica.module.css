@@ -3,10 +3,15 @@
     flex-wrap: wrap;
 }
 .imagenesCaracteristicas{
-    min-width: 100px;
-    min-height: 100px;
-    margin: 0 auto;
-    width: 100%;
+    min-width: 50px;
+
+}
+.tamano{
+    flex: 0.3;
+}
+.imagenSubida{
+    width: 300px;
+    height: 300px;
 }
 .grilla{
     display: grid;
@@ -18,5 +23,15 @@
     .grilla{
         grid-template-columns: 1fr;
     }
+    .contenedorFotoGrilla{
+        flex-direction: column;
+    }
+    .imagenSubida{
+        width: 100%;
+
+    }
+}
+.contenedorFotoGrilla{
+    padding: 30px 0;
 }
 

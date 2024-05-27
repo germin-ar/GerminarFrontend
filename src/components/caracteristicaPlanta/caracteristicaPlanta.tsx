@@ -355,27 +355,29 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                     </div>
                 )}
             </section>*/
-        <section className="max-w-[1300px] mx-auto">
-            <main className={`${styles.contenedor}`}>
-                <section className={"m-10"}>
+        <section className="max-w-[1300px] mx-auto w-[85%]">
+            <section className="flex flex-col gap-5">
+                <section>
                     <div
-                        className={`flex flex-col sm:flex-col md:flex-col lg:flex-row justify-center items-center m-12 gap-12`}>
-                        <div className={'flex flex-col items-center gap-10'}>
+                        className={`${stylesCaracteristicas.contenedorFotoGrilla} flex w-full justify-center items-center gap-2`}>
+                        <div className={'flex-1 flex w-full flex-col items-center gap-10'}>
                             <h1 className={`${BalooBhaina2.className} text-[#88BC43]`}></h1>
                             <div className="flex-1 flex items-start flex-col gap-5">
-                                <div className="h-[500px] overflow-hidden flex items-center justify-center">
-                                    <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                <div
+                                    className={`${stylesCaracteristicas.imagenSubida}  overflow-hidden flex items-center justify-center`}>
+                                    <img src={imagenDataUrl} className="object-cover"
                                          alt="Albahaca-sana" width="500"
                                          height="500"/>
                                 </div>
                                 {props.espacio === "espacio" ? (
                                     <p className="flex items-center justify-center gap-5"> ¿Querés saber cómo plantar?
-                                    <Link href="/guia" className="bg-[#88BC43] text-white py-2 px-4 rounded">
-                                        Empezar
-                                    </Link>
+                                        <Link href="/guia" className="bg-[#88BC43] text-white py-2 px-4 rounded">
+                                            Empezar
+                                        </Link>
                                     </p>
                                 ) : (
-                                    <Link href="/registro" className="bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+                                    <Link href="/registro"
+                                          className="bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2">
                                         <div>
                                             <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20" height="20"/>
                                         </div>
@@ -384,7 +386,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 )}
                             </div>
                         </div>
-                        <div className={'table-container'}>
+                        <div className={'flex-1 table-container'}>
                             <table className={'vertical-header-table'}>
                                 <tbody>
                                 <tr>
@@ -411,7 +413,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                     </div>
                 </section>
 
-                <section className={'flex flex-col gap-12 m-20'}>
+                <section className={'flex flex-col'}>
                     <div>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Estado de
                             salud</h2>
@@ -425,23 +427,25 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             </div>
                         </div>
                     </div>
-
+                </section>
+                <section className={'flex flex-col'}>
                     <div>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Descripción general</h2>
                         <p>
                             {resultados?.descripcion_general}</p>
                     </div>
-
+                </section>
+                <section className={'flex flex-col'}>
                     <div>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Características</h2>
                         <div className={`${stylesCaracteristicas.grilla}`}>
                             <div className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/tamaño-icon.png" alt="tamaño-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col items-start'}>
+                                <div className={'flex-1 flex flex-col items-start'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Tamaño</h3>
                                     <ul className={`list-disc list-inside`}>
                                         <li>Tallo de 30 a 50 cm de altura</li>
@@ -452,12 +456,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/fertilizante-icon.png" alt="fertilizante-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Fertilizante</h3>
                                     <p>Aplicar un fertilizante
                                         equilibrado una vez al mes durante la temporada de crecimiento.</p>
@@ -466,12 +470,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/riego-icon.png" alt="riego-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Riego</h3>
                                     <p>Mantener el suelo ligeramente
                                         húmedo, evitando el encharcamiento.</p>
@@ -480,12 +484,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/tierra-icon.png" alt="tierra-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Tierra</h3>
                                     <p>Requiere un suelo bien drenado y
                                         fértil, preferiblemente con un pH entre 6.0 y 7.5.</p>
@@ -494,12 +498,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/exposolar-icon.png" alt="exposolar-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Exposición solar</h3>
                                     <p>Luz solar directa por la mañana
                                         y sombra parcial por la tarde.</p>
@@ -508,12 +512,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/insecticida-icon.png" alt="insecticida-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Insecticida</h3>
                                     <p>Controlar plagas con
                                         insecticidas naturales como jabón insecticida o aceite de neem.</p>
@@ -522,12 +526,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/temperatura-icon.png" alt="temperatura-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temperatura adecuada</h3>
                                     <p>Prefiere temperaturas cálidas
                                         entre 18-25°C, evitando temperaturas extremadamente frías.</p>
@@ -536,12 +540,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/temporada-icon.png" alt="temporada-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temporada</h3>
                                     <p className={`${stylesResultado.texto}`}>Se puede sembrar en primavera
                                         después de que haya pasado el
@@ -551,12 +555,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/ubicacion-icon.png" alt="ubicacion-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Ubicaciones posibles</h3>
                                     <p>Ventana, balcón, terraza, patio
                                         trasero, porche.</p>
@@ -565,12 +569,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div
                                 className={`${stylesCaracteristicas.cajaCaracteristicas} flex items-center gap-8`}>
-                                <div>
+                                <div className={`${stylesCaracteristicas.tamano}`}>
                                     <Image className={`${stylesCaracteristicas.imagenesCaracteristicas}`}
                                            src="/resultado/podado-icon.png" alt="podado-icon" width="150"
                                            height="150"/>
                                 </div>
-                                <div className={'flex flex-col'}>
+                                <div className={'flex-1 flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Podado</h3>
                                     <p>Podar cada 15 días
                                         aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
@@ -580,8 +584,11 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                         </div>
                     </div>
 
+
+                </section>
+                <section>
                     <div className={''}>
-                    <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Consejos</h2>
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Consejos</h2>
                         <ul className={`list-disc list-inside flex flex-col gap-8`}>
                             <li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
                                 antes de usarlas para obtener el mejor sabor y aroma.
@@ -598,7 +605,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             </li>
                         </ul>
 
-                        <div className={'mt-14 flex'}>
+                        <div className={'my-14 flex'}>
                             {props.espacio === "espacio" ? (
                                 <p className="flex items-center justify-center gap-5"> ¿Querés saber cómo plantar?
                                     <Link href="/guia" className="bg-[#88BC43] text-white font-bold py-2 px-4 rounded">
@@ -606,7 +613,8 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                     </Link>
                                 </p>
                             ) : (
-                                <Link href="/registro" className="bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2">
+                                <Link href="/registro"
+                                      className="bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2">
                                     <div>
                                         <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20" height="20"/>
                                     </div>
@@ -616,7 +624,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                         </div>
                     </div>
                 </section>
-            </main>
+            </section>
 
         </section>
 
