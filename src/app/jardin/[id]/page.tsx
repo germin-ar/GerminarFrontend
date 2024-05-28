@@ -27,7 +27,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
 
 
     return (
-        <main className={`${stylesDescriptionPlants.contenedor}`}>
+        <section className={`${stylesDescriptionPlants.contenedor}`}>
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
@@ -180,7 +180,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                     Editar
                 </button>
             </div>
-        </main>
+        </section>
     )
 
 }

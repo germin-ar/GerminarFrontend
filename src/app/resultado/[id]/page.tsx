@@ -4,6 +4,5 @@ export default function ResultadoPage({params: {id}}: { params: { id: string } }
 
     return (
        <CaracteristicaPlanta planta={id} espacio="no"/>
-
     )
 }
