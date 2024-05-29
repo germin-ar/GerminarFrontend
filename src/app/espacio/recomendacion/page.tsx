@@ -33,22 +33,22 @@ export default function RecomendacionPage() {
                     <div className="pt-10">
                         <h3 className={`${BalooBhaina2.className} text-center`}>Albahaca</h3>
                         <Link href="/espacio/recomendacion/planta">
-                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800 mb-2`}
                                    src="/recomendacion/albahaca.png"
                                    alt="Albahaca" width="250"
                                    height="250"/>
                         </Link>
                         <div className="flex justify-around gap-10">
                             <div className={stylesRecomendacion.sunny}>
-                                <IoIosSunny size={45} className={"cursor-pointer"}/>
+                                <IoIosSunny size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Luz directa</div>
                             </div>
                             <div className={stylesRecomendacion.temperatureArrowUp}>
-                                <FaTemperatureArrowUp size={45} className={"cursor-pointer"}/>
+                                <FaTemperatureArrowUp size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Temperatura alta</div>
                             </div>
                             <div className={stylesRecomendacion.water}>
-                                <IoWater size={45} className={"cursor-pointer"}/>
+                                <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Riego escaso</div>
                             </div>
                         </div>
@@ -58,24 +58,24 @@ export default function RecomendacionPage() {
                     <div className="pt-10">
                         <h3 className={`${BalooBhaina2.className} text-center`}>Lechuga</h3>
                         <Link href="/espacio/recomendacion/planta">
-                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800 mb-2`}
                                    src="/recomendacion/lechuga.png"
                                    alt="Lechuga" width="250"
                                    height="250"/>
                         </Link>
                         <div className={'flex justify-around gap-10'}>
                             <div className={stylesRecomendacion.partlySunny}>
-                                <IoIosPartlySunny size={45} className={"cursor-pointer"}/>
+                                <IoIosPartlySunny size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Luz parcial</div>
                             </div>
                             <div className={stylesRecomendacion.temperatureArrowDown}>
-                                <FaTemperatureArrowDown size={45} className={"cursor-pointer"}/>
+                                <FaTemperatureArrowDown size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Temperatura baja</div>
                             </div>
                             <div className={stylesRecomendacion.water}>
                                 <div className={'flex gap-0'}>
-                                    <IoWater size={45} className={"cursor-pointer"}/>
-                                    <IoWater size={45} className={"cursor-pointer"}/>
+                                    <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
+                                    <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
                                 </div>
                                 <div className={stylesRecomendacion.tooltip}>Riego moderado</div>
                             </div>
@@ -85,22 +85,22 @@ export default function RecomendacionPage() {
                     <div className="pt-10">
                         <h3 className={`${BalooBhaina2.className} text-center`}>Morrón</h3>
                         <div>
-                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800 mb-2`}
                                    src="/recomendacion/morrón.png"
                                    alt="Morrón" width="250"
                                    height="250"/>
                         </div>
                         <div className={'flex justify-around gap-10'}>
                             <div className={stylesRecomendacion.partlySunny}>
-                                <IoIosPartlySunny size={45} className={"cursor-pointer"}/>
+                                <IoIosPartlySunny size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Luz parcial</div>
                             </div>
                             <div className={stylesRecomendacion.temperatureArrowUp}>
-                                <FaTemperatureArrowUp size={45} className={"cursor-pointer"}/>
+                                <FaTemperatureArrowUp size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Temperatura alta</div>
                             </div>
                             <div className={stylesRecomendacion.water}>
-                                <IoWater size={45} className={"cursor-pointer"}/>
+                                <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Riego escaso</div>
                             </div>
                         </div>
@@ -108,25 +108,25 @@ export default function RecomendacionPage() {
                     <div className="pt-10">
                         <h3 className={`${BalooBhaina2.className} text-center`}>Tomate</h3>
                         <Link href="/espacio/recomendacion/planta">
-                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800`}
+                            <Image className={`sm:w-96 sm:h-60 rounded shadow-lg border-2 border-green-800 mb-2`}
                                    src="/recomendacion/tomate.png"
                                    alt="Tomate" width="250"
                                    height="250"/>
                         </Link>
                         <div className={'flex justify-around gap-10'}>
                             <div className={stylesRecomendacion.sunny}>
-                                <IoIosSunny size={45} className={"cursor-pointer"}/>
+                                <IoIosSunny size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Luz directa</div>
                             </div>
                             <div className={stylesRecomendacion.temperatureArrowDown}>
-                                <FaTemperatureArrowDown size={45} className={"cursor-pointer"}/>
+                                <FaTemperatureArrowDown size={35} className={"sm:w-11 cursor-pointer"}/>
                                 <div className={stylesRecomendacion.tooltip}>Temperatura baja</div>
                             </div>
                             <div className={stylesRecomendacion.water}>
                                 <div className={'flex gap-0'}>
-                                    <IoWater size={45} className={"cursor-pointer"}/>
-                                    <IoWater size={45} className={"cursor-pointer"}/>
-                                    <IoWater size={45} className={"cursor-pointer"}/>
+                                    <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
+                                    <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
+                                    <IoWater size={35} className={"sm:w-11 cursor-pointer"}/>
                                 </div>
                                 <div className={stylesRecomendacion.tooltip}>Riego alto</div>
                             </div>
