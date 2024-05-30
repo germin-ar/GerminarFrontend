@@ -111,9 +111,13 @@ export default function JardinPage() {
     const [tipoVisible, setTipoVisible] = useState(false);
     const [antiguedadVisible, setAntiguedadVisible] = useState(false);
 
+    const toggleUbicacion = () => {
+        setUbicacionVisible(!ubicacionVisible);
+    };
+
     const handleUbicacionFilter = (ubicacion: string) => {
         setFiltro(ubicacion === 'Todos' ? '' : ubicacion);
-        setUbicacionVisible(true);
+        // setUbicacionVisible(true);
     };
 
     /****/
@@ -170,23 +174,38 @@ export default function JardinPage() {
                         <ul className="pl-5 pt-5 select-none">
                             <div>
                                 <div className="flex items-center gap-1 ">
-                                    <button type="button"
-                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                    <button
+                                        type="button"
+                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        onClick={toggleUbicacion}
+                                    >
                                         <IoIosHome size={25}/>
                                         <span
                                             className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
-                                            onClick={() => setUbicacionVisible(!ubicacionVisible)}>Ubicación</span>
-                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                             fill="none" viewBox="0 0 10 6">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                                  strokeWidth="2" d="m1 1 4 4 4-4"/>
+                                            // onClick={() => setUbicacionVisible(!ubicacionVisible)}
+                                        >Ubicación</span>
+                                        <svg
+                                            className={`w-3 h-3 transition-transform duration-300 ${
+                                                ubicacionVisible ? 'rotate-180' : ''
+                                            }`}
+                                            aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 10 6"
+                                        >
+                                            <path
+                                                stroke="currentColor"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="m1 1 4 4 4-4"
+                                            />
                                         </svg>
                                     </button>
                                 </div>
-                                {ubicacionVisible && (
-                                    <ul className="pl-5">
-                                        <li className="cursor-pointer"
-                                            onClick={() => handleUbicacionFilter('Todos')}>
+                                {/*{ubicacionVisible && (*/}
+                                <ul className={`pl-5 transition-max-height duration-500 ease-in-out ${ubicacionVisible ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
+                                    <li className="cursor-pointer" onClick={() => handleUbicacionFilter('Todos')}>
                                             <button type="button"
                                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                                 <span
@@ -219,7 +238,7 @@ export default function JardinPage() {
                                             </button>
                                         </li>
                                     </ul>
-                                )}
+                                {/*)}*/}
                             </div>
                             <div>
                                 <div className="flex items-center gap-1 ">
