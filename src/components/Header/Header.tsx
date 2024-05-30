@@ -14,17 +14,22 @@ export default function Header() {
     const toggleMenu = () => {
         setMenuAbierto(!menuAbierto);
     };
+
     return (
         <header className={`${stylesHeader.container} bg-gray-800`}>
             <nav className={`${stylesHeader.nav}`}>
                 <ul className={`${stylesHeader.lista}`}>
 
-                    <div className={`flex-1 ${stylesHeader.menu}`}>
-                        <div className="flex items-center">
-                            <li><Link href="/" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Inicio</Link>
+                    <div className={`${stylesHeader.usuario} flex-1 flex items-center justify-center`}>
+                        <div className={`${stylesHeader.menu} flex items-center justify-end gap-32`}>
+                            <li className={`${stylesHeader.liu}`}>
+                                <Link href="/" className={`${stylesHeader.li}`}>Inicio</Link>
+                                <div className={stylesHeader.underline}></div>
                             </li>
-                            <li><Link href="/biblioteca"
-                                      className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Biblioteca</Link></li>
+                            <li className={`${stylesHeader.liu}`}>
+                                <Link href="/biblioteca" className={`${stylesHeader.li}`}>Biblioteca</Link>
+                                <div className={stylesHeader.underline}></div>
+                            </li>
                         </div>
                     </div>
                     <div className={`flex-1 ${stylesHeader.menuR}`}>
@@ -35,10 +40,14 @@ export default function Header() {
                             <Image src="/logotipo.png" alt="Germin.ar" width={250} height={50} layout="responsive"/>
                         </div>
                     </div>
+
                     <div className={`${stylesHeader.usuario} flex-1 flex items-center justify-end`}>
                         <div className={`${stylesHeader.menu} flex items-center justify-end gap-8`}>
-                            <li><Link href="/jardin" className={`${stylesHeader.li} hover:text-gray-300 `}>Mi
-                                Jardín</Link></li>
+                            <li className={`${stylesHeader.liu}`}>
+                                <Link href="/jardin" className={`${stylesHeader.li}`}>Mi
+                                Jardín</Link>
+                                <div className={stylesHeader.underline}></div>
+                            </li>
                             <li><FaBell className={`${stylesHeader.campana}`}/></li>
                             {/*<li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>*/}
                             <div className="flex gap-2">
@@ -90,21 +99,20 @@ export default function Header() {
                                     <ul className="text-white">
                                         <li>
                                             <Link href="/"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Inicio</Link>
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Inicio</Link>
                                         </li>
                                         <li>
                                             <Link href="/biblioteca"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Biblioteca</Link>
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Biblioteca</Link>
                                         </li>
-                                        <li className={`${stylesHeader.li} hover:text-gray-300 px-10`}>
+                                        <li className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>
                                             Notificaciones
                                         </li>
                                         <li>
                                             <Link href="/jardin"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Mi
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Mi
                                                 Jardín</Link>
                                         </li>
-                                        {/* Agrega más enlaces según sea necesario */}
                                     </ul>
                                 </div>
                             </div>

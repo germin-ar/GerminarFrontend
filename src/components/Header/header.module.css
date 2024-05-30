@@ -1,42 +1,45 @@
-.container{
+.container {
     height: 120px;
     background-color: #EFE8D6;
-
 }
 
-.nav{
+.nav {
     height: 100%;
     width: 90%;
     margin: 0 auto;
 }
 
-.lista{
+.lista {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 }
 
-.titulo{
+.titulo {
     color: #88BC43;
 }
-.ar{
+
+.ar {
     color: #275F08;
 }
-.li{
+
+.li {
     font-weight: bold;
 }
 
-.marca{
+.marca {
     display: flex;
     justify-content: center;
     align-content: center;
 }
-.campana{
+
+.campana {
     width: 25px;
     height: 100%;
 }
-.corona{
+
+.corona {
     position: absolute;
     top: 0;
     right: 0;
@@ -44,38 +47,44 @@
     width: 30px;
     height: 30px;
 }
-.liUser{
+
+.liUser {
     position: relative;
 }
-.infoUsuario{
+
+.infoUsuario {
     width: 45px;
     height: 100%;
     padding: 0 0 0 10px;
     color: #88BC43;
 }
-.menuR{
+
+.menuR {
     display: none;
 }
+
 /**Responsive**/
 @media (max-width: 1500px) {
     .container {
 
         padding: 5px;
     }
-    .lista{
 
+    .lista {
 
 
     }
-    .usuario{
+
+    .usuario {
         flex-direction: column;
         display: none;
     }
-    .menu{
+
+    .menu {
         display: none;
     }
 
-    .menuR{
+    .menuR {
         display: flex;
     }
 
@@ -111,6 +120,28 @@
     }
 
 }
+
 @media (max-width: 475px) {
 
+}
+
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.25rem; /* h-1 */
+    background-color: #275F08; /* bg-green-500 */
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.liu {
+    position: relative;
+    display: inline-block;
+}
+
+.liu:hover .underline {
+    transform: scaleX(1);
 }
