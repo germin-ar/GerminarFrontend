@@ -99,21 +99,20 @@ export default function Header() {
                                     <ul className="text-white">
                                         <li>
                                             <Link href="/"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10 px-10`}>Inicio</Link>
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Inicio</Link>
                                         </li>
                                         <li>
                                             <Link href="/biblioteca"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10 px-10`}>Biblioteca</Link>
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Biblioteca</Link>
                                         </li>
-                                        <li className={`${stylesHeader.li} hover:text-gray-300 px-10`}>
+                                        <li className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>
                                             Notificaciones
                                         </li>
                                         <li>
                                             <Link href="/jardin"
-                                                  className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Mi
+                                                  className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Mi
                                                 Jardín</Link>
                                         </li>
-                                        {/* Agrega más enlaces según sea necesario */}
                                     </ul>
                                 </div>
                             </div>
