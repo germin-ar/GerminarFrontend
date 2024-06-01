@@ -109,14 +109,28 @@ export default function Formulario(props:IdentificarPlanta){
         }
     };
     const router = useRouter()
-    const submitForm = () => {
-        // Aquí puedes realizar la lógica para enviar el formulario
-        console.log("Formulario enviado");
+
+    const submitForm = async () => {
+        /*console.log("Formulario enviado");
         if (editar === "si"){
         router.push(`/jardin`)
         }
         if (editar === "no"){
             router.push(`/jardin/${id}`)
+        }*/
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/garden/addPlant', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues),
+            });
+            if (response.ok) {
+                router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+            }
+        } catch (err) {
+            alert(`Ocurrió un error al conectar con el servidor: ${err}`);
         }
     };
 
