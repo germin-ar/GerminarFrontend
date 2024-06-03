@@ -19,18 +19,11 @@ export async function generateStaticParams() {
     return [{id: '1'}]
 }
 interface FormValues {
-    nombre: string;
-    tipo: string;
-    familia: string;
-    estadoSalud: string;
-    exposicionSolar: string;
-    frecuenciaRiego: string;
-    altura: string;
-    fechaPlantacion: string;
-    descripcion: string;
-    ubicacion: string;
-    descripcionGeneral: string;
-    notas: string;
+    alias: string;
+    height: string;
+    creation_date: string;
+    name_garden: string;
+    notes: string;
 }
 interface IdentificarPlanta{
     id:string
@@ -40,33 +33,19 @@ interface IdentificarPlanta{
 export default function Formulario(props:IdentificarPlanta){
     const { id, editar } = props
     const [formValues, setFormValues] = useState<FormValues>({
-        nombre: "",
-        tipo: "",
-        familia: "",
-        estadoSalud: "",
-        exposicionSolar: "",
-        frecuenciaRiego: "",
-        altura: "",
-        fechaPlantacion: "",
-        descripcion: "",
-        ubicacion: "",
-        descripcionGeneral: "",
-        notas: "",
+        alias: "",
+        height: "",
+        creation_date: "",
+        name_garden: "",
+        notes: "",
     });
 
     const initialValues: FormValues = {
-        nombre: "Valor pre cargado 1",
-        tipo: "Valor pre cargado 2",
-        familia: "Valor pre cargado 3",
-        estadoSalud: "Valor pre cargado 4",
-        exposicionSolar: "Valor pre cargado 5",
-        frecuenciaRiego: "Valor pre cargado 6",
-        altura: "Valor pre cargado 7",
-        fechaPlantacion: "Valor pre cargado 8",
-        descripcion: "Valor pre cargado 9",
-        ubicacion: "Valor pre cargado 10",
-        descripcionGeneral: "Es esbelta y robusta, con tallos de color verde oscuro que se extienden hacia arriba en busca de luz solar. Sus hojas son grandes y frondosas, de un verde vibrante, con una textura ligeramente áspera al tacto. En la parte superior delos tallos, se forman racimos de flores amarillas que eventualmente darán paso a los deliciosos frutos rojos",
-        notas: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
+        alias: "-",
+        height: "Valor pre cargado 7",
+        creation_date: "Valor pre cargado 8",
+        name_garden: "",
+        notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -89,7 +68,7 @@ export default function Formulario(props:IdentificarPlanta){
     const handleUbicacionChange = (ubicacion: string) => {
         setFormValues((prevValues) => ({
             ...prevValues,
-            ubicacion: ubicacion,
+            name_garden: ubicacion,
         }));
 
     };
@@ -127,10 +106,12 @@ export default function Formulario(props:IdentificarPlanta){
                 body: JSON.stringify(formValues),
             });
             if (response.ok) {
-                router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+                console.log("Respuesta del servidor:", response);
+                //router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
             }
         } catch (err) {
-            alert(`Ocurrió un error al conectar con el servidor: ${err}`);
+            console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
+
         }
     };
 
@@ -189,17 +170,35 @@ export default function Formulario(props:IdentificarPlanta){
                         <div>
                             <div className="flex gap-2">
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Nombre:</p>
+                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Alias:</p>
                             </div>
                             <div className="flex items-center">
                                 <input
                                     type="text"
-                                    name="nombre"
-                                    value={formValues.nombre}
+                                    name="alias"
+                                    value={formValues.alias}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                            </div>
+
+                        </div>
+                        <div>
+                            <div className="flex gap-2">
+                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
+                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Nombre comunes:</p>
+                            </div>
+                            <div className="flex items-center">
+                                <p className="text-[24px] pl-9">Nombre Comun</p>
+                                {/*<input
+                                    type="text"
+                                    name="commonName"
+                                    value={formValues.commonName}
+                                    onChange={handleInputChange}
+                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                />
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
                             </div>
 
                         </div>
@@ -209,14 +208,15 @@ export default function Formulario(props:IdentificarPlanta){
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Tipo:</p>
                             </div>
                             <div className="flex items-center">
-                                <input
+                                {/*<input
                                     type="text"
                                     name="tipo"
                                     value={formValues.tipo}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className="text-[24px] pl-9">Tipo</p>
                             </div>
 
                         </div>
@@ -226,14 +226,15 @@ export default function Formulario(props:IdentificarPlanta){
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Familia:</p>
                             </div>
                             <div className="flex items-center">
-                                <input
+                                {/*<input
                                     type="text"
                                     name="familia"
                                     value={formValues.familia}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className="text-[24px] pl-9">Familia</p>
                             </div>
 
                         </div>
@@ -245,14 +246,15 @@ export default function Formulario(props:IdentificarPlanta){
                                     salud:</p>
                             </div>
                             <div className="flex items-center">
-                                <input
+                                {/*<input
                                     type="text"
                                     name="estadoSalud"
                                     value={formValues.estadoSalud}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className="text-[24px] pl-9">Estado de salud</p>
                             </div>
 
                         </div>
@@ -263,14 +265,15 @@ export default function Formulario(props:IdentificarPlanta){
                                     solar:</p>
                             </div>
                             <div className="flex items-center">
-                                <input
+                                {/*<input
                                     type="text"
                                     name="exposicionSolar"
                                     value={formValues.exposicionSolar}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className="text-[24px] pl-9">Exposición solar</p>
                             </div>
 
                         </div>
@@ -282,14 +285,15 @@ export default function Formulario(props:IdentificarPlanta){
                             </div>
 
                             <div className="flex items-center">
-                                <input
+                                {/*<input
                                     type="text"
                                     name="frecuenciaRiego"
                                     value={formValues.frecuenciaRiego}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className="text-[24px] pl-9">Frecuencia de riego</p>
                             </div>
                         </div>
                     </div>
@@ -303,7 +307,7 @@ export default function Formulario(props:IdentificarPlanta){
                                 <input
                                     type="text"
                                     name="altura"
-                                    value={formValues.altura}
+                                    value={formValues.height}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
@@ -321,7 +325,7 @@ export default function Formulario(props:IdentificarPlanta){
                                 <input
                                     type="text"
                                     name="fechaPlantacion"
-                                    value={formValues.fechaPlantacion}
+                                    value={formValues.creation_date}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
@@ -337,17 +341,18 @@ export default function Formulario(props:IdentificarPlanta){
                         <div>
                             <div className="flex gap-2">
                                 <FiAlertCircle className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Descripción
+                                <p className={`${BalooBhaina2.className} font-bold  text-[#1F2325]`}>Descripción
                                     general</p>
                             </div>
                             <div className="flex items-center">
-                                <textarea
+                                {/*<textarea
                                     name="descripcionGeneral"
                                     value={formValues.descripcionGeneral}
                                     onChange={handleInputChange}
                                     className="text-[24px] pl-9 pr-9 w-full min-h-[150px] resize-none border-b-2 border-gray-300 rounded"
                                 />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                <p className=" pl-9">Descripción general</p>
                             </div>
 
                         </div>
@@ -358,68 +363,68 @@ export default function Formulario(props:IdentificarPlanta){
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 <div
-                                    onClick={() => handleUbicacionChange("baño")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "baño" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("0")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "baño" ? "bg-gray-200" : ""}`}
                                 >
                                     Baño
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("patio trasero")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "patio trasero" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("1")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "patio trasero" ? "bg-gray-200" : ""}`}
                                 >
                                     Patio Trasero
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("porche")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "porche" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("2")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "porche" ? "bg-gray-200" : ""}`}
                                 >
                                     Porche
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("oficina")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "oficina" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("3")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "oficina" ? "bg-gray-200" : ""}`}
                                 >
                                     Oficina
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("cocina")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "cocina" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("4")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "cocina" ? "bg-gray-200" : ""}`}
                                 >
                                     Cocina
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("balcon")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "balcon" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("5")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "balcon" ? "bg-gray-200" : ""}`}
                                 >
                                     Balcón
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("terraza")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "terraza" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("6")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "terraza" ? "bg-gray-200" : ""}`}
                                 >
                                     Terraza
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("escritorio")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "escritorio" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("7")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "escritorio" ? "bg-gray-200" : ""}`}
                                 >
                                     Escritorio
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("pasillo")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "pasillo" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("8")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "pasillo" ? "bg-gray-200" : ""}`}
                                 >
                                     Pasillo
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("ventana")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "ventana" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("9")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "ventana" ? "bg-gray-200" : ""}`}
                                 >
                                     Ventana
                                 </div>
                                 <div
-                                    onClick={() => handleUbicacionChange("otro")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.ubicacion === "otro" ? "bg-gray-200" : ""}`}
+                                    onClick={() => handleUbicacionChange("10")}
+                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "otro" ? "bg-gray-200" : ""}`}
                                 >
                                     Otro
                                 </div>
@@ -458,7 +463,7 @@ export default function Formulario(props:IdentificarPlanta){
 
                         <textarea
                             name="notas"
-                            value={formValues.notas}
+                            value={formValues.notes}
                             onChange={handleInputChange}
                             className="text-[24px] pl-9 pr-9 w-full h-full resize-none"
                         />
