@@ -29,6 +29,10 @@ interface IdentificarPlanta{
     id:string
     editar:string
 }
+interface Garden {
+    id: number;
+    name: string;
+}
 
 export default function Formulario(props:IdentificarPlanta){
     const { id, editar } = props
@@ -65,7 +69,9 @@ export default function Formulario(props:IdentificarPlanta){
         submitForm();
     };
 
-    const handleUbicacionChange = (ubicacion: string) => {
+    const handleUbicacionChange = (ubicacion: string, index:any) => {
+        setUbicacionSeleccionada(index);
+        console.log(ubicacion, index)
         setFormValues((prevValues) => ({
             ...prevValues,
             name_garden: ubicacion,
@@ -114,14 +120,29 @@ export default function Formulario(props:IdentificarPlanta){
 
         }
     };
-
+    const [ubicaciones, setUbicaciones] = useState<string[]>([]);
+    const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(null);
     useEffect(() => {
         setFormValues(initialValues);
         const imagenGuardada = localStorage.getItem('imagen');
         if (imagenGuardada) {
             setImagenDataUrl(imagenGuardada);
         }
+        fetchUbicaciones();
     }, [id]);
+    const fetchUbicaciones = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+                headers: {
+                    'id-user': '1'
+                }
+            });
+            const data: Garden[] = await response.json();
+            setUbicaciones(data.map(garden => garden.name));
+        } catch (error) {
+            console.error('Error al obtener las ubicaciones:', error);
+        }
+    };
 
     const [showPopup, setShowPopup] = useState(false);
     const handleButtonClick = () => {
@@ -145,7 +166,7 @@ export default function Formulario(props:IdentificarPlanta){
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
-                        <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43]`}>Registrar Planta</h1>
+                        <h1 className={`${BalooBhaina2.className}  text-[#88BC43]`}>Registrar Planta</h1>
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <button
@@ -168,9 +189,9 @@ export default function Formulario(props:IdentificarPlanta){
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Alias:</p>
+                                <h3 className={`${BalooBhaina2.className} `}>Alias:</h3>
                             </div>
                             <div className="flex items-center">
                                 <input
@@ -178,19 +199,19 @@ export default function Formulario(props:IdentificarPlanta){
                                     name="alias"
                                     value={formValues.alias}
                                     onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                    className=" pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                             </div>
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Nombre comunes:</p>
+                                <h3 className={`${BalooBhaina2.className}`}>Nombre comunes:</h3>
                             </div>
                             <div className="flex items-center">
-                                <p className="text-[24px] pl-9">Nombre Comun</p>
+                                <p className=" pl-9">Nombre Comun</p>
                                 {/*<input
                                     type="text"
                                     name="commonName"
@@ -203,9 +224,9 @@ export default function Formulario(props:IdentificarPlanta){
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Tipo:</p>
+                                <h3 className={`${BalooBhaina2.className}  `}>Tipo:</h3>
                             </div>
                             <div className="flex items-center">
                                 {/*<input
@@ -216,14 +237,14 @@ export default function Formulario(props:IdentificarPlanta){
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                <p className="text-[24px] pl-9">Tipo</p>
+                                <p className=" pl-9">Tipo</p>
                             </div>
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <GiPlantRoots className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Familia:</p>
+                                <h3 className={`${BalooBhaina2.className} `}>Familia:</h3>
                             </div>
                             <div className="flex items-center">
                                 {/*<input
@@ -234,16 +255,16 @@ export default function Formulario(props:IdentificarPlanta){
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                <p className="text-[24px] pl-9">Familia</p>
+                                <p className=" pl-9">Familia</p>
                             </div>
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <MdOutlineHealthAndSafety className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Estado
+                                <h3 className={`${BalooBhaina2.className}`}>Estado
                                     de
-                                    salud:</p>
+                                    salud:</h3>
                             </div>
                             <div className="flex items-center">
                                 {/*<input
@@ -254,15 +275,15 @@ export default function Formulario(props:IdentificarPlanta){
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                <p className="text-[24px] pl-9">Estado de salud</p>
+                                <p className=" pl-9">Estado de salud</p>
                             </div>
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Exposición
-                                    solar:</p>
+                                <h3 className={`${BalooBhaina2.className} `}>Exposición
+                                    solar:</h3>
                             </div>
                             <div className="flex items-center">
                                 {/*<input
@@ -273,15 +294,15 @@ export default function Formulario(props:IdentificarPlanta){
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                <p className="text-[24px] pl-9">Exposición solar</p>
+                                <p className=" pl-9">Exposición solar</p>
                             </div>
 
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
-                                    de riego:</p>
+                                <h3 className={`${BalooBhaina2.className}`}>Frecuencia
+                                    de riego:</h3>
                             </div>
 
                             <div className="flex items-center">
@@ -293,7 +314,7 @@ export default function Formulario(props:IdentificarPlanta){
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                <p className="text-[24px] pl-9">Frecuencia de riego</p>
+                                <p className=" pl-9">Frecuencia de riego</p>
                             </div>
                         </div>
                     </div>
@@ -301,7 +322,7 @@ export default function Formulario(props:IdentificarPlanta){
                         <div>
                             <div className="flex gap-2">
                                 <CiRuler className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Altura:</p>
+                                <h3 className={`${BalooBhaina2.className}`}>Altura:</h3>
                             </div>
                             <div className="flex items-center">
                                 <input
@@ -309,16 +330,16 @@ export default function Formulario(props:IdentificarPlanta){
                                     name="altura"
                                     value={formValues.height}
                                     onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                    className=" pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                             </div>
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
-                                    plantación:</p>
+                                <h3 className={`${BalooBhaina2.className} `}>Fecha de
+                                    plantación:</h3>
 
                             </div>
                             <div className="flex items-center">
@@ -327,7 +348,7 @@ export default function Formulario(props:IdentificarPlanta){
                                     name="fechaPlantacion"
                                     value={formValues.creation_date}
                                     onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                    className="pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                             </div>
@@ -339,10 +360,10 @@ export default function Formulario(props:IdentificarPlanta){
                     </div>
                     <div className={`${stylesDescriptionPlants.item4}`}>
                         <div>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <FiAlertCircle className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold  text-[#1F2325]`}>Descripción
-                                    general</p>
+                                <h3 className={`${BalooBhaina2.className}`}>Descripción
+                                    general</h3>
                             </div>
                             <div className="flex items-center">
                                 {/*<textarea
@@ -357,89 +378,38 @@ export default function Formulario(props:IdentificarPlanta){
 
                         </div>
                         <div>
-                            <div className="flex gap-2 mt-4">
+                            <div className="flex gap-2 mt-4 items-center">
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
+                                <h3 className={`${BalooBhaina2.className}`}>Ubicación</h3>
                             </div>
+                            <button
+                                className="flex items-center gap-2 font-bold my-3 py-2 px-4 rounded text-white bg-[#88BC43]">Crear
+                                Jardín
+                            </button>
                             <div className="flex flex-wrap gap-2">
-                                <div
-                                    onClick={() => handleUbicacionChange("0")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "baño" ? "bg-gray-200" : ""}`}
-                                >
-                                    Baño
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("1")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "patio trasero" ? "bg-gray-200" : ""}`}
-                                >
-                                    Patio Trasero
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("2")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "porche" ? "bg-gray-200" : ""}`}
-                                >
-                                    Porche
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("3")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "oficina" ? "bg-gray-200" : ""}`}
-                                >
-                                    Oficina
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("4")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "cocina" ? "bg-gray-200" : ""}`}
-                                >
-                                    Cocina
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("5")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "balcon" ? "bg-gray-200" : ""}`}
-                                >
-                                    Balcón
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("6")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "terraza" ? "bg-gray-200" : ""}`}
-                                >
-                                    Terraza
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("7")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "escritorio" ? "bg-gray-200" : ""}`}
-                                >
-                                    Escritorio
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("8")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "pasillo" ? "bg-gray-200" : ""}`}
-                                >
-                                    Pasillo
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("9")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "ventana" ? "bg-gray-200" : ""}`}
-                                >
-                                    Ventana
-                                </div>
-                                <div
-                                    onClick={() => handleUbicacionChange("10")}
-                                    className={`text-[24px] py-2 px-4 rounded border border-gray-300 cursor-pointer ${formValues.name_garden === "otro" ? "bg-gray-200" : ""}`}
-                                >
-                                    Otro
-                                </div>
 
-
+                                {ubicaciones.map((ubicacion, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => handleUbicacionChange(ubicacion, index.toString())}
+                                        className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${
+                                            formValues.name_garden === ubicacion ? 'bg-gray-200' : ''
+                                        }`}
+                                    >
+                                        {ubicacion}
+                                    </div>
+                                ))}
                             </div>
+
                         </div>
                     </div>
                 </div>
             </section>
             <section className="m-10 flex flex-col md:flex-row gap-5">
                 <div className="flex-1">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                         <FaImages className={`${stylesDescriptionPlants.iconos}`}/>
-                        <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Imágenes</p>
+                        <h3 className={`${BalooBhaina2.className} `}>Imágenes</h3>
                     </div>
                     <div className={`${stylesDescriptionPlants.item1}`}>
                         <div className="h-[500px] overflow-hidden flex items-center justify-center">
@@ -453,10 +423,10 @@ export default function Formulario(props:IdentificarPlanta){
                     </button>
                 </div>
                 <div className="flex-1 flex gap-2 flex-col">
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 items-center">
                         <FaRegNoteSticky className={`${stylesDescriptionPlants.iconos}`}/>
-                        <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Notas
-                            adicionales</p>
+                        <h3 className={`${BalooBhaina2.className}`}>Notas
+                            adicionales</h3>
 
                     </div>
                     <div className={`${stylesDescriptionPlants.efectoHoja} overflow-hidden bg-[#EFE8D6]`}>
@@ -465,7 +435,7 @@ export default function Formulario(props:IdentificarPlanta){
                             name="notas"
                             value={formValues.notes}
                             onChange={handleInputChange}
-                            className="text-[24px] pl-9 pr-9 w-full h-full resize-none"
+                            className=" pl-9 pr-9 w-full h-full resize-none"
                         />
 
                     </div>
@@ -475,7 +445,7 @@ export default function Formulario(props:IdentificarPlanta){
 
                 <button
                     onClick={handleButtonClick}
-                    className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]"
+                    className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]"
                 >
                     <LuPencilLine className="w-[15px] h-[15px] "/>
                     Guardar
