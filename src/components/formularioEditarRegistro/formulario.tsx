@@ -457,7 +457,7 @@ export default function Formulario(props:IdentificarPlanta){
                     <div className={`${stylesDescriptionPlants.efectoHoja} overflow-hidden bg-[#EFE8D6]`}>
 
                         <textarea
-                            name="notas"
+                            name="notes"
                             value={formValues.notes}
                             onChange={handleInputChange}
                             className=" pl-9 pr-9 w-full h-full resize-none"
