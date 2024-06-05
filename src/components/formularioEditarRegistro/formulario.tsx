@@ -15,14 +15,15 @@ import {FiAlertCircle} from "react-icons/fi";
 import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {BalooBhaina2} from "../../app/ui/fonts";
 
+
 export async function generateStaticParams() {
     return [{id: '1'}]
 }
 interface FormValues {
     alias: string;
-    height: string;
+    height: number;
     creation_date: string;
-    name_garden: string;
+    id_garden: string;
     notes: string;
 }
 interface IdentificarPlanta{
@@ -36,19 +37,20 @@ interface Garden {
 
 export default function Formulario(props:IdentificarPlanta){
     const { id, editar } = props
+    const router = useRouter();
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
-        height: "",
+        height: 0,
         creation_date: "",
-        name_garden: "",
+        id_garden: "",
         notes: "",
     });
 
     const initialValues: FormValues = {
         alias: "-",
-        height: "Valor pre cargado 7",
-        creation_date: "Valor pre cargado 8",
-        name_garden: "",
+        height: 0,
+        creation_date: "",
+        id_garden: "",
         notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
     };
 
@@ -61,39 +63,25 @@ export default function Formulario(props:IdentificarPlanta){
             [name]: newValue,
         }));
     };
-    const handleConfirmChanges = () => {
-        setShowPopup(false);
 
-        console.log("Datos del formulario a enviar:", formValues);
 
-        submitForm();
-    };
-
-    const handleUbicacionChange = (ubicacion: string, index:any) => {
+    const handleUbicacionChange = (index:any) => {
         setUbicacionSeleccionada(index);
-        console.log(ubicacion, index)
+        console.log(index)
         setFormValues((prevValues) => ({
             ...prevValues,
-            name_garden: ubicacion,
+            id_garden: index,
         }));
 
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const hasChanges = Object.keys(formValues).some(
-            (key) => formValues[key as keyof FormValues] !== initialValues[key as keyof FormValues]
-        );
 
-        if (hasChanges) {
-            setShowPopup(true);
-            console.log(hasChanges)
-        } else {
 
-            //alert("No se realizaron cambios. handle submit");
-        }
+        submitForm();
     };
-    const router = useRouter()
+
 
     const submitForm = async () => {
         /*console.log("Formulario enviado");
@@ -104,7 +92,7 @@ export default function Formulario(props:IdentificarPlanta){
             router.push(`/jardin/${id}`)
         }*/
         try {
-            const response = await fetch('http://localhost:8080/api/v1/garden/addPlant', {
+            const response = await fetch('http://localhost:8080/api/v1/plants', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,7 +101,9 @@ export default function Formulario(props:IdentificarPlanta){
             });
             if (response.ok) {
                 console.log("Respuesta del servidor:", response);
-                //router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+                router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+            }else {
+                console.log(JSON.stringify(formValues))
             }
         } catch (err) {
             console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
@@ -144,20 +134,7 @@ export default function Formulario(props:IdentificarPlanta){
         }
     };
 
-    const [showPopup, setShowPopup] = useState(false);
-    const handleButtonClick = () => {
-        // Verifica si hay cambios en el formulario
-        const hasChanges = Object.keys(formValues).some(
-            (key) => formValues[key as keyof FormValues] !== initialValues[key as keyof FormValues]
-        );
 
-        if (hasChanges) {
-            setShowPopup(true); // Muestra el popup para confirmar los cambios
-        } else {
-            // Si no hay cambios, muestra un mensaje indicando que no se realizaron cambios
-            alert("No se realizaron cambios.");
-        }
-    };
 
     const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
 
@@ -170,9 +147,7 @@ export default function Formulario(props:IdentificarPlanta){
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <button
-                            onClick={handleButtonClick}
-                            className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]"
-                        >
+                            className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
                             <LuPencilLine className="w-[15px] h-[15px] "/>
                             Guardar
                         </button>
@@ -391,9 +366,9 @@ export default function Formulario(props:IdentificarPlanta){
                                 {ubicaciones.map((ubicacion, index) => (
                                     <div
                                         key={index}
-                                        onClick={() => handleUbicacionChange(ubicacion, index.toString())}
+                                        onClick={() => handleUbicacionChange(index)}
                                         className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${
-                                            formValues.name_garden === ubicacion ? 'bg-gray-200' : ''
+                                            formValues.id_garden === ubicacion ? 'bg-gray-200' : ''
                                         }`}
                                     >
                                         {ubicacion}
@@ -444,38 +419,13 @@ export default function Formulario(props:IdentificarPlanta){
             <div className="m-10">
 
                 <button
-                    onClick={handleButtonClick}
                     className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]"
                 >
                     <LuPencilLine className="w-[15px] h-[15px] "/>
                     Guardar
                 </button>
             </div>
-            {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                    <div className="bg-white p-6 rounded-lg">
-                        <h2 className="text-xl font-semibold mb-4">Cambios realizados</h2>
-                        <ul>
-                            {Object.entries(formValues).map(([key, value]) => {
-                                if (value !== initialValues[key as keyof FormValues]) {
-                                    return (
-                                        <li key={key} className="mb-2">
-                                            <span className="font-semibold">{key}:</span> {value}
-                                        </li>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </ul>
-                        <button
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                            onClick={handleConfirmChanges}
-                        >
-                            Confirmar
-                        </button>
-                    </div>
-                </div>
-            )}
+
         </form>
     )
 }
