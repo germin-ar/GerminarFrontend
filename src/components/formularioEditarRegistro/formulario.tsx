@@ -15,14 +15,15 @@ import {FiAlertCircle} from "react-icons/fi";
 import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {BalooBhaina2} from "../../app/ui/fonts";
 
+
 export async function generateStaticParams() {
     return [{id: '1'}]
 }
 interface FormValues {
     alias: string;
-    height: string;
-    creation_date: string;
-    name_garden: string;
+    height: number;
+    planting_date: string;
+    id_garden: number;
     notes: string;
 }
 interface IdentificarPlanta{
@@ -34,21 +35,25 @@ interface Garden {
     name: string;
 }
 
+
+
 export default function Formulario(props:IdentificarPlanta){
+    const [showPopup, setShowPopUp] = useState(false);
     const { id, editar } = props
+    const router = useRouter();
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
-        height: "",
-        creation_date: "",
-        name_garden: "",
+        height: 0.0,
+        planting_date: "",
+        id_garden: 0,
         notes: "",
     });
 
     const initialValues: FormValues = {
         alias: "-",
-        height: "Valor pre cargado 7",
-        creation_date: "Valor pre cargado 8",
-        name_garden: "",
+        height: 0.0,
+        planting_date: "",
+        id_garden: 0,
         notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
     };
 
@@ -61,39 +66,24 @@ export default function Formulario(props:IdentificarPlanta){
             [name]: newValue,
         }));
     };
-    const handleConfirmChanges = () => {
-        setShowPopup(false);
 
-        console.log("Datos del formulario a enviar:", formValues);
 
-        submitForm();
-    };
-
-    const handleUbicacionChange = (ubicacion: string, index:any) => {
-        setUbicacionSeleccionada(index);
-        console.log(ubicacion, index)
+    const handleUbicacionChange = (index:any) => {
+        console.log(index)
         setFormValues((prevValues) => ({
             ...prevValues,
-            name_garden: ubicacion,
+            id_garden: index,
         }));
 
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const hasChanges = Object.keys(formValues).some(
-            (key) => formValues[key as keyof FormValues] !== initialValues[key as keyof FormValues]
-        );
 
-        if (hasChanges) {
-            setShowPopup(true);
-            console.log(hasChanges)
-        } else {
 
-            //alert("No se realizaron cambios. handle submit");
-        }
+        submitForm()
     };
-    const router = useRouter()
+
 
     const submitForm = async () => {
         /*console.log("Formulario enviado");
@@ -104,7 +94,7 @@ export default function Formulario(props:IdentificarPlanta){
             router.push(`/jardin/${id}`)
         }*/
         try {
-            const response = await fetch('http://localhost:8080/api/v1/garden/addPlant', {
+            const response = await fetch('http://localhost:8080/api/v1/plants', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -113,15 +103,19 @@ export default function Formulario(props:IdentificarPlanta){
             });
             if (response.ok) {
                 console.log("Respuesta del servidor:", response);
-                //router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+                router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+            }else {
+                console.log(JSON.stringify(formValues))
             }
         } catch (err) {
             console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
 
         }
     };
-    const [ubicaciones, setUbicaciones] = useState<string[]>([]);
-    const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState(null);
+
+
+
+    const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
     useEffect(() => {
         setFormValues(initialValues);
         const imagenGuardada = localStorage.getItem('imagen');
@@ -138,30 +132,58 @@ export default function Formulario(props:IdentificarPlanta){
                 }
             });
             const data: Garden[] = await response.json();
-            setUbicaciones(data.map(garden => garden.name));
+            console.log(data)
+            setUbicaciones(data.map(garden => ({ id: garden.id, name: garden.name })));
         } catch (error) {
             console.error('Error al obtener las ubicaciones:', error);
         }
     };
-
-    const [showPopup, setShowPopup] = useState(false);
-    const handleButtonClick = () => {
-        // Verifica si hay cambios en el formulario
-        const hasChanges = Object.keys(formValues).some(
-            (key) => formValues[key as keyof FormValues] !== initialValues[key as keyof FormValues]
-        );
-
-        if (hasChanges) {
-            setShowPopup(true); // Muestra el popup para confirmar los cambios
-        } else {
-            // Si no hay cambios, muestra un mensaje indicando que no se realizaron cambios
-            alert("No se realizaron cambios.");
-        }
+    const [gardenName, setGardenName] = useState('');
+    const handleInputChangeGardenName = (event:any) => {
+        setGardenName(event.target.value);
     };
+    const handleSubmitGarden = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_id: '1',
+                    name: gardenName,
+                }),
+            });
+
+            if (response.ok) {
+                alert('Jardín creado exitosamente');
+                closePopup();
+                await fetchUbicaciones()
+            } else {
+                console.error('Error al crear el jardín');
+            }
+        } catch (error) {
+            console.error('Error al conectar con el servidor:', error);
+        }
+
+    }
+
 
     const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
 
+    const [isOpen, setIsOpen] = useState(false);
+
+    const openPopup = () => {
+        setIsOpen(true);
+    };
+
+    const closePopup = () => {
+        setIsOpen(false);
+    };
     return (
+        <>
         <form className={`${stylesDescriptionPlants.contenedor}`} onSubmit={handleSubmit}>
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
@@ -170,9 +192,7 @@ export default function Formulario(props:IdentificarPlanta){
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <button
-                            onClick={handleButtonClick}
-                            className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]"
-                        >
+                            className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
                             <LuPencilLine className="w-[15px] h-[15px] "/>
                             Guardar
                         </button>
@@ -326,8 +346,9 @@ export default function Formulario(props:IdentificarPlanta){
                             </div>
                             <div className="flex items-center">
                                 <input
-                                    type="text"
-                                    name="altura"
+                                    step="0.01"
+                                    type="number"
+                                    name="height"
                                     value={formValues.height}
                                     onChange={handleInputChange}
                                     className=" pl-9 border-b-2 border-gray-300 rounded"
@@ -345,8 +366,8 @@ export default function Formulario(props:IdentificarPlanta){
                             <div className="flex items-center">
                                 <input
                                     type="text"
-                                    name="fechaPlantacion"
-                                    value={formValues.creation_date}
+                                    name="planting_date"
+                                    value={formValues.planting_date}
                                     onChange={handleInputChange}
                                     className="pl-9 border-b-2 border-gray-300 rounded"
                                 />
@@ -382,21 +403,25 @@ export default function Formulario(props:IdentificarPlanta){
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
                                 <h3 className={`${BalooBhaina2.className}`}>Ubicación</h3>
                             </div>
+
                             <button
-                                className="flex items-center gap-2 font-bold my-3 py-2 px-4 rounded text-white bg-[#88BC43]">Crear
-                                Jardín
+                                type="button"
+                                onClick={openPopup}
+                                className="  flex items-center gap-2 font-bold my-3 py-2 px-4 rounded text-white bg-[#88BC43] "
+                            >
+                                Crear Jardín
                             </button>
                             <div className="flex flex-wrap gap-2">
 
-                                {ubicaciones.map((ubicacion, index) => (
+                                {ubicaciones.map((ubicacion,  index) => (
                                     <div
                                         key={index}
-                                        onClick={() => handleUbicacionChange(ubicacion, index.toString())}
+                                        onClick={() => handleUbicacionChange(ubicacion.id)}
                                         className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${
-                                            formValues.name_garden === ubicacion ? 'bg-gray-200' : ''
+                                            formValues.id_garden === ubicacion.id ? 'bg-gray-200' : ''
                                         }`}
                                     >
-                                        {ubicacion}
+                                        {ubicacion.name}
                                     </div>
                                 ))}
                             </div>
@@ -432,7 +457,7 @@ export default function Formulario(props:IdentificarPlanta){
                     <div className={`${stylesDescriptionPlants.efectoHoja} overflow-hidden bg-[#EFE8D6]`}>
 
                         <textarea
-                            name="notas"
+                            name="notes"
                             value={formValues.notes}
                             onChange={handleInputChange}
                             className=" pl-9 pr-9 w-full h-full resize-none"
@@ -444,38 +469,45 @@ export default function Formulario(props:IdentificarPlanta){
             <div className="m-10">
 
                 <button
-                    onClick={handleButtonClick}
                     className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]"
                 >
                     <LuPencilLine className="w-[15px] h-[15px] "/>
                     Guardar
                 </button>
             </div>
-            {showPopup && (
-                <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-                    <div className="bg-white p-6 rounded-lg">
-                        <h2 className="text-xl font-semibold mb-4">Cambios realizados</h2>
-                        <ul>
-                            {Object.entries(formValues).map(([key, value]) => {
-                                if (value !== initialValues[key as keyof FormValues]) {
-                                    return (
-                                        <li key={key} className="mb-2">
-                                            <span className="font-semibold">{key}:</span> {value}
-                                        </li>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </ul>
-                        <button
-                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                            onClick={handleConfirmChanges}
-                        >
-                            Confirmar
-                        </button>
-                    </div>
+
+        </form>
+            {isOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <form onSubmit={handleSubmitGarden}>
+                        <div className="bg-white p-8 rounded-lg shadow-md">
+                            <h2 className="text-lg font-semibold mb-4">Nuevo Jardín</h2>
+                            <input
+                                type="text"
+                                value={gardenName}
+                                onChange={handleInputChangeGardenName}
+                                className="mb-4 border border-gray-300 rounded px-2 py-1"
+                                placeholder="Nombre del jardín"
+                            />
+                            <div className="flex justify-end">
+                                <button
+                                    type="button"
+                                    onClick={closePopup}
+                                    className="mr-2 px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
+                                >
+                                    Cancelar
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                >
+                                    Confirmar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             )}
-        </form>
+            </>
     )
 }
