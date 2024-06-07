@@ -15,7 +15,6 @@ interface Plant {
     creation_date: string;
     modification_date: string;
 }
-
 interface Garden {
     id: number;
     name: string;
@@ -24,85 +23,18 @@ interface Garden {
         name: string;
         email: string;
     };
-    plants: Plant[]; // Aquí se define la propiedad plants como un array de objetos de tipo Plant
+    plants: {
+        id: number;
+        alias: string;
+        is_active: boolean;
+        creation_date: string;
+        modification_date: string;
+    }[];
+    is_active: boolean | null;
 }
-export default function JardinPage() {
-    /*const data = [
-        {
-            categoria: 'Balcón',
-            plantas: [
-                {
-                    nombre: 'Tomate',
-                    foto: '/recomendacion/tomate.png',
-                    especifico: [
-                        {
-                            nombre: 'Tomate',
-                            foto: '/recomendacion/tomate.png',
-                            codigo: "2580"
-                        },
-                        {
-                            nombre: 'Carlos',
-                            foto: '/recomendacion/carlos.png',
-                            codigo: "2581"
-                        }
-                    ]
-                },
-                {
-                    nombre: 'Rúcula',
-                    foto: '/recomendacion/rucula.png',
-                    especifico: [
-                        {
-                            nombre: 'Rucula',
-                            foto: '/recomendacion/rucula.png',
-                            codigo: "2582"
-                        }
-                    ]
-                },
-            ]
-        },
-        {
-            categoria: 'Patio trasero',
-            plantas: [
-                {
-                    nombre: 'Lechuga',
-                    foto: '/recomendacion/lechuga.png',
-                    especifico: [
-                        {
-                            nombre: 'Lechuga',
-                            foto: '/recomendacion/lechuga.png',
-                            codigo: "2583"
-                        }
-                    ]
-                }
 
-            ]
-        },
-        {
-            categoria: 'Cocina',
-            plantas: [
-                {
-                    nombre: 'morrón',
-                    foto: '/recomendacion/morrón.png',
-                    especifico: [
-                        {
-                            nombre: 'morrón',
-                            foto: '/recomendacion/morrón.png'
-                        }
-                    ]
-                },
-                {
-                    nombre: 'albahaca',
-                    foto: '/recomendacion/albahaca.png',
-                    especifico: [
-                        {
-                            nombre: 'albahaca',
-                            foto: '/recomendacion/albahaca.png'
-                        }
-                    ]
-                }
-            ]
-        }
-    ];*/
+export default function JardinPage() {
+
 
     const [filtro, setFiltro] = useState('');
 
@@ -145,24 +77,30 @@ export default function JardinPage() {
 
     const [gardens, setGardens] = useState<Garden[]>([]);
 
-    const fetchUbicaciones = async () => {
+    const fetchGardens = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+            const userId = 1;
+            const response = await fetch('http://localhost:8080/api/v1/gardens/all', {
                 headers: {
-                    'id-user': '1'
-                }
+                    'id-user': userId.toString(),
+                },
             });
+            if (!response.ok) {
+                throw new Error('Failed to fetch gardens');
+            }
             const data = await response.json();
-            console.log(data);
-            setGardens(data);
 
+
+            data.sort((a:any, b:any) => a.name.localeCompare(b.name));
+            console.log(data)
+            setGardens(data);
         } catch (error) {
-            console.error('Error al obtener las ubicaciones:', error);
+            console.error('Error fetching gardens:', error);
         }
     };
 
     useEffect(() => {
-        fetchUbicaciones();
+        fetchGardens();
     }, []);
 
     return (
@@ -323,19 +261,23 @@ export default function JardinPage() {
                     </div>
                     <section className="flex-1 flex gap-10 flex-col pl-10 pt-10 pb-10">
                         <div>
-                            {/* Renderizar ubicaciones */}
-                            {gardens.map(garden => (
-                                <div key={garden.id}>
-                                    <h2>{garden.name}</h2>
-                                    <ul>
-                                        {garden.plants.map(planta => (
-                                            <li onClick={() => mostrarPopup(planta, planta.id)} key={planta.id}>{planta.alias}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ))}
+                            <h1 className="text-center">Jardines</h1>
+                            <ul>
+                                {gardens.map(garden => (
+                                    <li key={garden.id}>
+                                        <h2>{garden.name ? garden.name : "Sin jardín"}</h2>
+                                        <ul>
+                                            {garden.plants.map(plant => (
+                                                <li onClick={() => mostrarPopup(plant, plant.id)} key={plant.id}>
+                                                    {plant.alias}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
-                        {popupVisible && plantaSeleccionada &&(
+                        {popupVisible && plantaSeleccionada && (
                             <>
                                 <div
                                     className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">

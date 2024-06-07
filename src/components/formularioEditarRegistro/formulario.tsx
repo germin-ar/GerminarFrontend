@@ -23,7 +23,7 @@ interface FormValues {
     alias: string;
     height: number;
     planting_date: string;
-    id_garden: number;
+    id_garden: number | null;
     notes: string;
 }
 interface IdentificarPlanta{
@@ -45,7 +45,7 @@ export default function Formulario(props:IdentificarPlanta){
         alias: "",
         height: 0.0,
         planting_date: "",
-        id_garden: 0,
+        id_garden: null,
         notes: "",
     });
 
@@ -53,7 +53,7 @@ export default function Formulario(props:IdentificarPlanta){
         alias: "-",
         height: 0.0,
         planting_date: "",
-        id_garden: 0,
+        id_garden: null,
         notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
     };
 
@@ -103,7 +103,7 @@ export default function Formulario(props:IdentificarPlanta){
             });
             if (response.ok) {
                 console.log("Respuesta del servidor:", response);
-                router.push(editar === "si" ? '/jardin' : `/jardin/${id}`);
+                router.push(editar === "no" ? '/jardin' : `/jardin/${id}`);
             }else {
                 console.log(JSON.stringify(formValues))
             }
