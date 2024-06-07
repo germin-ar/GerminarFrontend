@@ -24,6 +24,7 @@ interface FormValues {
     height: number;
     planting_date: string;
     id_garden: number | null;
+    id_user: number | null;
     notes: string;
 }
 interface IdentificarPlanta{
@@ -34,7 +35,9 @@ interface Garden {
     id: number;
     name: string;
 }
-
+interface  PlantResponse{
+    id:number;
+}
 
 
 export default function Formulario(props:IdentificarPlanta){
@@ -46,6 +49,7 @@ export default function Formulario(props:IdentificarPlanta){
         height: 0.0,
         planting_date: "",
         id_garden: null,
+        id_user:1, //TODO modifiar la id de usuario por cognito
         notes: "",
     });
 
@@ -54,6 +58,7 @@ export default function Formulario(props:IdentificarPlanta){
         height: 0.0,
         planting_date: "",
         id_garden: null,
+        id_user: 1,
         notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
     };
 
@@ -102,8 +107,9 @@ export default function Formulario(props:IdentificarPlanta){
                 body: JSON.stringify(formValues),
             });
             if (response.ok) {
-                console.log("Respuesta del servidor:", response);
-                router.push(editar === "no" ? '/jardin' : `/jardin/${id}`);
+                const responseData: PlantResponse = await response.json();
+                console.log("Respuesta del servidor:", responseData);
+                router.push(editar === "si" ? '/jardin' : `/jardin/${responseData}`);
             }else {
                 console.log(JSON.stringify(formValues))
             }

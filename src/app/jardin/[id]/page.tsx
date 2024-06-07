@@ -1,3 +1,4 @@
+"use client"
 import stylesDescriptionPlants from "@/app/jardin/[id]/descripcion.module.css";
 import Image from "next/image";
 import {BalooBhaina2} from "@/app/ui/fonts";
@@ -18,12 +19,63 @@ import {FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
 import {FaTrash} from "react-icons/fa";
 import Link from "next/link";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
-export async function generateStaticParams(){
+/*export async function generateStaticParams(){
     return[{id: '1'}]
+}*/
+
+interface Plant {
+    id: number;
+    alias: string;
+    creationDate: string;
+    modificationDate: string;
+    plantingDate: string;
+    description: string;
+    favorite: boolean;
+    height: number;
+    sunExposure: string;
+    notes: string;
+    nameGarden: string;
+    expo: string;
+    idGarden: number;
+    userId: number;
 }
 
-export default function JardinPage({params: {id}}: { params: { id: string } }) {
+export default function JardinPage({params: {id}}: { params: { id: number } }) {
+    const router = useRouter();
+    const [plant, setPlant] = useState<Plant | null>(null);
+
+    useEffect(() => {
+        const fetchPlant = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                    headers: {
+                        'id-user': '1'
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch plant');
+                }
+                const data = await response.json();
+                console.log(data);
+                setPlant(data);
+            } catch (error) {
+                console.error('Error fetching plant:', error);
+            }
+        };
+
+        if (id) {
+            fetchPlant();
+        }
+    }, [id]);
+
+    if (!plant) {
+        return <div>Loading...</div>;
+    }
+
+
 
 
     return (
@@ -31,7 +83,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
-                        <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43]`}>{id}</h1>
+                        <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43]`}>{plant.alias}</h1>
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <Link href={`/jardin/${id}/editar`}
@@ -62,7 +114,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Nombre:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.alias}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
@@ -110,7 +162,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                                 <CiRuler className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Altura:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.height}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
@@ -118,7 +170,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
                                     plantación:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.plantingDate}</p>
                         </div>
 
                     </div>
@@ -129,11 +181,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Descripción
                                     general</p>
                             </div>
-                            <p className="text-[24px] pl-9">Es esbelta y robusta, con tallos de color verde oscuro que
-                                se extienden hacia arriba en busca de luz solar. Sus hojas son grandes y frondosas, de
-                                un verde vibrante, con una textura ligeramente áspera al tacto. En la parte superior de
-                                los tallos, se forman racimos de flores amarillas que eventualmente darán paso a los
-                                deliciosos frutos rojos.</p>
+                            <p className="text-[24px] pl-9">{plant.description}</p>
                         </div>
                         <div>
                             <div className="flex gap-2 mt-4">
@@ -166,10 +214,7 @@ export default function JardinPage({params: {id}}: { params: { id: string } }) {
                             adicionales</p>
                     </div>
                     <div className={`${stylesDescriptionPlants.efectoHoja} bg-[#EFE8D6]`}>
-                        <p className="text-[24px] p-8 rounded">He notado que algunas hojas inferiores de mi planta
-                            de tomate
-                            están
-                            amarillentas y marchitas.</p>
+                        <p className="text-[24px] p-8 rounded">{plant.notes}</p>
                     </div>
                 </div>
             </section>
