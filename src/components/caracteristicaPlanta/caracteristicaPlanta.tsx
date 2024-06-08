@@ -4,11 +4,12 @@ import Image from "next/image";
 import stylesResultado from "@/app/resultado/[id]/resultado.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import stylesCaracteristicas from "./caracteristica.module.css"
 
 import datos from '../../../public/json/datos.json';
 import Link from "next/link";
+import Loading from "@/app/resultado/[id]/loading";
 
 interface PlantData {
     scientificName: string;
@@ -33,18 +34,19 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
         commonNames: [],
     };
 
-    const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
+    /*const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
     useEffect(() => {
         // Recuperar la imagen del localStorage al cargar el componente
         const imagenGuardada = localStorage.getItem('imagen');
         if (imagenGuardada) {
             setImagenDataUrl(imagenGuardada);
         }
-    }, []);
-    /*const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
+    }, []);*/
+    const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     useEffect(() => {
-        fetch(`http://localhost:8080/api/v1/candidates/${id}`)
+        fetch(`http://localhost:8080/api/v1/candidates/${planta}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -52,34 +54,42 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                 return response.json();
             })
             .then((data) => {
-                const candidates = data.candidates.map((candidate: any) => ({
+                const candidates = data.candidates.map((candidate:any) => ({
                     scientificName: candidate.specie.scientific_name,
                     genusName: candidate.specie.genus_name,
                     familyName: candidate.specie.family_name,
                     commonNames: candidate.specie.common_names,
                     score: candidate.score,
                 }));
-                candidates.sort((a: any, b: any) => b.score - a.score);
+                candidates.sort((a:any, b:any) => b.score - a.score);
                 setDatosPlanta(candidates);
-                console.log(candidates);
                 setLoading(false);
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
+                //console.error('Error fetching data:', error);
+                //console.error('Error fetching data:', error.message);
+                setError(error.message);
                 setLoading(false);
             });
-    }, [id]);
+    }, [planta]);
 
     if (loading) {
         return <Loading />;
-    }*/
+    }
+
+    if (error) {
+        return <div className="flex items-center justify-center flex-col">
+            <h1 className="text-center">Algo ha salido mal. Vuelve a identificar la imagen.</h1>
+            <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Volver a identificar</Link>
+            </div>;
+    }
     const buscarDatosPorNombre = (nombre: string) => {
         const resultado = datos.find(item => item.nombre === nombre);
         return resultado ? resultado.propiedad : null;
     };
     const resultados = buscarDatosPorNombre(planta);
     return (
-        /*<section className="max-w-[1300px] m-auto">
+        <section className="max-w-[1300px] m-auto">
             <section className="max-w-lg mx-auto mt-10 p-5 bg-white shadow-md rounded-lg overflow-x-auto">
                 <h1 className="text-2xl font-bold mb-5">Información de la planta</h1>
                 {datosPlanta.length === 0 ? (
@@ -110,14 +120,14 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                        height="500"/>
-                                <button
+                                <Link href={`/registro/${planta}`}
                                     className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                     <div>
                                         <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                                height="20"/>
                                     </div>
                                     Guardar
-                                </button>
+                                </Link>
                             </div>
                         </div>
                         <div className={'table-container'}>
@@ -334,7 +344,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                 </section>
             </main>
 
-        </section>*/
+        </section>
         /*<section className="max-w-[1300px] m-auto">
             <section className="max-w-lg mx-auto mt-10 p-5 bg-white shadow-md rounded-lg overflow-x-auto">
                 <h1 className="text-2xl font-bold mb-5">Información de la planta</h1>
@@ -355,7 +365,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                     </div>
                 )}
             </section>*/
-        <section className="max-w-[1300px] mx-auto w-[85%]">
+        /*<section className="max-w-[1300px] mx-auto w-[85%]">
             <section className="flex flex-col gap-5">
                 <section>
                     <div
@@ -626,7 +636,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                 </section>
             </section>
 
-        </section>
+        </section>*/
 
     )
 }

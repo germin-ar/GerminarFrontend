@@ -80,6 +80,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
     return (
         <section className={`${stylesDescriptionPlants.contenedor}`}>
+            <div>{plant.idGarden}</div>
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
@@ -188,7 +189,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.idGarden}</p>
                         </div>
                     </div>
                 </div>

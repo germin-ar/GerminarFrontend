@@ -29,7 +29,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
 
     const handleIdentificarClick = async (event?: React.FormEvent<HTMLFormElement>) => {
         if (event) {
-            event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+            event.preventDefault();
         }
         if (!archivoSeleccionado) {
             alert("Por favor selecciona un archivo primero.");
@@ -45,14 +45,14 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
             return;
         }
 
-            /*await fetch(
-                "http://localhost:8080/api/v1/image",
+            await fetch(
+                "http://localhost:8080/api/v1/images",
                 {
                     method: "POST",
                     body: formData,
-                    headers:{
+                    /*headers:{
                         "Content-Type": "multipart/form-data"
-                    }
+                    }*/
                 }
             )
                 .then(res => {
@@ -62,16 +62,16 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                     //redirect()
                     router.push(`/resultado/${json.id}`)
                 })
-                .catch(err => console.error("Error", err))*/
+                .catch(err => console.error("Error", err))
 
-        await fetch(
+        /*await fetch(
             "http://127.0.0.1:5000/upload",
             {
                 method: "POST",
                 body: formData,
                 /*headers:{
                     "Content-Type": "multipart/form-data"
-                }*/
+                }
             }
         )
             .then(res => {
@@ -89,7 +89,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                 router.push(`/resultado/${json.predictions[0].label}`)
 
             })
-            .catch(err => console.error("Error", err))
+            .catch(err => console.error("Error", err))*/
     };
 
     return (
