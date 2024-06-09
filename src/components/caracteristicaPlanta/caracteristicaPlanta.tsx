@@ -5,9 +5,7 @@ import stylesResultado from "@/app/resultado/[id]/resultado.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
 import React, {useEffect, useState} from "react";
-import stylesCaracteristicas from "./caracteristica.module.css"
 
-import datos from '../../../public/json/datos.json';
 import Link from "next/link";
 import Loading from "@/app/resultado/[id]/loading";
 
@@ -83,11 +81,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
             <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Volver a identificar</Link>
             </div>;
     }
-    const buscarDatosPorNombre = (nombre: string) => {
-        const resultado = datos.find(item => item.nombre === nombre);
-        return resultado ? resultado.propiedad : null;
-    };
-    const resultados = buscarDatosPorNombre(planta);
+
     return (
         <section className="max-w-[1300px] m-auto">
             <section className="max-w-lg mx-auto mt-10 p-5 bg-white shadow-md rounded-lg overflow-x-auto">
@@ -120,7 +114,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                        height="500"/>
-                                <Link href={`/registro/${planta}`}
+                                <Link href={`/registro/${planta}?datos=${encodeURIComponent(JSON.stringify(datosPlanta))}`}
                                     className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                     <div>
                                         <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
