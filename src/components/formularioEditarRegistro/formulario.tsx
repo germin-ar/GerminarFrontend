@@ -21,6 +21,7 @@ import Link from "next/link";
 export async function generateStaticParams() {
     return [{id: '1'}]
 }
+
 interface FormValues {
     alias: string;
     height: number;
@@ -46,17 +47,20 @@ interface Plant {
     id_garden: number;
 }
 
-interface IdentificarPlanta{
-    id:string
-    editar:string
+interface IdentificarPlanta {
+    id: string
+    editar: string
 }
+
 interface Garden {
     id: number;
     name: string;
 }
-interface  PlantResponse{
-    id:number;
+
+interface PlantResponse {
+    id: number;
 }
+
 interface PlantData {
     scientificName: string;
     genusName: string;
@@ -65,16 +69,16 @@ interface PlantData {
     commonNames: string[];
 }
 
-export default function Formulario(props:IdentificarPlanta){
+export default function Formulario(props: IdentificarPlanta) {
     const [showPopup, setShowPopUp] = useState(false);
-    const { id, editar } = props
+    const {id, editar} = props
     const router = useRouter();
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
         height: 0.0,
         planting_date: "",
         id_garden: null,
-        id_user:1, //TODO modifiar la id de usuario por cognito
+        id_user: 1, //TODO modifiar la id de usuario por cognito
         notes: "",
     });
 
@@ -88,7 +92,7 @@ export default function Formulario(props:IdentificarPlanta){
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
+        const {name, value, type} = e.target;
         const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
 
         setFormValues((prevValues) => ({
@@ -98,7 +102,7 @@ export default function Formulario(props:IdentificarPlanta){
     };
 
 
-    const handleUbicacionChange = (index:any) => {
+    const handleUbicacionChange = (index: any) => {
         console.log(index)
         setFormValues((prevValues) => ({
             ...prevValues,
@@ -123,25 +127,53 @@ export default function Formulario(props:IdentificarPlanta){
         if (editar === "no"){
             router.push(`/jardin/${id}`)
         }*/
-        try {
-            const response = await fetch('http://localhost:8080/api/v1/plants', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formValues),
-            });
-            if (response.ok) {
-                const responseData: PlantResponse = await response.json();
-                console.log("Respuesta del servidor:", responseData);
-                router.push(editar === "si" ? '/jardin' : `/jardin/${responseData}`);
-            }else {
-                console.log(JSON.stringify(formValues))
+        if (editar === "si") {
+            const updatedFormValues = {
+                ...formValues,
+                idUser: 1,
+                id: {id}
+            };
+            try {
+                const response = await fetch(`http://localhost:8080/api/v1/plants/update`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedFormValues)
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to update plant');
+                }
+                // Redirect to plant details page or any other page as needed
+                router.push(`/jardin`);
+            } catch (error) {
+                console.error('Error updating plant:', error);
             }
-        } catch (err) {
-            console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
-
         }
+        if (editar === "no") {
+
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/plants', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formValues),
+                });
+                if (response.ok) {
+                    const responseData: PlantResponse = await response.json();
+                    console.log("Respuesta del servidor:", responseData);
+                    router.push(`/jardin/${responseData}`)
+                } else {
+                    console.log(JSON.stringify(formValues))
+                }
+            } catch (err) {
+                console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
+
+            }
+        }
+
+
     };
 
 
@@ -151,7 +183,7 @@ export default function Formulario(props:IdentificarPlanta){
     const [error, setError] = useState(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
     useEffect(() => {
-        if(editar === "no"){
+        if (editar === "no") {
             fetch(`http://localhost:8080/api/v1/candidates/${id}`)
                 .then((response) => {
                     if (!response.ok) {
@@ -160,14 +192,14 @@ export default function Formulario(props:IdentificarPlanta){
                     return response.json();
                 })
                 .then((data) => {
-                    const candidates = data.candidates.map((candidate:any) => ({
+                    const candidates = data.candidates.map((candidate: any) => ({
                         scientificName: candidate.specie.scientific_name,
                         genusName: candidate.specie.genus_name,
                         familyName: candidate.specie.family_name,
                         commonNames: candidate.specie.common_names,
                         score: candidate.score,
                     }));
-                    candidates.sort((a:any, b:any) => b.score - a.score);
+                    candidates.sort((a: any, b: any) => b.score - a.score);
                     setDatosPlanta(candidates);
                     setLoading(false);
                 })
@@ -177,7 +209,7 @@ export default function Formulario(props:IdentificarPlanta){
                     setError(error.message);
                     setLoading(false);
                 });
-        } else if (editar === "si"){
+        } else if (editar === "si") {
             const fetchPlantData = async () => {
                 try {
                     const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
@@ -202,7 +234,6 @@ export default function Formulario(props:IdentificarPlanta){
         }
 
 
-
         setFormValues(initialValues);
         const imagenGuardada = localStorage.getItem('imagen');
         if (imagenGuardada) {
@@ -219,13 +250,13 @@ export default function Formulario(props:IdentificarPlanta){
             });
             const data: Garden[] = await response.json();
             console.log(data)
-            setUbicaciones(data.map(garden => ({ id: garden.id, name: garden.name })));
+            setUbicaciones(data.map(garden => ({id: garden.id, name: garden.name})));
         } catch (error) {
             console.error('Error al obtener las ubicaciones:', error);
         }
     };
     const [gardenName, setGardenName] = useState('');
-    const handleInputChangeGardenName = (event:any) => {
+    const handleInputChangeGardenName = (event: any) => {
         setGardenName(event.target.value);
     };
     const handleSubmitGarden = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -253,7 +284,6 @@ export default function Formulario(props:IdentificarPlanta){
         } catch (error) {
             console.error('Error al conectar con el servidor:', error);
         }
-
     }
 
 
@@ -271,7 +301,7 @@ export default function Formulario(props:IdentificarPlanta){
 
 
     if (loading) {
-        return <Loading />;
+        return <Loading/>;
     }
 
     if (error) {
@@ -290,7 +320,7 @@ export default function Formulario(props:IdentificarPlanta){
             <div>{datosPlanta[0].familyName}</div>
             <div>{datosPlanta[0].genusName}</div>*/}
             {
-                plantEdit? (
+                plantEdit ? (
                     <div>{plantEdit.alias}</div>
                 ) : (
                     <div>algo</div>
