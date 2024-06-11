@@ -29,6 +29,23 @@ interface FormValues {
     id_user: number | null;
     notes: string;
 }
+
+interface Plant {
+    id: number;
+    alias: string;
+    creation_date: string | null;
+    modification_date: string | null;
+    planting_date: string | null;
+    description: string | null;
+    favorite: boolean | null;
+    height: number;
+    sun_exposure: string | null;
+    notes: string;
+    name_garden: string | null;
+    expo: string | null;
+    id_garden: number;
+}
+
 interface IdentificarPlanta{
     id:string
     editar:string
@@ -128,36 +145,64 @@ export default function Formulario(props:IdentificarPlanta){
     };
 
 
+    const [plantEdit, setPlantEdit] = useState<Plant | null>(null);
     const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
     useEffect(() => {
-        fetch(`http://localhost:8080/api/v1/candidates/${id}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+        if(editar === "no"){
+            fetch(`http://localhost:8080/api/v1/candidates/${id}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    const candidates = data.candidates.map((candidate:any) => ({
+                        scientificName: candidate.specie.scientific_name,
+                        genusName: candidate.specie.genus_name,
+                        familyName: candidate.specie.family_name,
+                        commonNames: candidate.specie.common_names,
+                        score: candidate.score,
+                    }));
+                    candidates.sort((a:any, b:any) => b.score - a.score);
+                    setDatosPlanta(candidates);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    //console.error('Error fetching data:', error);
+                    //console.error('Error fetching data:', error.message);
+                    setError(error.message);
+                    setLoading(false);
+                });
+        } else if (editar === "si"){
+            const fetchPlantData = async () => {
+                try {
+                    const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                        headers: {
+                            'id-user': '1'
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch plant data');
+                    }
+                    const plant = await response.json();
+                    setPlantEdit(plant);
+                } catch (error) {
+                    console.error('Error fetching plant data:', error);
                 }
-                return response.json();
-            })
-            .then((data) => {
-                const candidates = data.candidates.map((candidate:any) => ({
-                    scientificName: candidate.specie.scientific_name,
-                    genusName: candidate.specie.genus_name,
-                    familyName: candidate.specie.family_name,
-                    commonNames: candidate.specie.common_names,
-                    score: candidate.score,
-                }));
-                candidates.sort((a:any, b:any) => b.score - a.score);
-                setDatosPlanta(candidates);
+            };
+
+            if (id) {
+                fetchPlantData();
                 setLoading(false);
-            })
-            .catch((error) => {
-                //console.error('Error fetching data:', error);
-                //console.error('Error fetching data:', error.message);
-                setError(error.message);
-                setLoading(false);
-            });
+            }
+        }
+
+
+
         setFormValues(initialValues);
         const imagenGuardada = localStorage.getItem('imagen');
         if (imagenGuardada) {
@@ -237,21 +282,29 @@ export default function Formulario(props:IdentificarPlanta){
     }
     return (
         <>
-            <div>{datosPlanta[0].scientificName}</div>
+            {/*<div>{datosPlanta[0].scientificName}</div>
             {datosPlanta[0].commonNames.map((name, index) => (
                 <p key={index}>{name}</p>
             ))}
             <div>{datosPlanta[0].score}</div>
             <div>{datosPlanta[0].familyName}</div>
-            <div>{datosPlanta[0].genusName}</div>
+            <div>{datosPlanta[0].genusName}</div>*/}
+            {
+                plantEdit? (
+                    <div>{plantEdit.alias}</div>
+                ) : (
+                    <div>algo</div>
+
+                )
+            }
 
 
             <form className={`${stylesDescriptionPlants.contenedor}`} onSubmit={handleSubmit}>
                 <section className="m-10">
                     <div className="flex justify-between flex-col md:flex-row md:gap-3">
-                        <div className="flex-1">
-                            <h1 className={`${BalooBhaina2.className}  text-[#88BC43]`}>Registrar Planta</h1>
-                        </div>
+                        <h1 className={`${BalooBhaina2.className}  text-[#88BC43]`}>
+                            {editar ? 'Editar Planta' : 'Registrar Planta'}
+                        </h1>
                         <div className="flex-1 flex justify-end items-center gap-3 ">
                             <button
                                 className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">

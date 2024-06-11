@@ -114,8 +114,8 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 <Image src="/resultado/albahaca-sana.jpg" alt="Albahaca-sana" width="500"
                                        height="500"/>
-                                <Link href={`/registro/${planta}?datos=${encodeURIComponent(JSON.stringify(datosPlanta))}`}
-                                    className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                <Link href={`/registro/${planta}}`}
+                                    className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                     <div>
                                         <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                                height="20"/>
