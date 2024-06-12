@@ -91,7 +91,7 @@ export default function JardinPage() {
             const data = await response.json();
 
 
-            data.sort((a:any, b:any) => a.name.localeCompare(b.name));
+            //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
             console.log(data)
             setGardens(data);
         } catch (error) {
@@ -261,11 +261,11 @@ export default function JardinPage() {
                     </div>
                     <section className="flex-1 flex gap-10 flex-col pl-10 pt-10 pb-10">
                         <div>
-                            <h1 className="text-center">Jardines</h1>
+                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] text-center`}>Jardines</h1>
                             <ul>
                                 {gardens.map(garden => (
                                     <li key={garden.id}>
-                                        <h2>{garden.name ? garden.name : "Sin jardín"}</h2>
+                                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>{garden.name ? garden.name : "Sin jardín"}</h2>
                                         <ul>
                                             {garden.plants.map(plant => (
                                                 <li onClick={() => mostrarPopup(plant, plant.id)} key={plant.id}>

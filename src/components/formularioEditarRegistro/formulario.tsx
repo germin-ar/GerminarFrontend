@@ -608,9 +608,9 @@ export default function Formulario(props: IdentificarPlanta) {
                                         />
                                         <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                                     </>) :
-                                        (<>
-                                        <p>{plantEdit?}</p>
-                                        </>)}
+                                        (
+                                        <p className="pl-9">{plantEdit?.modification_date}</p>
+                                        )}
 
                                 </div>
 
