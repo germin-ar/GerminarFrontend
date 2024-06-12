@@ -80,7 +80,7 @@ export default function JardinPage() {
     const fetchGardens = async () => {
         try {
             const userId = 1;
-            const response = await fetch('http://localhost:8080/api/v1/gardens/all', {
+            const response = await fetch('http://localhost:8080/api/v1/gardens', {
                 headers: {
                     'id-user': userId.toString(),
                 },

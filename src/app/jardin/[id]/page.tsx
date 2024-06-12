@@ -40,7 +40,12 @@ interface Plant {
     nameGarden: string;
     expo: string;
     idGarden: number;
-    userId: number;
+    plantCatalogFamilyName: string;
+    plantCatalogGenus:string;
+    plantCatalogIrrigation:string;
+    plantCatalogDescription:string;
+    plantCatalogCommonName: string;
+    plantCatalogScientificName: string;
 }
 
 export default function JardinPage({params: {id}}: { params: { id: number } }) {
@@ -113,16 +118,23 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         <div>
                             <div className="flex gap-2">
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Nombre:</p>
+                                <p className={`${BalooBhaina2.className} font-bold  text-[#1F2325]`}>Alias:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.alias}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Tipo:</p>
+                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Nombre:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.plantCatalogGenus}</p>
+                        </div>
+                        <div>
+                            <div className="flex gap-2">
+                                <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
+                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Género:</p>
+                            </div>
+                            <p className="text-[24px] pl-9">{plant.plantCatalogGenus}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">

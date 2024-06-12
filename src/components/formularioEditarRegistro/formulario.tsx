@@ -30,6 +30,41 @@ interface FormValues {
     id_user: number | null;
     notes: string;
 }
+interface PlantData {
+    id: string;
+    language: string;
+    candidates: Candidate[];
+    image: Image;
+}
+
+interface Candidate {
+    score: number;
+    specie: Species;
+    plant_data: PlantDataDetail;
+}
+interface Species {
+    scientific_name: string;
+    genus_name: string;
+    family_name: string;
+    common_names: string[];
+}
+interface PlantDataDetail {
+    description: string;
+    height: number | null;
+    fertilizer: string;
+    irrigation: string;
+    soil: string;
+    sun_exposure: string | null;
+    insecticide: string;
+    temperature_max: number | null;
+    temperature_min: number | null;
+}
+
+interface Image {
+    uuid: string;
+    url: string;
+}
+
 
 interface Plant {
     id: number;
@@ -70,7 +105,6 @@ interface PlantData {
 }
 
 export default function Formulario(props: IdentificarPlanta) {
-    const [showPopup, setShowPopUp] = useState(false);
     const {id, editar} = props
     const router = useRouter();
     const [formValues, setFormValues] = useState<FormValues>({
@@ -120,13 +154,6 @@ export default function Formulario(props: IdentificarPlanta) {
 
 
     const submitForm = async () => {
-        /*console.log("Formulario enviado");
-        if (editar === "si"){
-        router.push(`/jardin`)
-        }
-        if (editar === "no"){
-            router.push(`/jardin/${id}`)
-        }*/
         if (editar === "si") {
             const updatedFormValues = {
                 ...formValues,
@@ -176,7 +203,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
     };
 
-
+    const [plantData, setPlantData] = useState<PlantData | null>(null);
     const [plantEdit, setPlantEdit] = useState<Plant | null>(null);
     const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -191,21 +218,12 @@ export default function Formulario(props: IdentificarPlanta) {
                     }
                     return response.json();
                 })
-                .then((data) => {
-                    const candidates = data.candidates.map((candidate: any) => ({
-                        scientificName: candidate.specie.scientific_name,
-                        genusName: candidate.specie.genus_name,
-                        familyName: candidate.specie.family_name,
-                        commonNames: candidate.specie.common_names,
-                        score: candidate.score,
-                    }));
-                    candidates.sort((a: any, b: any) => b.score - a.score);
-                    setDatosPlanta(candidates);
+                .then((data: PlantData) => {
+                    setPlantData(data);
+                    console.log(data);
                     setLoading(false);
                 })
                 .catch((error) => {
-                    //console.error('Error fetching data:', error);
-                    //console.error('Error fetching data:', error.message);
                     setError(error.message);
                     setLoading(false);
                 });
@@ -319,21 +337,14 @@ export default function Formulario(props: IdentificarPlanta) {
             <div>{datosPlanta[0].score}</div>
             <div>{datosPlanta[0].familyName}</div>
             <div>{datosPlanta[0].genusName}</div>*/}
-            {
-                plantEdit ? (
-                    <div>{plantEdit.alias}</div>
-                ) : (
-                    <div>algo</div>
 
-                )
-            }
 
 
             <form className={`${stylesDescriptionPlants.contenedor}`} onSubmit={handleSubmit}>
                 <section className="m-10">
                     <div className="flex justify-between flex-col md:flex-row md:gap-3">
                         <h1 className={`${BalooBhaina2.className}  text-[#88BC43]`}>
-                            {editar ? 'Editar Planta' : 'Registrar Planta'}
+                            {editar === 'no' ? 'Registrar Planta' : 'Editar Planta'}
                         </h1>
                         <div className="flex-1 flex justify-end items-center gap-3 ">
                             <button
@@ -347,9 +358,18 @@ export default function Formulario(props: IdentificarPlanta) {
                     <div className={`${stylesDescriptionPlants.planta} mt-4`}>
                         <div className={`${stylesDescriptionPlants.item1}`}>
                             <div className="h-[500px] overflow-hidden flex items-center justify-center">
-                                <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
-                                     alt="imagen" width="500"
-                                     height="500"/>
+                                { plantData ? (
+                                        <img src={`${plantData?.image.url}`} className="object-cover max-w-full max-h-full"
+                                             alt="imagen" width="500"
+                                             height="500"/>
+                                ) : (
+                                    <>
+                                        <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                             alt="imagen" width="500"
+                                             height="500"/>
+                                    </>
+                                )}
+
                             </div>
                         </div>
                         <div className={`${stylesDescriptionPlants.item2}`}>
@@ -359,14 +379,28 @@ export default function Formulario(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className} `}>Alias:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    <input
-                                        type="text"
-                                        name="alias"
-                                        value={formValues.alias}
-                                        onChange={handleInputChange}
-                                        className=" pl-9 border-b-2 border-gray-300 rounded"
-                                    />
-                                    <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                    { plantData ?
+                                        (<>
+                                                <input
+                                                    type="text"
+                                                    name="alias"
+                                                    value={formValues.alias}
+                                                    onChange={handleInputChange}
+                                                    className=" pl-9 border-b-2 border-gray-300 rounded"
+                                                />
+                                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                            </>
+                                        ) : (<>
+                                            <input
+                                                type="text"
+                                                name="alias"
+                                                value={formValues.alias}
+                                                onChange={handleInputChange}
+                                                className=" pl-9 border-b-2 border-gray-300 rounded"
+                                            />
+                                            <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                        </>)}
+
                                 </div>
 
                             </div>
@@ -376,7 +410,6 @@ export default function Formulario(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Nombre comunes:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    <p className=" pl-9">Nombre Comun</p>
                                     {/*<input
                                     type="text"
                                     name="commonName"
@@ -385,13 +418,31 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                    { plantData ?
+                                        (<ul className="flex gap-2 pl-9">
+                                        {/*<input
+                                                type="text"
+                                                name="commonName"
+                                                value={plantData.candidates[0].specie.common_names.map( (id, index) => {
+
+                                                })}
+                                                onChange={handleInputChange}
+                                                className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                            />
+                                            <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                            {plantData?.candidates[0].specie.common_names.map((name, index) => (
+
+                                                <li key={index}>{name}{index !== plantData?.candidates[0].specie.common_names.length - 1 && ','} </li>
+
+                                            ))}
+                                        </ul>) : (<> mapearaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</>)}
                                 </div>
 
                             </div>
                             <div>
                                 <div className="flex gap-2 items-center">
                                     <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
-                                    <h3 className={`${BalooBhaina2.className}  `}>Tipo:</h3>
+                                    <h3 className={`${BalooBhaina2.className}  `}>Género:</h3>
                                 </div>
                                 <div className="flex items-center">
                                     {/*<input
@@ -402,7 +453,14 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    <p className=" pl-9">Tipo</p>
+                                    { plantData ? (
+                                        <>
+                                            <p className=" pl-9">{plantData.candidates[0].specie.genus_name}</p>
+                                        </>) :
+                                        (<>
+                                        <p className=" pl-9">Completarrrrrrrrrrrrrrrrr</p>
+                                    </>)}
+
                                 </div>
 
                             </div>
@@ -420,7 +478,11 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    <p className=" pl-9">Familia</p>
+                                    { plantData ?
+                                        (<>
+                                            <p className=" pl-9">{plantData.candidates[0].specie.family_name}</p>
+                                        </>) : (<><p className=" pl-9">completarrrrrrrrrrrrrrrrrrrrrrr</p></>)}
+
                                 </div>
 
                             </div>
@@ -451,15 +513,11 @@ export default function Formulario(props: IdentificarPlanta) {
                                         solar:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    {/*<input
-                                    type="text"
-                                    name="exposicionSolar"
-                                    value={formValues.exposicionSolar}
-                                    onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
-                                />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    <p className=" pl-9">Exposición solar</p>
+                                    { plantData ?
+                                        (<>
+                                            <p className=" pl-9">{plantData.candidates[0].plant_data.sun_exposure}</p>
+                                        </>) : (<><p className=" pl-9">Completarrrrrrr</p></>)}
+
                                 </div>
 
                             </div>
@@ -471,15 +529,14 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </div>
 
                                 <div className="flex items-center">
-                                    {/*<input
-                                    type="text"
-                                    name="frecuenciaRiego"
-                                    value={formValues.frecuenciaRiego}
-                                    onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
-                                />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    <p className=" pl-9">Frecuencia de riego</p>
+                                    {plantData ?
+                                        (
+                                            <>
+                                            <p className=" pl-9">{plantData.candidates[0].plant_data.irrigation}</p>
+                                            </>) : (<>
+                                            <p className=" pl-9">completarrrrrrrrr</p>
+                                        </>)}
+
                                 </div>
                             </div>
                         </div>
@@ -509,14 +566,20 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 </div>
                                 <div className="flex items-center">
-                                    <input
-                                        type="text"
-                                        name="planting_date"
-                                        value={formValues.planting_date}
-                                        onChange={handleInputChange}
-                                        className="pl-9 border-b-2 border-gray-300 rounded"
-                                    />
-                                    <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                    { plantData ? (<>
+                                        <input
+                                            type="text"
+                                            name="planting_date"
+                                            value={formValues.planting_date}
+                                            onChange={handleInputChange}
+                                            className="pl-9 border-b-2 border-gray-300 rounded"
+                                        />
+                                        <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                    </>) :
+                                        (<>
+                                        <p>editarrrrr</p>
+                                        </>)}
+
                                 </div>
 
 
@@ -531,14 +594,13 @@ export default function Formulario(props: IdentificarPlanta) {
                                         general</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    {/*<textarea
-                                    name="descripcionGeneral"
-                                    value={formValues.descripcionGeneral}
-                                    onChange={handleInputChange}
-                                    className="text-[24px] pl-9 pr-9 w-full min-h-[150px] resize-none border-b-2 border-gray-300 rounded"
-                                />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    <p className=" pl-9">Descripción general</p>
+                                    { plantData ? (
+                                        <>
+                                        <p className="pl-9">{plantData.candidates[0].plant_data.description}</p>
+                                        </>) : (<>
+                                        <p className=" pl-9">llenarrrrrrrrrr</p>
+                                    </>)}
+
                                 </div>
 
                             </div>
@@ -599,13 +661,22 @@ export default function Formulario(props: IdentificarPlanta) {
 
                         </div>
                         <div className={`${stylesDescriptionPlants.efectoHoja} overflow-hidden bg-[#EFE8D6]`}>
+                            { plantData ? (<>
+                            <textarea
+                                name="notes"
+                                value={formValues.notes}
+                                onChange={handleInputChange}
+                                className=" pl-9 pr-9 w-full h-full resize-none"
+                            />
+                            </>) : (<>
+                            <textarea
+                                name="notes"
+                                value={formValues.notes}
+                                onChange={handleInputChange}
+                                className=" pl-9 pr-9 w-full h-full resize-none"
+                            />
+                            </>)}
 
-                        <textarea
-                            name="notes"
-                            value={formValues.notes}
-                            onChange={handleInputChange}
-                            className=" pl-9 pr-9 w-full h-full resize-none"
-                        />
 
                         </div>
                     </div>
