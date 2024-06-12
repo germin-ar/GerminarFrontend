@@ -52,7 +52,7 @@ export default function Header() {
                             {/*<li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>*/}
                             <div className="flex gap-2">
                                 <li className={`${stylesHeader.liUser} `}>
-                                    <Image className="rounded-full min-w-[75px]" src="/usuario.PNG" width="75"
+                                    <Image className="rounded-full min-w-[75px]" src="/usuario.png" width="75"
                                            height="75"
                                            alt="usuario logueado"/>
                                     <FaCrown className={`${stylesHeader.corona}`}/>
