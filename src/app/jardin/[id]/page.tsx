@@ -29,23 +29,26 @@ import {useRouter} from "next/navigation";
 interface Plant {
     id: number;
     alias: string;
-    creationDate: string;
-    modificationDate: string;
-    plantingDate: string;
-    description: string;
-    favorite: boolean;
-    height: number;
-    sunExposure: string;
-    notes: string;
-    nameGarden: string;
-    expo: string;
-    idGarden: number;
-    plantCatalogFamilyName: string;
-    plantCatalogGenus:string;
-    plantCatalogIrrigation:string;
-    plantCatalogDescription:string;
-    plantCatalogCommonName: string;
-    plantCatalogScientificName: string;
+    creation_date: string | null;
+    modification_date: string;
+    planting_date: string | null;
+    description: string | null;
+    favorite: boolean | null;
+    height: number | null;
+    sun_exposure: string | null;
+    notes: string | null;
+    name_garden: string | null;
+    expo: string | null;
+    id_garden: number;
+    plant_catalog_family_name: string;
+    plant_catalog_genus: string;
+    plant_catalog_irrigation: string;
+    plant_catalog_description: string;
+    plant_catalog_common_name: string;
+    plant_catalog_scientific_name: string;
+    images: {
+        url: string;
+    }[];
 }
 
 export default function JardinPage({params: {id}}: { params: { id: number } }) {
@@ -85,7 +88,6 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
     return (
         <section className={`${stylesDescriptionPlants.contenedor}`}>
-            <div>{plant.idGarden}</div>
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
@@ -110,8 +112,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                 </div>
                 <div className={`${stylesDescriptionPlants.planta} mt-4`}>
                     <div className={`${stylesDescriptionPlants.item1}`}>
-                        <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                               src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
+                        {/*<Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                               src={plant.images[0].url} alt={`${id}`} width="450"
+                               height="200"/>*/}
+
+                        <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                               src={plant.images[0].url} alt={`${id}`} width="450"
                                height="200"/>
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
@@ -127,21 +133,21 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Nombre:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plantCatalogGenus}</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_scientific_name}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
                                 <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Género:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plantCatalogGenus}</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_genus}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
                                 <GiPlantRoots className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Familia:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_family_name}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
@@ -158,15 +164,16 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Exposición
                                     solar:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.sun_exposure}</p>
+
                         </div>
                         <div>
-                            <div className="flex gap-2">
+                        <div className="flex gap-2">
                                 <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
                                     de riego:</p>
                             </div>
-                            <p className="text-[24px] pl-9">a</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_irrigation}</p>
                         </div>
                     </div>
                     <div className={`${stylesDescriptionPlants.item3}`}>
@@ -183,7 +190,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
                                     plantación:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plantingDate}</p>
+                            <p className="text-[24px] pl-9">{plant.planting_date}</p>
                         </div>
 
                     </div>
@@ -194,14 +201,14 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Descripción
                                     general</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.description}</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_description}</p>
                         </div>
                         <div>
                             <div className="flex gap-2 mt-4">
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.idGarden}</p>
+                            <p className="text-[24px] pl-9">{plant.id_garden}</p>
                         </div>
                     </div>
                 </div>
@@ -213,10 +220,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Imágenes</p>
                     </div>
                     <div className={`${stylesDescriptionPlants.item1}`}>
-                        <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                        {/*<Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
                                src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
-                               height="200"/>
-
+                               height="200"/>*/}
+                        <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                             src={plant.images[0].url} alt={`${id}`} width="450"
+                             height="200"/>
                     </div>
                     <button className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas</button>
                 </div>

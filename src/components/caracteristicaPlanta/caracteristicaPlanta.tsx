@@ -16,6 +16,8 @@ interface PlantData {
     image: Image;
 }
 
+
+
 interface Candidate {
     score: number;
     specie: Species;
@@ -29,16 +31,24 @@ interface Species {
     common_names: string[];
 }
 
+
+
+
 interface PlantDataDetail {
     description: string;
     height: number | null;
     fertilizer: string;
-    irrigation: string;
+    watering: string;
     soil: string;
     sun_exposure: string | null;
     insecticide: string;
     temperature_max: number | null;
     temperature_min: number | null;
+    tips: string;
+    harvest_time: string;
+    growth_season: string;
+    planting_time: string;
+    pruning:string;
 }
 
 interface Image {
@@ -220,7 +230,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Riego</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Mantener el suelo ligeramente
                                         húmedo, evitando el encharcamiento.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.irrigation}</p>
+                                    <p>{plantData?.candidates[0].plant_data.watering}</p>
                                 </div>
                             </div>
 
@@ -270,8 +280,10 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temperatura adecuada</h3>
-                                    <p className={`${stylesResultado.texto}`}>Prefiere temperaturas cálidas
-                                        entre 18-25°C, evitando temperaturas extremadamente frías.</p>
+                                    {/*<p className={`${stylesResultado.texto}`}>Prefiere temperaturas cálidas
+                                        entre 18-25°C, evitando temperaturas extremadamente frías.</p>*/}
+                                    <p>{plantData?.candidates[0].plant_data.temperature_min}</p>
+                                    <p>{plantData?.candidates[0].plant_data.temperature_max}</p>
                                 </div>
                             </div>
 
@@ -282,23 +294,15 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temporada</h3>
-                                    <p className={`${stylesResultado.texto}`}>Se puede sembrar en primavera
+                                    {/*<p className={`${stylesResultado.texto}`}>Se puede sembrar en primavera
                                         después de que haya pasado el
-                                        riesgo de heladas.</p>
+                                        riesgo de heladas.</p>*/}
+                                    <p>{plantData?.candidates[0].plant_data.harvest_time}</p>
+                                    <p>{plantData?.candidates[0].plant_data.growth_season}</p>
+                                    <p>{plantData?.candidates[0].plant_data.planting_time}</p>
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
-                                <div>
-                                    <Image src="/resultado/ubicacion-icon.png" alt="ubicacion-icon" width="150"
-                                           height="150"/>
-                                </div>
-                                <div className={'flex flex-col'}>
-                                    <h3 className={`${BalooBhaina2.className}`}>Ubicaciones posibles</h3>
-                                    <p className={`${stylesResultado.texto}`}>Ventana, balcón, terraza, patio
-                                        trasero, porche.</p>
-                                </div>
-                            </div>
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
@@ -307,9 +311,10 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Podado</h3>
-                                    <p className={`${stylesResultado.texto}`}>Podar cada 15 días
+                                    {/*<p className={`${stylesResultado.texto}`}>Podar cada 15 días
                                         aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
-                                        abundante.</p>
+                                        abundante.</p>*/}
+                                    <p>{plantData?.candidates[0].plant_data.pruning}</p>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +323,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                     <div className={''}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Consejos</h2>
                         <ul className={`list-disc list-inside flex flex-col gap-8`}>
-                            <li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
+                            {/*<li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
                                 antes de usarlas para obtener el mejor sabor y aroma.
                             </li>
                             <li>Si la albahaca comienza a florecer, retira las flores para prolongar la producción de
@@ -330,7 +335,8 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <li>Si no vas a utilizar toda la albahaca de inmediato, puedes conservar las hojas en un
                                 recipiente hermético en la nevera durante unos días o congelarlas para usarlas más
                                 tarde.
-                            </li>
+                            </li>*/}
+                            <li>{plantData?.candidates[0].plant_data.tips}</li>
                         </ul>
 
                         <div className={'mt-14'}>

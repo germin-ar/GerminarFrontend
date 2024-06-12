@@ -25,10 +25,10 @@ export async function generateStaticParams() {
 interface FormValues {
     alias: string;
     height: number;
-    planting_date: string;
+    planting_date: Date;
     id_garden: number | null;
-    id_user: number | null;
-    notes: string;
+    is_favorite: boolean;
+    image_url: string;
 }
 interface PlantData {
     id: string;
@@ -50,14 +50,19 @@ interface Species {
 }
 interface PlantDataDetail {
     description: string;
-    height: number | null;
+    height: number;
     fertilizer: string;
-    irrigation: string;
+    watering: string;
     soil: string;
     sun_exposure: string | null;
     insecticide: string;
     temperature_max: number | null;
     temperature_min: number | null;
+    tips: string;
+    harvest_time: string;
+    growth_season: string;
+    planting_time: string;
+    pruning:string;
 }
 
 interface Image {
@@ -71,15 +76,40 @@ interface Plant {
     alias: string;
     creation_date: string | null;
     modification_date: string | null;
-    planting_date: string | null;
+    planting_date: Date;
     description: string | null;
     favorite: boolean | null;
     height: number;
     sun_exposure: string | null;
-    notes: string;
+    //notes: string;
     name_garden: string | null;
     expo: string | null;
     id_garden: number;
+}
+
+interface PlantEdit {
+    id: number;
+    alias: string;
+    creation_date: string | null;
+    modification_date: string;
+    planting_date: string | null;
+    description: string | null;
+    favorite: boolean | null;
+    height: number ;
+    sun_exposure: string | null;
+    notes: string | null;
+    name_garden: string | null;
+    expo: string | null;
+    id_garden: number;
+    plant_catalog_family_name: string;
+    plant_catalog_genus: string;
+    plant_catalog_irrigation: string;
+    plant_catalog_description: string;
+    plant_catalog_common_name: string;
+    plant_catalog_scientific_name: string;
+    images: {
+        url: string;
+    }[];
 }
 
 interface IdentificarPlanta {
@@ -109,26 +139,32 @@ export default function Formulario(props: IdentificarPlanta) {
     const router = useRouter();
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
-        height: 0.0,
-        planting_date: "",
+        height: 0,
+        planting_date: new Date('2024-06-12'),
         id_garden: null,
-        id_user: 1, //TODO modifiar la id de usuario por cognito
-        notes: "",
+        is_favorite: true,
+        image_url: ""
     });
 
     const initialValues: FormValues = {
-        alias: "-",
-        height: 0.0,
-        planting_date: "",
+        alias: "",
+        height: 0,
+        planting_date: new Date('2024-06-12'),
         id_garden: null,
-        id_user: 1,
-        notes: "He notado que algunas hojas inferiores de mi planta de tomate están amarillentas y marchitas.",
+        is_favorite: true,
+        image_url: ""
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const {name, value, type} = e.target;
-        const newValue = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+        const { name, value, type } = e.target;
+        let newValue: string | number | boolean | Date = value;
 
+        // Check if the input type is 'date' and convert the value to a Date object
+        if (type === 'date') {
+            newValue = new Date(value);
+        } else if (type === 'checkbox') {
+            newValue = (e.target as HTMLInputElement).checked;
+        }
         setFormValues((prevValues) => ({
             ...prevValues,
             [name]: newValue,
@@ -180,19 +216,25 @@ export default function Formulario(props: IdentificarPlanta) {
         if (editar === "no") {
 
             try {
+                const updatedFormValues = {
+                    ...formValues,
+                    image_url: plantData?.image.url, // Replace 'your_image_url_here' with the actual URL
+                };
                 const response = await fetch('http://localhost:8080/api/v1/plants', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'id-user': "1"
                     },
-                    body: JSON.stringify(formValues),
+                    body: JSON.stringify(updatedFormValues),
+
                 });
                 if (response.ok) {
                     const responseData: PlantResponse = await response.json();
                     console.log("Respuesta del servidor:", responseData);
                     router.push(`/jardin/${responseData}`)
                 } else {
-                    console.log(JSON.stringify(formValues))
+                    console.log(JSON.stringify(updatedFormValues))
                 }
             } catch (err) {
                 console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
@@ -204,7 +246,7 @@ export default function Formulario(props: IdentificarPlanta) {
     };
 
     const [plantData, setPlantData] = useState<PlantData | null>(null);
-    const [plantEdit, setPlantEdit] = useState<Plant | null>(null);
+    const [plantEdit, setPlantEdit] = useState<PlantEdit | null>(null);
     const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -330,16 +372,6 @@ export default function Formulario(props: IdentificarPlanta) {
     }
     return (
         <>
-            {/*<div>{datosPlanta[0].scientificName}</div>
-            {datosPlanta[0].commonNames.map((name, index) => (
-                <p key={index}>{name}</p>
-            ))}
-            <div>{datosPlanta[0].score}</div>
-            <div>{datosPlanta[0].familyName}</div>
-            <div>{datosPlanta[0].genusName}</div>*/}
-
-
-
             <form className={`${stylesDescriptionPlants.contenedor}`} onSubmit={handleSubmit}>
                 <section className="m-10">
                     <div className="flex justify-between flex-col md:flex-row md:gap-3">
@@ -364,7 +396,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                              height="500"/>
                                 ) : (
                                     <>
-                                        <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                        <img src={`${plantEdit?.images[0].url}`} className="object-cover max-w-full max-h-full"
                                              alt="imagen" width="500"
                                              height="500"/>
                                     </>
@@ -394,7 +426,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                             <input
                                                 type="text"
                                                 name="alias"
-                                                value={formValues.alias}
+                                                value={plantEdit?.alias}
                                                 onChange={handleInputChange}
                                                 className=" pl-9 border-b-2 border-gray-300 rounded"
                                             />
@@ -435,7 +467,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                                 <li key={index}>{name}{index !== plantData?.candidates[0].specie.common_names.length - 1 && ','} </li>
 
                                             ))}
-                                        </ul>) : (<> mapearaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</>)}
+                                        </ul>) : (<p className=" pl-9"> {plantEdit?.plant_catalog_common_name}</p>)}
                                 </div>
 
                             </div>
@@ -458,7 +490,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                             <p className=" pl-9">{plantData.candidates[0].specie.genus_name}</p>
                                         </>) :
                                         (<>
-                                        <p className=" pl-9">Completarrrrrrrrrrrrrrrrr</p>
+                                        <p className=" pl-9">{plantEdit?.plant_catalog_genus}</p>
                                     </>)}
 
                                 </div>
@@ -481,7 +513,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     { plantData ?
                                         (<>
                                             <p className=" pl-9">{plantData.candidates[0].specie.family_name}</p>
-                                        </>) : (<><p className=" pl-9">completarrrrrrrrrrrrrrrrrrrrrrr</p></>)}
+                                        </>) : (<><p className=" pl-9">{plantEdit?.plant_catalog_family_name}</p></>)}
 
                                 </div>
 
@@ -516,7 +548,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     { plantData ?
                                         (<>
                                             <p className=" pl-9">{plantData.candidates[0].plant_data.sun_exposure}</p>
-                                        </>) : (<><p className=" pl-9">Completarrrrrrr</p></>)}
+                                        </>) : (<><p className=" pl-9">{plantEdit?.sun_exposure}</p></>)}
 
                                 </div>
 
@@ -532,9 +564,9 @@ export default function Formulario(props: IdentificarPlanta) {
                                     {plantData ?
                                         (
                                             <>
-                                            <p className=" pl-9">{plantData.candidates[0].plant_data.irrigation}</p>
+                                            <p className=" pl-9">{plantData.candidates[0].plant_data.watering}</p>
                                             </>) : (<>
-                                            <p className=" pl-9">completarrrrrrrrr</p>
+                                            <p className=" pl-9">{plantEdit?.plant_catalog_irrigation}</p>
                                         </>)}
 
                                 </div>
@@ -548,10 +580,10 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </div>
                                 <div className="flex items-center">
                                     <input
-                                        step="0.01"
+                                        step="0.1"
                                         type="number"
                                         name="height"
-                                        value={formValues.height}
+                                        value={plantEdit?.height}
                                         onChange={handleInputChange}
                                         className=" pl-9 border-b-2 border-gray-300 rounded"
                                     />
@@ -568,16 +600,16 @@ export default function Formulario(props: IdentificarPlanta) {
                                 <div className="flex items-center">
                                     { plantData ? (<>
                                         <input
-                                            type="text"
+                                            type="date"
                                             name="planting_date"
-                                            value={formValues.planting_date}
+                                            value={formValues.planting_date.toISOString().substr(0, 10)}
                                             onChange={handleInputChange}
                                             className="pl-9 border-b-2 border-gray-300 rounded"
                                         />
                                         <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                                     </>) :
                                         (<>
-                                        <p>editarrrrr</p>
+                                        <p>{plantEdit?}</p>
                                         </>)}
 
                                 </div>
@@ -598,7 +630,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                         <>
                                         <p className="pl-9">{plantData.candidates[0].plant_data.description}</p>
                                         </>) : (<>
-                                        <p className=" pl-9">llenarrrrrrrrrr</p>
+                                        <p className=" pl-9">{plantEdit?.plant_catalog_description}</p>
                                     </>)}
 
                                 </div>
@@ -637,6 +669,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     </div>
                 </section>
                 <section className="m-10 flex flex-col md:flex-row gap-5">
+                    { !plantData ? (
                     <div className="flex-1">
                         <div className="flex gap-2 items-center">
                             <FaImages className={`${stylesDescriptionPlants.iconos}`}/>
@@ -652,7 +685,10 @@ export default function Formulario(props: IdentificarPlanta) {
                         </div>
                         <button className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Subir más imágenes
                         </button>
-                    </div>
+                    </div>):(
+                        <>
+                        </>)
+                    }
                     <div className="flex-1 flex gap-2 flex-col">
                         <div className="flex gap-2 items-center">
                             <FaRegNoteSticky className={`${stylesDescriptionPlants.iconos}`}/>
@@ -664,15 +700,15 @@ export default function Formulario(props: IdentificarPlanta) {
                             { plantData ? (<>
                             <textarea
                                 name="notes"
-                                value={formValues.notes}
-                                onChange={handleInputChange}
+                                //value={formValues.notes}
+                                //onChange={handleInputChange}
                                 className=" pl-9 pr-9 w-full h-full resize-none"
                             />
                             </>) : (<>
                             <textarea
                                 name="notes"
-                                value={formValues.notes}
-                                onChange={handleInputChange}
+                                //value={formValues.notes}
+                                //onChange={handleInputChange}
                                 className=" pl-9 pr-9 w-full h-full resize-none"
                             />
                             </>)}
