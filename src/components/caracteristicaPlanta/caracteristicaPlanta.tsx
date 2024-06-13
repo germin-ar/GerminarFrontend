@@ -7,7 +7,7 @@ import styles from "@/app/home.module.css";
 import React, {useEffect, useState} from "react";
 
 import Link from "next/link";
-import Loading from "@/app/resultado/[id]/loading";
+import Loading from "@/components/Spinner/Spinner";
 
 interface PlantData {
     id: string;
@@ -100,9 +100,11 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
     }
 
     if (error) {
-        return <div className="flex items-center justify-center flex-col">
-            <h1 className="text-center">Algo ha salido mal. Vuelve a identificar la imagen.</h1>
-            <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Volver a identificar</Link>
+        return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
+            <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
+            <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
+                   height="200"/>
+            <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Reintentar</Link>
             </div>;
     }
 
