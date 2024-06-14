@@ -6,6 +6,8 @@ import Link from "next/link";
 import {IoIosHome} from "react-icons/io";
 import {FaClock, FaHeart, FaTrash} from "react-icons/fa";
 import {PiPottedPlantFill} from "react-icons/pi";
+import {FaFaceGrimace} from "react-icons/fa6";
+import {MdCheckCircle} from "react-icons/md";
 
 interface Plant {
     id: number;
@@ -247,9 +249,8 @@ export default function JardinPage() {
                                 >
                                     <IoIosHome size={25}/>
                                     <span
-                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
-                                        // onClick={() => setUbicacionVisible(!ubicacionVisible)}
-                                    >Ubicación</span>
+                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Ubicación
+                                    </span>
                                     <svg
                                         className={`w-3 h-3 transition-transform duration-300 ${
                                             ubicacionVisible ? 'rotate-180' : ''
@@ -269,22 +270,37 @@ export default function JardinPage() {
                                     </svg>
                                 </button>
                             </div>
-                            <ul className={`pl-5 transition-max-height duration-500 ease-in-out`}>
-                                <li className="cursor-pointer"
-                                    onClick={() => handleUbicacionFilter("todos")}>
-                                    <button type="button"
-                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                                <span
-                                                    className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Todos</span>
+                            <ul
+                                className={`pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${
+                                    ubicacionVisible ? 'max-h-60' : 'max-h-0'
+                                }`}
+                            >
+                                <li
+                                    className="cursor-pointer"
+                                    onClick={() => handleUbicacionFilter("todos")}
+                                >
+                                    <button
+                                        type="button"
+                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    >
+                                        <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">
+                                          Todos
+                                        </span>
                                     </button>
                                 </li>
                                 {data.map(garden => (
-                                    <li key={garden.id} className="cursor-pointer"
-                                        onClick={() => handleUbicacionFilter(garden.name)}>
-                                        <button type="button"
-                                                className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                                        <span
-                                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">{garden.name}</span>
+                                    <li
+                                        key={garden.id}
+                                        className="cursor-pointer"
+                                        onClick={() => handleUbicacionFilter(garden.name)}
+                                    >
+                                        <button
+                                            type="button"
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        >
+                                          <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">
+                                            {garden.name}
+                                          </span>
                                         </button>
                                     </li>
                                 ))}
@@ -300,11 +316,6 @@ export default function JardinPage() {
                                         onClick={() => setPrioridadVisible(!prioridadVisible)}>Favoritos</span>
                                 </button>
                             </div>
-                            {prioridadVisible && (
-                                <div className="pl-5">
-
-                                </div>
-                            )}
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
@@ -364,10 +375,18 @@ export default function JardinPage() {
                     {popupVisible && plantaSeleccionada && (
                         <>
                             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                                <div className="flex flex-col items-center gap-2 bg-white p-8 rounded-lg w-96">
-                                    <img src={plantaSeleccionada.image} alt={plantaSeleccionada.alias}
-                                         className="w-16 h-16 mr-2 rounded-full"/>
-                                    <h3 className="text-lg font-semibold mb-2">{plantaSeleccionada.alias}</h3>
+                                <div className="flex flex-col items-center gap-2 sm:gap-3 bg-white p-8 rounded-lg w-96">
+                                    <div className="flex flex-col gap-2 sm:gap-3 sm:flex-row items-center">
+                                        <div className={"flex-col items-center"}>
+                                            <img src={plantaSeleccionada.image} alt={plantaSeleccionada.alias}
+                                                 className="w-16 h-16 rounded-full sm:mr-2"/>
+                                            <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
+                                        </div>
+                                        <div>
+                                            {/*plantaSeleccionada.isHealthy*/}
+                                            <p className={"w-fit text-center"}>¡Tu planta está sana!</p>
+                                        </div>
+                                    </div>
                                     {/*<p>Descripción: {plantaSeleccionada.description}</p>*/}
                                     <div className={"flex gap-3"}>
                                         <Link href={"/editar"}
