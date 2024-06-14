@@ -1,26 +1,21 @@
 "use client"
 import stylesDescriptionPlants from "@/app/jardin/[id]/descripcion.module.css";
-import Image from "next/image";
 import {BalooBhaina2} from "@/app/ui/fonts";
 
 
-import {FaRegIdCard} from "react-icons/fa";
+import {FaImages, FaRegIdCard, FaTrash} from "react-icons/fa";
 import {RiPlantLine} from "react-icons/ri";
 import {GiPlantRoots} from "react-icons/gi";
-import {MdOutlineHealthAndSafety} from "react-icons/md";
+import {MdOutlineHealthAndSafety, MdOutlineWaterDrop} from "react-icons/md";
 import {IoSunnyOutline} from "react-icons/io5";
-import {MdOutlineWaterDrop} from "react-icons/md";
-import {CiRuler} from "react-icons/ci";
-import {CiCalendar} from "react-icons/ci";
+import {CiCalendar, CiRuler} from "react-icons/ci";
 import {FiAlertCircle} from "react-icons/fi";
-import {FaLocationDot} from "react-icons/fa6";
-import {FaImages} from "react-icons/fa";
-import {FaRegNoteSticky} from "react-icons/fa6";
+import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
-import {FaTrash} from "react-icons/fa";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import Loading from "@/components/Spinner/Spinner";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
@@ -81,11 +76,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     }, [id]);
 
     if (!plant) {
-        return <div>Loading...</div>;
+        return <Loading/>
     }
-
-
-
 
     return (
         <section className={`${stylesDescriptionPlants.contenedor}`}>
@@ -96,7 +88,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <Link href={`/jardin/${id}/editar`}
-                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
+                              className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
                             <LuPencilLine className="w-[15px] h-[15px] "/>
                             Editar
                         </Link>
@@ -118,8 +110,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                height="200"/>*/}
 
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                               src={plant.images[0].url} alt={`${id}`} width="450"
-                               height="200"/>
+                             src={plant.images[0].url} alt={`${id}`} width="450"
+                             height="200"/>
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
                         <div>
@@ -169,7 +161,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
                         </div>
                         <div>
-                        <div className="flex gap-2">
+                            <div className="flex gap-2">
                                 <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
                                     de riego:</p>
