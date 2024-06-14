@@ -15,12 +15,12 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
   }
 
     return (
-        <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5 `}>
-            <h2 className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
+        <section className={`${styles.fondoCards} rounded flex justify-center items-center flex-col gap-5 `}>
+            <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className}`}>Herramientas de cultivo
                 inteligentes</h2>
 
             <div className={`flex justify-center items-center flex-wrap gap-5`}>
-                <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
+                <div className={`${styles.cards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
                         <p className={`${BalooBhaina2.className} text-center`}>¿Cómo
                             identifico mi planta?</p>
@@ -28,12 +28,12 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <button
                             onClick={handleClick}
-                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`${styles.botonCards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Identificar
                         </button>
                     </div>
                 </div>
-                <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
+                <div className={`${styles.cards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
                         <p className={`${BalooBhaina2.className} text-center`}>¿Qué
                             puedo plantar hoy?</p>
@@ -45,7 +45,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                         </Link>
                     </div>
                 </div>
-                <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
+                <div className={`${styles.cards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
                         <p className={`${BalooBhaina2.className} text-center  `}>¿Qué
                             puedo plantar en
@@ -58,7 +58,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                         </Link>
                     </div>
                 </div>
-                <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
+                <div className={`${styles.cards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center ">
                         <p className={`${BalooBhaina2.className} text-center `}>¿Qué
                             le sucede a mi
