@@ -1,9 +1,42 @@
+"use client"
 import stylesDescubrir from "./descubrir.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
 import styles from "@/app/home.module.css";
+import {useState} from "react";
+
+interface Location {
+    latitude: number | null;
+    longitude: number | null;
+}
 
 export default function DescubrirPage() {
+    const [locationData, setLocationData] = useState<Location>({ latitude: null, longitude: null });
+
+    const handleMapClick = (event:any) => {
+        setLocationData({
+            latitude: event.latLng.lat(),
+            longitude: event.latLng.lng()
+        });
+    };
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    setLocationData({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    });
+                },
+                (error) => {
+                    console.error('Error getting location:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    };
+    
     return (
         <>
             <main className={`${stylesDescubrir.contenedor}`}>
@@ -26,13 +59,19 @@ export default function DescubrirPage() {
                                 <Image src="/descubrir/ubicacion-icon.png" alt="ubicacion-icon" width="30"
                                        height="30"/>
                             </div>
-                            <a  href="" className={'cursor-pointer underline font-semibold'}>Activar ubicación</a>
+                            <button onClick={getLocation} type="button" className={'cursor-pointer underline font-semibold'}>Activar ubicación</button>
                         </div>
                         <div>
                             <button
                                 className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 Buscar
                             </button>
+                            {locationData.latitude !== null && locationData.longitude !== null && (
+                                <div>
+                                    <p>Latitud: {locationData.latitude}</p>
+                                    <p>Longitud: {locationData.longitude}</p>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </section>
