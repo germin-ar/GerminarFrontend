@@ -40,7 +40,7 @@ interface PlantDataDetail {
     fertilizer: string;
     watering: string;
     soil: string;
-    sun_exposure: string | null;
+    sun_exposure: string;
     insecticide: string;
     temperature_max: number | null;
     temperature_min: number | null;
@@ -69,7 +69,10 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
         family_name: '',
         common_names: [],
     };
-
+    const [showPopup, setShowPopup] = useState(false);
+    const handleClick = () => {
+        setShowPopup(!showPopup);
+    };
     const [plantData, setPlantData] = useState<PlantData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -197,7 +200,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                         <div className={'flex flex-wrap'}>
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/tamaño-icon.png" alt="tamaño-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tamaño-icon.png" alt="tamaño-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col items-start'}>
@@ -212,7 +215,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/fertilizante-icon.png" alt="fertilizante-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/fertilizante-icon.png" alt="fertilizante-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -225,7 +228,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/riego-icon.png" alt="riego-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/riego-icon.png" alt="riego-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -238,7 +241,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/tierra-icon.png" alt="tierra-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tierra-icon.png" alt="tierra-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -251,20 +254,31 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/exposolar-icon.png" alt="exposolar-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/exposolar-icon.png" alt="exposolar-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Exposición solar</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Luz solar directa por la mañana
                                         y sombra parcial por la tarde.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.sun_exposure}</p>
+                                    <p className="cursor-pointer">{plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 100 ? `${plantData && plantData?.candidates[0].plant_data.sun_exposure.slice(0, 100)}...` : plantData && plantData?.candidates[0].plant_data.sun_exposure }</p>
+                                    {plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 50 && <button className="mt-2 px-4 py-2 text-white rounded bg-[#88BC43] w-1/4" onClick={handleClick}>ver mas</button>}
+                                    {showPopup && (
+                                        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                                            <div className="bg-white p-4 rounded shadow-lg w-[800px]" >
+                                                <p>{plantData && plantData?.candidates[0].plant_data.sun_exposure}</p>
+                                                <button onClick={handleClick} className="mt-2 px-4 py-2  text-white rounded bg-[#88BC43]">
+                                                    Cerrar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/insecticida-icon.png" alt="insecticida-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/insecticida-icon.png" alt="insecticida-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -277,7 +291,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/temperatura-icon.png" alt="temperatura-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temperatura-icon.png" alt="temperatura-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -291,7 +305,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/temporada-icon.png" alt="temporada-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temporada-icon.png" alt="temporada-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
@@ -308,7 +322,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
-                                    <Image src="/resultado/podado-icon.png" alt="podado-icon" width="150"
+                                    <Image className="max-w-[100px] min-w-[100px]" src="/resultado/podado-icon.png" alt="podado-icon" width="150"
                                            height="150"/>
                                 </div>
                                 <div className={'flex flex-col'}>
