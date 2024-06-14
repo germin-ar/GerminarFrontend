@@ -6,6 +6,8 @@ import Link from "next/link";
 import {IoIosHome} from "react-icons/io";
 import {FaClock, FaHeart, FaTrash} from "react-icons/fa";
 import {PiPottedPlantFill} from "react-icons/pi";
+import {CiCalendar} from "react-icons/ci";
+import Image from "next/image";
 
 interface Plant {
     id: number;
@@ -206,39 +208,39 @@ export default function JardinPage() {
 
     return (
         <>
-            {/*<section>*/}
-            {/*    <div className={"flex flex-col items-center my-12"}>*/}
-            {/*        /!*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*!/*/}
-            {/*        <div className="flex justify-center items-center gap-10">*/}
-            {/*            <div className="flex-1 flex justify-center items-center gap-5">*/}
-            {/*                <button*/}
-            {/*                    className={`bg-[#88BC43] w-max hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>*/}
-            {/*                    <div>*/}
-            {/*                        <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"*/}
-            {/*                               height="20"/>*/}
-            {/*                    </div>*/}
-            {/*                    Añadir nueva planta*/}
-            {/*                </button>*/}
-            {/*                <button*/}
-            {/*                    className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>*/}
-            {/*                    <div>*/}
-            {/*                        <CiCalendar className={`${stylesJardin.iconos}`}/>*/}
-            {/*                    </div>*/}
-            {/*                    Calendario*/}
-            {/*                </button>*/}
-            {/*            </div>*/}
-            {/*            <div className="flex-1 w-96">*/}
-            {/*                <input*/}
-            {/*                    type="text"*/}
-            {/*                    placeholder="Buscar"*/}
-            {/*                    value={filtro}*/}
-            {/*                    onChange={handleFiltroChange}*/}
-            {/*                    className="px-4 py-2 w-full rounded-full border border-gray-300 focus:outline-none focus:border-blue-500"*/}
-            {/*                />*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</section>*/}
+            <section>
+                <div className={"flex flex-col items-center my-12"}>
+                    {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
+                        <div className="flex-1 flex justify-center items-center gap-5">
+                            <button
+                                className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                <div>
+                                    <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
+                                           height="20"/>
+                                </div>
+                                Añadir nueva planta
+                            </button>
+                            <button
+                                className={`${styles.botonCards} flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                <div>
+                                    <CiCalendar className={`${stylesJardin.iconos}`}/>
+                                </div>
+                                Calendario
+                            </button>
+                        </div>
+                        <div className="flex-1 w-96">
+                            <input
+                                type="text"
+                                placeholder="Buscar"
+                                value={filtro}
+                                onChange={handleFiltroChange}
+                                className="px-4 py-2 w-full rounded-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
             <div className={`${stylesJardin.contenidoAjustado} flex mb-10`}>
                 <div className="flex-shrink-0 md:overflow-x-auto">
                     <ul className="pl-5 pt-5 select-none">
