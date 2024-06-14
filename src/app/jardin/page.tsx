@@ -6,8 +6,6 @@ import Link from "next/link";
 import {IoIosHome} from "react-icons/io";
 import {FaClock, FaHeart, FaTrash} from "react-icons/fa";
 import {PiPottedPlantFill} from "react-icons/pi";
-import {FaFaceGrimace} from "react-icons/fa6";
-import {MdCheckCircle} from "react-icons/md";
 
 interface Plant {
     id: number;
@@ -157,6 +155,10 @@ export default function JardinPage() {
         setUbicacionVisible(!ubicacionVisible);
     };
 
+    const toggleAntiguedad = () => {
+        setAntiguedadVisible(!antiguedadVisible);
+    };
+
     const handleUbicacionFilter = (ubicacion: string) => {
         setFiltro(ubicacion === 'Todos' ? '' : ubicacion);
         // setUbicacionVisible(true);
@@ -238,7 +240,7 @@ export default function JardinPage() {
             {/*    </div>*/}
             {/*</section>*/}
             <div className={`${stylesJardin.contenidoAjustado} flex mb-10`}>
-                <div className="w-72 flex-shrink-0">
+                <div className="flex-shrink-0 md:overflow-x-auto">
                     <ul className="pl-5 pt-5 select-none">
                         <div>
                             <div className="flex items-center gap-1 ">
@@ -247,9 +249,9 @@ export default function JardinPage() {
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                     onClick={toggleUbicacion}
                                 >
-                                    <IoIosHome size={25}/>
+                                    <IoIosHome size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
-                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">Ubicación
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Ubicación
                                     </span>
                                     <svg
                                         className={`w-3 h-3 transition-transform duration-300 ${
@@ -271,7 +273,7 @@ export default function JardinPage() {
                                 </button>
                             </div>
                             <ul
-                                className={`pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${
+                                className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${
                                     ubicacionVisible ? 'max-h-60' : 'max-h-0'
                                 }`}
                             >
@@ -283,7 +285,8 @@ export default function JardinPage() {
                                         type="button"
                                         className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                     >
-                                        <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
                                           Todos
                                         </span>
                                     </button>
@@ -298,7 +301,8 @@ export default function JardinPage() {
                                             type="button"
                                             className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                         >
-                                          <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold">
+                                          <span
+                                              className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
                                             {garden.name}
                                           </span>
                                         </button>
@@ -310,21 +314,41 @@ export default function JardinPage() {
                             <div className="flex items-center gap-1 ">
                                 <button type="button"
                                         className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                    <FaHeart size={25}/>
+                                    <FaHeart size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
-                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
                                         onClick={() => setPrioridadVisible(!prioridadVisible)}>Favoritos</span>
                                 </button>
                             </div>
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
-                                <button type="button"
-                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                    <PiPottedPlantFill size={25}/>
+                                <button
+                                    type="button"
+                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    // onClick={toggleUbicacion}
+                                >
+                                    <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
-                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
-                                        onClick={() => setTipoVisible(!tipoVisible)}>Tipo</span>
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Tipo
+                                    </span>
+                                    <svg
+                                        className={`w-3 h-3 transition-transform duration-300 ${
+                                            tipoVisible ? 'rotate-180' : ''
+                                        }`}
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 10 6"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 4 4 4-4"
+                                        />
+                                    </svg>
                                 </button>
                             </div>
                             {tipoVisible && (
@@ -334,18 +358,59 @@ export default function JardinPage() {
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
-                                <button type="button"
-                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                    <FaClock size={25}/>
+                                <button
+                                    type="button"
+                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    onClick={toggleAntiguedad}
+                                >
+                                    <FaClock size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
-                                        className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap text-lg font-bold"
-                                        onClick={() => setAntiguedadVisible(!antiguedadVisible)}>Antigüedad</span>
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Fecha
+                                    </span>
+                                    <svg
+                                        className={`w-3 h-3 transition-transform duration-300 ${
+                                            antiguedadVisible ? 'rotate-180' : ''
+                                        }`}
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 10 6"
+                                    >
+                                        <path
+                                            stroke="currentColor"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="m1 1 4 4 4-4"
+                                        />
+                                    </svg>
                                 </button>
                             </div>
-                            {antiguedadVisible && (
-                                <div className="pl-5">
-                                </div>
-                            )}
+                            <ul
+                                className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${
+                                    antiguedadVisible ? 'max-h-60' : 'max-h-0'
+                                }`}
+                            >
+                                <li
+                                    className="cursor-pointer"
+                                    // onClick={() => handleUbicacionFilter("todos")}
+                                >
+                                    <button
+                                        type="button"
+                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    >
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">Más recientes</span>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    >
+                                        <span
+                                            className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">Más antiguos</span>
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </ul>
                 </div>
@@ -355,15 +420,21 @@ export default function JardinPage() {
                             <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"}/>
                                 <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
-                                <div className="flex flex-wrap gap-2 justify-between sm:grid sm:grid-cols-3 sm:gap-4">
+                                <div
+                                    className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:grid-cols-3 sm:gap-y-4 sm:gap-x-10">
                                     {garden.plants.map((plant, index) => (
-                                        <div key={index} className="flex items-center cursor-pointer w-2/5"
+                                        <div key={index} className="flex flex-row justify-between items-center cursor-pointer"
                                              onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                            <img src={plant.image} alt={plant.alias}
-                                                 className="w-12 h-12 mr-2 rounded-full"/>
-                                            <span>{plant.alias}</span>
+                                            <div className={"flex items-center"}>
+                                                <img src={plant.image} alt={plant.alias}
+                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full"/>
+                                                <span>{plant.alias}</span>
+                                            </div>
                                             {plant.is_favorite && (
-                                                <span className="ml-3"><FaHeart color={"#cc3333"} size={20}/></span>
+                                                // <span className="ml-3 responsive-image"><FaHeart color={"#cc3333"} size={20}/></span>
+                                                <span className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                    color={"#cc3333"} size={20}/></span>
+
                                             )}
                                         </div>
                                     ))}
@@ -390,7 +461,7 @@ export default function JardinPage() {
                                     {/*<p>Descripción: {plantaSeleccionada.description}</p>*/}
                                     <div className={"flex gap-3"}>
                                         <Link href={"/editar"}
-                                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Editar
                                         </Link>
                                         <button
