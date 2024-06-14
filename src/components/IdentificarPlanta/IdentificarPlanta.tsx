@@ -1,9 +1,12 @@
+"use client"
 import stylesHeader from "../../components/Header/header.module.css";
 import stylesIdentificar from "./identificarPlanta.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import React, {useEffect, useState} from "react";
+import Loading from "@/components/Spinner/Spinner";
 
 interface IdentificarPlanta{
     enlace:string;
@@ -12,13 +15,37 @@ interface IdentificarPlanta{
 
 export default function IdentificarPlanta(props:IdentificarPlanta) {
     const { enlace: string } = props;
+    const [isLoading, setIsLoading] = useState(true);
+    const [data, setData] = useState<string | null>(null);
+
+    useEffect(() => {
+        fetchData();
+
+        async function fetchData() {
+            try {
+                const result: string = await new Promise((resolve) => {
+                    setTimeout(() => resolve("Datos cargados"), 2000);
+                });
+
+                setData(result);
+            } catch (error) {
+                console.error("Error al cargar los datos:", error)
+            } finally {
+                setIsLoading(false);
+            }
+        }
+    }, []);
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <>
             <section className={`${stylesIdentificar.contenedor}`}>
                 <section>
                     <div className={'flex flex-col justify-center items-start gap-4 my-12'}>
-                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} mb-4`}>Identificar
+                        <h1 className={`${stylesHeader.titulo} ${BalooBhaina2.className} mb-4`}>Diagnosticar
                             planta</h1>
                         <p>¿Querés asegurarte de que tus vegetales, hierbas y
                             cultivos estén siempre en su mejor estado? ¡Con nuestra aplicación puedes hacerlo
@@ -50,7 +77,7 @@ export default function IdentificarPlanta(props:IdentificarPlanta) {
                             </div>
                         </div>
                         <div>
-                            <Link href={`/${props.enlace}`}
+                            <Link href={"/estado"}
                                 className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 Identificar
                             </Link>

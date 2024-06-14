@@ -1,17 +1,14 @@
 "use client"
 import styles from "@/components/IdentificarImagen/identificarImagen.module.css";
 import Image from "next/image";
-
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {useRouter} from "next/navigation";
-import {id} from "postcss-selector-parser";
-
-
 
 
 interface IdentificarImagenProps{
     imagen: string;
     pagina: string;
+    forwardRef?: React.RefObject<HTMLDivElement>
 }
 
 export default function IdentificarImagen(props:IdentificarImagenProps){
@@ -45,24 +42,24 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
             return;
         }
 
-            await fetch(
-                "http://localhost:8080/api/v1/images",
-                {
-                    method: "POST",
-                    body: formData,
-                    /*headers:{
-                        "Content-Type": "multipart/form-data"
-                    }*/
-                }
-            )
-                .then(res => {
-                    return res.json();
-                })
-                .then(json => {
-                    //redirect()
-                    router.push(`/resultado/${json.id}`)
-                })
-                .catch(err => console.error("Error", err))
+        await fetch(
+            "http://localhost:8080/api/v1/images",
+            {
+                method: "POST",
+                body: formData,
+                /*headers:{
+                    "Content-Type": "multipart/form-data"
+                }*/
+            }
+        )
+            .then(res => {
+                return res.json();
+            })
+            .then(json => {
+                //redirect()
+                router.push(`/resultado/${json.id}`)
+            })
+            .catch(err => console.error("Error", err))
 
         /*await fetch(
             "http://127.0.0.1:5000/upload",
@@ -93,7 +90,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
     };
 
     return (
-        <section className={`${styles[imagen]}`}>
+        <section className={`${styles[imagen]}`} ref={props.forwardRef}>
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
@@ -104,7 +101,8 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                         </>
                     ) : (
                         <>
-                            <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es gratis!</h1>
+                            <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
+                                gratis!</h1>
                             <h1 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado ¡Gratis!</h1>
                         </>
                     )}

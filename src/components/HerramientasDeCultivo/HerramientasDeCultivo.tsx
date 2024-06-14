@@ -2,7 +2,18 @@ import styles from "@/app/home.module.css";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Link from "next/link";
 
-export default function HerramientasDeCultivo(){
+interface ButtonScrollProps {
+    targetRef: React.RefObject<HTMLDivElement>
+}
+
+export default function HerramientasDeCultivo(props: ButtonScrollProps) {
+    const { targetRef } = props;
+  const handleClick = () => {
+      if (targetRef.current) {
+          targetRef.current.scrollIntoView({ behavior: 'smooth'});
+      }
+  }
+
     return (
         <section className={`${styles.fondoCards} flex justify-center items-center flex-col gap-5 `}>
             <h2 className={`${styles.tituloSecundario} tituloSecundario`}>Herramientas de cultivo
@@ -15,10 +26,11 @@ export default function HerramientasDeCultivo(){
                             identifico mi planta?</p>
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
-                        <Link href="/diagnosticar"
-                              className={`${styles.botonCards}  text-white font-bold py-2 px-4 rounded`}>
+                        <button
+                            onClick={handleClick}
+                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Identificar
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <div className={`${styles.cards} bg-white p-4 rounded-md shadow-md`}>
@@ -28,7 +40,7 @@ export default function HerramientasDeCultivo(){
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <Link href="/descubrir"
-                              className={`${styles.botonCards}  text-white font-bold py-2 px-4 rounded`}>
+                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Descubrir
                         </Link>
                     </div>
@@ -41,7 +53,7 @@ export default function HerramientasDeCultivo(){
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <Link href="/espacio"
-                              className={`${styles.botonCards}  text-white font-bold py-2 px-4 rounded`}>
+                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Analizar
                         </Link>
                     </div>
@@ -53,8 +65,8 @@ export default function HerramientasDeCultivo(){
                             planta?</p>
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
-                        <Link href={`/dianosticarEstado`}
-                              className={`${styles.botonCards}  text-white font-bold py-2 px-4 rounded`}>
+                        <Link href={`/diagnosticar`}
+                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Diagnosticar
                         </Link>
                     </div>

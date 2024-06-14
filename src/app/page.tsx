@@ -1,18 +1,22 @@
+"use client"
 import styles from "./home.module.css"
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
-import Link from "next/link";
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
+import React, {useRef} from 'react';
 
 export default function Home() {
+    const targetRef = useRef<HTMLDivElement>(null);
 
     return (
         <>
-            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado"/>
+            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef}/>
             <section className="flex justify-center items-center">
-                {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
-                <HerramientasDeCultivo />
+                <div>
+                    {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
+                    <HerramientasDeCultivo targetRef={targetRef}/>
+                </div>
             </section>
             <section className={`${styles.nuestraPropuesta} flex justify-center items-center flex-col md:flex-row`}>
                 <div className="md:w-1/2">
@@ -33,12 +37,8 @@ export default function Home() {
             </section>
 
 
-
-
-
-
-
-            <section className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center`}>
+            <section
+                className={`${styles.contenedorPropuesta} grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center`}>
                 <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
                     <div className="flex-1 flex items-center w-full justify-center">
                         <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
@@ -53,7 +53,9 @@ export default function Home() {
                                 fertilización, poda y otras tareas según tu horario. Personaliza el contenido y el
                                 método de
                                 notificación para una gestión eficiente de tus plantas</p>
-                            <button className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Administrar</button>
+                            <button
+                                className={`${styles.botonCards} w-1/2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Administrar
+                            </button>
                         </div>
                     </div>
                 </div>
