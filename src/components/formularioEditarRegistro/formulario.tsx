@@ -30,6 +30,15 @@ interface FormValues {
     is_favorite: boolean;
     image_url: string;
 }
+
+interface FormValuesEdit {
+    alias: string;
+    height: number;
+    //planting_date: Date;
+    id_garden: number | null;
+    is_favorite: boolean;
+    image_url: string;
+}
 interface PlantData {
     id: string;
     language: string;
@@ -49,6 +58,7 @@ interface Species {
     common_names: string[];
 }
 interface PlantDataDetail {
+    id: number;
     description: string;
     height: number;
     fertilizer: string;
@@ -71,21 +81,7 @@ interface Image {
 }
 
 
-interface Plant {
-    id: number;
-    alias: string;
-    creation_date: string | null;
-    modification_date: string | null;
-    planting_date: Date;
-    description: string | null;
-    favorite: boolean | null;
-    height: number;
-    sun_exposure: string | null;
-    //notes: string;
-    name_garden: string | null;
-    expo: string | null;
-    id_garden: number;
-}
+
 
 interface PlantEdit {
     id: number;
@@ -95,7 +91,7 @@ interface PlantEdit {
     planting_date: string | null;
     description: string | null;
     favorite: boolean | null;
-    height: number ;
+    height: number;
     sun_exposure: string | null;
     notes: string | null;
     name_garden: string | null;
@@ -103,10 +99,11 @@ interface PlantEdit {
     id_garden: number;
     plant_catalog_family_name: string;
     plant_catalog_genus: string;
-    plant_catalog_irrigation: string;
+    plant_catalog_watering_frecuency: string;
     plant_catalog_description: string;
     plant_catalog_common_name: string;
     plant_catalog_scientific_name: string;
+    plant_catalog_sun_exposure: string;
     images: {
         url: string;
     }[];
@@ -137,6 +134,16 @@ interface PlantData {
 export default function Formulario(props: IdentificarPlanta) {
     const {id, editar} = props
     const router = useRouter();
+
+    const [plantData, setPlantData] = useState<PlantData | null>(null);
+    const [plantEdit, setPlantEdit] = useState<PlantEdit | null>(null);
+    const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
+
+
+
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
         height: 0,
@@ -146,14 +153,18 @@ export default function Formulario(props: IdentificarPlanta) {
         image_url: ""
     });
 
-    const initialValues: FormValues = {
+
+    //edit
+    const [formValuesEdit, setFormValuesEdit] = useState<FormValuesEdit>({
         alias: "",
-        height: 0,
-        planting_date: new Date('2024-06-12'),
+        height:  0,
+        //planting_date: new Date('2024-06-12'),
         id_garden: null,
         is_favorite: true,
         image_url: ""
-    };
+    });
+
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -172,9 +183,31 @@ export default function Formulario(props: IdentificarPlanta) {
     };
 
 
+    const handleInputChangeEdit = (e:any) => {
+        const { name, value, type } = e.target;
+        let newValueEdit: string | number | boolean = value;
+        if (type === 'checkbox') {
+            newValueEdit = (e.target as HTMLInputElement).checked;
+        }
+        setFormValuesEdit((prevValues) => ({
+            ...prevValues,
+            [name]: newValueEdit
+        }));
+    };
+
+
     const handleUbicacionChange = (index: any) => {
         console.log(index)
         setFormValues((prevValues) => ({
+            ...prevValues,
+            id_garden: index,
+        }));
+
+    };
+
+    const handleUbicacionChangeEdit = (index: any) => {
+        console.log(index)
+        setFormValuesEdit((prevValues) => ({
             ...prevValues,
             id_garden: index,
         }));
@@ -191,23 +224,22 @@ export default function Formulario(props: IdentificarPlanta) {
 
     const submitForm = async () => {
         if (editar === "si") {
-            const updatedFormValues = {
-                ...formValues,
-                idUser: 1,
-                id: {id}
-            };
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/plants/update`, {
-                    method: 'PUT',
+                const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}`, {
+                    method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'id-user': '1'
                     },
-                    body: JSON.stringify(updatedFormValues)
+                    body: JSON.stringify(formValuesEdit)
                 });
                 if (!response.ok) {
+                    console.log(formValuesEdit);
                     throw new Error('Failed to update plant');
+
                 }
-                // Redirect to plant details page or any other page as needed
+
+                console.log(formValuesEdit);
                 router.push(`/jardin`);
             } catch (error) {
                 console.error('Error updating plant:', error);
@@ -218,7 +250,8 @@ export default function Formulario(props: IdentificarPlanta) {
             try {
                 const updatedFormValues = {
                     ...formValues,
-                    image_url: plantData?.image.url, // Replace 'your_image_url_here' with the actual URL
+                    image_url: plantData?.image.url,
+                    id_plant_catalog: plantData?.candidates[0].plant_data.id
                 };
                 const response = await fetch('http://localhost:8080/api/v1/plants', {
                     method: 'POST',
@@ -245,12 +278,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
     };
 
-    const [plantData, setPlantData] = useState<PlantData | null>(null);
-    const [plantEdit, setPlantEdit] = useState<PlantEdit | null>(null);
-    const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
+
     useEffect(() => {
         if (editar === "no") {
             fetch(`http://localhost:8080/api/v1/candidates/${id}`)
@@ -269,6 +297,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     setError(error.message);
                     setLoading(false);
                 });
+
         } else if (editar === "si") {
             const fetchPlantData = async () => {
                 try {
@@ -282,6 +311,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     }
                     const plant = await response.json();
                     setPlantEdit(plant);
+                    console.log(plant)
                 } catch (error) {
                     console.error('Error fetching plant data:', error);
                 }
@@ -294,12 +324,9 @@ export default function Formulario(props: IdentificarPlanta) {
         }
 
 
-        setFormValues(initialValues);
-        const imagenGuardada = localStorage.getItem('imagen');
-        if (imagenGuardada) {
-            setImagenDataUrl(imagenGuardada);
-        }
+
         fetchUbicaciones();
+        console.log(ubicaciones);
     }, [id]);
     const fetchUbicaciones = async () => {
         try {
@@ -347,7 +374,7 @@ export default function Formulario(props: IdentificarPlanta) {
     }
 
 
-    const [imagenDataUrl, setImagenDataUrl] = useState<string>('');
+
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -411,8 +438,8 @@ export default function Formulario(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className} `}>Alias:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    { plantData ?
-                                        (<>
+                                    {plantData &&
+                                        <>
                                                 <input
                                                     type="text"
                                                     name="alias"
@@ -422,12 +449,12 @@ export default function Formulario(props: IdentificarPlanta) {
                                                 />
                                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
                                             </>
-                                        ) : (<>
+                                    } { plantEdit && (<>
                                             <input
                                                 type="text"
                                                 name="alias"
-                                                value={plantEdit?.alias}
-                                                onChange={handleInputChange}
+                                                defaultValue={plantEdit.alias}
+                                                onChange={handleInputChangeEdit}
                                                 className=" pl-9 border-b-2 border-gray-300 rounded"
                                             />
                                             <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
@@ -450,9 +477,9 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    { plantData ?
+                                    {plantData ?
                                         (<ul className="flex gap-2 pl-9">
-                                        {/*<input
+                                            {/*<input
                                                 type="text"
                                                 name="commonName"
                                                 value={plantData.candidates[0].specie.common_names.map( (id, index) => {
@@ -474,6 +501,31 @@ export default function Formulario(props: IdentificarPlanta) {
                             <div>
                                 <div className="flex gap-2 items-center">
                                     <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
+                                    <h3 className={`${BalooBhaina2.className}  `}>Nombre cientifico:</h3>
+                                </div>
+                                <div className="flex items-center">
+                                    {/*<input
+                                    type="text"
+                                    name="tipo"
+                                    value={formValues.tipo}
+                                    onChange={handleInputChange}
+                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
+                                />
+                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+                                    {plantData ? (
+                                            <>
+                                                <p className=" pl-9">{plantData.candidates[0].specie.scientific_name}</p>
+                                            </>) :
+                                        (<>
+                                            <p className=" pl-9">{plantEdit?.plant_catalog_scientific_name}</p>
+                                        </>)}
+
+                                </div>
+
+                            </div>
+                            <div>
+                                <div className="flex gap-2 items-center">
+                                    <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
                                     <h3 className={`${BalooBhaina2.className}  `}>Género:</h3>
                                 </div>
                                 <div className="flex items-center">
@@ -485,13 +537,13 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    { plantData ? (
-                                        <>
-                                            <p className=" pl-9">{plantData.candidates[0].specie.genus_name}</p>
-                                        </>) :
+                                    {plantData ? (
+                                            <>
+                                                <p className=" pl-9">{plantData.candidates[0].specie.genus_name}</p>
+                                            </>) :
                                         (<>
-                                        <p className=" pl-9">{plantEdit?.plant_catalog_genus}</p>
-                                    </>)}
+                                            <p className=" pl-9">{plantEdit?.plant_catalog_genus}</p>
+                                        </>)}
 
                                 </div>
 
@@ -510,7 +562,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
                                 />
                                 <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
-                                    { plantData ?
+                                    {plantData ?
                                         (<>
                                             <p className=" pl-9">{plantData.candidates[0].specie.family_name}</p>
                                         </>) : (<><p className=" pl-9">{plantEdit?.plant_catalog_family_name}</p></>)}
@@ -545,10 +597,10 @@ export default function Formulario(props: IdentificarPlanta) {
                                         solar:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    { plantData ?
+                                    {plantData ?
                                         (<>
                                             <p className=" pl-9">{plantData.candidates[0].plant_data.sun_exposure}</p>
-                                        </>) : (<><p className=" pl-9">{plantEdit?.sun_exposure}</p></>)}
+                                        </>) : (<><p className=" pl-9">{plantEdit?.plant_catalog_sun_exposure}</p></>)}
 
                                 </div>
 
@@ -564,9 +616,9 @@ export default function Formulario(props: IdentificarPlanta) {
                                     {plantData ?
                                         (
                                             <>
-                                            <p className=" pl-9">{plantData.candidates[0].plant_data.watering}</p>
+                                                <p className=" pl-9">{plantData.candidates[0].plant_data.watering}</p>
                                             </>) : (<>
-                                            <p className=" pl-9">{plantEdit?.plant_catalog_irrigation}</p>
+                                            <p className=" pl-9">{plantEdit?.plant_catalog_watering_frecuency}</p>
                                         </>)}
 
                                 </div>
@@ -578,17 +630,32 @@ export default function Formulario(props: IdentificarPlanta) {
                                     <CiRuler className={`${stylesDescriptionPlants.iconos}`}/>
                                     <h3 className={`${BalooBhaina2.className}`}>Altura:</h3>
                                 </div>
-                                <div className="flex items-center">
-                                    <input
-                                        step="0.1"
-                                        type="number"
-                                        name="height"
-                                        value={plantEdit?.height}
-                                        onChange={handleInputChange}
-                                        className=" pl-9 border-b-2 border-gray-300 rounded"
-                                    />
-                                    <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
-                                </div>
+                                {plantData &&
+                                    <div className="flex items-center">
+                                        <input
+                                            step="0.1"
+                                            type="number"
+                                            name="height"
+                                            //value={plantEdit && plantEdit.height ? plantEdit.height : ''}
+                                            value={formValues.height}
+                                            onChange={handleInputChange}
+                                            className=" pl-9 border-b-2 border-gray-300 rounded"
+                                        />
+                                        <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                    </div>
+                                    }{ plantEdit &&
+                                    <div className="flex items-center">
+                                        <input
+                                            step="0.1"
+                                            type="number"
+                                            name="height"
+                                            defaultValue={plantEdit.height}
+                                            onChange={handleInputChangeEdit}
+                                            className=" pl-9 border-b-2 border-gray-300 rounded"
+                                        />
+                                        <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                    </div>
+                                }
                             </div>
                             <div>
                                 <div className="flex gap-2 items-center">
@@ -598,19 +665,33 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 </div>
                                 <div className="flex items-center">
-                                    { plantData ? (<>
-                                        <input
-                                            type="date"
-                                            name="planting_date"
-                                            value={formValues.planting_date.toISOString().substr(0, 10)}
-                                            onChange={handleInputChange}
-                                            className="pl-9 border-b-2 border-gray-300 rounded"
-                                        />
-                                        <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
-                                    </>) :
+                                    {plantData ? (<>
+                                            <input
+                                                type="date"
+                                                name="planting_date"
+                                                value={formValues.planting_date.toISOString().substr(0, 10)}
+                                                onChange={handleInputChange}
+                                                className="pl-9 border-b-2 border-gray-300 rounded"
+                                            />
+                                            <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
+                                        </>) :
                                         (
-                                        <p className="pl-9">{plantEdit?.modification_date}</p>
+                                            <p className="pl-9">{plantEdit && plantEdit.planting_date?.slice(0, 10)}</p>
                                         )}
+                                </div>
+
+
+                            </div>
+                            <div>
+                                <div className="flex gap-2 items-center">
+                                    <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
+                                    <h3 className={`${BalooBhaina2.className} `}>Fecha de
+                                        la última actualización:</h3>
+
+                                </div>
+                                <div className="flex items-center">
+
+                                    <p className="pl-9">{plantEdit?.modification_date.replace("T", " ").replace("Z", "")}</p>
 
                                 </div>
 
@@ -626,9 +707,9 @@ export default function Formulario(props: IdentificarPlanta) {
                                         general</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    { plantData ? (
+                                    {plantData ? (
                                         <>
-                                        <p className="pl-9">{plantData.candidates[0].plant_data.description}</p>
+                                            <p className="pl-9">{plantData.candidates[0].plant_data.description}</p>
                                         </>) : (<>
                                         <p className=" pl-9">{plantEdit?.plant_catalog_description}</p>
                                     </>)}
@@ -651,7 +732,8 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </button>
                                 <div className="flex flex-wrap gap-2">
 
-                                    {ubicaciones.map((ubicacion, index) => (
+                                    {plantData && ubicaciones.map((ubicacion, index) => (
+
                                         <div
                                             key={index}
                                             onClick={() => handleUbicacionChange(ubicacion.id)}
@@ -659,9 +741,25 @@ export default function Formulario(props: IdentificarPlanta) {
                                                 formValues.id_garden === ubicacion.id ? 'bg-gray-200' : ''
                                             }`}
                                         >
-                                            {ubicacion.name}
+                                            {ubicacion.id === null ? "sin jardin" : ubicacion.name}
                                         </div>
                                     ))}
+
+                                    {
+                                        plantEdit && ubicaciones.map((ubicacion, index) => (
+
+                                            <div
+                                                key={index}
+                                                onClick={() => handleUbicacionChangeEdit(ubicacion.id)}
+                                                className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${
+                                                    formValuesEdit.id_garden === ubicacion.id ? 'bg-gray-200' : ''
+                                                }`}
+                                            >
+                                                {ubicacion.id === null ? "sin jardin" : ubicacion.name}
+                                            </div>
+                                        ))
+
+                                    }
                                 </div>
 
                             </div>
@@ -677,7 +775,7 @@ export default function Formulario(props: IdentificarPlanta) {
                         </div>
                         <div className={`${stylesDescriptionPlants.item1}`}>
                             <div className="h-[500px] overflow-hidden flex items-center justify-center">
-                                <img src={imagenDataUrl} className="object-cover max-w-full max-h-full"
+                                <img src={plantEdit?.images[0].url} className="object-cover max-w-full max-h-full"
                                      alt="Albahaca-sana" width="500"
                                      height="500"/>
                             </div>

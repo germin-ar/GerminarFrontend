@@ -42,10 +42,11 @@ interface Plant {
     id_garden: number;
     plant_catalog_family_name: string;
     plant_catalog_genus: string;
-    plant_catalog_irrigation: string;
+    plant_catalog_watering_frecuency: string;
     plant_catalog_description: string;
     plant_catalog_common_name: string;
     plant_catalog_scientific_name: string;
+    plant_catalog_sun_exposure: string;
     images: {
         url: string;
     }[];
@@ -164,7 +165,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Exposición
                                     solar:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.sun_exposure}</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_sun_exposure}</p>
 
                         </div>
                         <div>
@@ -173,7 +174,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
                                     de riego:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_irrigation}</p>
+                            <p className="text-[24px] pl-9">{plant.plant_catalog_watering_frecuency}</p>
                         </div>
                     </div>
                     <div className={`${stylesDescriptionPlants.item3}`}>
@@ -188,12 +189,21 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                             <div className="flex gap-2">
                                 <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
+                                    última modificación:</p>
+                            </div>
+                            <p className="text-[24px] pl-9">{plant.modification_date.replace("T", " ").replace("Z", "")}</p>
+                        </div>
+                        <div>
+                            <div className="flex gap-2">
+                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
+                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
                                     plantación:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.planting_date}</p>
+                            <p className="text-[24px] pl-9">{plant.planting_date?.slice(0, 10)}</p>
                         </div>
 
                     </div>
+
                     <div className={`${stylesDescriptionPlants.item4}`}>
                         <div>
                             <div className="flex gap-2">
@@ -208,7 +218,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.id_garden}</p>
+                            <p className="text-[24px] pl-9">{plant.id_garden == null && "-"}</p>
                         </div>
                     </div>
                 </div>
