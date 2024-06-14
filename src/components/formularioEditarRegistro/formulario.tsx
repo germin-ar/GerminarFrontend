@@ -3,6 +3,7 @@ import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
 import stylesDescriptionPlants from './descripcion.module.css';
 
+import { FaHeart } from 'react-icons/fa';
 import {LuPencilLine} from "react-icons/lu";
 import Image from "next/image";
 import {FaImages, FaRegIdCard} from "react-icons/fa";
@@ -88,7 +89,7 @@ interface PlantEdit {
     alias: string;
     creation_date: string | null;
     modification_date: string;
-    planting_date: string | null;
+    planting_date: string ;
     description: string | null;
     favorite: boolean | null;
     height: number;
@@ -160,11 +161,20 @@ export default function Formulario(props: IdentificarPlanta) {
         height:  0,
         //planting_date: new Date('2024-06-12'),
         id_garden: null,
-        is_favorite: true,
+        is_favorite: false,
         image_url: ""
     });
 
+    const [relleno, setRelleno] = useState(false);
 
+    const handleClick = () => {
+        setFormValuesEdit(prevValues => ({
+            ...prevValues,
+            is_favorite: !prevValues.is_favorite
+        }));
+        console.log(formValuesEdit.is_favorite)
+        setRelleno(!relleno);
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
@@ -186,9 +196,19 @@ export default function Formulario(props: IdentificarPlanta) {
     const handleInputChangeEdit = (e:any) => {
         const { name, value, type } = e.target;
         let newValueEdit: string | number | boolean = value;
-        if (type === 'checkbox') {
+         if (type === 'checkbox') {
             newValueEdit = (e.target as HTMLInputElement).checked;
         }
+         if (name === 'hearth'){
+             newValueEdit = !formValuesEdit.is_favorite;
+         }
+        if (name === 'alias'){
+            newValueEdit = value;
+        }
+        if (name === 'height'){
+            newValueEdit = value
+        }
+
         setFormValuesEdit((prevValues) => ({
             ...prevValues,
             [name]: newValueEdit
@@ -202,7 +222,6 @@ export default function Formulario(props: IdentificarPlanta) {
             ...prevValues,
             id_garden: index,
         }));
-
     };
 
     const handleUbicacionChangeEdit = (index: any) => {
@@ -225,6 +244,10 @@ export default function Formulario(props: IdentificarPlanta) {
     const submitForm = async () => {
         if (editar === "si") {
             try {
+                /*const updatedFormValuesEdit = {
+                ...formValuesEdit,
+                        image_url: plantEdit?.images[0].url,
+                };*/
                 const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}`, {
                     method: 'POST',
                     headers: {
@@ -311,6 +334,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     }
                     const plant = await response.json();
                     setPlantEdit(plant);
+                    setRelleno(plant.favorite)
                     console.log(plant)
                 } catch (error) {
                     console.error('Error fetching plant data:', error);
@@ -417,17 +441,28 @@ export default function Formulario(props: IdentificarPlanta) {
                     <div className={`${stylesDescriptionPlants.planta} mt-4`}>
                         <div className={`${stylesDescriptionPlants.item1}`}>
                             <div className="h-[500px] overflow-hidden flex items-center justify-center">
-                                { plantData ? (
+                                { plantData &&
                                         <img src={`${plantData?.image.url}`} className="object-cover max-w-full max-h-full"
                                              alt="imagen" width="500"
                                              height="500"/>
-                                ) : (
+                                }{
+                                ( plantEdit &&
                                     <>
-                                        <img src={`${plantEdit?.images[0].url}`} className="object-cover max-w-full max-h-full"
-                                             alt="imagen" width="500"
-                                             height="500"/>
+                                        <div className="relative">
+                                            <img
+                                                src={`${plantEdit.images[0].url}`}
+                                                className="object-cover max-w-full max-h-full"
+                                                alt="imagen"
+                                                width="500"
+                                                height="500"
+                                            />
+                                            <div className="absolute top-0 right-0 m-4 select-none bg-white rounded p-2">
+                                                <FaHeart name="hearth" size={30} color={relleno ? "red" : "gray"} onChange={handleInputChangeEdit} onClick={handleClick}/>
+                                            </div>
+                                        </div>
                                     </>
-                                )}
+                                )
+                            }
 
                             </div>
                         </div>
@@ -665,7 +700,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 </div>
                                 <div className="flex items-center">
-                                    {plantData ? (<>
+                                    {plantData && <>
                                             <input
                                                 type="date"
                                                 name="planting_date"
@@ -674,10 +709,18 @@ export default function Formulario(props: IdentificarPlanta) {
                                                 className="pl-9 border-b-2 border-gray-300 rounded"
                                             />
                                             <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>
-                                        </>) :
-                                        (
-                                            <p className="pl-9">{plantEdit && plantEdit.planting_date?.slice(0, 10)}</p>
-                                        )}
+                                        </> }
+                                    { plantEdit &&
+                                        /*<input
+                                            type="date"
+                                            name="planting_date"
+                                            //defaultValue={plantEdit.planting_date?.slice(0, 10)}
+                                            defaultValue={plantEdit.planting_date?.slice(0, 10)}
+                                            onChange={handleInputChangeEdit}
+                                            className="pl-9 border-b-2 border-gray-300 rounded"
+                                        />*/
+                                        <p className="pl-9">{plantEdit.planting_date.replace("T", " ").replace("Z", "").slice(0, 10)}</p>
+                                        }
                                 </div>
 
 
@@ -750,7 +793,9 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                             <div
                                                 key={index}
+                                                data-id={ubicacion.id}
                                                 onClick={() => handleUbicacionChangeEdit(ubicacion.id)}
+                                                //onChange={handleInputChangeEdit}
                                                 className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${
                                                     formValuesEdit.id_garden === ubicacion.id ? 'bg-gray-200' : ''
                                                 }`}
