@@ -5,4 +5,5 @@
 
 .widthText {
     width: 420px;
+    max-height: 60px;
 }
