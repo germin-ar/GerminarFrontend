@@ -1,6 +1,7 @@
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
 import styles from "@/app/estado/estado.module.css";
+import HomeStyles from "@/app/home.module.css";
 
 export default function EstadoPage() {
     return (
@@ -22,7 +23,7 @@ export default function EstadoPage() {
                                 <div className="flex w-full gap-5 justify-between">
 
                                     <button
-                                        className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                        className={`${HomeStyles.botonCards} flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                         <div>
                                             <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
                                                    height="20"/>
@@ -31,7 +32,7 @@ export default function EstadoPage() {
                                     </button>
 
                                     <button
-                                        className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                        className={`${HomeStyles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                         Detalles
                                     </button>
                                 </div>
@@ -66,8 +67,8 @@ export default function EstadoPage() {
                     </div>
                 </section>
                 <section className={'flex flex-col gap-12 m-20'}>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Estado de
                             salud</h2>
                         <div className={`flex items-center gap-5`}>
                             <div>
@@ -78,9 +79,8 @@ export default function EstadoPage() {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Descripción
-                            general</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Problema detectado</h2>
                         <p>Tu planta ha sido dañada por <span
                             className="font-bold">ORUGAS</span>,
                             que se alimentan profusamente de las hojas.</p>
@@ -94,8 +94,8 @@ export default function EstadoPage() {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[45px] text-[#88BC43] font-bold`}>Datos</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Explorando el problema</h2>
                         <p className="text-justify">
                             Las orugas pueden causar problemas a los aficionados a la jardinería. Si no se controlan,
                             estos
@@ -106,8 +106,8 @@ export default function EstadoPage() {
                             Si las orugas resultan problemáticas, los jardineros pueden eliminarlas manualmente, o bien
                             emplear redes antinsectos para proteger sus valiosas plantas.</p>
                     </div>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Síntomas</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Síntomas</h2>
                         <p className="text-justify">Los síntomas de una infestación de orugas incluyen agujeros en las
                             hojas
                             y daños en bordes y
@@ -117,8 +117,8 @@ export default function EstadoPage() {
                             y también buscar huevos agrupados. Una vez que las orugas se desarrollan, se convierten en
                             pupas, de donde emergen mariposas o polillas para reiniciar el ciclo.</p>
                     </div>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Solución</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Solución</h2>
                         <p className="text-justify">
                             A pesar de que las orugas son diferentes entre sí, todas mastican diversas partes de la
                             planta y
@@ -161,8 +161,8 @@ export default function EstadoPage() {
                             </li>
                         </ol>
                     </div>
-                    <div>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Prevención</h2>
+                    <div className="bg-white rounded-lg shadow-lg p-6">
+                        <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Prevención</h2>
                         <p className="text-justify">La prevención puede requerir menos esfuerzo que los intentos de
                             erradicar
                             las infestaciones ya consolidadas. Estas son las principales medidas de prevención que
