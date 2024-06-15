@@ -7,12 +7,11 @@ import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import {BalooBhaina2} from "@/app/ui/fonts";
-import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import {FaVolumeUp, FaVolumeMute} from 'react-icons/fa';
 
 import {FaArrowDown, FaBars, FaCrown, FaTimes} from "react-icons/fa";
 import {FaUser} from "react-icons/fa";
 import {Simulate} from "react-dom/test-utils";
-import play = Simulate.play;
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
@@ -70,7 +69,6 @@ export default function GerminarPage() {
         }
 
 
-
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -82,6 +80,7 @@ export default function GerminarPage() {
             setActiveSection(sectionId);
         }
     }
+
     const handleVideoEnded = () => {
         setVideoEnded(true);
         handleFormButtonClick();
@@ -173,7 +172,7 @@ export default function GerminarPage() {
 
                 <div
                     className={`${stylesVideoSection.video} absolute inset-0 rounded-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
-                <video ref={videoRef} autoPlay={true} loop={false} muted={!audioEnabled} onEnded={handleVideoEnded}
+                    <video ref={videoRef} autoPlay={true} loop={false} muted={!audioEnabled} onEnded={handleVideoEnded}
                            className={`${stylesVideoSection.reproductor}`}>
                         <source src="/videolanding/landing.mp4" type="video/mp4"/>
                     </video>
