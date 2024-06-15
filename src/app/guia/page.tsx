@@ -5,22 +5,29 @@ import styles from "@/app/guia/guia.module.css";
 export default function GuiaPage() {
     return (
         <>
-            <main className={`${styles.contenedor}`}>
                 <section>
-                    <div className={'flex-1 flex flex-col items-center gap-5 my-12'}>
-                        <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Albahaca</h1>
-                        <div className={`flex-1 flex items-start flex-col gap-5`}>
-                            <div>
-                                <Image className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
-                                       src="/resultado/albahaca-sana.jpg"
-                                       alt="Albahaca" width="250"
-                                       height="250"/>
+                    <div className="flex-1 flex flex-col items-center gap-5">
+                        <div className="relative w-full h-96 rounded-b-lg overflow-hidden">
+                            {/* Imagen de fondo */}
+                            <Image
+                                className="absolute inset-0 w-full h-full object-cover"
+                                src={"/estado/fondo-albahaca.jpg"}
+                                alt={"Alabahca"}
+                                layout="fill"
+                            />
+                            {/* Fondo oscuro para el texto */}
+                            <div className="absolute inset-0 bg-black opacity-40 rounded-b-lg" />
+                            {/* Contenedor de texto */}
+                            <div className="absolute bottom-5 left-5 text-white p-4">
+                                <h1 className={`${BalooBhaina2.className} font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl`}>
+                                    Como cultivar Albahaca con éxito
+                                </h1>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section className={"m-20"}>
-                    <div className={'my-32'}>
+                <section className={"m-10"}>
+                    <div className={'mb-32 bg-white rounded-lg shadow-lg p-6'}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Guía de siembra</h2>
                         <ol className={`${styles.listNumber} list-decimal list-inside pl-5 text-justify flex flex-col gap-8 text-justify`}>
                             <li>Las semillas puedes recogerlas en otoño extrayéndolas de una planta adulta, y
@@ -77,8 +84,6 @@ export default function GuiaPage() {
                         </ol>
                     </div>
                 </section>
-            </main>
-
         </>
 
     )
