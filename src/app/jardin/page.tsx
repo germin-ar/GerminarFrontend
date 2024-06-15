@@ -149,6 +149,7 @@ export default function JardinPage() {
     ];
 
     const [filtro, setFiltro] = useState('');
+    const [filtroPlanta, setFiltroPlanta] = useState('');
     const [buscador, setBuscador] = useState('');
 
     /**sidebar**/
@@ -210,6 +211,10 @@ export default function JardinPage() {
         setFiltro(e === 'todos' ? '' : e);
     };
 
+    const handleFiltroPlantaChange = (e: any) => {
+        setFiltroPlanta(e);
+    };
+
     const handleBuscadorChange = (e: any) => {
         setBuscador(e.target.value);
     };
@@ -234,6 +239,33 @@ export default function JardinPage() {
             garden.name.toLowerCase().includes(filtro.toLowerCase())
         );
     };
+
+    const filtrarPlantasPorFiltro = (isFavorite: boolean | null, specie: string | null) => {
+        let plantasFiltradas: Plant[] = [];
+
+        data.forEach(garden => {
+            garden.plants.forEach(plant => {
+                let cumpleFiltro = true;
+
+                if (isFavorite !== null && plant.is_favorite !== isFavorite) {
+                    cumpleFiltro = false;
+                }
+
+                if (specie !== null && plant.specie !== specie) {
+                    cumpleFiltro = false;
+                }
+
+                if (cumpleFiltro) {
+                    plantasFiltradas.push(plant);
+                }
+            });
+        });
+
+        return plantasFiltradas;
+    };
+
+    const plantasFavoritas = filtrarPlantasPorFiltro(true, null);
+    console.log(plantasFavoritas);
 
     const resaltarTexto = (texto: any) => {
         if (!buscador) {
@@ -362,7 +394,7 @@ export default function JardinPage() {
                                     <FaHeart size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
-                                        onClick={() => setPrioridadVisible(!prioridadVisible)}>Favoritos</span>
+                                        onClick={() => handleFiltroPlantaChange("isFavorite")}>Favoritos</span>
                                 </button>
                             </div>
                         </div>
@@ -375,7 +407,8 @@ export default function JardinPage() {
                                 >
                                     <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"}/>
                                     <span
-                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Tipo
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
+                                        onClick={() => handleFiltroPlantaChange("specie")}>Tipo
                                     </span>
                                     <svg
                                         className={`w-3 h-3 transition-transform duration-300 ${
@@ -483,7 +516,7 @@ export default function JardinPage() {
                                                             className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
                                                             color={"#cc3333"} size={20}/></span>
                                                     )}
-                                                </div>
+                                               </div>
                                             ))}
                                         </div>
                                     </div>
@@ -527,6 +560,42 @@ export default function JardinPage() {
                         )}
                     </div>
 
+                    <div>
+                        {filtrarPlantasPorFiltro().length > 0 ? (
+                            <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
+                                {filtrarPlantasPorFiltro().map(plant => (
+
+                                        <div
+                                            className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                            {garden.plants.map((plant, index) => (
+                                                <div key={index}
+                                                     className="flex flex-row justify-between items-center cursor-pointer"
+                                                     onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    <div className={"flex items-center"}>
+                                                        <img src={plant.image} alt={plant.alias}
+                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full"/>
+                                                        <span>{resaltarTexto(plant.alias)}</span>
+                                                    </div>
+                                                    {plant.is_favorite && (
+                                                        <span
+                                                            className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                            color={"#cc3333"} size={20}/></span>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col grid grid-cols-1">
+                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                    No se encontraron resultados para <span
+                                    className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                </h3>
+                            </div>
+                        )}
+                    </div>
 
                     {popupVisible && plantaSeleccionada && (
                         <>

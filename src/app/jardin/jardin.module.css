@@ -55,13 +55,13 @@
     display: block;
 }
 
-@media (min-width: 767px) and (max-width: 893px) {
+@media (min-width: 767px) and (max-width: 895px) {
     .responsiveImage {
         display: none;
     }
 }
 
-@media (min-width: 894px) {
+@media (min-width: 896px) {
     .responsiveImage {
         display: block;
     }
