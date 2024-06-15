@@ -120,6 +120,17 @@ export default function JardinPage() {
                     specie: "fruta"
                 },
                 {
+                    id: 201,
+                    alias: "Cebolla",
+                    is_active: true,
+                    creation_date: "hoy",
+                    modification_date: "hoy",
+                    image: "/resultado/albahaca-sana.jpg",
+                    quantity: 5,
+                    is_favorite: false,
+                    specie: "verdura"
+                },
+                {
                     id: 202,
                     alias: "Lechuga",
                     is_active: true,
@@ -140,12 +151,6 @@ export default function JardinPage() {
     const handleFiltroChange = (e: any) => {
         setFiltro(e.target.value);
     };
-
-    /*const filteredData = data.filter((categoria) => {
-        const categoriaIncluida = categoria.categoria.toLowerCase().includes(filtro.toLowerCase());
-        const plantasFiltradas = categoria.plantas.filter((planta) => planta.nombre.toLowerCase().includes(filtro.toLowerCase()));
-        return categoriaIncluida || plantasFiltradas.length > 0;
-    });*/
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
@@ -205,6 +210,27 @@ export default function JardinPage() {
     useEffect(() => {
         fetchGardens()
     }, []);
+
+
+    const filtrarElementos = () => {
+        return data.filter(garden =>
+            garden.name.toLowerCase().includes(filtro.toLowerCase()) ||
+            garden.plants.some(plant =>
+                plant.alias.toLowerCase().includes(filtro.toLowerCase())
+            )
+        );
+    };
+
+    const resaltarTexto = (texto: any) => {
+        if (!filtro) {
+            return texto;
+        }
+        const partes = texto.split(new RegExp(`(${filtro})`, 'gi'));
+        return partes.map((parte: any, index: any) =>
+            parte.toLowerCase() === filtro.toLowerCase() ?
+                <span key={index} className="font-bold">{parte}</span> : parte
+        );
+    };
 
     return (
         <>
@@ -417,33 +443,39 @@ export default function JardinPage() {
                     </ul>
                 </div>
                 <section className="flex-1 flex gap-10 flex-col px-2 mt-3">
-                    <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
-                        {data.map(garden => (
-                            <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
-                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"}/>
-                                <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
-                                <div
-                                    className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:grid-cols-3 sm:gap-y-4 sm:gap-x-10">
-                                    {garden.plants.map((plant, index) => (
-                                        <div key={index} className="flex flex-row justify-between items-center cursor-pointer"
-                                             onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                            <div className={"flex items-center"}>
-                                                <img src={plant.image} alt={plant.alias}
-                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full"/>
-                                                <span>{plant.alias}</span>
-                                            </div>
-                                            {plant.is_favorite && (
-                                                // <span className="ml-3 responsive-image"><FaHeart color={"#cc3333"} size={20}/></span>
-                                                <span className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
-                                                    color={"#cc3333"} size={20}/></span>
-
-                                            )}
+                    <div>
+                        {filtrarElementos().length > 0 ? (
+                            <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
+                                {filtrarElementos().map(garden => (
+                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
+                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"} />
+                                        <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                        <div className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                            {garden.plants.map((plant, index) => (
+                                                <div key={index} className="flex flex-row justify-between items-center cursor-pointer" onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    <div className={"flex items-center"}>
+                                                        <img src={plant.image} alt={plant.alias} className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                        <span>{resaltarTexto(plant.alias)}</span>
+                                                    </div>
+                                                    {plant.is_favorite && (
+                                                        <span className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart color={"#cc3333"} size={20}/></span>
+                                                    )}
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
-                                </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        ) : (
+                            <div className="flex flex-col grid grid-cols-1">
+                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                No se encontraron resultados para
+                                <span className="font-bold text-[#275F08]">&quot;{filtro}&quot;</span>.
+                            </h3>
+                            </div>
+                        )}
                     </div>
+
 
                     {popupVisible && plantaSeleccionada && (
                         <>
