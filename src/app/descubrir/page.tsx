@@ -4,20 +4,29 @@ import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
 import styles from "@/app/home.module.css";
 import {useState} from "react";
+import Map from "@/components/map/Map";
+import Link from "next/link";
 
 interface Location {
-    latitude: number | null;
-    longitude: number | null;
+    latitude: number | null | string;
+    longitude: number | null | string;
 }
 
-export default function DescubrirPage() {
-    const [locationData, setLocationData] = useState<Location>({ latitude: null, longitude: null });
+export default function DescubrirPage(){
+    const [locationData, setLocationData] = useState<Location>({latitude: null, longitude: null});
+    const [mapa, setMapa] = useState(false);
 
-    const handleMapClick = (event:any) => {
+
+    const handleCoordinatesChange = (lat: string, lng: string) => {
+
         setLocationData({
-            latitude: event.latLng.lat(),
-            longitude: event.latLng.lng()
-        });
+            latitude: lat,
+            longitude: lng
+        })
+    };
+
+    const handleMapClick = (event: any) => {
+        setMapa(!mapa)
     };
     const getLocation = () => {
         if (navigator.geolocation) {
@@ -36,7 +45,18 @@ export default function DescubrirPage() {
             console.error('Geolocation is not supported by this browser.');
         }
     };
-    
+    const [value, setValue] = useState(1);
+
+    const handleChange = (e:any) => {
+        setValue(parseInt(e.target.value));
+    };
+
+    const [valueLugar, setValueLugar] = useState(1);
+    const handleChangeLugar = (e:any) => {
+        setValueLugar(parseInt(e.target.value));
+    };
+
+
     return (
         <>
             <main className={`${stylesDescubrir.contenedor}`}>
@@ -59,13 +79,23 @@ export default function DescubrirPage() {
                                 <Image src="/descubrir/ubicacion-icon.png" alt="ubicacion-icon" width="30"
                                        height="30"/>
                             </div>
-                            <button onClick={getLocation} type="button" className={'cursor-pointer underline font-semibold'}>Activar ubicación</button>
+                            <button onClick={getLocation} type="button"
+                                    className={'cursor-pointer underline font-semibold'}>Activar ubicación o
+                            </button>
+                            <p>o</p>
+                            <button
+                                onClick={handleMapClick}
+                                className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>{!mapa ? "Abrir Mapa" : "Cerrar Mapa"}
+                            </button>
                         </div>
                         <div>
-                            <button
-                                className={`${styles.botonCards} bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
-                                Buscar
-                            </button>
+
+                        </div>
+                        <div>
+
+                            {
+                                mapa && <Map onCoordinatesChange={handleCoordinatesChange}/>
+                            }
                             {locationData.latitude !== null && locationData.longitude !== null && (
                                 <div>
                                     <p>Latitud: {locationData.latitude}</p>
@@ -73,8 +103,47 @@ export default function DescubrirPage() {
                                 </div>
                             )}
                         </div>
+                        <div>
+                        </div>
+                    </div>
+
+
+                </section>
+                <section className={"m-10"}>
+                    <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Seleccion cantidad de luz</h2>
+                    <div className="flex items-center w-[80%] mx-auto">
+                        <span className="mr-2">{value}</span>
+                        <input
+                            type="range"
+                            min="1"
+                            max="10"
+                            value={value}
+                            onChange={handleChange}
+                            className="slider-thumb appearance-none w-full h-1 bg-gray-300 rounded-full outline-none appearance-none focus:outline-none"
+                        />
                     </div>
                 </section>
+                <section className={"m-10"}>
+                    <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Seleccion cantidad metros</h2>
+                    <div className="flex items-center w-[80%] mx-auto">
+                        <span className="mr-2">{valueLugar}</span>
+                        <input
+                            type="range"
+                            min="1"
+                            max="10"
+                            value={valueLugar}
+                            onChange={handleChangeLugar}
+                            className="slider-thumb appearance-none w-full h-1 bg-gray-300 rounded-full outline-none appearance-none focus:outline-none"
+                        />
+                    </div>
+                </section>
+                <section className={"m-10"}>
+                    <Link href={``}
+                        className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                        Buscar
+                    </Link>
+                </section>
+
             </main>
 
         </>
