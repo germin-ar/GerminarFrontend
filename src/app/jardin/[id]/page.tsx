@@ -51,6 +51,7 @@ interface Plant {
         url: string;
     }[];
 }
+const BASE_URL = process.env.API_BASE_URL;
 
 export default function JardinPage({params: {id}}: { params: { id: number } }) {
     const router = useRouter();
@@ -59,7 +60,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     useEffect(() => {
         const fetchPlant = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                const response = await fetch(`${BASE_URL}/plants/${id}`, {
                     headers: {
                         'id-user': '1'
                     }
