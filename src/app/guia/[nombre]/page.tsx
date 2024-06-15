@@ -1,14 +1,14 @@
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
-import styles from "@/app/guia/guia.module.css";
+import styles from "@/app/guia/[nombre]/guia.module.css";
 
-export default function GuiaPage() {
+export default function GuiaPage({params: {nombre}}: { params: { nombre: string } }) {
     return (
         <>
             <main className={`${styles.contenedor}`}>
                 <section>
                     <div className={'flex-1 flex flex-col items-center gap-5 my-12'}>
-                        <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Albahaca</h1>
+                        <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{nombre.charAt(0).toUpperCase()}{nombre.slice(1).replace("-", " ")}</h1>
                         <div className={`flex-1 flex items-start flex-col gap-5`}>
                             <div>
                                 <Image className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}

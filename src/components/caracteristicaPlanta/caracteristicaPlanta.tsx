@@ -59,10 +59,11 @@ interface Image {
 interface IdentificarPlanta{
     planta:string
     espacio:string
+    sugerencia:string
 }
 
 export default function CaracteristicaPlanta(props:IdentificarPlanta) {
-    const { planta, espacio } = props
+    const { planta, espacio, sugerencia } = props
     const defaultPlantData: Species = {
         scientific_name: '',
         genus_name: '',
@@ -77,6 +78,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     useEffect(() => {
+        if (sugerencia === "no"){
         setLoading(true);
         setError(null);
 
@@ -96,7 +98,12 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                 setError(error.message);
                 setLoading(false);
             });
-    }, [planta]);
+
+    } else if(sugerencia === 'si'){
+            setLoading(false)
+        }
+
+        }, [planta]);
 
     if (loading) {
         return <Loading />;
@@ -121,7 +128,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
 
 
                         <div className={'flex flex-col items-center gap-10'}>
-                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{}</h1>
+                            <h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{plantData?.candidates[0].specie.scientific_name}</h1>
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 {/*<Image src={`${plantData?.image.url}`} alt="Albahaca-sana" width="500"
                                        height="500"/>*/}
@@ -129,14 +136,29 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                      width="500"
                                      height="500"
                                     alt={`${plantData?.candidates[0].specie.common_names[0]}`}/>
-                                <Link href={`/registro/${planta}`}
-                                    className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
-                                    <div>
-                                        <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                               height="20"/>
-                                    </div>
-                                    Guardar
-                                </Link>
+                                {
+                                    plantData && (
+                                        <Link href={`/registro/${planta}`}
+                                              className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                            <div>
+                                                <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
+                                                       height="20"/>
+                                            </div>
+                                            Guardar
+                                        </Link>
+                                    )
+                                }
+                                {
+                                    sugerencia === 'si' && (
+                                        <div className="flex items-center justify-between flex-row gap-2">
+                                        <p> ¿Querés saber saber cómo plantar?</p>
+                                            <Link href={`/guia/${planta}`}
+                                                  className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                                Empezar
+                                            </Link>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                         <div className={'table-container'}>

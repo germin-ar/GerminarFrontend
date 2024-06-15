@@ -138,7 +138,7 @@ export default function DescubrirPage(){
                     </div>
                 </section>
                 <section className={"m-10"}>
-                    <Link href={``}
+                    <Link href={`/descubrir/busqueda?latitude=${locationData.latitude}&longitude=${locationData.longitude}&sun_exposure=${value}&square_meters=${valueLugar}&page=1`}
                         className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                         Buscar
                     </Link>

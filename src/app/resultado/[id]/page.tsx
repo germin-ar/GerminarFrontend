@@ -3,6 +3,6 @@ import CaracteristicaPlanta from "@/components/caracteristicaPlanta/caracteristi
 export default function ResultadoPage({params: {id}}: { params: { id: string } }) {
 
     return (
-       <CaracteristicaPlanta planta={id} espacio="no"/>
+       <CaracteristicaPlanta planta={id} espacio="no" sugerencia="no"/>
     )
 }
