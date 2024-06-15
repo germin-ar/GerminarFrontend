@@ -34,6 +34,8 @@ interface Garden {
         is_active: boolean;
         is_favorite: boolean;
         specie: string;
+        image: string;
+        quantity: number;
         creation_date: string;
         modification_date: string;
     }[];
@@ -147,10 +149,7 @@ export default function JardinPage() {
     ];
 
     const [filtro, setFiltro] = useState('');
-
-    const handleFiltroChange = (e: any) => {
-        setFiltro(e.target.value);
-    };
+    const [buscador, setBuscador] = useState('');
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
@@ -164,11 +163,6 @@ export default function JardinPage() {
 
     const toggleAntiguedad = () => {
         setAntiguedadVisible(!antiguedadVisible);
-    };
-
-    const handleUbicacionFilter = (ubicacion: string) => {
-        setFiltro(ubicacion === 'Todos' ? '' : ubicacion);
-        // setUbicacionVisible(true);
     };
 
     /****/
@@ -212,25 +206,48 @@ export default function JardinPage() {
     }, []);
 
 
-    const filtrarElementos = () => {
+    const handleFiltroChange = (e: any) => {
+        setFiltro(e === 'todos' ? '' : e);
+    };
+
+    const handleBuscadorChange = (e: any) => {
+        setBuscador(e.target.value);
+    };
+
+    const filtrarPorBuscador = () => {
+        if (buscador.trim() === '') {
+            return data;
+        }
         return data.filter(garden =>
-            garden.name.toLowerCase().includes(filtro.toLowerCase()) ||
+            garden.name.toLowerCase().includes(buscador.toLowerCase()) ||
             garden.plants.some(plant =>
-                plant.alias.toLowerCase().includes(filtro.toLowerCase())
+                plant.alias.toLowerCase().includes(buscador.toLowerCase())
             )
         );
     };
 
+    const filtrarPorFiltro = () => {
+        if (filtro === '') {
+            return data;
+        }
+        return data.filter(garden =>
+            garden.name.toLowerCase().includes(filtro.toLowerCase())
+        );
+    };
+
     const resaltarTexto = (texto: any) => {
-        if (!filtro) {
+        if (!buscador) {
             return texto;
         }
-        const partes = texto.split(new RegExp(`(${filtro})`, 'gi'));
+        const partes = texto.split(new RegExp(`(${buscador})`, 'gi'));
         return partes.map((parte: any, index: any) =>
-            parte.toLowerCase() === filtro.toLowerCase() ?
+            parte.toLowerCase() === buscador.toLowerCase() ?
                 <span key={index} className="font-bold">{parte}</span> : parte
         );
     };
+
+    console.log("buscador", filtrarPorBuscador().length, buscador);
+    console.log("filtro", filtrarPorFiltro().length, filtro);
 
     return (
         <>
@@ -259,8 +276,8 @@ export default function JardinPage() {
                             <input
                                 type="text"
                                 placeholder="Buscar"
-                                value={filtro}
-                                onChange={handleFiltroChange}
+                                value={buscador}
+                                onChange={handleBuscadorChange}
                                 className="px-4 py-2 w-full rounded-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                             />
                         </div>
@@ -307,10 +324,10 @@ export default function JardinPage() {
                             >
                                 <li
                                     className="cursor-pointer"
-                                    onClick={() => handleUbicacionFilter("todos")}
                                 >
                                     <button
                                         type="button"
+                                        onClick={() => handleFiltroChange("todos")}
                                         className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                     >
                                         <span
@@ -323,10 +340,10 @@ export default function JardinPage() {
                                     <li
                                         key={garden.id}
                                         className="cursor-pointer"
-                                        onClick={() => handleUbicacionFilter(garden.name)}
                                     >
                                         <button
                                             type="button"
+                                            onClick={() => handleFiltroChange(garden.name)}
                                             className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                         >
                                           <span
@@ -444,21 +461,55 @@ export default function JardinPage() {
                 </div>
                 <section className="flex-1 flex gap-10 flex-col px-2 mt-3">
                     <div>
-                        {filtrarElementos().length > 0 ? (
+                        {filtrarPorBuscador().length > 0 && buscador != '' ? (
                             <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
-                                {filtrarElementos().map(garden => (
+                                {filtrarPorBuscador().map(garden => (
                                     <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
-                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"} />
+                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"}/>
                                         <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
-                                        <div className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                        <div
+                                            className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                             {garden.plants.map((plant, index) => (
-                                                <div key={index} className="flex flex-row justify-between items-center cursor-pointer" onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                <div key={index}
+                                                     className="flex flex-row justify-between items-center cursor-pointer"
+                                                     onClick={() => mostrarPopup(plant, plant.quantity)}>
                                                     <div className={"flex items-center"}>
-                                                        <img src={plant.image} alt={plant.alias} className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                        <img src={plant.image} alt={plant.alias}
+                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full"/>
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
                                                     {plant.is_favorite && (
-                                                        <span className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart color={"#cc3333"} size={20}/></span>
+                                                        <span
+                                                            className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                            color={"#cc3333"} size={20}/></span>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : filtrarPorFiltro().length > 0 && buscador == '' ? (
+                            <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
+                                {filtrarPorFiltro().map(garden => (
+                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
+                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2"}/>
+                                        <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                        <div
+                                            className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                            {garden.plants.map((plant, index) => (
+                                                <div key={index}
+                                                     className="flex flex-row justify-between items-center cursor-pointer"
+                                                     onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    <div className={"flex items-center"}>
+                                                        <img src={plant.image} alt={plant.alias}
+                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full"/>
+                                                        <span>{resaltarTexto(plant.alias)}</span>
+                                                    </div>
+                                                    {plant.is_favorite && (
+                                                        <span
+                                                            className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                            color={"#cc3333"} size={20}/></span>
                                                     )}
                                                 </div>
                                             ))}
@@ -468,10 +519,10 @@ export default function JardinPage() {
                             </div>
                         ) : (
                             <div className="flex flex-col grid grid-cols-1">
-                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                No se encontraron resultados para
-                                <span className="font-bold text-[#275F08]">&quot;{filtro}&quot;</span>.
-                            </h3>
+                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                    No se encontraron resultados para <span
+                                    className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                </h3>
                             </div>
                         )}
                     </div>
