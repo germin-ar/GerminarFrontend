@@ -107,8 +107,8 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
             <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
             <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
                    height="200"/>
-            <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Reintentar</Link>
-            </div>;
+            <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
+            </div>
     }
 
     return (

@@ -5,14 +5,14 @@ import React, {ChangeEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 
 
-interface IdentificarImagenProps{
+interface IdentificarImagenProps {
     imagen: string;
     pagina: string;
     forwardRef?: React.RefObject<HTMLDivElement>
 }
 
-export default function IdentificarImagen(props:IdentificarImagenProps){
-    const { imagen, pagina } = props;
+export default function IdentificarImagen(props: IdentificarImagenProps) {
+    const {imagen, pagina} = props;
     const [archivoSeleccionado, setArchivoSeleccionado] = useState<File | null>(
         null
     );
@@ -111,14 +111,18 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
                       onSubmit={handleIdentificarClick}>
                     <h2 className={``}>Sube o arrastre tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
-                        <label htmlFor="archivoInput" className={`${styles.seleccionarIdentificar}`}>
-                            Selecciona Archivo
+                        <label htmlFor="archivoInput" className={"cursor-pointer flex items-center gap-3"}>
+                            <div className={`${styles.seleccionarIdentificar} text-lg`}>
+                                Selecciona Archivo
+                            </div>
+                            <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
+                                   style={{display: 'none'}}/>
+                            <p>{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                         </label>
-                        <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
-                               style={{display: 'none'}}/>
-                        <p>{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                     </div>
-                    <button type="submit" className={`${styles.botonIdentificar} py-2 px-4 rounded`}>Identificar
+                    <button type="submit"
+                            className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                        Identificar
                     </button>
                 </form>
             </div>

@@ -109,9 +109,10 @@
     height: 250px;
     border-radius: 0 50px 0 50px;
 }
+
 @media (max-width: 530px) {
     .imagenes {
-        width: 100%;
+        width: 350px;
         height: 350px;
 
     }

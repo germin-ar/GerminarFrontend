@@ -44,16 +44,16 @@ export default function Home() {
             </section>
 
             <section
-                className={`bg-[#EFE8D6] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 justify-center shadow-lg`}>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center w-full justify-center">
+                className={`bg-[#EFE8D6] grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-6 justify-center shadow-lg px-10`}>
+                <div className={`flex items-center flex justify-center gap-3 py-10`}>
+                    <div>
                         <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1 flex items-center">
                         <div className={"flex flex-col"}>
                             <h3 className={`${BalooBhaina2.className} text-nowrap`}>Administra tus notificaciones</h3>
-                            <p>
+                            <p className={"w-full"}>
                                 Personaliza alertas para cuidar tus plantas. Configura recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
                             </p>
                             <button
@@ -63,8 +63,8 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center w-full justify-center">
+                <div className={`flex items-center flex justify-center gap-3 py-10`}>
+                    <div>
                         <Image className={`${styles.imagenes}`} src="/seguimiento.jfif" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -73,7 +73,8 @@ export default function Home() {
                             <h3 className={`${BalooBhaina2.className}`}>Haz un
                                 seguimiento de tu
                                 progreso</h3>
-                            <p>Registra tu experiencia de cultivo con nuestra función de seguimiento. Anota plantaciones, riegos y cosechas con recordatorios automáticos.</p>
+                            <p className={"w-full"}>
+                                Registra tu experiencia de cultivo con nuestra función de seguimiento. Anota plantaciones, riegos y cosechas con recordatorios automáticos.</p>
                             <button
                                 className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                 Seguir
@@ -81,8 +82,8 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className="flex-1 flex items-center w-full justify-center">
+                <div className={`flex items-center flex justify-center gap-3 py-10`}>
+                    <div>
                         <Image className={`${styles.imagenes}`} src="/tutoriales.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
@@ -91,7 +92,8 @@ export default function Home() {
                             <h3 className={`${BalooBhaina2.className} text-nowrap`}>Busca y
                                 aprende
                                 tutoriales</h3>
-                            <p>Aprende horticultura urbana con nuestros tutoriales paso a paso. Cuida tus plantas, resuelve problemas y maximiza tus cosechas de manera fácil y accesible.</p>
+                            <p className={"w-full"}>
+                                Aprende horticultura urbana con nuestros tutoriales paso a paso. Cuida tus plantas, resuelve problemas y maximiza tus cosechas de manera fácil y accesible.</p>
                             <button
                                 className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                 Biblioteca
@@ -99,15 +101,16 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.tamanoRecomendacionCards} flex justify-center  gap-3 py-10`}>
-                    <div className={`flex-1 flex items-center w-full justify-center`}>
+                <div className={`flex items-center flex justify-center gap-3 py-10`}>
+                    <div>
                         <Image className={`${styles.imagenes}`} src="/ideal.png" alt="Ecosistema" width="200"
                                height="200"/>
                     </div>
                     <div className="flex-1 flex items-center">
                         <div className={"flex flex-col"}>
                             <h3 className={`${BalooBhaina2.className}`}>Descubre tu planta ideal para tu jardín</h3>
-                            <p>Encuentra plantas perfectas para tu espacio con nuestra herramienta de recomendación personalizada.</p>
+                            <p className={"w-full"}>
+                                Encuentra plantas perfectas para tu espacio con nuestra herramienta de recomendación personalizada.</p>
                             <button
                                 className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                 Descubrir
@@ -115,7 +118,6 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-
             </section>
         </>
     );
