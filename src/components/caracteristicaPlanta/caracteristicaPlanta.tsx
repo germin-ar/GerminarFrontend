@@ -61,6 +61,8 @@ interface IdentificarPlanta{
     espacio:string
 }
 
+const BASE_URL = process.env.API_BASE_URL;
+
 export default function CaracteristicaPlanta(props:IdentificarPlanta) {
     const { planta, espacio } = props
     const defaultPlantData: Species = {
@@ -80,7 +82,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
         setLoading(true);
         setError(null);
 
-        fetch(`http://localhost:8080/api/v1/candidates/${planta}`)
+        fetch(`${BASE_URL}/candidates/${planta}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

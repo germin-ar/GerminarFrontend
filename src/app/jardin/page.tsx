@@ -40,6 +40,7 @@ interface Garden {
     is_active: boolean | null;
 }
 
+const BASE_URL = process.env.API_BASE_URL;
 export default function JardinPage() {
 
     const data = [
@@ -183,7 +184,7 @@ export default function JardinPage() {
     const fetchGardens = async () => {
         try {
             const userId = 1;
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+            const response = await fetch(`${BASE_URL}/gardens`, {
                 headers: {
                     'id-user': userId.toString(),
                 },
