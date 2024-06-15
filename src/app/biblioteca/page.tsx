@@ -4,10 +4,9 @@ import {BalooBhaina2} from "@/app/ui/fonts";
 export default function BibliotecaPage() {
     return (
         <>
-            <main className={`${stylesBiblioteca.contenedor}`}>
                 <div className={'flex justify-start gap-20'}>
                     <aside id="default-sidebar"
-                           className="text-lg top-0 left-0 z-40 w-1/4 transition-transform -translate-x-full sm:translate-x-0"
+                           className="text-lg top-0 left-0 z-40 w-80180 transition-transform -translate-x-full sm:translate-x-0"
                            aria-label="Sidebar">
                         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                             <ul className="space-y-2 font-medium ">
@@ -60,36 +59,40 @@ export default function BibliotecaPage() {
                         </div>
                     </aside>
                     <section>
-                        <div className={'my-10 flex flex-col gap-10'}>
+                        <div className={'my-10 flex flex-col gap-5'}>
 
-                            <h3 className={`${BalooBhaina2.className}`}>Tutoriales</h3>
+                            <h3 className={`${BalooBhaina2.className}`}>Los tutoriales más visitados</h3>
 
-                            <div className={'flex flex-wrap gap-20'}>
-                                <div>
-                                    <p className={'text-center'}>Germinación de semillas de albahaca</p>
-                                    <a href="">
-                                        <video width="400" height="400" controls>
-                                            <source src="/biblioteca/tutorial.mp4" type="video/mp4"/>
-                                            Tu navegador no soporta el elemento de video.
-                                        </video>
-                                    </a>
+                            <div className={'grid grid-cols-1 md:grid-cols-2 gap-x- gap-y-10'}>
+                                <div className={"flex flex-col gap-1"}>
+                                    <p className={`${stylesBiblioteca.widthText} text-[20px] px-1 bg-[#9CC254] rounded text-white text-bold cursor-pointer truncate hover:text-wrap`}>
+                                        Germinar tomates en 5 días en casa | Sembrar, plantar y cultivar tomates</p>
+                                    <div>
+                                        <iframe width="420" height="235"
+                                                src="https://www.youtube.com/embed/hLmOfHPRtfQ?si=QCAPwC4A4UnwHePk"
+                                                title="YouTube video player" frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerPolicy="strict-origin-when-cross-origin"
+                                                allowFullScreen></iframe>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className={'text-center'}>Germinación de semillas de menta</p>
-                                    <a href="">
-                                        <video width="400" height="400" controls>
-                                            <source src="/biblioteca/tutorial.mp4" type="video/mp4"/>
-                                            Tu navegador no soporta el elemento de video.
-                                        </video>
-                                    </a>
+
+                                <div className={"flex flex-col gap-1"}>
+                                    <p className={`${stylesBiblioteca.widthText} text-[20px] px-1 bg-[#9CC254] rounded text-white text-bold cursor-pointer truncate hover:text-wrap`}>
+                                        Como SEMBRAR LECHUGAS como un EXPERTO: Lechugas perfectas desde el SEMILLERO</p>
+                                    <div>
+                                        <iframe width="420" height="235"
+                                                src="https://www.youtube.com/embed/vuYW_OYvMQM?si=gzBM6N_026w6NVbK"
+                                                title="YouTube video player" frameBorder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                referrerPolicy="strict-origin-when-cross-origin"
+                                                allowFullScreen></iframe>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </section>
                 </div>
-
-            </main>
         </>
 
     )
