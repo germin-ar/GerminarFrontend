@@ -4,10 +4,12 @@ import stylesJardin from "@/app/jardin/jardin.module.css"
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoIosHome } from "react-icons/io";
-import { FaClock, FaHeart, FaTrash } from "react-icons/fa";
+import { FaClock, FaHeart, FaLeaf, FaTrash } from "react-icons/fa";
 import { PiPottedPlantFill } from "react-icons/pi";
 import { CiCalendar } from "react-icons/ci";
 import Image from "next/image";
+import { GiTreeBranch } from "react-icons/gi";
+import { BalooBhaina2 } from "../ui/fonts";
 
 interface Plant {
     id: number;
@@ -398,7 +400,7 @@ export default function JardinPage() {
                             <div className="flex items-center gap-1 ">
                                 <button type="button"
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                    <FaHeart size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
+                                    <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
                                         onClick={() => handleFiltroPlantaChange("plantas")}>Plantas</span>
@@ -423,7 +425,7 @@ export default function JardinPage() {
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                 // onClick={toggleUbicacion}
                                 >
-                                    <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
+                                    <FaLeaf size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
                                         onClick={() => handleFiltroPlantaChange("specie")}>Tipo
@@ -507,7 +509,10 @@ export default function JardinPage() {
                         </div>
                     </ul>
                 </div>
-                <section className="flex-1 flex gap-10 flex-col px-2 mt-3">
+                <section className="flex-1 flex gap-6 flex-col px-2 mt-3">
+                    {/* {plantasFiltradas?.length == 0 && ( */}
+                    <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2>
+                    {/* )} */}
                     <div>
                         {filtrarPorBuscador().length > 0 && buscador != '' ? (
                             <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
@@ -577,6 +582,10 @@ export default function JardinPage() {
                         )}
                     </div>
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
+
+                    {plantasFiltradas?.length != 0 && (
+                        <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
+                    )}
 
                     <div>
                         {((filtrarPlantasPorFiltro().length > 0 && (filtroPlantas === true || filtroPlantas === false)) ||
