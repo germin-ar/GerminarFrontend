@@ -20,6 +20,7 @@ interface Plant {
     image: string;
     quantity: number;
     specie: string;
+    is_active: boolean;
 }
 
 interface Garden {
@@ -45,6 +46,87 @@ interface Garden {
 }
 
 export default function JardinPage() {
+
+    const plantsInfo: Plant[] = [
+        {
+            id: 201,
+            alias: "Cebolla",
+            is_active: true,
+            creation_date: "hoy",
+            modification_date: "hoy",
+            image: "/resultado/albahaca-sana.jpg",
+            quantity: 5,
+            is_favorite: false,
+            specie: "verdura"
+        },
+        {
+            id: 202,
+            alias: "Rucula",
+            is_active: true,
+            creation_date: "ayer",
+            modification_date: "ayer",
+            image: "/recomendacion/rucula.PNG",
+            quantity: 2,
+            is_favorite: true,
+            specie: "verdura"
+        },
+        {
+            id: 203,
+            alias: "Albahaca",
+            is_active: true,
+            creation_date: "hoy",
+            modification_date: "hoy",
+            image: "/resultado/albahaca-sana.jpg",
+            quantity: 5,
+            is_favorite: false,
+            specie: "especia"
+        },
+        {
+            id: 204,
+            alias: "Perejil",
+            is_active: true,
+            creation_date: "ayer",
+            modification_date: "ayer",
+            image: "/recomendacion/rucula.PNG",
+            quantity: 2,
+            is_favorite: true,
+            specie: "especia"
+        },
+        {
+            id: 205,
+            alias: "Tomate",
+            is_active: true,
+            creation_date: "hoy",
+            modification_date: "hoy",
+            image: "/recomendacion/tomate.PNG",
+            quantity: 3,
+            is_favorite: false,
+            specie: "fruta"
+        },
+        {
+            id: 206,
+            alias: "Cebolla",
+            is_active: true,
+            creation_date: "hoy",
+            modification_date: "hoy",
+            image: "/resultado/albahaca-sana.jpg",
+            quantity: 5,
+            is_favorite: false,
+            specie: "verdura"
+        },
+        {
+            id: 207,
+            alias: "Lechuga",
+            is_active: true,
+            creation_date: "ayer",
+            modification_date: "ayer",
+            image: "/recomendacion/lechuga.PNG",
+            quantity: 1,
+            is_favorite: false,
+            specie: "verdura"
+        }
+    ];
+
 
     const data = [
         {
@@ -152,12 +234,15 @@ export default function JardinPage() {
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
-    const [prioridadVisible, setPrioridadVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
     const [antiguedadVisible, setAntiguedadVisible] = useState(false);
 
     const toggleUbicacion = () => {
         setUbicacionVisible(!ubicacionVisible);
+    };
+
+    const toggleTipo = () => {
+        setTipoVisible(!tipoVisible);
     };
 
     const toggleAntiguedad = () => {
@@ -204,9 +289,12 @@ export default function JardinPage() {
         fetchGardens()
     }, []);
 
+    const [mostrarJardin, setMostrarJardin] = useState(false);
+
     const [filtro, setFiltro] = useState('');
     const [filtroPlantas, setFiltroPlantas] = useState(false);
     const [filtroPlantaFavorita, setFiltroPlantaFavorito] = useState(false);
+    const [filtroPlantaTipo, setFiltroPlantaTipo] = useState('');
     const [plantasFiltradas, setPlantasFiltradas] = useState<Plant[] | null>(null);
     const [buscador, setBuscador] = useState('');
 
@@ -220,8 +308,15 @@ export default function JardinPage() {
         if (e === "plantas") {
             setFiltroPlantas(true);
             setFiltroPlantaFavorito(false);
+            setFiltroPlantaTipo('');
         } else if (e === "isFavorite") {
             setFiltroPlantaFavorito(true);
+            setFiltroPlantas(false);
+            setFiltroPlantaTipo('');
+        } else if (e != '') {
+            console.log("e:", e);
+            setFiltroPlantaTipo(e);
+            setFiltroPlantaFavorito(false);
             setFiltroPlantas(false);
         }
         setFiltro('');
@@ -255,27 +350,29 @@ export default function JardinPage() {
     const filtrarPlantasPorFiltro = () => {
         let plantasFiltradas: Plant[] = [];
 
-        if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita)) {
-            data.forEach(garden => {
-                garden.plants.forEach(plant => {
+        if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita && !filtroPlantaTipo)) {
+            plantsInfo.forEach(plant => {
+                plantasFiltradas.push(plant);
+            });
+        } else if (filtroPlantaFavorita && (!filtroPlantas && filtroPlantaTipo == '')) {
+            plantsInfo.forEach(plant => {
+                if (plant.is_favorite) {
                     plantasFiltradas.push(plant);
-                });
+                }
             });
-        } else if (filtroPlantaFavorita) {
-            data.forEach(garden => {
-                garden.plants.forEach(plant => {
-                    if (plant.is_favorite) {
-                        plantasFiltradas.push(plant);
-                    }
-                });
-            });
+
+        } else if (filtroPlantaTipo != '' && !filtroPlantas && !filtroPlantaFavorita) {
+            // Asumiendo que `prueba` es un array inicial
+            plantasFiltradas = plantsInfo.filter(plant =>
+                plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
+            );
         }
         return plantasFiltradas;
     };
 
     useEffect(() => {
         filtrarPlantasPorFiltro();
-    }, [filtroPlantas, filtroPlantaFavorita]);
+    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo]);
 
     const resaltarTexto = (texto: any) => {
         if (!buscador) {
@@ -288,7 +385,9 @@ export default function JardinPage() {
         );
     };
 
-    console.log(filtrarPlantasPorFiltro(), filtroPlantas, filtroPlantaFavorita);
+    const uniqueSpecies = Array.from(new Set(plantsInfo.map(plant => plant.specie)));
+    console.log(filtrarPlantasPorFiltro(), "plantas:", filtroPlantas, "favs:", filtroPlantaFavorita, "specie", filtroPlantaTipo);
+
     return (
         <>
             <section>
@@ -334,7 +433,7 @@ export default function JardinPage() {
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                     onClick={() => {
                                         toggleUbicacion();
-                                        handleFiltroChange("todos");
+                                        // handleFiltroChange("todos");
                                     }}
                                 >
                                     <IoIosHome size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
@@ -389,7 +488,7 @@ export default function JardinPage() {
                                         >
                                             <span
                                                 className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
-                                                {garden.name}
+                                                {garden.name.charAt(0).toUpperCase() + garden.name.slice(1)}
                                             </span>
                                         </button>
                                     </li>
@@ -418,17 +517,17 @@ export default function JardinPage() {
                                 </button>
                             </div>
                         </div>
+                        {/* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */}
                         <div>
                             <div className="flex items-center gap-1 ">
                                 <button
                                     type="button"
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                // onClick={toggleUbicacion}
+                                    onClick={() => { toggleTipo(); }}
                                 >
                                     <FaLeaf size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
-                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
-                                        onClick={() => handleFiltroPlantaChange("specie")}>Tipo
+                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Tipo planta
                                     </span>
                                     <svg
                                         className={`w-3 h-3 transition-transform duration-300 ${tipoVisible ? 'rotate-180' : ''
@@ -448,10 +547,28 @@ export default function JardinPage() {
                                     </svg>
                                 </button>
                             </div>
-                            {tipoVisible && (
-                                <div className="pl-5">
-                                </div>
-                            )}
+                            <ul
+                                className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${tipoVisible ? 'max-h-60' : 'max-h-0'
+                                    }`}
+                            >
+                                {uniqueSpecies.map(specie => (
+                                    <li
+                                        key={specie}
+                                        className="cursor-pointer"
+                                    >
+                                        <button
+                                            type="button"
+                                            onClick={() => handleFiltroPlantaChange(specie)}
+                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        >
+                                            <span
+                                                className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
+                                                {specie.charAt(0).toUpperCase() + specie.slice(1)}
+                                            </span>
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
@@ -488,7 +605,6 @@ export default function JardinPage() {
                             >
                                 <li
                                     className="cursor-pointer"
-                                // onClick={() => handleUbicacionFilter("todos")}
                                 >
                                     <button
                                         type="button"
@@ -588,9 +704,7 @@ export default function JardinPage() {
                     )}
 
                     <div>
-                        {((filtrarPlantasPorFiltro().length > 0 && (filtroPlantas === true || filtroPlantas === false)) ||
-                            (filtrarPlantasPorFiltro().length > 0 && filtroPlantas === false && filtroPlantaFavorita === false) ||
-                            (filtrarPlantasPorFiltro().length > 0 && filtroPlantas === false && filtroPlantaFavorita === true)) ? (
+                        { filtrarPlantasPorFiltro().length > 0 ? (
                             <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                 {filtrarPlantasPorFiltro().map(plant => (
 
@@ -628,7 +742,7 @@ export default function JardinPage() {
                                 ))}
                             </div>
 
-                        ) : filtrarPlantasPorFiltro().length === 0 && filtroPlantas === true ? (
+                        ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas === true ? (
                             <div className="flex flex-col grid grid-cols-1">
                                 <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
                                     No tienes plantas guardadas en tus <span
@@ -636,7 +750,7 @@ export default function JardinPage() {
                                 </h3>
                             </div>
                             // acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                        ) : filtrarPlantasPorFiltro().length === 0 && filtroPlantas === false ? (
+                        ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas == false ? (
                             <div className="flex flex-col grid grid-cols-1">
                                 <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
                                     No tienes plantas guardadas.
