@@ -73,7 +73,7 @@ export default function JardinPage() {
                     modification_date: "ayer",
                     image: "/recomendacion/rucula.PNG",
                     quantity: 2,
-                    is_favorite: false,
+                    is_favorite: true,
                     specie: "verdura"
                 },
                 {
@@ -84,7 +84,7 @@ export default function JardinPage() {
                     modification_date: "hoy",
                     image: "/resultado/albahaca-sana.jpg",
                     quantity: 5,
-                    is_favorite: true,
+                    is_favorite: false,
                     specie: "especia"
                 },
                 {
@@ -95,7 +95,7 @@ export default function JardinPage() {
                     modification_date: "ayer",
                     image: "/recomendacion/rucula.PNG",
                     quantity: 2,
-                    is_favorite: false,
+                    is_favorite: true,
                     specie: "especia"
                 }
             ],
@@ -118,7 +118,7 @@ export default function JardinPage() {
                     modification_date: "hoy",
                     image: "/recomendacion/tomate.PNG",
                     quantity: 3,
-                    is_favorite: true,
+                    is_favorite: false,
                     specie: "fruta"
                 },
                 {
@@ -140,7 +140,7 @@ export default function JardinPage() {
                     modification_date: "ayer",
                     image: "/recomendacion/lechuga.PNG",
                     quantity: 1,
-                    is_favorite: true,
+                    is_favorite: false,
                     specie: "verdura"
                 }
             ],
@@ -210,6 +210,8 @@ export default function JardinPage() {
 
     const handleFiltroChange = (e: any) => {
         setFiltro(e === 'todos' ? '' : e);
+        setFiltroPlantas(false);
+        setFiltroPlantaFavorito(false);
     };
 
     const handleFiltroPlantaChange = (e: any) => {
@@ -220,6 +222,7 @@ export default function JardinPage() {
             setFiltroPlantaFavorito(true);
             setFiltroPlantas(false);
         }
+        setFiltro('');
     };
 
     const handleBuscadorChange = (e: any) => {
@@ -250,7 +253,7 @@ export default function JardinPage() {
     const filtrarPlantasPorFiltro = () => {
         let plantasFiltradas: Plant[] = [];
 
-        if (filtroPlantas) {
+        if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita)) {
             data.forEach(garden => {
                 garden.plants.forEach(plant => {
                     plantasFiltradas.push(plant);
@@ -327,7 +330,10 @@ export default function JardinPage() {
                                 <button
                                     type="button"
                                     className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                    onClick={toggleUbicacion}
+                                    onClick={() => {
+                                        toggleUbicacion();
+                                        handleFiltroChange("todos");
+                                    }}
                                 >
                                     <IoIosHome size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
@@ -570,8 +576,10 @@ export default function JardinPage() {
                     </div>
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
 
-                    <div className="">
-                        {filtrarPlantasPorFiltro().length > 0 && filtroPlantas == true && filtroPlantaFavorita == false ? (
+                    <div>
+                        {((filtrarPlantasPorFiltro().length > 0 && (filtroPlantas === true || filtroPlantas === false)) ||
+                            (filtrarPlantasPorFiltro().length > 0 && filtroPlantas === false && filtroPlantaFavorita === false) ||
+                            (filtrarPlantasPorFiltro().length > 0 && filtroPlantas === false && filtroPlantaFavorita === true)) ? (
                             <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                 {filtrarPlantasPorFiltro().map(plant => (
 
@@ -585,12 +593,20 @@ export default function JardinPage() {
                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                 <span>{resaltarTexto(plant.alias)}</span>
                                             </div>
-                                            {plant.is_favorite && (
+                                            {plant.is_favorite ? (
                                                 <div>
-                                                    <FaTrash color={"#d3d3d3"} size={20} className={""} />
+                                                    <FaTrash color={"#d3d3d3"} size={20} />
                                                     <span
 
                                                         className={"ml-3 w-fit"}><FaHeart
+                                                            color={"#cc3333"} size={20} /></span>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <FaTrash color={"#d3d3d3"} size={20} />
+                                                    <span
+
+                                                        className={"ml-3 w-fit invisible"}><FaHeart
                                                             color={"#cc3333"} size={20} /></span>
                                                 </div>
                                             )}
@@ -601,42 +617,22 @@ export default function JardinPage() {
                                 ))}
                             </div>
 
-                        ) : filtrarPlantasPorFiltro().length > 0 && filtroPlantas == false && filtroPlantaFavorita == true ? (
-                            <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
-                                {filtrarPlantasPorFiltro().map(index => (
-
-                                    <div className="border border-gray-200 p-4 rounded-lg lg:w-60">
-
-                                        <div
-                                            className="flex flex-row flex-wrap gap-2 items-center justify-between"
-                                            onClick={() => mostrarPopup(index, index.quantity)}>
-                                            <div className={"flex items-center"}>
-                                                <img src={index.image} alt={index.alias}
-                                                    className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
-                                                <span>{resaltarTexto(index.alias)}</span>
-                                            </div>
-                                            {index.is_favorite && (
-                                                <div>
-                                                    <FaTrash color={"#d3d3d3"} size={20} className={""} />
-                                                    <span
-
-                                                        className={"ml-3 w-fit"}><FaHeart
-                                                            color={"#cc3333"} size={20} /></span>
-                                                </div>
-                                            )}
-                                        </div>
-
-
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
+                        ) : filtrarPlantasPorFiltro().length === 0 && filtroPlantas === true ? (
                             <div className="flex flex-col grid grid-cols-1">
                                 <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                    No se encontraron resultados para <span
-                                        className="font-bold text-[#275F08]">&quot;{buscador} filtro planta &quot;</span>.
+                                    No tienes plantas guardadas en tus <span
+                                        className="font-bold text-[#275F08]"> favoritos</span>.
                                 </h3>
                             </div>
+                            // acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        ) : filtrarPlantasPorFiltro().length === 0 && filtroPlantas === false ? (
+                            <div className="flex flex-col grid grid-cols-1">
+                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                No tienes plantas guardadas.
+                            </h3>
+                        </div>
+                        ) : (
+                            <div></div>
                         )}
                     </div>
 
