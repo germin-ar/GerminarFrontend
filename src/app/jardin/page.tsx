@@ -567,10 +567,12 @@ export default function JardinPage() {
                             </div>
                         ) : (
                             <div className="flex flex-col grid grid-cols-1">
-                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                    No se encontraron resultados para <span
-                                        className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
-                                </h3>
+                                {plantasFiltradas?.length == 0 && (
+                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                        No se encontraron resultados para <span
+                                            className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                    </h3>
+                                )}
                             </div>
                         )}
                     </div>
@@ -627,10 +629,10 @@ export default function JardinPage() {
                             // acaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                         ) : filtrarPlantasPorFiltro().length === 0 && filtroPlantas === false ? (
                             <div className="flex flex-col grid grid-cols-1">
-                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                No tienes plantas guardadas.
-                            </h3>
-                        </div>
+                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                    No tienes plantas guardadas.
+                                </h3>
+                            </div>
                         ) : (
                             <div></div>
                         )}
