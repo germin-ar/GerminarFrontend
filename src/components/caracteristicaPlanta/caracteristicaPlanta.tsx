@@ -14,8 +14,11 @@ interface PlantData {
     language: string;
     candidates: Candidate[];
     image: Image;
+    health:Health;
 }
-
+interface Health{
+    is_healty: boolean
+}
 
 
 interface Candidate {
@@ -200,7 +203,8 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                        alt="Planta-sana-icon" width="80" height="80"/>
                             </div>
                             <div>
-                                <p>¡Tu planta parece sana!</p>
+                                {plantData?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
+
                             </div>
                         </div>
                     </div>
