@@ -66,3 +66,10 @@
         display: block;
     }
 }
+
+.customScrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9ba7c0 #f3f4f6;
+    padding-right: 0.5rem;
+    box-sizing: content-box;
+}

@@ -66,7 +66,7 @@ export default function JardinPage() {
             modification_date: "ayer",
             image: "/recomendacion/rucula.PNG",
             quantity: 2,
-            is_favorite: true,
+            is_favorite: false,
             specie: "verdura"
         },
         {
@@ -88,7 +88,7 @@ export default function JardinPage() {
             modification_date: "ayer",
             image: "/recomendacion/rucula.PNG",
             quantity: 2,
-            is_favorite: true,
+            is_favorite: false,
             specie: "especia"
         },
         {
@@ -179,6 +179,106 @@ export default function JardinPage() {
                     quantity: 2,
                     is_favorite: true,
                     specie: "especia"
+                },
+                {
+                    id: 208,
+                    alias: "Tomate",
+                    is_active: true,
+                    creation_date: "05/06/2024",
+                    modification_date: "hoy",
+                    image: "/recomendacion/tomate.PNG",
+                    quantity: 3,
+                    is_favorite: false,
+                    specie: "fruta"
+                },
+                {
+                    id: 209,
+                    alias: "Remolacha",
+                    is_active: true,
+                    creation_date: "05/06/2024",
+                    modification_date: "hoy",
+                    image: "/recomendacion/tomate.PNG",
+                    quantity: 3,
+                    is_favorite: false,
+                    specie: "verdura"
+                }
+            ],
+            is_active: true
+        },
+        {
+            id: 5,
+            name: "Jardín nro 3",
+            user: {
+                id: 101,
+                name: "Alice",
+                email: "alice@gmail.com"
+            },
+            plants: [
+                {
+                    id: 301,
+                    alias: "Cebolla",
+                    is_active: true,
+                    creation_date: "01/06/2024",
+                    modification_date: "hoy",
+                    image: "/resultado/albahaca-sana.jpg",
+                    quantity: 5,
+                    is_favorite: false,
+                    specie: "verdura"
+                },
+                {
+                    id: 302,
+                    alias: "Rucula",
+                    is_active: true,
+                    creation_date: "01/06/2024",
+                    modification_date: "ayer",
+                    image: "/recomendacion/rucula.PNG",
+                    quantity: 2,
+                    is_favorite: true,
+                    specie: "verdura"
+                },
+                {
+                    id: 303,
+                    alias: "Albahaca",
+                    is_active: true,
+                    creation_date: "03/06/2024",
+                    modification_date: "hoy",
+                    image: "/resultado/albahaca-sana.jpg",
+                    quantity: 5,
+                    is_favorite: false,
+                    specie: "especia"
+                },
+                {
+                    id: 304,
+                    alias: "Perejil",
+                    is_active: true,
+                    creation_date: "04/06/2024",
+                    modification_date: "ayer",
+                    image: "/recomendacion/rucula.PNG",
+                    quantity: 2,
+                    is_favorite: true,
+                    specie: "especia"
+                },
+                {
+                    id: 308,
+                    alias: "Tomate",
+                    is_active: true,
+                    creation_date: "05/06/2024",
+                    modification_date: "hoy",
+                    image: "/recomendacion/tomate.PNG",
+                    quantity: 3,
+                    is_favorite: false,
+                    specie: "fruta"
+                },
+                {
+                    id: 309,
+                    alias: "Remolacha",
+                    is_active: true,
+                    creation_date: "05/06/2024",
+                    modification_date: "hoy",
+                    image: "/recomendacion/tomate.PNG",
+                    quantity: 3,
+                    is_favorite: false,
+                    specie: "verdura"
                 }
             ],
             is_active: true
@@ -343,16 +443,26 @@ export default function JardinPage() {
         setBuscador(e.target.value);
     };
 
+    let filtradoJardin: Garden[] = [];
+    let filtradoPlantas: Plant[] = [];
     const filtrarPorBuscador = () => {
+
         if (buscador.trim() === '') {
-            return data;
+            filtradoJardin = data;
+            filtradoPlantas = plantsInfo;
         }
-        return data.filter(garden =>
-            garden.name.toLowerCase().includes(buscador.toLowerCase()) ||
-            garden.plants.some(plant =>
-                plant.alias.toLowerCase().includes(buscador.toLowerCase())
-            )
+        filtradoJardin = data.filter(garden =>
+            garden.name.toLowerCase().includes(buscador.toLowerCase())
+            // ||
+            // garden.plants.some(plant =>
+            //     plant.alias.toLowerCase().includes(buscador.toLowerCase())
+            // )
         );
+        filtradoPlantas = plantsInfo.filter(plant =>
+            plant.alias.toLowerCase().includes(buscador.toLowerCase())
+        )
+
+        return { filtradoJardin, filtradoPlantas };
     };
 
     const filtrarPorFiltro = () => {
@@ -388,7 +498,6 @@ export default function JardinPage() {
 
             plantsInfo.forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
-                console.log(`Fecha original: ${plant.creation_date}, Objeto Date: ${dateObject}`);
             });
         } else if (filtroPlantaFechaAntiguo) {
             plantasFiltradas = plantsInfo.sort((a, b) => {
@@ -396,7 +505,6 @@ export default function JardinPage() {
             });
             plantsInfo.forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
-                console.log(`Fecha original: ${plant.creation_date}, Objeto Date: ${dateObject}`);
             });
         }
 
@@ -545,7 +653,7 @@ export default function JardinPage() {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => {handleFiltroChange("todos"); scrollToGarden()}}
+                                        onClick={() => { handleFiltroChange("todos"); scrollToGarden() }}
                                         className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
@@ -561,7 +669,7 @@ export default function JardinPage() {
                                     >
                                         <button
                                             type="button"
-                                            onClick={() => { handleFiltroChange(garden.name), scrollToGarden()}}
+                                            onClick={() => { handleFiltroChange(garden.name), scrollToGarden() }}
                                             className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">                                            <span
                                                 className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
                                                 {garden.name.charAt(0).toUpperCase() + garden.name.slice(1)}
@@ -713,13 +821,14 @@ export default function JardinPage() {
 
                     {data.length !== 0 ? (
                         <>
-                            <h2 ref={refGarden} className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2><div>
-                                {filtrarPorBuscador().length > 0 && buscador != '' ? (
+                            <h2 ref={refGarden} className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2>
+                            <div>
+                                {filtrarPorBuscador().filtradoJardin.length > 0 && buscador != '' ? (
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
-                                        {filtrarPorBuscador().map(garden => (
-                                            <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative hover:shadow-lg">
+                                        {filtrarPorBuscador().filtradoJardin.map(garden => (
+                                            <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
@@ -745,9 +854,9 @@ export default function JardinPage() {
                                 ) : filtrarPorFiltro().length > 0 && buscador == '' ? (
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorFiltro().map(garden => (
-                                            <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
+                                            <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
@@ -772,12 +881,12 @@ export default function JardinPage() {
                                     </div>
                                 ) : (
                                     <div className="flex flex-col grid grid-cols-1">
-                                        {plantasFiltradas?.length == 0 && (
-                                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                                No se encontraron resultados para <span
-                                                    className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
-                                            </h3>
-                                        )}
+
+                                        <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                            No se encontraron jardines con el nombre <span
+                                                className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                        </h3>
+
                                     </div>
                                 )}
                             </div>
@@ -792,61 +901,91 @@ export default function JardinPage() {
                             </Link> */}
                         </div>
                     )}
+
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
 
-                    {plantasFiltradas?.length === 0 ? (
-                        <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>No tienes plantas</h2>
+
+                    {plantsInfo.length !== 0 ? (
+                        <>
+                            <h2 ref={refPlant} className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
+                            <div>
+                                {filtrarPorBuscador().filtradoPlantas.length > 0 && buscador != '' ? (
+                                    <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
+                                        {filtrarPorBuscador().filtradoPlantas.map(plant => (
+                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
+                                                <div
+                                                    className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
+                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    <div className="flex items-center">
+                                                        <img src={plant.image} alt="plant.alias"
+                                                            className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                        <span>{resaltarTexto(plant.alias)}</span>
+                                                    </div>
+                                                    {plant.is_favorite ? (
+                                                        <span
+                                                            className={"w-fit"}><FaHeart
+                                                                color={"#cc3333"} size={20} />
+                                                        </span>
+                                                    ) : (
+                                                        <span
+                                                            className={"w-fit invisible"}><FaHeart
+                                                                color={"#cc3333"} size={20} />
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : filtrarPlantasPorFiltro().length > 0 && buscador == '' ? (
+                                    <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
+                                        {filtrarPlantasPorFiltro().map(plant => (
+                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
+                                                <div
+                                                    className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
+                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    <div className="flex items-center">
+                                                        <img src={plant.image} alt="plant.alias"
+                                                            className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                        <span>{resaltarTexto(plant.alias)}</span>
+                                                    </div>
+                                                    {plant.is_favorite ? (
+                                                        <span
+                                                            className={"w-fit"}><FaHeart
+                                                                color={"#cc3333"} size={20} />
+                                                        </span>
+                                                    ) : (
+                                                        <span
+                                                            className={"w-fit invisible"}><FaHeart
+                                                                color={"#cc3333"} size={20} />
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (filtrarPlantasPorFiltro().length == 0 && filtroPlantaFavorita && !filtroPlantas && !filtroPlantaTipo && !filtroPlantaFechaReciente && !filtroPlantaFechaAntiguo) && !buscador ? (
+                                    <div className="flex flex-col grid grid-cols-1">
+                                        <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                            No tienes plantas guardadas en tus <span
+                                                className="font-bold text-[#275F08]"> favoritos</span>.
+                                        </h3>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col grid grid-cols-1">
+                                        <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                            No se encontraron plantas con el nombre <span
+                                                className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                        </h3>
+                                    </div>
+                                )}
+                            </div>
+                        </>
                     ) : (
                         <div>
-                            <h2 ref={refPlant} className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
-                            {filtrarPlantasPorFiltro().length > 0 ? (
-                                <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
-                                    {filtrarPlantasPorFiltro().map(plant => (
-
-                                        <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
-
-                                            <div
-                                                className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                                <div className={"flex items-center"}>
-                                                    <img src={plant.image} alt={plant.alias}
-                                                        className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
-                                                    <span>{resaltarTexto(plant.alias)}</span>
-                                                </div>
-                                                {plant.is_favorite ? (
-                                                    <span
-                                                        className={"w-fit"}><FaHeart
-                                                            color={"#cc3333"} size={20} /></span>
-                                                ) : (
-                                                    <span
-                                                        className={"w-fit invisible"}><FaHeart
-                                                            color={"#cc3333"} size={20} /></span>
-                                                )}
-                                            </div>
-
-
-                                        </div>
-                                    ))}
-                                </div>
-
-                            ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas === true ? (
-                                <div className="flex flex-col grid grid-cols-1">
-                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                        No tienes plantas guardadas en tus <span
-                                            className="font-bold text-[#275F08]"> favoritos</span>.
-                                    </h3>
-                                </div>
-                            ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas == false ? (
-                                <div className="flex flex-col grid grid-cols-1">
-                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                        No tienes plantas guardadas.
-                                    </h3>
-                                </div>
-                            ) : (
-                                <div></div>
-                            )}
+                            <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Aún no tienes plantas.</h2>
                         </div>
                     )}
+
                     {popupVisible && plantaSeleccionada && (
                         <>
                             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
