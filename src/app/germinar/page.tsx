@@ -4,7 +4,7 @@ import styles from "@/app/home.module.css";
 import stylesVideoSection from "@/app/germinar/germinar.module.css";
 
 import Image from "next/image";
-import {useEffect, useRef, useState} from "react";
+import {RefObject, useEffect, useRef, useState} from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import {FaVolumeUp, FaVolumeMute} from 'react-icons/fa';
@@ -95,6 +95,8 @@ export default function GerminarPage() {
     const handleToggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
+
+    const myRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
     return (
         <>
 
@@ -292,7 +294,7 @@ export default function GerminarPage() {
             </section>
             <main id="herramientas" className="flex justify-center items-center">
                 {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
-                <HerramientasDeCultivo/>
+                <HerramientasDeCultivo targetRef={myRef}/>
             </main>
             <section id="propuesta"
                      className={`${styles.nuestraPropuesta} flex justify-center items-center flex-col md:flex-row`}>

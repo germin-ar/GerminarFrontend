@@ -1,4 +1,5 @@
 import stylesEspacio from "@/app/espacio/espacio.module.css";
+import styles from "@/app/home.module.css";
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import {MdSunny} from "react-icons/md";
 import {TbSunOff} from "react-icons/tb";
@@ -18,70 +19,70 @@ export default function EspacioPage() {
                             <h2 className={`${BalooBhaina2.className} text-[#88BC43] text-center`}>Ingresa tus
                                 datos manualmente</h2>
                         </div>
-                        <div className={`${stylesEspacio.contenido} `}>
+                        <div className={`${stylesEspacio.contenido}`}>
                             <p>¿Dónde planeas ubicar tu planta?</p>
-                            <div className={`${stylesEspacio.ubicacionResp} flex flex-wrap gap-3 justify-center items-center pt-10 font-bold`}>
-                                <label htmlFor="baño" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                            <div className={`${stylesEspacio.ubicacionResp} flex flex-wrap gap-5 justify-center items-center pt-10 font-bold`}>
+                                <label htmlFor="baño" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Baño</h4>
                                         <input className="peer/baño sr-only" type="radio" id="baño" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="patio-trasero" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="patio-trasero" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>P. Trasero</h4>
                                         <input className="sr-only" type="radio" id="patio-trasero" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="porche" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="porche" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Porche</h4>
                                         <input className="sr-only" type="radio" id="porche" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="oficina" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="oficina" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Oficina</h4>
                                         <input className="sr-only" type="radio" id="oficina" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="cocina" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="cocina" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Cocina</h4>
                                         <input className="sr-only" type="radio" id="cocina" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="balcon" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="balcon" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Balcón</h4>
                                         <input className="sr-only" type="radio" id="balcon" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="terraza" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="terraza" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Terraza</h4>
                                         <input className="sr-only" type="radio" id="terraza" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="escritorio" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="escritorio" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Escritorio</h4>
                                         <input className="sr-only" type="radio" id="escritorio" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="pasillo" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="pasillo" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Pasillo</h4>
                                         <input className="sr-only" type="radio" id="pasillo" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="ventana" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="ventana" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Ventana</h4>
                                         <input className="sr-only" type="radio" id="ventana" name="ubicacion"/>
                                     </div>
                                 </label>
-                                <label htmlFor="otro" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
+                                <label htmlFor="otro" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
                                         <h4>Otro...</h4>
                                         <input className="sr-only" type="radio" id="otro" name="ubicacion"/>
@@ -154,7 +155,8 @@ export default function EspacioPage() {
             </section>
             <div className={`${stylesEspacio.botonContenedor}`}>
                 <Link href="espacio/recomendacion"
-                      className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded`}>Analizar</Link>
+                className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                Analizar</Link>
             </div>
         </>
 

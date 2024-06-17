@@ -55,14 +55,21 @@
     display: block;
 }
 
-@media (min-width: 767px) and (max-width: 893px) {
+@media (min-width: 767px) and (max-width: 895px) {
     .responsiveImage {
         display: none;
     }
 }
 
-@media (min-width: 894px) {
+@media (min-width: 896px) {
     .responsiveImage {
         display: block;
     }
+}
+
+.customScrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9ba7c0 #f3f4f6;
+    padding-right: 0.5rem;
+    box-sizing: content-box;
 }

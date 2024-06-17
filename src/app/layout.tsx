@@ -21,7 +21,7 @@ export default function RootLayout({
             <title>Home</title>
         </head>
 
-        <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased`}>
+        <body className={`${inter.className} ${PoppinsTexto.className} ${styles.body} antialiased relative`}>
 
             <Header/>
 

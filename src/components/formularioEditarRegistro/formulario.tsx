@@ -3,10 +3,9 @@ import {useRouter} from "next/navigation";
 import React, {useEffect, useState} from "react";
 import stylesDescriptionPlants from './descripcion.module.css';
 
-import {FaHeart} from 'react-icons/fa';
+import {FaHeart, FaImages, FaRegIdCard} from 'react-icons/fa';
 import {LuPencilLine} from "react-icons/lu";
 import Image from "next/image";
-import {FaImages, FaRegIdCard} from "react-icons/fa";
 import {RiPlantLine} from "react-icons/ri";
 import {GiPlantRoots} from "react-icons/gi";
 import {MdOutlineHealthAndSafety, MdOutlineWaterDrop} from "react-icons/md";
@@ -15,7 +14,7 @@ import {CiCalendar, CiRuler} from "react-icons/ci";
 import {FiAlertCircle} from "react-icons/fi";
 import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {BalooBhaina2} from "../../app/ui/fonts";
-import Loading from "@/app/resultado/[id]/loading";
+import Loading from "@/components/Spinner/Spinner";
 import Link from "next/link";
 
 
@@ -40,7 +39,6 @@ interface FormValuesEdit {
     is_favorite: boolean;
     image_url: string;
 }
-
 interface PlantData {
     id: string;
     language: string;
@@ -53,14 +51,12 @@ interface Candidate {
     specie: Species;
     plant_data: PlantDataDetail;
 }
-
 interface Species {
     scientific_name: string;
     genus_name: string;
     family_name: string;
     common_names: string[];
 }
-
 interface PlantDataDetail {
     id: number;
     description: string;
@@ -76,7 +72,7 @@ interface PlantDataDetail {
     harvest_time: string;
     growth_season: string;
     planting_time: string;
-    pruning: string;
+    pruning:string;
 }
 
 interface Image {
@@ -85,12 +81,14 @@ interface Image {
 }
 
 
+
+
 interface PlantEdit {
     id: number;
     alias: string;
     creation_date: string | null;
     modification_date: string;
-    planting_date: string;
+    planting_date: string ;
     description: string | null;
     favorite: boolean | null;
     height: number;
@@ -143,6 +141,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
+
 
 
     const [formValues, setFormValues] = useState<FormValues>({
@@ -348,6 +347,7 @@ export default function Formulario(props: IdentificarPlanta) {
         }
 
 
+
         fetchUbicaciones();
         console.log(ubicaciones);
     }, [id]);
@@ -395,6 +395,8 @@ export default function Formulario(props: IdentificarPlanta) {
             console.error('Error al conectar con el servidor:', error);
         }
     }
+
+
 
 
     const [isOpen, setIsOpen] = useState(false);
