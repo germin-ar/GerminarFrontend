@@ -73,7 +73,7 @@ export default function JardinPage() {
             id: 203,
             alias: "Albahaca",
             is_active: true,
-            creation_date:"2024-06-03",
+            creation_date: "2024-06-03",
             modification_date: "hoy",
             image: "/resultado/albahaca-sana.jpg",
             quantity: 5,
@@ -366,7 +366,7 @@ export default function JardinPage() {
 
     const filtrarPlantasPorFiltro = () => {
         let plantasFiltradas: Plant[] = [];
-        
+
         if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita && !filtroPlantaTipo && !filtroPlantaFechaReciente && !filtroPlantaFechaAntiguo)) {
             plantsInfo.forEach(plant => {
                 plantasFiltradas.push(plant);
@@ -385,7 +385,7 @@ export default function JardinPage() {
             plantasFiltradas = plantsInfo.sort((a, b) => {
                 return new Date(b.creation_date).getDate() - new Date(a.creation_date).getDate();
             });
-           
+
             plantsInfo.forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
                 console.log(`Fecha original: ${plant.creation_date}, Objeto Date: ${dateObject}`);
@@ -399,7 +399,7 @@ export default function JardinPage() {
                 console.log(`Fecha original: ${plant.creation_date}, Objeto Date: ${dateObject}`);
             });
         }
-        
+
         return plantasFiltradas;
     };
 
@@ -419,7 +419,6 @@ export default function JardinPage() {
     };
 
     const uniqueSpecies = Array.from(new Set(plantsInfo.map(plant => plant.specie)));
-    console.log(filtrarPlantasPorFiltro(), "plantas:", filtroPlantas, "favs:", filtroPlantaFavorita, "specie", filtroPlantaTipo, "fechaRec", filtroPlantaFechaReciente, "fechaAnt", filtroPlantaFechaAntiguo);
 
     return (
         <>
@@ -463,7 +462,7 @@ export default function JardinPage() {
                             <div className="flex items-center gap-1 ">
                                 <button
                                     type="button"
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     onClick={() => {
                                         toggleUbicacion();
                                         // handleFiltroChange("todos");
@@ -501,7 +500,7 @@ export default function JardinPage() {
                                     <button
                                         type="button"
                                         onClick={() => handleFiltroChange("todos")}
-                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
                                             className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
@@ -516,10 +515,8 @@ export default function JardinPage() {
                                     >
                                         <button
                                             type="button"
-                                            onClick={() => handleFiltroChange(garden.name)}
-                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                                        >
-                                            <span
+                                            onClick={() => { handleFiltroChange(garden.name); }}
+                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">                                            <span
                                                 className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
                                                 {garden.name.charAt(0).toUpperCase() + garden.name.slice(1)}
                                             </span>
@@ -531,7 +528,7 @@ export default function JardinPage() {
                         <div>
                             <div className="flex items-center gap-1 ">
                                 <button type="button"
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">
                                     <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
@@ -542,7 +539,7 @@ export default function JardinPage() {
                         <div>
                             <div className="flex items-center gap-1 ">
                                 <button type="button"
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">
                                     <FaHeart size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
@@ -550,12 +547,11 @@ export default function JardinPage() {
                                 </button>
                             </div>
                         </div>
-                        {/* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa */}
                         <div>
                             <div className="flex items-center gap-1 ">
                                 <button
                                     type="button"
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     onClick={() => { toggleTipo(); }}
                                 >
                                     <FaLeaf size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
@@ -592,7 +588,7 @@ export default function JardinPage() {
                                         <button
                                             type="button"
                                             onClick={() => handleFiltroPlantaChange(specie)}
-                                            className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                         >
                                             <span
                                                 className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
@@ -607,7 +603,7 @@ export default function JardinPage() {
                             <div className="flex items-center gap-1 ">
                                 <button
                                     type="button"
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     onClick={toggleAntiguedad}
                                 >
                                     <FaClock size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
@@ -642,7 +638,7 @@ export default function JardinPage() {
                                     <button
                                         type="button"
                                         onClick={() => handleFiltroPlantaChange("desc")}
-                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
                                             className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">Más recientes</span>
@@ -650,7 +646,7 @@ export default function JardinPage() {
                                     <button
                                         type="button"
                                         onClick={() => handleFiltroPlantaChange("asc")}
-                                        className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                                        className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
                                             className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">Más antiguos</span>
@@ -668,7 +664,7 @@ export default function JardinPage() {
                         {filtrarPorBuscador().length > 0 && buscador != '' ? (
                             <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                 {filtrarPorBuscador().map(garden => (
-                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
+                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative hover:shadow-lg">
                                         <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                         <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
                                         <div
@@ -743,7 +739,7 @@ export default function JardinPage() {
                             <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                 {filtrarPlantasPorFiltro().map(plant => (
 
-                                    <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative">
+                                    <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
 
                                         <div
                                             className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
@@ -838,6 +834,10 @@ export default function JardinPage() {
                                     </div>
                                     {/*<p>Descripción: {plantaSeleccionada.description}</p>*/}
                                     <div className={"flex gap-3"}>
+                                    <Link href={"/detalle"}
+                                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                            Ver detalles
+                                        </Link>
                                         <Link href={"/editar"}
                                             className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Editar
