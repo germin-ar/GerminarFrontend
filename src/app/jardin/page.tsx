@@ -420,8 +420,38 @@ export default function JardinPage() {
 
     const uniqueSpecies = Array.from(new Set(plantsInfo.map(plant => plant.specie)));
 
+    const [showButton, setShowButton] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 700) {
+                setShowButton(true);
+            } else {
+                setShowButton(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 5, behavior: 'smooth' });
+    };
+
     return (
         <>
+            {showButton && (
+                <button
+                    onClick={scrollToTop}
+                    className="fixed bottom-36 right-10 p-3 bg-gray-700 text-white rounded-full transition duration-300 ease-in-out transform hover:bg-gray-800 active:bg-gray-900 active:scale-75"
+                >
+                    Ir arriba
+                </button>
+            )}
+
             <section>
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
@@ -657,132 +687,143 @@ export default function JardinPage() {
                     </ul>
                 </div>
                 <section className="flex-1 flex gap-6 flex-col px-2 mt-3">
-                    {/* {plantasFiltradas?.length == 0 && ( */}
-                    <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2>
-                    {/* )} */}
-                    <div>
-                        {filtrarPorBuscador().length > 0 && buscador != '' ? (
-                            <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
-                                {filtrarPorBuscador().map(garden => (
-                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative hover:shadow-lg">
-                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                        <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
-                                        <div
-                                            className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
-                                            {garden.plants.map((plant, index) => (
-                                                <div key={index}
-                                                    className="flex flex-row justify-between items-center cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                                    <div className={"flex items-center"}>
-                                                        <img src={plant.image} alt={plant.alias}
-                                                            className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
-                                                        <span>{resaltarTexto(plant.alias)}</span>
-                                                    </div>
-                                                    {plant.is_favorite && (
-                                                        <span
-                                                            className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
-                                                                color={"#cc3333"} size={20} /></span>
-                                                    )}
+
+                    {data.length !== 0 ? (
+                        <>
+                            <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2><div>
+                                {filtrarPorBuscador().length > 0 && buscador != '' ? (
+                                    <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
+                                        {filtrarPorBuscador().map(garden => (
+                                            <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative hover:shadow-lg">
+                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                                <div
+                                                    className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                                    {garden.plants.map((plant, index) => (
+                                                        <div key={index}
+                                                            className="flex flex-row justify-between items-center cursor-pointer"
+                                                            onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                            <div className={"flex items-center"}>
+                                                                <img src={plant.image} alt={plant.alias}
+                                                                    className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                                <span>{resaltarTexto(plant.alias)}</span>
+                                                            </div>
+                                                            {plant.is_favorite && (
+                                                                <span
+                                                                    className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                                        color={"#cc3333"} size={20} /></span>
+                                                            )}
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        ) : filtrarPorFiltro().length > 0 && buscador == '' ? (
-                            <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
-                                {filtrarPorFiltro().map(garden => (
-                                    <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
-                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                        <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
-                                        <div
-                                            className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
-                                            {garden.plants.map((plant, index) => (
-                                                <div key={index}
-                                                    className="flex flex-row justify-between items-center cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                                    <div className={"flex items-center"}>
-                                                        <img src={plant.image} alt={plant.alias}
-                                                            className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
-                                                        <span>{resaltarTexto(plant.alias)}</span>
-                                                    </div>
-                                                    {plant.is_favorite && (
-                                                        <span
-                                                            className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
-                                                                color={"#cc3333"} size={20} /></span>
-                                                    )}
+                                ) : filtrarPorFiltro().length > 0 && buscador == '' ? (
+                                    <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
+                                        {filtrarPorFiltro().map(garden => (
+                                            <div key={garden.id} className="border border-gray-200 p-4 rounded-lg relative">
+                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name ? garden.name : "Sin jardín"}</h3>
+                                                <div
+                                                    className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
+                                                    {garden.plants.map((plant, index) => (
+                                                        <div key={index}
+                                                            className="flex flex-row justify-between items-center cursor-pointer"
+                                                            onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                            <div className={"flex items-center"}>
+                                                                <img src={plant.image} alt={plant.alias}
+                                                                    className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                                <span>{resaltarTexto(plant.alias)}</span>
+                                                            </div>
+                                                            {plant.is_favorite && (
+                                                                <span
+                                                                    className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
+                                                                        color={"#cc3333"} size={20} /></span>
+                                                            )}
+                                                        </div>
+                                                    ))}
                                                 </div>
-                                            ))}
-                                        </div>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="flex flex-col grid grid-cols-1">
-                                {plantasFiltradas?.length == 0 && (
-                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                        No se encontraron resultados para <span
-                                            className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
-                                    </h3>
+                                ) : (
+                                    <div className="flex flex-col grid grid-cols-1">
+                                        {plantasFiltradas?.length == 0 && (
+                                            <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                                No se encontraron resultados para <span
+                                                    className="font-bold text-[#275F08]">&quot;{buscador}&quot;</span>.
+                                            </h3>
+                                        )}
+                                    </div>
                                 )}
                             </div>
-                        )}
-                    </div>
+                        </>
+                    ) : (
+                        <div>
+                            <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Aún no tienes jardines</h2>
+                            {/* <Link href={}                            
+                                className="px-6 py-2 bg-[#88BC43] text-white rounded-lg hover:bg-[#6ba832] transition duration-300"
+                            >
+                                Crear un jardín
+                            </Link> */}
+                        </div>
+                    )}
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
 
-                    {plantasFiltradas?.length != 0 && (
-                        <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
-                    )}
+                    {plantasFiltradas?.length === 0 ? (
+                            <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>No tienes plantas</h2>
+                    ) : (
+                        <div>
+                            <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
+                            {filtrarPlantasPorFiltro().length > 0 ? (
+                                <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
+                                    {filtrarPlantasPorFiltro().map(plant => (
 
-                    <div>
-                        {filtrarPlantasPorFiltro().length > 0 ? (
-                            <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
-                                {filtrarPlantasPorFiltro().map(plant => (
+                                        <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
 
-                                    <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
-
-                                        <div
-                                            className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                            onClick={() => mostrarPopup(plant, plant.quantity)}>
-                                            <div className={"flex items-center"}>
-                                                <img src={plant.image} alt={plant.alias}
-                                                    className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
-                                                <span>{resaltarTexto(plant.alias)}</span>
+                                            <div
+                                                className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
+                                                onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                <div className={"flex items-center"}>
+                                                    <img src={plant.image} alt={plant.alias}
+                                                        className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
+                                                    <span>{resaltarTexto(plant.alias)}</span>
+                                                </div>
+                                                {plant.is_favorite ? (
+                                                    <span
+                                                        className={"w-fit"}><FaHeart
+                                                            color={"#cc3333"} size={20} /></span>
+                                                ) : (
+                                                    <span
+                                                        className={"w-fit invisible"}><FaHeart
+                                                            color={"#cc3333"} size={20} /></span>
+                                                )}
                                             </div>
-                                            {plant.is_favorite ? (
-                                                <span
-                                                    className={"w-fit"}><FaHeart
-                                                        color={"#cc3333"} size={20} /></span>
-                                            ) : (
-                                                <span
-                                                    className={"w-fit invisible"}><FaHeart
-                                                        color={"#cc3333"} size={20} /></span>
-                                            )}
+
+
                                         </div>
+                                    ))}
+                                </div>
 
-
-                                    </div>
-                                ))}
-                            </div>
-
-                        ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas === true ? (
-                            <div className="flex flex-col grid grid-cols-1">
-                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                    No tienes plantas guardadas en tus <span
-                                        className="font-bold text-[#275F08]"> favoritos</span>.
-                                </h3>
-                            </div>
-                        ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas == false ? (
-                            <div className="flex flex-col grid grid-cols-1">
-                                <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
-                                    No tienes plantas guardadas.
-                                </h3>
-                            </div>
-                        ) : (
-                            <div></div>
-                        )}
-                    </div>
-
+                            ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas === true ? (
+                                <div className="flex flex-col grid grid-cols-1">
+                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                        No tienes plantas guardadas en tus <span
+                                            className="font-bold text-[#275F08]"> favoritos</span>.
+                                    </h3>
+                                </div>
+                            ) : filtrarPlantasPorFiltro().length == 0 && filtroPlantas == false ? (
+                                <div className="flex flex-col grid grid-cols-1">
+                                    <h3 className="ms-10 overflow lg:text-nowrap text-[#1F2325]">
+                                        No tienes plantas guardadas.
+                                    </h3>
+                                </div>
+                            ) : (
+                                <div></div>
+                            )}
+                        </div>
+                    )}
                     {popupVisible && plantaSeleccionada && (
                         <>
                             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
@@ -834,7 +875,7 @@ export default function JardinPage() {
                                     </div>
                                     {/*<p>Descripción: {plantaSeleccionada.description}</p>*/}
                                     <div className={"flex gap-3"}>
-                                    <Link href={"/detalle"}
+                                        <Link href={"/detalle"}
                                             className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Ver detalles
                                         </Link>
