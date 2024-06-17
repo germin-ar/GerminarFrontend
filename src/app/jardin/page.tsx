@@ -1,7 +1,7 @@
 "use client"
 import styles from "@/app/home.module.css";
 import stylesJardin from "@/app/jardin/jardin.module.css"
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { IoIosHome } from "react-icons/io";
 import { FaClock, FaHeart, FaLeaf, FaTrash } from "react-icons/fa";
@@ -441,6 +441,22 @@ export default function JardinPage() {
         window.scrollTo({ top: 5, behavior: 'smooth' });
     };
 
+    const refPlant = useRef<HTMLHeadingElement>(null);
+
+    const scrollToPlant = () => {
+        if (refPlant.current) {
+            refPlant.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const refGarden = useRef<HTMLHeadingElement>(null);
+
+    const scrollToGarden = () => {
+        if (refGarden.current) {
+            refGarden.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <>
             {showButton && (
@@ -529,7 +545,7 @@ export default function JardinPage() {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => handleFiltroChange("todos")}
+                                        onClick={() => {handleFiltroChange("todos"); scrollToGarden()}}
                                         className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
@@ -545,7 +561,7 @@ export default function JardinPage() {
                                     >
                                         <button
                                             type="button"
-                                            onClick={() => { handleFiltroChange(garden.name); }}
+                                            onClick={() => { handleFiltroChange(garden.name), scrollToGarden()}}
                                             className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">                                            <span
                                                 className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
                                                 {garden.name.charAt(0).toUpperCase() + garden.name.slice(1)}
@@ -562,7 +578,11 @@ export default function JardinPage() {
                                     <PiPottedPlantFill size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
-                                        onClick={() => handleFiltroPlantaChange("plantas")}>Plantas</span>
+                                        onClick={() => {
+                                            handleFiltroPlantaChange("plantas");
+                                            scrollToPlant();
+                                        }}
+                                    >Plantas</span>
                                 </button>
                             </div>
                         </div>
@@ -573,7 +593,10 @@ export default function JardinPage() {
                                     <FaHeart size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
                                     <span
                                         className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold"
-                                        onClick={() => handleFiltroPlantaChange("isFavorite")}>Favoritos</span>
+                                        onClick={() => {
+                                            handleFiltroPlantaChange("isFavorite");
+                                            scrollToPlant();
+                                        }}>Favoritos</span>
                                 </button>
                             </div>
                         </div>
@@ -617,7 +640,7 @@ export default function JardinPage() {
                                     >
                                         <button
                                             type="button"
-                                            onClick={() => handleFiltroPlantaChange(specie)}
+                                            onClick={() => { handleFiltroPlantaChange(specie); scrollToPlant(); }}
                                             className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                         >
                                             <span
@@ -667,7 +690,7 @@ export default function JardinPage() {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => handleFiltroPlantaChange("desc")}
+                                        onClick={() => { handleFiltroPlantaChange("desc"); scrollToPlant(); }}
                                         className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
@@ -675,7 +698,7 @@ export default function JardinPage() {
                                     </button>
                                     <button
                                         type="button"
-                                        onClick={() => handleFiltroPlantaChange("asc")}
+                                        onClick={() => { handleFiltroPlantaChange("asc"); scrollToPlant(); }}
                                         className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     >
                                         <span
@@ -690,7 +713,7 @@ export default function JardinPage() {
 
                     {data.length !== 0 ? (
                         <>
-                            <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2><div>
+                            <h2 ref={refGarden} className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2><div>
                                 {filtrarPorBuscador().length > 0 && buscador != '' ? (
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().map(garden => (
@@ -772,10 +795,10 @@ export default function JardinPage() {
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
 
                     {plantasFiltradas?.length === 0 ? (
-                            <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>No tienes plantas</h2>
+                        <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>No tienes plantas</h2>
                     ) : (
                         <div>
-                            <h2 className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
+                            <h2 ref={refPlant} className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
                             {filtrarPlantasPorFiltro().length > 0 ? (
                                 <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                     {filtrarPlantasPorFiltro().map(plant => (
