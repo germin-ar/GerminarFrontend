@@ -21,6 +21,7 @@ export interface Plant {
     alias: string;
     creation_date: string;
     modification_date: string;
+    is_favorite: boolean;
     photos: Photo[];
 }
 
@@ -73,7 +74,7 @@ export default function JardinPage() {
                 throw new Error('Failed to fetch gardens');
             }
             const data = await response.json();
-
+            console.log(data)
 
             //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
             // console.log(data)
@@ -372,8 +373,8 @@ export default function JardinPage() {
 
                                 {uniqueGardenNames.length > 0 && (
                                     <>
-                                        {uniqueGardenNames.map(name => (
-                                            <>
+                                        {uniqueGardenNames.map((name, index) => (
+                                            <div key={index}>
                                                 {name != null && (
                                                     <li key={name}
                                                         className="cursor-pointer">
@@ -387,7 +388,7 @@ export default function JardinPage() {
                                                         </button>
                                                     </li>
                                                 )}
-                                            </>
+                                            </div>
                                         ))}
                                     </>
                                 )}
@@ -731,7 +732,8 @@ export default function JardinPage() {
                                                         </tr>
                                                         <tr className="border">
                                                             <th className={`p-4 border`}>Favorito</th>
-                                                            <td className={`relative`}>
+                                                            <td className={`p-4 relative`}>
+                                                                {plantaSeleccionada.is_favorite ? "Sí" : "No"}
                                                                 {/* {plantaSeleccionada.is_favorite ? (
                                                                     <span className={`absolute top-[17px] left-[15px] px-2 border inline-flex leading-5 font-semibold rounded-full bg-green-100 text-green-800`}>
                                                                         Si
@@ -756,7 +758,7 @@ export default function JardinPage() {
                                             className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Ver detalles
                                         </Link>
-                                        <Link href={"/editar"}
+                                        <Link href={`/jardin/${plantaSeleccionada.id}/editar`}
                                             className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Editar
                                         </Link>

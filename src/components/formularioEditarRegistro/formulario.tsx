@@ -32,12 +32,12 @@ interface FormValues {
 }
 
 interface FormValuesEdit {
-    alias: string;
-    height: number;
+    alias: string | null;
+    height: number | null;
     //planting_date: Date;
     id_garden: number | null;
-    is_favorite: boolean;
-    image_url: string;
+    is_favorite: boolean | null;
+    image_url: string | null;
 }
 interface PlantData {
     id: string;
@@ -156,12 +156,11 @@ export default function Formulario(props: IdentificarPlanta) {
 
     //edit
     const [formValuesEdit, setFormValuesEdit] = useState<FormValuesEdit>({
-        alias: "",
+        alias: '',
         height: 0,
-        //planting_date: new Date('2024-06-12'),
         id_garden: null,
         is_favorite: false,
-        image_url: ""
+        image_url: ''
     });
 
     const [relleno, setRelleno] = useState(false);
@@ -334,6 +333,13 @@ export default function Formulario(props: IdentificarPlanta) {
                     const plant = await response.json();
                     setPlantEdit(plant);
                     setRelleno(plant.favorite)
+                    setFormValuesEdit({
+                        alias: plant.alias ?? '', // Assuming alias is a string
+                        height: plant.height ?? 0, // Assuming height is a number
+                        id_garden: plant.id_garden ?? null, // Assuming id_garden is a number or null
+                        is_favorite: plant.favorite ?? false, // Assuming favorite is a boolean
+                        image_url: plant.images.length > 0 ? plant.images[0].url : '' // Assuming images is an array and url is a string
+                    });
                     console.log(plant)
                 } catch (error) {
                     console.error('Error fetching plant data:', error);
