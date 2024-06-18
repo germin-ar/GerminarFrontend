@@ -31,65 +31,6 @@ export interface Photo {
 
 export default function JardinPage() {
 
-    const gardens: Garden[] = [
-        {
-            id: 1,
-            name: 'Garden A',
-            plants: [
-                {
-                    id: 101,
-                    alias: 'Plant 1',
-                    creation_date: '2024-06-06T12:03:05Z',
-                    modification_date: '2024-06-06T12:03:05Z',
-                    is_favorite: true,
-                    photos: [
-                        { url: 'recomendacion/albahaca.PNG' },
-                        { url: 'recomendacion/albahaca.PNG' }
-                    ]
-                },
-                {
-                    id: 102,
-                    alias: 'Plant 2',
-                    creation_date: '2023-06-06T12:03:05Z',
-                    modification_date: '2023-06-18',
-                    is_favorite: false,
-                    photos: [
-                        { url: 'recomendacion/carlos.PNG' },
-                        { url: 'recomendacion/carlos.PNG' }
-                    ]
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: 'Garden B',
-            plants: [
-                {
-                    id: 201,
-                    alias: 'Plant 3',
-                    creation_date: '2022-06-06T12:03:05Z',
-                    modification_date: '2023-07-05',
-                    is_favorite: true,
-                    photos: [
-                        { url: 'recomendacion/lechuga.PNG' },
-                        { url: 'recomendacion/lechuga.PNG' }
-                    ]
-                },
-                {
-                    id: 202,
-                    alias: 'Plant 4',
-                    creation_date: '2021-06-06T12:03:05Z',
-                    modification_date: '2023-08-10',
-                    is_favorite: false,
-                    photos: [
-                        { url: 'recomendacion/morrón.PNG' },
-                        { url: 'recomendacion/morrón.PNG' }
-                    ]
-                }
-            ]
-        }
-    ];
-
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -119,7 +60,7 @@ export default function JardinPage() {
         // console.log(planta)
     };
 
-    /*const [gardens, setGardens] = useState<Garden[]>([]);
+    const [gardens, setGardens] = useState<Garden[]>([]);
 
     const fetchGardens = async () => {
         try {
@@ -146,7 +87,7 @@ export default function JardinPage() {
     useEffect(() => {
         fetchGardens()
     }, []);
-*/
+
     const [mostrarJardin, setMostrarJardin] = useState(false);
 
     const [filtro, setFiltro] = useState('');
@@ -263,7 +204,6 @@ export default function JardinPage() {
             });
             gardens.flatMap(garden => garden.plants).forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
-                console.log(dateObject.getDate);
             });
         } else if (filtroPlantaFechaAntiguo) {
             plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
@@ -362,7 +302,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-            //  await fetchGardens();
+            await fetchGardens();
 
 
             setConfirmDelete(false);
