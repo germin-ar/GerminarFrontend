@@ -210,7 +210,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.id_garden == null && "-"}</p>
+                            <p className="text-[24px] pl-9">{plant.id_garden == null ? "-" : plant.name_garden}</p>
                         </div>
                     </div>
                 </div>

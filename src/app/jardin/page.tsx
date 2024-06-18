@@ -754,7 +754,7 @@ export default function JardinPage() {
                                     </div>
                                     {/*<p>Descripción: {plantaSeleccionada.description}</p>*/}
                                     <div className={"flex gap-3"}>
-                                        <Link href={"/detalle"}
+                                        <Link href={`/jardin/${plantaSeleccionada.id}`}
                                             className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Ver detalles
                                         </Link>
