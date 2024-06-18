@@ -246,11 +246,12 @@ export default function Formulario(props: IdentificarPlanta) {
                 ...formValuesEdit,
                         image_url: plantEdit?.images[0].url,
                 };*/
+                const idUsuario = 1;
                 const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'id-user': '1'
+                        'id-user': idUsuario.toString()
                     },
                     body: JSON.stringify(formValuesEdit)
                 });
@@ -334,11 +335,11 @@ export default function Formulario(props: IdentificarPlanta) {
                     setPlantEdit(plant);
                     setRelleno(plant.favorite)
                     setFormValuesEdit({
-                        alias: plant.alias ?? '', // Assuming alias is a string
-                        height: plant.height ?? 0, // Assuming height is a number
-                        id_garden: plant.id_garden ?? null, // Assuming id_garden is a number or null
-                        is_favorite: plant.favorite ?? false, // Assuming favorite is a boolean
-                        image_url: plant.images.length > 0 ? plant.images[0].url : '' // Assuming images is an array and url is a string
+                        alias: plant.alias ?? '',
+                        height: plant.height ?? 0,
+                        id_garden: plant.id_garden ?? null,
+                        is_favorite: plant.favorite ?? false,
+                        image_url: plant.images.length > 0 ? plant.images[0].url : ''
                     });
                     console.log(plant)
                 } catch (error) {

@@ -273,6 +273,47 @@ export default function JardinPage() {
         }
     };
 
+    const [confirmDelete, setConfirmDelete] = useState(false);
+
+    const handleCancelDelete = () => {
+        setConfirmDelete(false);
+    };
+    const handleDeleteClick = () => {
+        setConfirmDelete(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            const deletePlant = async (id:any) => {
+                const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'id-user': '1'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log(`Planta con ID ${id} eliminada correctamente`);
+            };
+
+            await deletePlant(plantaSeleccionada?.id);
+            console.log(plantaSeleccionada?.id);
+
+
+            await fetchGardens();
+
+
+            setConfirmDelete(false);
+            setPopupVisible(false);
+
+        } catch (error) {
+            console.error('Hubo un problema al eliminar la planta:', error);
+        }
+    };
+
     return (
         <>
             {showButton && (
@@ -768,8 +809,28 @@ export default function JardinPage() {
                                         >
                                             Cerrar
                                         </button>
-                                        <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-2 right-2 cursor-pointer"} />
-
+                                        <FaTrash onClick={handleDeleteClick} color={"#d3d3d3"} size={20} className={"absolute top-2 right-2 cursor-pointer"} />
+                                        {confirmDelete && (
+                                            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                                                <div className="bg-white p-6 rounded shadow-lg">
+                                                    <p className="mb-4">¿Estás seguro de que quieres borrar esta planta?</p>
+                                                    <div className="flex justify-end">
+                                                        <button
+                                                            onClick={handleConfirmDelete}
+                                                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                                        >
+                                                            Sí
+                                                        </button>
+                                                        <button
+                                                            onClick={handleCancelDelete}
+                                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                                        >
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                         {/* <span
                                             className={`absolute top-1 right-1 bg-[#333333] text-white font-bold px-2 w-fit h-fit rounded transition duration-300 ease-in-out transform hover:bg-[#555555] active:bg-[#1f1f1f] active:scale-75 cursor-pointer`}
                                             onClick={() => setPopupVisible(false)}>
