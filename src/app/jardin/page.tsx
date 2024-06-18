@@ -30,7 +30,6 @@ export interface Photo {
 }
 
 export default function JardinPage() {
-
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -77,7 +76,7 @@ export default function JardinPage() {
             console.log(data)
 
             //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
-            // console.log(data)
+            console.log(data)
             setGardens(data);
         } catch (error) {
             console.error('Error fetching gardens:', error);
@@ -103,7 +102,6 @@ export default function JardinPage() {
         setFiltro(e === 'todos' ? '' : e);
         setFiltroPlantas(false);
         setFiltroPlantaFavorito(false);
-        console.log(e, filtro);
     };
 
     const handleFiltroPlantaChange = (e: any) => {
@@ -199,19 +197,19 @@ export default function JardinPage() {
             } 
             */
         } else if (filtroPlantaFechaReciente) {
-            plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
-                return new Date(b.creation_date).getDate() - new Date(a.creation_date).getDate();
-            });
-            gardens.flatMap(garden => garden.plants).forEach(plant => {
-                const dateObject = new Date(plant.creation_date);
-            });
+            plantasFiltradas = gardens.flatMap(garden => garden.plants)
+                .sort((a, b) => {
+                    const dateA = new Date(a.creation_date).getTime();
+                    const dateB = new Date(b.creation_date).getTime();
+                    return dateB - dateA;
+                });
         } else if (filtroPlantaFechaAntiguo) {
-            plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
-                return new Date(a.creation_date).getDate() - new Date(b.creation_date).getDate();
-            });
-            gardens.flatMap(garden => garden.plants).forEach(plant => {
-                const dateObject = new Date(plant.creation_date);
-            });
+            plantasFiltradas = gardens.flatMap(garden => garden.plants)
+                .sort((a, b) => {
+                    const dateA = new Date(a.creation_date).getTime();
+                    const dateB = new Date(b.creation_date).getTime();
+                    return dateA - dateB;
+                });
         }
 
         return plantasFiltradas;
@@ -312,6 +310,18 @@ export default function JardinPage() {
             console.error('Hubo un problema al eliminar la planta:', error);
         }
     };
+
+    function formatDateString(dateString: string): string {
+        const date = new Date(dateString); // Crear objeto Date a partir de la cadena
+        const day = date.getDate().toString().padStart(2, '0'); // Día con dos dígitos
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mes con dos dígitos (empezando desde 0)
+        const year = date.getFullYear(); // Año con cuatro dígitos
+        const hours = date.getHours().toString().padStart(2, '0'); // Horas con dos dígitos
+        const minutes = date.getMinutes().toString().padStart(2, '0'); // Minutos con dos dígitos
+        const seconds = date.getSeconds().toString().padStart(2, '0'); // Segundos con dos dígitos
+
+        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    }
 
     return (
         <>
@@ -767,7 +777,7 @@ export default function JardinPage() {
                                                         <tr>
                                                             <th className={`p-4 border`}>Creada el</th>
                                                             <td className={`p-4 border`}>
-                                                                {plantaSeleccionada.creation_date.replace("T", " ").replace("Z", "")}
+                                                                {formatDateString(plantaSeleccionada.creation_date)}
                                                             </td>
                                                         </tr>
                                                         <tr className="border">
