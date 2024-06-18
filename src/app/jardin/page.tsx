@@ -727,7 +727,7 @@ export default function JardinPage() {
                                                         <tr>
                                                             <th className={`p-4 border`}>Creada el</th>
                                                             <td className={`p-4 border`}>
-                                                                {plantaSeleccionada.creation_date}
+                                                                {plantaSeleccionada.creation_date.replace("T", " ").replace("Z", "")}
                                                             </td>
                                                         </tr>
                                                         <tr className="border">
