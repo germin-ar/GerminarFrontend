@@ -10,325 +10,25 @@ import { CiCalendar } from "react-icons/ci";
 import Image from "next/image";
 import { BalooBhaina2 } from "../ui/fonts";
 
-interface Plant {
+export interface Garden {
+    id: number | null;
+    name: string | null;
+    plants: Plant[];
+}
+
+export interface Plant {
     id: number;
     alias: string;
     creation_date: string;
     modification_date: string;
-    is_favorite: boolean;
-    image: string;
-    quantity: number;
-    specie: string;
-    is_active: boolean;
+    photos: Photo[];
 }
 
-interface Garden {
-    id: number;
-    name: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-    };
-    plants: {
-        id: number;
-        alias: string;
-        is_active: boolean;
-        is_favorite: boolean;
-        specie: string;
-        image: string;
-        quantity: number;
-        creation_date: string;
-        modification_date: string;
-    }[];
-    is_active: boolean | null;
+export interface Photo {
+    url: string;
 }
 
 export default function JardinPage() {
-
-    const plantsInfo: Plant[] = [
-        {
-            id: 201,
-            alias: "Cebolla",
-            is_active: true,
-            creation_date: "2024-06-01",
-            modification_date: "hoy",
-            image: "/resultado/albahaca-sana.jpg",
-            quantity: 5,
-            is_favorite: false,
-            specie: "verdura"
-        },
-        {
-            id: 202,
-            alias: "Rucula",
-            is_active: true,
-            creation_date: "2024-06-01",
-            modification_date: "ayer",
-            image: "/recomendacion/rucula.PNG",
-            quantity: 2,
-            is_favorite: false,
-            specie: "verdura"
-        },
-        {
-            id: 203,
-            alias: "Albahaca",
-            is_active: true,
-            creation_date: "2024-06-03",
-            modification_date: "hoy",
-            image: "/resultado/albahaca-sana.jpg",
-            quantity: 5,
-            is_favorite: false,
-            specie: "especia"
-        },
-        {
-            id: 204,
-            alias: "Perejil",
-            is_active: true,
-            creation_date: "2024-06-04",
-            modification_date: "ayer",
-            image: "/recomendacion/rucula.PNG",
-            quantity: 2,
-            is_favorite: false,
-            specie: "especia"
-        },
-        {
-            id: 205,
-            alias: "Tomate",
-            is_active: true,
-            creation_date: "2024-06-05",
-            modification_date: "hoy",
-            image: "/recomendacion/tomate.PNG",
-            quantity: 3,
-            is_favorite: false,
-            specie: "fruta"
-        },
-        {
-            id: 206,
-            alias: "Cebolla",
-            is_active: true,
-            creation_date: "2024-06-05",
-            modification_date: "hoy",
-            image: "/resultado/albahaca-sana.jpg",
-            quantity: 5,
-            is_favorite: false,
-            specie: "verdura"
-        },
-        {
-            id: 207,
-            alias: "Lechuga",
-            is_active: true,
-            creation_date: "2024-06-08",
-            modification_date: "ayer",
-            image: "/recomendacion/lechuga.PNG",
-            quantity: 1,
-            is_favorite: false,
-            specie: "verdura"
-        }
-    ];
-
-    const data = [
-        {
-            id: 1,
-            name: "Summer plants",
-            user: {
-                id: 101,
-                name: "Alice",
-                email: "alice@gmail.com"
-            },
-            plants: [
-                {
-                    id: 201,
-                    alias: "Cebolla",
-                    is_active: true,
-                    creation_date: "01/06/2024",
-                    modification_date: "hoy",
-                    image: "/resultado/albahaca-sana.jpg",
-                    quantity: 5,
-                    is_favorite: false,
-                    specie: "verdura"
-                },
-                {
-                    id: 202,
-                    alias: "Rucula",
-                    is_active: true,
-                    creation_date: "01/06/2024",
-                    modification_date: "ayer",
-                    image: "/recomendacion/rucula.PNG",
-                    quantity: 2,
-                    is_favorite: true,
-                    specie: "verdura"
-                },
-                {
-                    id: 203,
-                    alias: "Albahaca",
-                    is_active: true,
-                    creation_date: "03/06/2024",
-                    modification_date: "hoy",
-                    image: "/resultado/albahaca-sana.jpg",
-                    quantity: 5,
-                    is_favorite: false,
-                    specie: "especia"
-                },
-                {
-                    id: 204,
-                    alias: "Perejil",
-                    is_active: true,
-                    creation_date: "04/06/2024",
-                    modification_date: "ayer",
-                    image: "/recomendacion/rucula.PNG",
-                    quantity: 2,
-                    is_favorite: true,
-                    specie: "especia"
-                },
-                {
-                    id: 208,
-                    alias: "Tomate",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/recomendacion/tomate.PNG",
-                    quantity: 3,
-                    is_favorite: false,
-                    specie: "fruta"
-                },
-                {
-                    id: 209,
-                    alias: "Remolacha",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/recomendacion/tomate.PNG",
-                    quantity: 3,
-                    is_favorite: false,
-                    specie: "verdura"
-                }
-            ],
-            is_active: true
-        },
-        {
-            id: 5,
-            name: "Jardín nro 3",
-            user: {
-                id: 101,
-                name: "Alice",
-                email: "alice@gmail.com"
-            },
-            plants: [
-                {
-                    id: 301,
-                    alias: "Cebolla",
-                    is_active: true,
-                    creation_date: "01/06/2024",
-                    modification_date: "hoy",
-                    image: "/resultado/albahaca-sana.jpg",
-                    quantity: 5,
-                    is_favorite: false,
-                    specie: "verdura"
-                },
-                {
-                    id: 302,
-                    alias: "Rucula",
-                    is_active: true,
-                    creation_date: "01/06/2024",
-                    modification_date: "ayer",
-                    image: "/recomendacion/rucula.PNG",
-                    quantity: 2,
-                    is_favorite: true,
-                    specie: "verdura"
-                },
-                {
-                    id: 303,
-                    alias: "Albahaca",
-                    is_active: true,
-                    creation_date: "03/06/2024",
-                    modification_date: "hoy",
-                    image: "/resultado/albahaca-sana.jpg",
-                    quantity: 5,
-                    is_favorite: false,
-                    specie: "especia"
-                },
-                {
-                    id: 304,
-                    alias: "Perejil",
-                    is_active: true,
-                    creation_date: "04/06/2024",
-                    modification_date: "ayer",
-                    image: "/recomendacion/rucula.PNG",
-                    quantity: 2,
-                    is_favorite: true,
-                    specie: "especia"
-                },
-                {
-                    id: 308,
-                    alias: "Tomate",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/recomendacion/tomate.PNG",
-                    quantity: 3,
-                    is_favorite: false,
-                    specie: "fruta"
-                },
-                {
-                    id: 309,
-                    alias: "Remolacha",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/recomendacion/tomate.PNG",
-                    quantity: 3,
-                    is_favorite: false,
-                    specie: "verdura"
-                }
-            ],
-            is_active: true
-        },
-        {
-            id: 2,
-            name: "Spring blossom",
-            user: {
-                id: 101,
-                name: "Alice",
-                email: "alice@gmail.com"
-            },
-            plants: [
-                {
-                    id: 205,
-                    alias: "Tomate",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/recomendacion/tomate.PNG",
-                    quantity: 3,
-                    is_favorite: false,
-                    specie: "fruta"
-                },
-                {
-                    id: 206,
-                    alias: "Cebolla",
-                    is_active: true,
-                    creation_date: "05/06/2024",
-                    modification_date: "hoy",
-                    image: "/resultado/albahaca-sana.jpg",
-                    quantity: 5,
-                    is_favorite: false,
-                    specie: "verdura"
-                },
-                {
-                    id: 207,
-                    alias: "Lechuga",
-                    is_active: true,
-                    creation_date: "08/06/2024",
-                    modification_date: "ayer",
-                    image: "/recomendacion/lechuga.PNG",
-                    quantity: 1,
-                    is_favorite: false,
-                    specie: "verdura"
-                }
-            ],
-            is_active: true
-        }
-    ];
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
@@ -402,6 +102,7 @@ export default function JardinPage() {
         setFiltro(e === 'todos' ? '' : e);
         setFiltroPlantas(false);
         setFiltroPlantaFavorito(false);
+        console.log(e, filtro);
     };
 
     const handleFiltroPlantaChange = (e: any) => {
@@ -445,20 +146,21 @@ export default function JardinPage() {
 
     let filtradoJardin: Garden[] = [];
     let filtradoPlantas: Plant[] = [];
+
     const filtrarPorBuscador = () => {
 
         if (buscador.trim() === '') {
-            filtradoJardin = data;
-            filtradoPlantas = plantsInfo;
+            filtradoJardin = gardens;
+            filtradoPlantas = gardens.flatMap(garden => garden.plants);
         }
-        filtradoJardin = data.filter(garden =>
-            garden.name.toLowerCase().includes(buscador.toLowerCase())
+        filtradoJardin = gardens.filter(garden =>
+            garden.name && garden.name.toLowerCase().includes(buscador.toLowerCase())
             // ||
             // garden.plants.some(plant =>
             //     plant.alias.toLowerCase().includes(buscador.toLowerCase())
             // )
         );
-        filtradoPlantas = plantsInfo.filter(plant =>
+        filtradoPlantas = gardens.flatMap(garden => garden.plants).filter(plant =>
             plant.alias.toLowerCase().includes(buscador.toLowerCase())
         )
 
@@ -467,10 +169,10 @@ export default function JardinPage() {
 
     const filtrarPorFiltro = () => {
         if (filtro === '') {
-            return data;
+            return gardens;
         }
-        return data.filter(garden =>
-            garden.name.toLowerCase().includes(filtro.toLowerCase())
+        return gardens.filter(garden =>
+            garden.name && garden.name.toLowerCase().includes(filtro.toLowerCase())
         );
     };
 
@@ -478,32 +180,36 @@ export default function JardinPage() {
         let plantasFiltradas: Plant[] = [];
 
         if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita && !filtroPlantaTipo && !filtroPlantaFechaReciente && !filtroPlantaFechaAntiguo)) {
-            plantsInfo.forEach(plant => {
+            gardens.flatMap(garden => garden.plants).forEach(plant => {
                 plantasFiltradas.push(plant);
             });
-        } else if (filtroPlantaFavorita && (!filtroPlantas && filtroPlantaTipo == '')) {
-            plantsInfo.forEach(plant => {
+        }
+        /*
+        else if (filtroPlantaFavorita && (!filtroPlantas && filtroPlantaTipo == '')) {
+            gardens.flatMap(garden => garden.plants).forEach(plant => {
                 if (plant.is_favorite) {
                     plantasFiltradas.push(plant);
                 }
             });
         } else if (filtroPlantaTipo != '' && !filtroPlantas && !filtroPlantaFavorita) {
-            plantasFiltradas = plantsInfo.filter(plant =>
+            plantasFiltradas = gardens.flatMap(garden => garden.plants).filter(plant =>
                 plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
             );
-        } else if (filtroPlantaFechaReciente) {
-            plantasFiltradas = plantsInfo.sort((a, b) => {
+        } 
+        */
+        else if (filtroPlantaFechaReciente) {
+            plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
                 return new Date(b.creation_date).getDate() - new Date(a.creation_date).getDate();
             });
 
-            plantsInfo.forEach(plant => {
+            gardens.flatMap(garden => garden.plants).forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
             });
         } else if (filtroPlantaFechaAntiguo) {
-            plantasFiltradas = plantsInfo.sort((a, b) => {
+            plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
                 return new Date(a.creation_date).getDate() - new Date(b.creation_date).getDate();
             });
-            plantsInfo.forEach(plant => {
+            gardens.flatMap(garden => garden.plants).forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
             });
         }
@@ -526,7 +232,8 @@ export default function JardinPage() {
         );
     };
 
-    const uniqueSpecies = Array.from(new Set(plantsInfo.map(plant => plant.specie)));
+    //const uniqueSpecies = Array.from(new Set(gardens.flatMap(garden => garden.plants).map(plant => plant.specie)));
+    const uniqueGardenNames = Array.from(new Set(gardens.flatMap(garden => garden.name)));
 
     const [showButton, setShowButton] = useState(false);
 
@@ -662,21 +369,29 @@ export default function JardinPage() {
                                         </span>
                                     </button>
                                 </li>
-                                {data.map(garden => (
-                                    <li
-                                        key={garden.id}
-                                        className="cursor-pointer"
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={() => { handleFiltroChange(garden.name), scrollToGarden() }}
-                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">                                            <span
-                                                className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
-                                                {garden.name.charAt(0).toUpperCase() + garden.name.slice(1)}
-                                            </span>
-                                        </button>
-                                    </li>
-                                ))}
+
+                                {uniqueGardenNames.length > 0 && (
+                                    <>
+                                        {uniqueGardenNames.map(name => (
+                                            <>
+                                                {name != null && (
+                                                    <li key={name}
+                                                        className="cursor-pointer">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => { handleFiltroChange(name), scrollToGarden(); }}
+                                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white">                                            <span
+                                                                className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
+                                                                {name.charAt(0).toUpperCase() + name.slice(1)}
+                                                            </span>
+                                                        </button>
+                                                    </li>
+                                                )}
+                                            </>
+                                        ))}
+                                    </>
+                                )}
+
                             </ul>
                         </div>
                         <div>
@@ -737,7 +452,7 @@ export default function JardinPage() {
                                     </svg>
                                 </button>
                             </div>
-                            <ul
+                            {/* <ul
                                 className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${tipoVisible ? 'max-h-60' : 'max-h-0'
                                     }`}
                             >
@@ -758,7 +473,7 @@ export default function JardinPage() {
                                         </button>
                                     </li>
                                 ))}
-                            </ul>
+                            </ul> */}
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
@@ -819,7 +534,7 @@ export default function JardinPage() {
                 </div>
                 <section className="flex-1 flex gap-6 flex-col px-2 mt-3">
 
-                    {data.length !== 0 ? (
+                    {gardens.length !== 0 ? (
                         <>
                             <h2 ref={refGarden} className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Tus jardines</h2>
                             <div>
@@ -828,23 +543,23 @@ export default function JardinPage() {
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.image} alt={plant.alias}
+                                                                <img src={plant.photos[0].url} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
-                                                            {plant.is_favorite && (
+                                                            {/* {plant.is_favorite && (
                                                                 <span
                                                                     className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
                                                                         color={"#cc3333"} size={20} /></span>
-                                                            )}
+                                                            )} */}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -856,23 +571,23 @@ export default function JardinPage() {
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.image} alt={plant.alias}
+                                                                <img src={plant.photos[0].url} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
-                                                            {plant.is_favorite && (
+                                                            {/* {plant.is_favorite && (
                                                                 <span
                                                                     className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
                                                                         color={"#cc3333"} size={20} /></span>
-                                                            )}
+                                                            )} */}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -905,7 +620,7 @@ export default function JardinPage() {
                     {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
 
 
-                    {plantsInfo.length !== 0 ? (
+                    {gardens.flatMap(garden => garden.plants).length !== 0 ? (
                         <>
                             <h2 ref={refPlant} className={`${BalooBhaina2.className} ms-10 mt-10 text-[#88BC43] font-bold`}>Tus plantas</h2>
                             <div>
@@ -915,13 +630,13 @@ export default function JardinPage() {
                                             <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
                                                 <div
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    onClick={() => mostrarPopup(plant, plant.id)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.image} alt="plant.alias"
+                                                        <img src={plant.photos[0].url} alt="plant.alias"
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
-                                                    {plant.is_favorite ? (
+                                                    {/* {plant.is_favorite ? (
                                                         <span
                                                             className={"w-fit"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
@@ -931,7 +646,7 @@ export default function JardinPage() {
                                                             className={"w-fit invisible"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
                                                         </span>
-                                                    )}
+                                                    )} */}
                                                 </div>
                                             </div>
                                         ))}
@@ -942,13 +657,13 @@ export default function JardinPage() {
                                             <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
                                                 <div
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.quantity)}>
+                                                    onClick={() => mostrarPopup(plant, plant.id)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.image} alt="plant.alias"
+                                                        <img src={plant.photos[0].url} alt="plant.alias"
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
-                                                    {plant.is_favorite ? (
+                                                    {/* {plant.is_favorite ? (
                                                         <span
                                                             className={"w-fit"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
@@ -958,7 +673,7 @@ export default function JardinPage() {
                                                             className={"w-fit invisible"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
                                                         </span>
-                                                    )}
+                                                    )} */}
                                                 </div>
                                             </div>
                                         ))}
@@ -992,7 +707,7 @@ export default function JardinPage() {
                                 <div className="flex flex-col items-center justify-around gap-4 bg-white p-8 rounded-lg w-[450px] h-96 relative">
                                     <div className="flex flex-col gap-2 items-center">
                                         <div className={"flex flex-col items-center absolute top-[-45px]"}>
-                                            <img src={plantaSeleccionada.image} alt={plantaSeleccionada.alias}
+                                            <img src={plantaSeleccionada.photos[0].url} alt={plantaSeleccionada.alias}
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
@@ -1017,7 +732,7 @@ export default function JardinPage() {
                                                         <tr className="border">
                                                             <th className={`p-4 border`}>Favorito</th>
                                                             <td className={`relative`}>
-                                                                {plantaSeleccionada.is_favorite ? (
+                                                                {/* {plantaSeleccionada.is_favorite ? (
                                                                     <span className={`absolute top-[17px] left-[15px] px-2 border inline-flex leading-5 font-semibold rounded-full bg-green-100 text-green-800`}>
                                                                         Si
                                                                     </span>
@@ -1025,7 +740,7 @@ export default function JardinPage() {
                                                                     <span className={`absolute top-[17px] left-[15px] px-2 border inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800`}>
                                                                         No
                                                                     </span>
-                                                                )}
+                                                                )} */}
                                                             </td>
                                                         </tr>
                                                     </tbody>
