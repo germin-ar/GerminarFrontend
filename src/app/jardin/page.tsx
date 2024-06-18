@@ -31,6 +31,65 @@ export interface Photo {
 
 export default function JardinPage() {
 
+    const gardens: Garden[] = [
+        {
+            id: 1,
+            name: 'Garden A',
+            plants: [
+                {
+                    id: 101,
+                    alias: 'Plant 1',
+                    creation_date: '2024-06-06T12:03:05Z',
+                    modification_date: '2024-06-06T12:03:05Z',
+                    is_favorite: true,
+                    photos: [
+                        { url: 'recomendacion/albahaca.PNG' },
+                        { url: 'recomendacion/albahaca.PNG' }
+                    ]
+                },
+                {
+                    id: 102,
+                    alias: 'Plant 2',
+                    creation_date: '2023-06-06T12:03:05Z',
+                    modification_date: '2023-06-18',
+                    is_favorite: false,
+                    photos: [
+                        { url: 'recomendacion/carlos.PNG' },
+                        { url: 'recomendacion/carlos.PNG' }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: 'Garden B',
+            plants: [
+                {
+                    id: 201,
+                    alias: 'Plant 3',
+                    creation_date: '2022-06-06T12:03:05Z',
+                    modification_date: '2023-07-05',
+                    is_favorite: true,
+                    photos: [
+                        { url: 'recomendacion/lechuga.PNG' },
+                        { url: 'recomendacion/lechuga.PNG' }
+                    ]
+                },
+                {
+                    id: 202,
+                    alias: 'Plant 4',
+                    creation_date: '2021-06-06T12:03:05Z',
+                    modification_date: '2023-08-10',
+                    is_favorite: false,
+                    photos: [
+                        { url: 'recomendacion/morrón.PNG' },
+                        { url: 'recomendacion/morrón.PNG' }
+                    ]
+                }
+            ]
+        }
+    ];
+
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -60,7 +119,7 @@ export default function JardinPage() {
         // console.log(planta)
     };
 
-    const [gardens, setGardens] = useState<Garden[]>([]);
+    /*const [gardens, setGardens] = useState<Garden[]>([]);
 
     const fetchGardens = async () => {
         try {
@@ -87,7 +146,7 @@ export default function JardinPage() {
     useEffect(() => {
         fetchGardens()
     }, []);
-
+*/
     const [mostrarJardin, setMostrarJardin] = useState(false);
 
     const [filtro, setFiltro] = useState('');
@@ -185,26 +244,26 @@ export default function JardinPage() {
                 plantasFiltradas.push(plant);
             });
         }
-        /*
         else if (filtroPlantaFavorita && (!filtroPlantas && filtroPlantaTipo == '')) {
             gardens.flatMap(garden => garden.plants).forEach(plant => {
                 if (plant.is_favorite) {
                     plantasFiltradas.push(plant);
                 }
             });
-        } else if (filtroPlantaTipo != '' && !filtroPlantas && !filtroPlantaFavorita) {
-            plantasFiltradas = gardens.flatMap(garden => garden.plants).filter(plant =>
-                plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
-            );
-        } 
-        */
-        else if (filtroPlantaFechaReciente) {
+            /*
+            } else if (filtroPlantaTipo != '' && !filtroPlantas && !filtroPlantaFavorita) {
+                plantasFiltradas = gardens.flatMap(garden => garden.plants).filter(plant =>
+                    plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
+                );
+            } 
+            */
+        } else if (filtroPlantaFechaReciente) {
             plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
                 return new Date(b.creation_date).getDate() - new Date(a.creation_date).getDate();
             });
-
             gardens.flatMap(garden => garden.plants).forEach(plant => {
                 const dateObject = new Date(plant.creation_date);
+                console.log(dateObject.getDate);
             });
         } else if (filtroPlantaFechaAntiguo) {
             plantasFiltradas = gardens.flatMap(garden => garden.plants).sort((a, b) => {
@@ -284,7 +343,7 @@ export default function JardinPage() {
 
     const handleConfirmDelete = async () => {
         try {
-            const deletePlant = async (id:any) => {
+            const deletePlant = async (id: any) => {
                 const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
                     method: 'DELETE',
                     headers: {
@@ -303,7 +362,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-            await fetchGardens();
+            //  await fetchGardens();
 
 
             setConfirmDelete(false);
@@ -597,11 +656,11 @@ export default function JardinPage() {
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
-                                                            {/* {plant.is_favorite && (
+                                                            {plant.is_favorite && (
                                                                 <span
                                                                     className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
                                                                         color={"#cc3333"} size={20} /></span>
-                                                            )} */}
+                                                            )}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -625,11 +684,11 @@ export default function JardinPage() {
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
-                                                            {/* {plant.is_favorite && (
+                                                            {plant.is_favorite && (
                                                                 <span
                                                                     className={`ml-3 ${stylesJardin.responsiveImage}`}><FaHeart
                                                                         color={"#cc3333"} size={20} /></span>
-                                                            )} */}
+                                                            )}
                                                         </div>
                                                     ))}
                                                 </div>
@@ -678,7 +737,7 @@ export default function JardinPage() {
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
-                                                    {/* {plant.is_favorite ? (
+                                                    {plant.is_favorite ? (
                                                         <span
                                                             className={"w-fit"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
@@ -688,7 +747,7 @@ export default function JardinPage() {
                                                             className={"w-fit invisible"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
                                                         </span>
-                                                    )} */}
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -705,7 +764,7 @@ export default function JardinPage() {
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
-                                                    {/* {plant.is_favorite ? (
+                                                    {plant.is_favorite ? (
                                                         <span
                                                             className={"w-fit"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
@@ -715,7 +774,7 @@ export default function JardinPage() {
                                                             className={"w-fit invisible"}><FaHeart
                                                                 color={"#cc3333"} size={20} />
                                                         </span>
-                                                    )} */}
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -774,8 +833,7 @@ export default function JardinPage() {
                                                         <tr className="border">
                                                             <th className={`p-4 border`}>Favorito</th>
                                                             <td className={`p-4 relative`}>
-                                                                {plantaSeleccionada.is_favorite ? "Sí" : "No"}
-                                                                {/* {plantaSeleccionada.is_favorite ? (
+                                                                {plantaSeleccionada.is_favorite ? (
                                                                     <span className={`absolute top-[17px] left-[15px] px-2 border inline-flex leading-5 font-semibold rounded-full bg-green-100 text-green-800`}>
                                                                         Si
                                                                     </span>
@@ -783,7 +841,7 @@ export default function JardinPage() {
                                                                     <span className={`absolute top-[17px] left-[15px] px-2 border inline-flex leading-5 font-semibold rounded-full bg-red-100 text-red-800`}>
                                                                         No
                                                                     </span>
-                                                                )} */}
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     </tbody>
