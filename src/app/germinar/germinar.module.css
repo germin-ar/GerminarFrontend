@@ -1,44 +1,36 @@
-.video{
+.video {
     width: 100%;
     padding: 80px 0;
 }
+
 .active {
-    background-color: #275F08; /* Color de fondo cuando está activo */
-    color: white; /* Color de texto cuando está activo */
+    background-color: #275F08;
+    /* Color de fondo cuando está activo */
+    color: white;
+    /* Color de texto cuando está activo */
 }
 
 
-.reproductor{
+.reproductor {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.contenedor{
+.contenedor {
     /*min-height: calc(100vh - 132px);*/
     height: 100vh;
 }
+
 @media (max-width: 1000px) {
-    .contenedor{
+    .contenedor {
         flex-direction: column;
     }
 }
-.contImg{
+
+.contImg {
     width: 100%;
     margin: 0 auto;
 }
 
-@media (max-width: 1640px){
-
-
-
-
-
-}
-
-
-.icono{
-    width: 30px;
-    height: 30px;
-}
-/**/
+@media (max-width: 1640px) {}
