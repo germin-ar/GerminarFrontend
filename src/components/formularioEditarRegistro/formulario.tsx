@@ -29,6 +29,7 @@ interface FormValues {
     id_garden: number | null;
     is_favorite: boolean;
     image_url: string;
+    notes: string;
 }
 
 interface FormValuesEdit {
@@ -150,6 +151,7 @@ export default function Formulario(props: IdentificarPlanta) {
         planting_date: new Date('2024-06-12'),
         id_garden: null,
         is_favorite: true,
+        notes: "",
         image_url: ""
     });
 
@@ -852,8 +854,8 @@ export default function Formulario(props: IdentificarPlanta) {
                             {plantData ? (<>
                             <textarea
                                 name="notes"
-                                //value={formValues.notes}
-                                //onChange={handleInputChange}
+                                value={formValues.notes}
+                                onChange={handleInputChange}
                                 className=" pl-9 pr-9 w-full h-full resize-none"
                             />
                             </>) : (<>
