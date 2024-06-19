@@ -30,6 +30,7 @@ export interface Photo {
 }
 
 export default function JardinPage() {
+
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -50,12 +51,15 @@ export default function JardinPage() {
     /****/
     const [popupVisible, setPopupVisible] = useState(false);
     const [plantaSeleccionada, setPlantaSeleccionada] = useState<Plant | null>(null); //
+    const [jardinDePlanta, setJardinDePlanta] = useState<Garden | null>(null); //
     const [cat, setCat] = useState(0);
 
-    const mostrarPopup = (planta: any, idPlanta: any) => {
+
+    const mostrarPopup = (planta: any, idPlanta: any, garden: Garden | null) => {
         setPopupVisible(true);
         setPlantaSeleccionada(planta);
         setCat(idPlanta);
+        setJardinDePlanta(garden || null);
         // console.log(planta)
     };
 
@@ -312,16 +316,27 @@ export default function JardinPage() {
     };
 
     function formatDateString(dateString: string): string {
-        const date = new Date(dateString); // Crear objeto Date a partir de la cadena
-        const day = date.getDate().toString().padStart(2, '0'); // Día con dos dígitos
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mes con dos dígitos (empezando desde 0)
-        const year = date.getFullYear(); // Año con cuatro dígitos
-        const hours = date.getHours().toString().padStart(2, '0'); // Horas con dos dígitos
-        const minutes = date.getMinutes().toString().padStart(2, '0'); // Minutos con dos dígitos
-        const seconds = date.getSeconds().toString().padStart(2, '0'); // Segundos con dos dígitos
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0'); 
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear(); 
+        const hours = date.getHours().toString().padStart(2, '0'); 
+        const minutes = date.getMinutes().toString().padStart(2, '0'); 
+        const seconds = date.getSeconds().toString().padStart(2, '0'); 
 
         return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     }
+
+    const findGardenIdFromPlantId = (plantId: number): string | null => {
+        for (const garden of gardens) {
+            for (const plant of garden.plants) {
+                if (plant.id === plantId) {
+                    return garden.name;
+                }
+            }
+        }
+        return null; 
+    };
 
     return (
         <>
@@ -594,13 +609,13 @@ export default function JardinPage() {
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.id)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
                                                                 <img src={plant.photos[0].url} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
@@ -622,13 +637,13 @@ export default function JardinPage() {
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.id)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
                                                                 <img src={plant.photos[0].url} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
@@ -668,7 +683,7 @@ export default function JardinPage() {
                         </div>
                     )}
 
-                    {/* --------------------------------------------------------------------------------------------------------------------------------------------- */}
+                    {/* ---------------------------------------------------------------------------------------------------------------------------------------------*/}
 
 
                     {gardens.flatMap(garden => garden.plants).length !== 0 ? (
@@ -678,10 +693,10 @@ export default function JardinPage() {
                                 {filtrarPorBuscador().filtradoPlantas.length > 0 && buscador != '' ? (
                                     <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                         {filtrarPorBuscador().filtradoPlantas.map(plant => (
-                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
+                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-fit relative hover:shadow-lg">
                                                 <div
-                                                    className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.id)}>
+                                                    className="flex flex-row flex-wrap gap-3 items-center justify-between h-full cursor-pointer"
+                                                    onClick={() => mostrarPopup(plant, plant.id, null)}>
                                                     <div className="flex items-center">
                                                         <img src={plant.photos[0].url} alt="plant.alias"
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
@@ -705,10 +720,10 @@ export default function JardinPage() {
                                 ) : filtrarPlantasPorFiltro().length > 0 && buscador == '' ? (
                                     <div className="flex flex-col md:grid md:grid-cols-2 md:flex-row lg:grid-cols-2 gap-4 lg:flex flex-wrap">
                                         {filtrarPlantasPorFiltro().map(plant => (
-                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
+                                            <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-fit relative hover:shadow-lg">
                                                 <div
-                                                    className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.id)}>
+                                                    className="flex flex-row flex-wrap gap-3 items-center justify-between h-full cursor-pointer"
+                                                    onClick={() => mostrarPopup(plant, plant.id, null)}>
                                                     <div className="flex items-center">
                                                         <img src={plant.photos[0].url} alt="plant.alias"
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
@@ -772,7 +787,7 @@ export default function JardinPage() {
                                                     <tbody>
                                                         <tr>
                                                             <th className={`p-4 border`}>Jardín</th>
-                                                            <td className={`p-4 border`}>Jardín</td>
+                                                            <td className={`p-4 border`}>{findGardenIdFromPlantId(plantaSeleccionada.id) || 'Sin Jardín'}</td>
                                                         </tr>
                                                         <tr>
                                                             <th className={`p-4 border`}>Creada el</th>
@@ -825,13 +840,13 @@ export default function JardinPage() {
                                                     <div className="flex justify-end">
                                                         <button
                                                             onClick={handleConfirmDelete}
-                                                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                                            className="bg-[#E53E3E] mr-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#CC3333] active:bg-[#B32D2D] active:scale-75"
                                                         >
                                                             Sí
                                                         </button>
                                                         <button
                                                             onClick={handleCancelDelete}
-                                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                                            className="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-gray-400 active:bg-gray-500 active:scale-75"
                                                         >
                                                             No
                                                         </button>
