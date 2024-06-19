@@ -16,13 +16,6 @@
     align-items: center;
 }
 
-.check {
-    width: 25px;
-    height: 25px;
-    color: #275F08;
-    margin: 0 0 4px 0;
-}
-
 .tooltip {
     position: absolute;
     bottom: 100%;
