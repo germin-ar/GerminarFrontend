@@ -11,6 +11,8 @@ interface IdentificarImagenProps{
     forwardRef?: React.RefObject<HTMLDivElement>
 }
 
+const BASE_URL = process.env.API_BASE_URL;
+
 export default function IdentificarImagen(props:IdentificarImagenProps){
     const { imagen, pagina } = props;
     const [archivoSeleccionado, setArchivoSeleccionado] = useState<File | null>(
@@ -43,7 +45,7 @@ export default function IdentificarImagen(props:IdentificarImagenProps){
         }
 
         await fetch(
-            "http://localhost:8080/api/v1/images",
+            `${BASE_URL}/images`,
             {
                 method: "POST",
                 body: formData,
