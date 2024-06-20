@@ -58,34 +58,93 @@ export default function JardinPage() {
         setCat(idPlanta);
         // console.log(planta)
     };
-
-    const [gardens, setGardens] = useState<Garden[]>([]);
-
-    const fetchGardens = async () => {
-        try {
-            const userId = 1;
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
-                headers: {
-                    'id-user': userId.toString(),
+    const gardens: Garden[] = [
+        {
+            id: 1,
+            name: "Garden A",
+            plants: [
+                {
+                    id: 101,
+                    alias: "Rose Bush",
+                    creation_date: "2023-04-15",
+                    modification_date: "2023-06-10",
+                    is_favorite: true,
+                    photos: [
+                        { url: "/recomendacion/albahaca.png" },
+                        { url: "/recomendacion/carlos.png" }
+                    ]
                 },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch gardens');
-            }
-            const data = await response.json();
-            console.log(data)
-
-            //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
-            console.log(data)
-            setGardens(data);
-        } catch (error) {
-            console.error('Error fetching gardens:', error);
+                {
+                    id: 102,
+                    alias: "Tulip Bed",
+                    creation_date: "2023-05-05",
+                    modification_date: "2023-06-12",
+                    is_favorite: false,
+                    photos: [
+                        { url: "/recomendacion/tomate.png" },
+                        { url: "/recomendacion/morrón.png" }
+                    ]
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: "Garden B",
+            plants: [
+                {
+                    id: 201,
+                    alias: "Cactus Corner",
+                    creation_date: "2023-01-20",
+                    modification_date: "2023-05-30",
+                    is_favorite: false,
+                    photos: [
+                        { url: "/recomendacion/albahaca.png" },
+                        { url: "/recomendacion/carlos.png" }
+                    ]
+                },
+                {
+                    id: 202,
+                    alias: "Herb Patch",
+                    creation_date: "2023-02-15",
+                    modification_date: "2023-06-05",
+                    is_favorite: true,
+                    photos: [
+                        { url: "/recomendacion/tomate.png" },
+                        { url: "/recomendacion/morrón.png" }
+                    ]
+                }
+            ]
         }
-    };
+    ];
 
-    useEffect(() => {
-        fetchGardens()
-    }, []);
+
+    /* const [gardens, setGardens] = useState<Garden[]>([]);
+
+     const fetchGardens = async () => {
+         try {
+             const userId = 1;
+             const response = await fetch('http://localhost:8080/api/v1/gardens', {
+                 headers: {
+                     'id-user': userId.toString(),
+                 },
+             });
+             if (!response.ok) {
+                 throw new Error('Failed to fetch gardens');
+             }
+             const data = await response.json();
+             console.log(data)
+
+             //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
+             console.log(data)
+             setGardens(data);
+         } catch (error) {
+             console.error('Error fetching gardens:', error);
+         }
+     };
+
+     useEffect(() => {
+         fetchGardens()
+     }, []);*/
 
     const [mostrarJardin, setMostrarJardin] = useState(false);
 
@@ -300,7 +359,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-            await fetchGardens();
+           // await fetchGardens();
 
 
             setConfirmDelete(false);
@@ -602,7 +661,7 @@ export default function JardinPage() {
                                                             className="flex flex-row justify-between items-center cursor-pointer"
                                                             onClick={() => mostrarPopup(plant, plant.id)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.photos[0].url} alt={plant.alias}
+                                                                <Image src={plant.photos[0].url} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
