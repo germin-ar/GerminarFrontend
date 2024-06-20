@@ -39,6 +39,7 @@ interface FormValuesEdit {
     id_garden: number | null;
     is_favorite: boolean | null;
     image_url: string | null;
+    notes: string;
 }
 interface PlantData {
     id: string;
@@ -162,6 +163,7 @@ export default function Formulario(props: IdentificarPlanta) {
         height: 0,
         id_garden: null,
         is_favorite: false,
+        notes: "",
         image_url: ''
     });
 
@@ -341,7 +343,8 @@ export default function Formulario(props: IdentificarPlanta) {
                         height: plant.height ?? 0,
                         id_garden: plant.id_garden ?? null,
                         is_favorite: plant.favorite ?? false,
-                        image_url: plant.images.length > 0 ? plant.images[0].url : ''
+                        image_url: plant.images.length > 0 ? plant.images[0].url : '',
+                        notes: plant.notes ?? ''
                     });
                     console.log(plant)
                 } catch (error) {
@@ -861,8 +864,8 @@ export default function Formulario(props: IdentificarPlanta) {
                             </>) : (<>
                             <textarea
                                 name="notes"
-                                //value={formValues.notes}
-                                //onChange={handleInputChange}
+                                value={formValuesEdit.notes}
+                                onChange={handleInputChangeEdit}
                                 className=" pl-9 pr-9 w-full h-full resize-none"
                             />
                             </>)}
