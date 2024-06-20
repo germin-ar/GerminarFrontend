@@ -45,6 +45,15 @@ interface Plant {
     images: {
         url: string;
     }[];
+    history: {
+        id_plant: number;
+        notes: string;
+        height: number;
+        alias: string;
+        url_image: string;
+        modified_at: string;
+        id_diseases: number;
+    }[];
 }
 
 export default function JardinPage({params: {id}}: { params: { id: number } }) {
@@ -242,6 +251,36 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     </div>
                 </div>
             </section>
+            <section className="m-10">
+                <div className="overflow-x-auto overscroll-x-auto max-w-[1300px]  mx-auto">
+                    <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Historial</h2>
+                    <ol className="items-center sm:flex space-x-6 px px-6 py-4">
+                        {plant.history.map((item, index) => (
+                            <li key={index} className="relative mb-6 sm:mb-0 mr-6">
+                                <div className="flex items-center">
+                                    <div
+                                        className="z-10 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
+                                        <svg className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
+                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                        </svg>
+                                    </div>
+                                    <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                                </div>
+                                <div className="mt-3 sm:pe-8">
+                                    <time>{item.modified_at.slice(0, 19)}</time>
+                                    <p>Alias: {item.alias}</p>
+                                    <p>Altura: {item.height}</p>
+                                    <p>Notas: {item.notes}</p>
+                                    <img src={item.url_image} alt={item.alias} width="200" height="100"
+                                         className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}/>
+                                </div>
+                            </li>
+                        ))}
+                    </ol>
+                </div>
+            </section>
             <div className="m-10">
 
                 <button className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
@@ -250,6 +289,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                 </button>
             </div>
         </section>
+
     )
 
 }
