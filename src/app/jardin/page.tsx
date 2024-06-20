@@ -359,7 +359,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-           // await fetchGardens();
+            // await fetchGardens();
 
 
             setConfirmDelete(false);
@@ -689,7 +689,7 @@ export default function JardinPage() {
                                                             className="flex flex-row justify-between items-center cursor-pointer"
                                                             onClick={() => mostrarPopup(plant, plant.id)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.photos[0].url} alt={plant.alias}
+                                                                <Image src={plant.photos[0].url} alt={plant.alias} width={500} height={500}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
@@ -742,7 +742,7 @@ export default function JardinPage() {
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
                                                     onClick={() => mostrarPopup(plant, plant.id)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.photos[0].url} alt="plant.alias"
+                                                        <Image src={plant.photos[0].url} alt="plant.alias" width={500} height={500}
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
@@ -769,7 +769,7 @@ export default function JardinPage() {
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
                                                     onClick={() => mostrarPopup(plant, plant.id)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.photos[0].url} alt="plant.alias"
+                                                        <Image src={plant.photos[0].url} alt="plant.alias" width={500} height={500}
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
@@ -817,8 +817,8 @@ export default function JardinPage() {
                                 <div className="flex flex-col items-center justify-around gap-4 bg-white p-8 rounded-lg w-[450px] h-96 relative">
                                     <div className="flex flex-col gap-2 items-center">
                                         <div className={"flex flex-col items-center absolute top-[-45px]"}>
-                                            <img src={plantaSeleccionada.photos[0].url} alt={plantaSeleccionada.alias}
-                                                className="w-20 h-20 rounded-full" />
+                                            <Image src={plantaSeleccionada.photos[0].url} alt={plantaSeleccionada.alias}
+                                                width={500} height={500} className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
                                         <div>

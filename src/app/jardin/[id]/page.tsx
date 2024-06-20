@@ -16,6 +16,8 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import Loading from "@/components/Spinner/Spinner";
+import Image from 'next/image';
+
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
@@ -118,7 +120,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                src={plant.images[0].url} alt={`${id}`} width="450"
                                height="200"/>*/}
 
-                        <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                        <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
                              src={plant.images[0].url} alt={`${id}`} width="450"
                              height="200"/>
                     </div>
@@ -234,7 +236,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         {/*<Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
                                src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
                                height="200"/>*/}
-                        <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
+                        <Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
                              src={plant.images[0].url} alt={`${id}`} width="450"
                              height="200"/>
                     </div>
@@ -273,7 +275,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                     <p>Alias: {item.alias}</p>
                                     <p>Altura: {item.height}</p>
                                     <p>Notas: {item.notes}</p>
-                                    <img src={item.url_image} alt={item.alias} width="200" height="100"
+                                    <Image src={item.url_image} alt={item.alias} width="200" height="100"
                                          className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}/>
                                 </div>
                             </li>

@@ -135,7 +135,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 {/*<Image src={`${plantData?.image.url}`} alt="Albahaca-sana" width="500"
                                        height="500"/>*/}
-                                <img src={`${plantData?.image.url}`}
+                                <Image src={`${plantData?.image.url}`}
                                      width="500"
                                      height="500"
                                     alt={`${plantData?.candidates[0].specie.common_names[0]}`}/>
