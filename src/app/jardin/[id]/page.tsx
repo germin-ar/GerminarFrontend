@@ -104,7 +104,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
     const toggleOrder = () => {
         const reversedHistory = [...orderedHistory].reverse();
-        setOrder(false);
+        setOrder(!order);
         setOrderedHistory(reversedHistory);
     };
 
