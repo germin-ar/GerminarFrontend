@@ -60,6 +60,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     const router = useRouter();
     const [plant, setPlant] = useState<Plant | null>(null);
 
+    const [order, setOrder] = useState('newest');
     useEffect(() => {
         const fetchPlant = async () => {
             try {
@@ -72,6 +73,15 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     throw new Error('Failed to fetch plant');
                 }
                 const data = await response.json();
+
+                if (data.history) {
+                    if (order === 'newest') {
+                        data.history.reverse(); // Más nuevo primero
+                    } else if (order === 'oldest') {
+                        // No se hace nada, ya que el orden original es el más viejo primero
+                    }
+                }
+
                 console.log(data);
                 setPlant(data);
             } catch (error) {
@@ -82,7 +92,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
         if (id) {
             fetchPlant();
         }
-    }, [id]);
+    }, [id, order]);
+
+    const toggleOrder = () => {
+        // Cambiar el estado 'order' entre 'newest' y 'oldest'
+        setOrder(prevOrder => (prevOrder === 'newest' ? 'oldest' : 'newest'));
+    };
 
     if (!plant) {
         return <Loading/>
@@ -252,34 +267,36 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                 </div>
             </section>
             <section className="m-10">
-                <div className="overflow-x-auto overscroll-x-auto max-w-[1300px]  mx-auto">
-                    <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Historial</h2>
-                    <ol className="items-center sm:flex space-x-6 px px-6 py-4">
-                        {plant.history.map((item, index) => (
-                            <li key={index} className="relative mb-6 sm:mb-0 mr-6">
-                                <div className="flex items-center">
-                                    <div
-                                        className="z-10 flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full ring-0 ring-white dark:bg-blue-900 sm:ring-8 dark:ring-gray-900 shrink-0">
-                                        <svg className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true"
-                                             xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path
-                                                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                                        </svg>
-                                    </div>
-                                    <div className="hidden sm:flex w-full bg-gray-200 h-0.5 dark:bg-gray-700"></div>
+                <button onClick={toggleOrder}
+                        className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Cambiar Orden: {order === 'newest' ? 'Más nuevo primero' : 'Más viejo primero'}
+                </button>
+                <section>
+                    <h2 className="text-lg font-semibold mb-2">Historial de la planta</h2>
+                    <ol className="relative border-s border-gray-200 dark:border-gray-700">
+                        {plant.history.map((entry, index) => (
+                            <li key={index} className="mb-10 ms-6 flex">
+                                <div className="flex-1">
+                                    <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                        {entry.alias}
+                                    </h3>
+                                    <time>Modificado: {entry.modified_at.slice(0, 19)}</time>
+                                    <p>Alias: {entry.alias}</p>
+                                    <p>Altura: {entry.height}</p>
+                                    <p>Notas: {entry.notes}</p>
+                                    {/* TODO: Mapear enfermedades si es necesario */}
+                                    {entry.id_diseases ? <p>Estado de salud: {entry.id_diseases}</p> : <p>-</p>}
                                 </div>
-                                <div className="mt-3 sm:pe-8">
-                                    <time>{item.modified_at.slice(0, 19)}</time>
-                                    <p>Alias: {item.alias}</p>
-                                    <p>Altura: {item.height}</p>
-                                    <p>Notas: {item.notes}</p>
-                                    <img src={item.url_image} alt={item.alias} width="200" height="100"
-                                         className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}/>
+                                <div className="flex-1">
+                                    {entry.url_image && (
+                                        <img src={entry.url_image} alt="Plant Image"
+                                             className="h-32 w-auto object-cover rounded-lg"/>
+                                    )}
                                 </div>
                             </li>
                         ))}
                     </ol>
-                </div>
+                </section>
             </section>
             <div className="m-10">
 
