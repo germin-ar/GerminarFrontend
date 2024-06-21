@@ -56,11 +56,22 @@ interface Plant {
     }[];
 }
 
+interface PlantHistory{
+        id_plant: number;
+        notes: string;
+        height: number;
+        alias: string;
+        url_image: string;
+        modified_at: string;
+        id_diseases: number;
+}
+
 export default function JardinPage({params: {id}}: { params: { id: number } }) {
     const router = useRouter();
     const [plant, setPlant] = useState<Plant | null>(null);
-
+    const [orderedHistory, setOrderedHistory] = useState<PlantHistory[]>([]);
     const [order, setOrder] = useState('newest');
+
     useEffect(() => {
         const fetchPlant = async () => {
             try {
@@ -74,16 +85,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                 }
                 const data = await response.json();
 
-                if (data.history) {
-                    if (order === 'newest') {
-                        data.history.reverse(); // Más nuevo primero
-                    } else if (order === 'oldest') {
-                        // No se hace nada, ya que el orden original es el más viejo primero
-                    }
-                }
+                const sortedHistory = [...data.history].reverse();
+
 
                 console.log(data);
                 setPlant(data);
+                setOrderedHistory(sortedHistory);
             } catch (error) {
                 console.error('Error fetching plant:', error);
             }
@@ -95,8 +102,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     }, [id, order]);
 
     const toggleOrder = () => {
-        // Cambiar el estado 'order' entre 'newest' y 'oldest'
-        setOrder(prevOrder => (prevOrder === 'newest' ? 'oldest' : 'newest'));
+        const reversedHistory = [...orderedHistory].reverse();
+        setOrderedHistory(reversedHistory);
     };
 
     if (!plant) {
@@ -269,12 +276,13 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             <section className="m-10">
                 <button onClick={toggleOrder}
                         className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Cambiar Orden: {order === 'newest' ? 'Más nuevo primero' : 'Más viejo primero'}
+                    Cambiar Orden: {orderedHistory[0] && orderedHistory[0].modified_at ?
+                    `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
                     <h2 className="text-lg font-semibold mb-2">Historial de la planta</h2>
                     <ol className="relative border-s border-gray-200 dark:border-gray-700">
-                        {plant.history.map((entry, index) => (
+                        {orderedHistory.map((entry, index) => (
                             <li key={index} className="mb-10 ms-6 flex">
                                 <div className="flex-1">
                                     <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
