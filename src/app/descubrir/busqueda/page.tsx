@@ -1,8 +1,9 @@
 "use client"
 import {useSearchParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import {Suspense, useEffect, useState} from "react";
 import {ImSpinner} from "react-icons/im";
 import Link from "next/link";
+import Loading from "@/components/Spinner/Spinner";
 
 interface PlantSuggestion {
     common_name: string;
@@ -12,7 +13,7 @@ interface PlantSuggestion {
 
 
 
-export default function BusquedaPage() {
+function BusquedaPage() {
 
     const [plantSuggestions, setPlantSuggestions] = useState<PlantSuggestion[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -160,3 +161,10 @@ export default function BusquedaPage() {
     )
 }
 
+export default function App() {
+    return (
+        <Suspense fallback={<Loading />}>
+            <BusquedaPage />
+        </Suspense>
+    );
+}
