@@ -1,52 +1,33 @@
-FROM node:18-alpine AS base
-
-# 1. Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+FROM node:18-alpine AS dependencies
 RUN apk add --no-cache libc6-compat
+WORKDIR /home/app
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm i
 
-WORKDIR /app
-
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
-
-# 2. Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+FROM node:18-alpine AS builder
+WORKDIR /home/app
+COPY --from=dependencies /home/app/node_modules ./node_modules
 COPY . .
-# This will do the trick, use the corresponding env file for each environment.
-COPY .env.production.sample .env.production
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV="production"
 RUN npm run build
 
-# 3. Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
+FROM node:18-slim AS runner
 
+WORKDIR /home/app
+ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV=production
+COPY --from=builder /home/app/.next/standalone ./standalone
+COPY --from=builder /home/app/public /home/app/standalone/public
+COPY --from=builder /home/app/.next/static /home/app/standalone/.next/static
+COPY --from=builder /home/app/scripts/entrypoint.sh ./scripts/entrypoint.sh
+COPY --from=builder /home/app/.env.production ./.env.production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+ENV HOSTNAME "0.0.0.0"
 
-COPY --from=builder /app/public ./public
+RUN chmod +x ./scripts/entrypoint.sh
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+ENTRYPOINT [ "./scripts/entrypoint.sh" ]
 
-
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT 3000
-
-CMD HOSTNAME=localhost node server.js
+CMD ["node", "./standalone/server.js"]
