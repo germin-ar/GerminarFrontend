@@ -70,7 +70,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     const router = useRouter();
     const [plant, setPlant] = useState<Plant | null>(null);
     const [orderedHistory, setOrderedHistory] = useState<PlantHistory[]>([]);
-    const [order, setOrder] = useState('newest');
+    const [order, setOrder] = useState(false);
 
     useEffect(() => {
         const fetchPlant = async () => {
@@ -89,6 +89,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
 
                 console.log(data);
+                setOrder(true);
                 setPlant(data);
                 setOrderedHistory(sortedHistory);
             } catch (error) {
@@ -99,10 +100,11 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
         if (id) {
             fetchPlant();
         }
-    }, [id, order]);
+    }, [id]);
 
     const toggleOrder = () => {
         const reversedHistory = [...orderedHistory].reverse();
+        setOrder(false);
         setOrderedHistory(reversedHistory);
     };
 
@@ -276,7 +278,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             <section className="m-10">
                 <button onClick={toggleOrder}
                         className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Cambiar Orden: {orderedHistory[0] && orderedHistory[0].modified_at ?
+                    Cambiar Orden: { order ?
                     `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
