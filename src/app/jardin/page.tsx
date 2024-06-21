@@ -276,7 +276,7 @@ export default function JardinPage() {
 
     useEffect(() => {
         filtrarPlantasPorFiltro();
-    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]);
+    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo, filtrarPlantasPorFiltro]);
 
     const resaltarTexto = (texto: any) => {
         if (!buscador) {

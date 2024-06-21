@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Loader} from "@googlemaps/js-api-loader";
+import React, { useEffect, useState } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
 interface Position {
     lat: number;
     lng: number;
@@ -19,7 +19,7 @@ const Map: React.FC<MapProps> = ({ onCoordinatesChange }) => {
                 apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY as string,
                 version: 'weekly'
             });
-            const {Map} = await loader.importLibrary('maps');
+            const { Map } = await loader.importLibrary('maps');
             const { Marker } = await loader.importLibrary('marker') as google.maps.MarkerLibrary;
 
             const position = {
@@ -41,7 +41,7 @@ const Map: React.FC<MapProps> = ({ onCoordinatesChange }) => {
                 position: position
             })
 
-            map.addListener('click', (event:any) => {
+            map.addListener('click', (event: any) => {
                 // Obtener las nuevas coordenadas de posición
                 const newPosition = {
                     lat: event.latLng.lat(),
@@ -57,11 +57,11 @@ const Map: React.FC<MapProps> = ({ onCoordinatesChange }) => {
 
 
         initMap();
-    }, [])
+    }, [onCoordinatesChange])
 
     return (
         <>
-        <div style={{ height: '600px'}} ref={mapRef} />
+            <div style={{ height: '600px' }} ref={mapRef} />
         </>
     )
 }

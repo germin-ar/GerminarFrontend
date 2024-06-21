@@ -2,9 +2,9 @@
 import Image from "next/image";
 
 import stylesResultado from "@/app/resultado/[id]/resultado.module.css";
-import {BalooBhaina2} from "@/app/ui/fonts";
+import { BalooBhaina2 } from "@/app/ui/fonts";
 import styles from "@/app/home.module.css";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import Loading from "@/components/Spinner/Spinner";
@@ -14,9 +14,9 @@ interface PlantData {
     language: string;
     candidates: Candidate[];
     image: Image;
-    health:Health;
+    health: Health;
 }
-interface Health{
+interface Health {
     is_healty: boolean
 }
 
@@ -51,7 +51,7 @@ interface PlantDataDetail {
     harvest_time: string;
     growth_season: string;
     planting_time: string;
-    pruning:string;
+    pruning: string;
 }
 
 interface Image {
@@ -59,13 +59,13 @@ interface Image {
     url: string;
 }
 
-interface IdentificarPlanta{
-    planta:string
-    espacio:string
-    sugerencia:string
+interface IdentificarPlanta {
+    planta: string
+    espacio: string
+    sugerencia: string
 }
 
-export default function CaracteristicaPlanta(props:IdentificarPlanta) {
+export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const { planta, espacio, sugerencia } = props
     const defaultPlantData: Species = {
         scientific_name: '',
@@ -81,32 +81,32 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     useEffect(() => {
-        if (sugerencia === "no"){
-        setLoading(true);
-        setError(null);
+        if (sugerencia === "no") {
+            setLoading(true);
+            setError(null);
 
-        fetch(`http://localhost:8080/api/v1/candidates/${planta}`)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data: PlantData) => {
-                setPlantData(data);
-                console.log(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error.message);
-                setLoading(false);
-            });
+            fetch(`http://localhost:8080/api/v1/candidates/${planta}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data: PlantData) => {
+                    setPlantData(data);
+                    console.log(data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setError(error.message);
+                    setLoading(false);
+                });
 
-    } else if(sugerencia === 'si'){
+        } else if (sugerencia === 'si') {
             setLoading(false)
         }
 
-        }, [planta]);
+    }, [planta, sugerencia]);
 
     if (loading) {
         return <Loading />;
@@ -116,9 +116,9 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
         return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
             <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
             <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
-                   height="200"/>
+                height="200" />
             <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
-            </div>
+        </div>
     }
 
     return (
@@ -136,16 +136,16 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 {/*<Image src={`${plantData?.image.url}`} alt="Albahaca-sana" width="500"
                                        height="500"/>*/}
                                 <Image src={`${plantData?.image.url}`}
-                                     width="500"
-                                     height="500"
-                                    alt={`${plantData?.candidates[0].specie.common_names[0]}`}/>
+                                    width="500"
+                                    height="500"
+                                    alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
                                 {
                                     plantData && (
                                         <Link href={`/registro/${planta}`}
-                                              className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                            className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                             <div>
                                                 <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                                       height="20"/>
+                                                    height="20" />
                                             </div>
                                             Guardar
                                         </Link>
@@ -154,9 +154,9 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 {
                                     sugerencia === 'si' && (
                                         <div className="flex items-center justify-between flex-row gap-2">
-                                        <p> ¿Querés saber saber cómo plantar?</p>
+                                            <p> ¿Querés saber saber cómo plantar?</p>
                                             <Link href={`/guia/${planta}`}
-                                                  className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
+                                                className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                                 Empezar
                                             </Link>
                                         </div>
@@ -167,26 +167,26 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                         <div className={'table-container'}>
                             <table className={'vertical-header-table'}>
                                 <tbody>
-                                <tr>
-                                    <th className={'p-10 border'}>Nombre científico</th>
-                                    <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.scientific_name}</p></td>
-                                </tr>
-                                <tr>
-                                    <th className={'p-10 border'}>Nombres comunes</th>
-                                    <td className={'p-10 border'}>
-                                        {plantData?.candidates[0].specie.common_names.map((name, index) => (
-                                            <p key={index}>{name}</p>
-                                        ))}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th className={'p-10 border'}>Género</th>
-                                    <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.genus_name}</p></td>
-                                </tr>
-                                <tr>
-                                    <th className={'p-10 border'}>Familia</th>
-                                    <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.family_name}</p></td>
-                                </tr>
+                                    <tr>
+                                        <th className={'p-10 border'}>Nombre científico</th>
+                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.scientific_name}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th className={'p-10 border'}>Nombres comunes</th>
+                                        <td className={'p-10 border'}>
+                                            {plantData?.candidates[0].specie.common_names.map((name, index) => (
+                                                <p key={index}>{name}</p>
+                                            ))}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th className={'p-10 border'}>Género</th>
+                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.genus_name}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th className={'p-10 border'}>Familia</th>
+                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.family_name}</p></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -200,7 +200,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                         <div className={`flex items-center gap-5`}>
                             <div>
                                 <Image className={`w-14 sm:w-20`} src="/resultado/planta-sana-icon.png"
-                                       alt="Planta-sana-icon" width="80" height="80"/>
+                                    alt="Planta-sana-icon" width="80" height="80" />
                             </div>
                             <div>
                                 {plantData?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
@@ -227,7 +227,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tamaño-icon.png" alt="tamaño-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col items-start'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Tamaño</h3>
@@ -242,7 +242,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/fertilizante-icon.png" alt="fertilizante-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Fertilizante</h3>
@@ -255,7 +255,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/riego-icon.png" alt="riego-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Riego</h3>
@@ -268,7 +268,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tierra-icon.png" alt="tierra-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Tierra</h3>
@@ -281,13 +281,13 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/exposolar-icon.png" alt="exposolar-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Exposición solar</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Luz solar directa por la mañana
                                         y sombra parcial por la tarde.</p>*/}
-                                    <p className="cursor-pointer">{plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 100 ? `${plantData && plantData?.candidates[0].plant_data.sun_exposure.slice(0, 100)}...` : plantData && plantData?.candidates[0].plant_data.sun_exposure }</p>
+                                    <p className="cursor-pointer">{plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 100 ? `${plantData && plantData?.candidates[0].plant_data.sun_exposure.slice(0, 100)}...` : plantData && plantData?.candidates[0].plant_data.sun_exposure}</p>
                                     {plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 50 && <button className="mt-2 px-4 py-2 text-white rounded bg-[#88BC43] w-1/4" onClick={handleClick}>ver mas</button>}
                                     {showPopup && (
                                         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
@@ -305,7 +305,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/insecticida-icon.png" alt="insecticida-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Insecticida</h3>
@@ -318,7 +318,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temperatura-icon.png" alt="temperatura-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temperatura adecuada</h3>
@@ -332,7 +332,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temporada-icon.png" alt="temporada-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Temporada</h3>
@@ -349,7 +349,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                             <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/podado-icon.png" alt="podado-icon" width="150"
-                                           height="150"/>
+                                        height="150" />
                                 </div>
                                 <div className={'flex flex-col'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Podado</h3>
@@ -386,7 +386,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
                                 className={`bg-[#88BC43] hover:bg-blue-600 text-white font-bold py-2 px-4 rounded flex items-center gap-2`}>
                                 <div>
                                     <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                           height="20"/>
+                                        height="20" />
                                 </div>
                                 Guardar
                             </button>

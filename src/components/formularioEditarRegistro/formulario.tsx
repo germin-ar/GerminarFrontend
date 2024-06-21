@@ -362,7 +362,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
         fetchUbicaciones();
         console.log(ubicaciones);
-    }, [id]);
+    }, [id, editar, ubicaciones]);
     const fetchUbicaciones = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/v1/gardens', {
