@@ -1,7 +1,7 @@
 "use client"
 import styles from "@/app/home.module.css";
 import stylesJardin from "@/app/jardin/jardin.module.css"
-import React, { useEffect, useRef, useState } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Link from "next/link";
 import { IoIosHome } from "react-icons/io";
 import { FaClock, FaHeart, FaLeaf, FaTrash } from "react-icons/fa";
@@ -234,7 +234,7 @@ export default function JardinPage() {
         );
     };
 
-    const filtrarPlantasPorFiltro = () => {
+    const filtrarPlantasPorFiltro = useCallback(() => {
         let plantasFiltradas: Plant[] = [];
 
         if (filtroPlantas || (!filtroPlantas && !filtroPlantaFavorita && !filtroPlantaTipo && !filtroPlantaFechaReciente && !filtroPlantaFechaAntiguo)) {
@@ -272,11 +272,11 @@ export default function JardinPage() {
         }
 
         return plantasFiltradas;
-    };
+    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]);
 
     useEffect(() => {
         filtrarPlantasPorFiltro();
-    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo, filtrarPlantasPorFiltro]);
+    }, [filtrarPlantasPorFiltro]);
 
     const resaltarTexto = (texto: any) => {
         if (!buscador) {
