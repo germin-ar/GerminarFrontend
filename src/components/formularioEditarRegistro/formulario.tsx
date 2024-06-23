@@ -145,6 +145,8 @@ export default function Formulario(props: IdentificarPlanta) {
     const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
 
 
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [fileUpload, setFileUpload] = useState(false);
 
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
@@ -347,6 +349,7 @@ export default function Formulario(props: IdentificarPlanta) {
                         notes: plant.notes ?? ''
                     });
                     console.log(plant)
+                    setFileUpload(false)
                 } catch (error) {
                     console.error('Error fetching plant data:', error);
                 }
@@ -362,7 +365,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
         fetchUbicaciones();
         console.log(ubicaciones);
-    }, [id]);
+    }, [id, fileUpload]);
     const fetchUbicaciones = async () => {
         try {
             const response = await fetch('http://localhost:8080/api/v1/gardens', {
@@ -422,6 +425,47 @@ export default function Formulario(props: IdentificarPlanta) {
     };
 
 
+
+
+    const handleFileChange = (event:any) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const handleUploadImage = async (event:any) => {
+        if (event) {
+            event.preventDefault();
+        }
+        if (!selectedFile) {
+            alert('No se ha seleccionado ningún archivo.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', selectedFile);
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}/photo`, {
+                method: 'POST',
+                headers: {
+                    'id-user': '1',
+                },
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Imagen subida correctamente:', data);
+                setFileUpload(true);
+                setSelectedFile(null);
+            } else {
+                console.error('Error al subir imagen:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    };
+
+
     if (loading) {
         return <Loading/>;
     }
@@ -461,7 +505,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     <>
                                         <div className="relative">
                                             <img
-                                                src={`${plantEdit.images[0].url}`}
+                                                src={plantEdit && plantEdit.images.length > 0 ? plantEdit.images[plantEdit.images.length - 1].url : ''}
                                                 className="object-cover max-w-full max-h-full"
                                                 alt="imagen"
                                                 width="500"
@@ -833,15 +877,21 @@ export default function Formulario(props: IdentificarPlanta) {
                             </div>
                             <div className={`${stylesDescriptionPlants.item1}`}>
                                 <div className="h-[500px] overflow-hidden flex items-center justify-center">
-                                    <img src={plantEdit?.images[0].url} className="object-cover max-w-full max-h-full"
+                                    <img src={plantEdit && plantEdit.images.length > 0 ? plantEdit.images[plantEdit.images.length - 1].url : ''} className="object-cover max-w-full max-h-full"
                                          alt="Albahaca-sana" width="500"
                                          height="500"/>
                                 </div>
 
                             </div>
-                            <button className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Subir más
-                                imágenes
-                            </button>
+                            <div className="flex gap-2 items-center justify-center flex-wrap">
+                                <input type="file" onChange={handleFileChange}/>
+                                <button
+                                    onClick={handleUploadImage}
+                                    className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]"
+                                >
+                                    Subir imagen
+                                </button>
+                            </div>
                         </div>) : (
                         <>
                         </>)
