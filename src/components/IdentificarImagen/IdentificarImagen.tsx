@@ -94,7 +94,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
-                           width="150" height="150"/>
+                           width="150" height="150" />
                     {imagen === 'imagenIdentificarEspacio' ? (
                         <>
                             <h1>Identifica tu Espacio ¡Es gratis!</h1>
