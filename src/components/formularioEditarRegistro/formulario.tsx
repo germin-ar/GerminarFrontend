@@ -444,7 +444,7 @@ export default function Formulario(props: IdentificarPlanta) {
         formData.append('image', selectedFile);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}/photo`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${plantEdit?.id}/photo`, {
                 method: 'POST',
                 headers: {
                     'id-user': '1',
