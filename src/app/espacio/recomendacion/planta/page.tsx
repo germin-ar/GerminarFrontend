@@ -5,7 +5,7 @@ export default function PlantaPage(/*{params: {id}}: { params: { id: string } }*
 
     return (
         <section className="max-w-[1300px] m-auto">
-            <CaracteristicaPlanta planta={id} espacio="espacio"/>
+            <CaracteristicaPlanta planta={id} espacio="espacio" sugerencia="no"/>
         </section>
 
     )

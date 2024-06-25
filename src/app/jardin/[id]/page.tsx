@@ -81,7 +81,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     useEffect(() => {
         const fetchPlant = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
                     headers: {
                         'id-user': '1'
                     }

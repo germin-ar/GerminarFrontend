@@ -64,7 +64,7 @@ export default function JardinPage() {
     const fetchGardens = async () => {
         try {
             const userId = 1;
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
                 headers: {
                     'id-user': userId.toString(),
                 },
@@ -194,7 +194,7 @@ export default function JardinPage() {
                 plantasFiltradas = gardens.flatMap(garden => garden.plants).filter(plant =>
                     plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
                 );
-            } 
+            }
             */
         } else if (filtroPlantaFechaReciente) {
             plantasFiltradas = gardens.flatMap(garden => garden.plants)
@@ -282,7 +282,7 @@ export default function JardinPage() {
     const handleConfirmDelete = async () => {
         try {
             const deletePlant = async (id: any) => {
-                const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'id-user': '1'
@@ -660,7 +660,7 @@ export default function JardinPage() {
                     ) : (
                         <div>
                             <h2 className={`${BalooBhaina2.className} ms-10 text-[#88BC43] font-bold`}>Aún no tienes jardines</h2>
-                            {/* <Link href={}                            
+                            {/* <Link href={}
                                 className="px-6 py-2 bg-[#88BC43] text-white rounded-lg hover:bg-[#6ba832] transition duration-300"
                             >
                                 Crear un jardín
