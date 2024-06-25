@@ -43,7 +43,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         }
 
         await fetch(
-            "http://localhost:8080/api/v1/images",
+            `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/images`,
             {
                 method: "POST",
                 body: formData,

@@ -85,7 +85,7 @@ export default function CaracteristicaPlanta(props:IdentificarPlanta) {
         setLoading(true);
         setError(null);
 
-        fetch(`http://localhost:8080/api/v1/candidates/${planta}`)
+        fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/candidates/${planta}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

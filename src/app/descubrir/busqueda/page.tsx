@@ -31,7 +31,7 @@ export default function BusquedaPage() {
         const fetchData = async () => {
             try {
                 setLoading(true)
-                const apiUrl = `http://localhost:8080/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sun_exposure=${sun_exposure}&square_meters=${square_meters}&page=${currentPage}`;
+                const apiUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sun_exposure=${sun_exposure}&square_meters=${square_meters}&page=${currentPage}`;
 
                 const response = await fetch(apiUrl);
                 if (!response.ok) {

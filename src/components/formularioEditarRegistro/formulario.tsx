@@ -251,7 +251,7 @@ export default function Formulario(props: IdentificarPlanta) {
                         image_url: plantEdit?.images[0].url,
                 };*/
                 const idUsuario = 1;
-                const response = await fetch(`http://localhost:8080/api/v1/plants/${plantEdit?.id}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${plantEdit?.id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -279,7 +279,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     image_url: plantData?.image.url,
                     id_plant_catalog: plantData?.candidates[0].plant_data.id
                 };
-                const response = await fetch('http://localhost:8080/api/v1/plants', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -307,7 +307,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
     useEffect(() => {
         if (editar === "no") {
-            fetch(`http://localhost:8080/api/v1/candidates/${id}`)
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/candidates/${id}`)
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -327,7 +327,7 @@ export default function Formulario(props: IdentificarPlanta) {
         } else if (editar === "si") {
             const fetchPlantData = async () => {
                 try {
-                    const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
                         headers: {
                             'id-user': '1'
                         }
@@ -365,7 +365,7 @@ export default function Formulario(props: IdentificarPlanta) {
     }, [id]);
     const fetchUbicaciones = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
                 headers: {
                     'id-user': '1'
                 }
@@ -385,7 +385,7 @@ export default function Formulario(props: IdentificarPlanta) {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/api/v1/gardens', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
