@@ -24,8 +24,8 @@ export default function Home() {
                     <div className="md:w-1/2 md:px-20">
                         <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} mb-0 md:mb-4`}>Nuestra propuesta</h2>
                         <p className="leading-relaxed">
-                            ¿Sueñas con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
-                            rincón de tu hogar en un jardín próspero. Olvídate de las limitaciones de espacio y la falta
+                            ¿Soñás con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
+                            rincón de tu hogar en un jardín próspero. Olvidate de las limitaciones de espacio y la falta
                             de experiencia. Te guiaremos paso a paso para cultivar con éxito en balcones, terrazas y
                             hasta interiores.
                         </p>

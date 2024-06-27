@@ -300,15 +300,15 @@ export default function GerminarPage() {
                     <div className="md:w-1/2 md:px-20">
                         <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} mb-0 md:mb-4`}>Nuestra propuesta</h2>
                         <p className="leading-relaxed">
-                            ¿Sueñas con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
-                            rincón de tu hogar en un jardín próspero. Olvídate de las limitaciones de espacio y la falta
+                            ¿Soñás con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
+                            rincón de tu hogar en un jardín próspero. Olvidate de las limitaciones de espacio y la falta
                             de experiencia. Te guiaremos paso a paso para cultivar con éxito en balcones, terrazas y
                             hasta interiores.
                         </p>
                     </div>
                     <div className="md:w-1/2 flex justify-center md:pl-8 mb-4 md:mb-0">
                         <div className="max-w-full">
-                        <Image
+                            <Image
                                 className={`rounded-lg shadow-md w-[500px]`}
                                 src="/ecosistema.jpeg"
                                 alt="Ecosistema"
@@ -339,7 +339,7 @@ export default function GerminarPage() {
                 </div>
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
-                    <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
                             src="/seguimiento.jpeg" alt="Progreso" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
@@ -353,7 +353,7 @@ export default function GerminarPage() {
                 </div>
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
-                    <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
                             src="/tutoriales.jpeg" alt="Tutorial" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
@@ -369,7 +369,7 @@ export default function GerminarPage() {
                 </div>
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
-                    <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
                             src="/ideal.jpeg" alt="Jardín" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
