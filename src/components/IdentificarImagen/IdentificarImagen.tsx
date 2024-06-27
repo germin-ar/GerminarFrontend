@@ -97,31 +97,31 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                            width="150" height="150" />
                     {imagen === 'imagenIdentificarEspacio' ? (
                         <>
-                            <h1>Identifica tu Espacio ¡Es gratis!</h1>
+                            <h2 className="font-bold">Identificá tu espacio ¡Es gratis!</h2>
                         </>
                     ) : (
                         <>
-                            <h1 className={`${styles.textoPrimario}`}>Identifica tu planta y su estado de salud ¡Es
-                                gratis!</h1>
-                            <h1 className={`${styles.textoSecundario}`}>Identifica tu planta y su estado ¡Gratis!</h1>
+                            <h2 className={`${styles.textoPrimario} font-bold text-center`}>Identificá tu planta y su estado de salud ¡Es
+                                gratis!</h2>
+                            <h2 className={`${styles.textoSecundario} font-bold text-center`}>Identificá tu planta y su estado ¡Gratis!</h2>
                         </>
                     )}
                 </div>
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
                       onSubmit={handleIdentificarClick}>
-                    <h2 className={``}>Sube o arrastre tu foto</h2>
+                    <h2 className={`font-bold`}>Subí o arrastrá tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
-                        <label htmlFor="archivoInput" className={"cursor-pointer flex items-center gap-3"}>
-                            <div className={`${styles.seleccionarIdentificar} text-lg`}>
-                                Selecciona Archivo
-                            </div>
+                        <label htmlFor="archivoInput" className={"cursor-pointer flex flex-col sm:flex-row items-center"}>
+                            <p className={`${styles.seleccionarIdentificar} text-lg bg-[#d9d9d9] py-2 px-4 w-full sm:w-60`}>
+                                Seleccioná un archivo
+                            </p>
                             <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
                                    style={{display: 'none'}}/>
-                            <p>{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
+                            <p className="text-lg bg-[#323331] py-2 px-4 ">{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                         </label>
                     </div>
                     <button type="submit"
-                            className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`mb-10 bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                         Identificar
                     </button>
                 </form>
