@@ -30,34 +30,6 @@ export interface Photo {
 }
 
 export default function JardinPage() {
-    const gardens: Garden[] = [
-        {
-            id: null,
-            name: null,
-            plants: [
-                {
-                    id: 1,
-                    alias: "Tomate",
-                    creation_date: "2023-05-15",
-                    modification_date: "2023-06-10",
-                    is_favorite: true,
-                    photos: [
-                        { url: "" }
-                    ]
-                },
-                {
-                    id: 2,
-                    alias: "Albahaca",
-                    creation_date: "2023-05-20",
-                    modification_date: "2023-06-05",
-                    is_favorite: false,
-                    photos: [
-                        { url: "/recomendacion/albahaca.png" }
-                    ]
-                }
-            ]
-        }
-    ];
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
@@ -90,7 +62,7 @@ export default function JardinPage() {
         // console.log(planta)
     };
 
-    /*const [gardens, setGardens] = useState<Garden[]>([]);
+    const [gardens, setGardens] = useState<Garden[]>([]);
 
     const fetchGardens = async () => {
         try {
@@ -116,7 +88,7 @@ export default function JardinPage() {
 
     useEffect(() => {
         fetchGardens()
-    }, []);*/
+    }, []);
 
     const [mostrarJardin, setMostrarJardin] = useState(false);
 
@@ -331,7 +303,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-            //await fetchGardens();
+            await fetchGardens();
 
 
             setConfirmDelete(false);
