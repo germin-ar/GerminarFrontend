@@ -11,6 +11,7 @@ import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
 import { FaArrowDown, FaBars, FaCrown, FaTimes } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
+import Link from "next/link";
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
@@ -169,7 +170,7 @@ export default function GerminarPage() {
             </div>
 
 
-            <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
+            <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black relative`}>
 
                 <div
                     className={`${stylesVideoSection.video} absolute inset-0 rounded-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
@@ -189,17 +190,17 @@ export default function GerminarPage() {
 
                 {showForm && (
 
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <div className="fixed inset-0 flex items-center justify-center z-10">
 
                         <section>
-                            <div className="text-end">
-                                <button onClick={handleCloseFormButtonClick}
-                                    className="bg-[#EFE8D6] mb-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
-                                    ✕
-                                </button>
-                            </div>
                             <div
-                                className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                                className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 relative">
+                                <div className="text-end">
+                                    <button onClick={handleCloseFormButtonClick}
+                                        className="absolute top-2 right-2 bg-[#EFE8D6] mb-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                        ✕
+                                    </button>
+                                </div>
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                                     <form className="space-y-4 md:space-y-6" action="#">
                                         <div>
@@ -244,8 +245,8 @@ export default function GerminarPage() {
                                             className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">Registrarse
                                         </button>
                                         <p className="">
-                                            ¿Ya tenés una cuenta? <a href="#"
-                                                className="hover:underline ">Logueate</a>
+                                            ¿Ya tenés una cuenta? <Link href={"/login"}
+                                                className="hover:underline ">Logueate</Link>
                                             o inicia sesión con:</p>
                                         <div>
 
@@ -271,7 +272,7 @@ export default function GerminarPage() {
                         <div
                             className="fixed bottom-8 left-1/2 transform -translate-x-3/4 wiggle border-b-2  border-b-[#EFE8D6]">
                             <FaArrowDown
-                                className="text-[#EFE8D6] text-4xl animate-bounce bg-[#275F08] rounded-full p-1"
+                                className="text-[#EFE8D6] text-4xl animate-bounce bg-[#275F08] rounded-full p-1 cursor-pointer"
                                 onClick={() => handleScrollToSection('identificar')} />
                         </div>
                     </>
@@ -385,15 +386,15 @@ export default function GerminarPage() {
             <div className="flex items-center justify-center gap-2 py-5 flex-wrap bg-[#EFE8D6] shadow-lg mb-10">
                 <p className="font-bold">¿Querés disfrutar de estos beneficios?</p>
                 <div className="flex gap-3 items-center">
-                    <button
+                    <button onClick={handleFormButtonClick}
                         className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
                         Registrarme
                     </button>
                     <p className="font-bold">o</p>
-                    <button
+                    <Link href={"/login"}
                         className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
                         Iniciar sesión
-                    </button>
+                    </Link>
                 </div>
             </div>
         </>
