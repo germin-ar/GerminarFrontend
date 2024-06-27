@@ -20,6 +20,7 @@
     background-position: center center;
     opacity: 0.4;
 }
+
 /* seccion espacio*/
 .imagenIdentificarEspacio {
     position: relative;
@@ -53,79 +54,90 @@
 
 }
 
-.subirIdentificar{
+.subirIdentificar {
     border: 2px solid #275F08;
-    padding: 10px 20px;
-    background-color: #323331;
 }
-.botonIdentificar{
+
+.botonIdentificar {
     background-color: #88BC43;
     color: white;
 
 }
-.seleccionarIdentificar{
+
+.seleccionarIdentificar {
     font-weight: bold;
     color: #275F08;
 }
-.textoSubirIdentificar{
+
+.textoSubirIdentificar {
     font-weight: bold;
 
 }
-.textoIdentificar{
+
+.textoIdentificar {
     font-weight: bold;
     flex: 1;
 }
-.marca{
+
+.marca {
     right: 100%;
     border-radius: 100%;
     flex: 0.1;
     margin-right: 25px;
 }
 
-@media (max-width: 520px){
-    .logoIdentificar{
+@media (max-width: 520px) {
+    .logoIdentificar {
         flex-direction: column;
         width: 90%;
         flex: 0;
 
     }
-    .marca{
+
+    .marca {
         margin-top: 10px;
         width: 20%;
         margin-right: 0;
     }
-    .subirIdentificar{
+
+    .subirIdentificar {
         flex-direction: column;
         gap: 0;
     }
-    .form{
+
+    .form {
         gap: 25px;
         flex: 0;
     }
-    .contenidoIdentificar{
+
+    .contenidoIdentificar {
         gap: 30px;
     }
-    .imagenIdentificar{
+
+    .imagenIdentificar {
         height: calc(100vh - 116px);
         padding: 40px 0;
         max-height: 700px;
         border-radius: 0;
     }
-    .imagenIdentificarEspacio{
+
+    .imagenIdentificarEspacio {
         height: calc(100vh - 116px);
         padding: 40px 0;
         max-height: 700px;
         border-radius: 0;
     }
-    .textoPrimario{
+
+    .textoPrimario {
         display: none;
     }
-    .textoSecundario{
-        display: block!important;
+
+    .textoSecundario {
+        display: block !important;
     }
 
 }
-.textoSecundario{
+
+.textoSecundario {
     display: none;
 }
-

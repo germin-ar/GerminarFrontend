@@ -16,11 +16,11 @@ export default function EspacioPage() {
                 <section>
                     <div className="flex-1">
                         <div>
-                            <h2 className={`${BalooBhaina2.className} text-[#88BC43] text-center`}>Ingresa tus
+                            <h2 className={`${BalooBhaina2.className} text-[#88BC43] text-center`}>Ingresá tus
                                 datos manualmente</h2>
                         </div>
                         <div className={`${stylesEspacio.contenido}`}>
-                            <p>¿Dónde planeas ubicar tu planta?</p>
+                            <p>¿Dónde planeás ubicar tu planta?</p>
                             <div className={`${stylesEspacio.ubicacionResp} flex flex-wrap gap-5 justify-center items-center pt-10 font-bold`}>
                                 <label htmlFor="baño" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
@@ -30,7 +30,7 @@ export default function EspacioPage() {
                                 </label>
                                 <label htmlFor="patio-trasero" className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
                                     <div className={`${stylesEspacio.ubicacion}`}>
-                                        <h4>P. Trasero</h4>
+                                        <h4>Patio Trasero</h4>
                                         <input className="sr-only" type="radio" id="patio-trasero" name="ubicacion"/>
                                     </div>
                                 </label>
@@ -92,7 +92,7 @@ export default function EspacioPage() {
                         </div>
                     </div>
                     <div className={`${stylesEspacio.contenido} flex-1`}>
-                        <p>Selecciona la cantidad de luz que recibirá tu
+                        <p>Seleccioná la cantidad de luz que recibirá tu
                             planta</p>
                         <div className="flex items-center flex-wrap justify-center gap-10 pt-10">
                             <label htmlFor="pleno" className={"cursor-pointer"}>
@@ -119,7 +119,7 @@ export default function EspacioPage() {
                         </div>
                     </div>
                     <div className={`${stylesEspacio.contenido} flex-1`}>
-                        <p>Selecciona la temporada del año en la que te encuentras</p>
+                        <p>Seleccioná la temporada del año en la que te encontrás</p>
                         <div className="flex items-center flex-wrap justify-center gap-10 pt-10">
                             <label htmlFor="otoño" className={"cursor-pointer"}>
                                 <div className={`${stylesEspacio.tipoSol}`}>
@@ -130,21 +130,21 @@ export default function EspacioPage() {
                             </label>
                             <label htmlFor="verano" className={"cursor-pointer"}>
                                 <div className={`${stylesEspacio.tipoSol}`}>
-                                    <p>Otoño</p>
+                                    <p>Verano</p>
                                     <Image src="/verano.png" alt="Verano" width="80" height="80"/>
                                     <input type="radio" id="verano" name="temporada"/>
                                 </div>
                             </label>
                             <label htmlFor="primavera" className={"cursor-pointer"}>
                                 <div className={`${stylesEspacio.tipoSol}`}>
-                                    <p>Otoño</p>
+                                    <p>Primavera</p>
                                     <Image src="/primavera.png" alt="Primavera" width="80" height="80"/>
                                     <input type="radio" id="primavera" name="temporada"/>
                                 </div>
                             </label>
                             <label htmlFor="invierno" className={"cursor-pointer"}>
                                 <div className={`${stylesEspacio.tipoSol}`}>
-                                    <p>Otoño</p>
+                                    <p>Invierno</p>
                                     <Image src="/invierno.png" alt="Invierno" width="80" height="80"/>
                                     <input type="radio" id="invierno" name="temporada"/>
                                 </div>

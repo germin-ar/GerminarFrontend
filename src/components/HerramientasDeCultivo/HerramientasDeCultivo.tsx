@@ -15,11 +15,11 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
   }
 
     return (
-        <section className={`${styles.fondoCards} rounded flex justify-center items-center flex-col gap-5 `}>
-            <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className}`}>Herramientas de cultivo
+        <section className={`${styles.fondoCards} rounded-lg flex justify-center items-center flex-col gap-5 `}>
+            <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} text-center sm:text-start`}>Herramientas de cultivo
                 inteligentes</h2>
 
-            <div className={`flex justify-center items-center flex-wrap gap-5`}>
+            <div className={`grid grid-col-1 sm:grid-cols-2 lg:flex gap-5`}>
                 <div className={`${styles.cards} shadow-lg transition-transform duration-300 ease-in-out transform hover:scale-105 bg-white p-4 rounded-md shadow-md`}>
                     <div className="flex-1 flex justify-center items-center">
                         <p className={`${BalooBhaina2.className} text-center`}>¿Cómo

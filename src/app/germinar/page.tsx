@@ -11,7 +11,7 @@ import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 
 import { FaArrowDown, FaBars, FaCrown, FaTimes } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
-import { Simulate } from "react-dom/test-utils";
+import Link from "next/link";
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
@@ -119,7 +119,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("presentacion")}
-                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Presentación
                                 </button>
@@ -127,14 +127,14 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("identificar")}
-                                    className={`rounded font-bold py-2 px-4  ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
                                 >Identificación
                                 </button>
                             </li>
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("herramientas")}
-                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Herramientas
                                 </button>
@@ -142,7 +142,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("propuesta")}
-                                    className={`rounded font-bold py-2 px-4    ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
                                 >
                                     Nuestra Propuesta
                                 </button>
@@ -150,7 +150,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("premium")}
-                                    className={`rounded font-bold   py-2 px-4 ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Premium
                                 </button>
@@ -170,7 +170,7 @@ export default function GerminarPage() {
             </div>
 
 
-            <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black  relative`}>
+            <section id="presentacion" className={`${stylesVideoSection.contenedor} bg-black relative`}>
 
                 <div
                     className={`${stylesVideoSection.video} absolute inset-0 rounded-full z-0 transition-opacity duration-500 ${showForm ? 'opacity-30' : 'opacity-100'}`}>
@@ -190,63 +190,63 @@ export default function GerminarPage() {
 
                 {showForm && (
 
-                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                    <div className="fixed inset-0 flex items-center justify-center z-10">
 
                         <section>
-                            <div className="text-end">
-                                <button onClick={handleCloseFormButtonClick}
-                                    className="bg-[#EFE8D6] mb-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
-                                    ✕
-                                </button>
-                            </div>
                             <div
-                                className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                                className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 relative">
+                                <div className="text-end">
+                                    <button onClick={handleCloseFormButtonClick}
+                                        className="absolute top-2 right-2 bg-[#EFE8D6] mb-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                        ✕
+                                    </button>
+                                </div>
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                                     <form className="space-y-4 md:space-y-6" action="#">
                                         <div>
                                             <label htmlFor="email"
                                                 className="">Email</label>
                                             <input type="email" name="email" id="email"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Ingrese su correo" />
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                placeholder="Ingresá un correo" />
                                         </div>
                                         <div>
                                             <label htmlFor="password"
                                                 className="">Contraseña</label>
                                             <input type="password" name="password" id="password"
                                                 placeholder="••••••••"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
                                         </div>
                                         <div>
                                             <label htmlFor="confirm-password"
                                                 className="block ">Confirmar
                                                 contraseña</label>
-                                            <input type="confirm-password" name="confirm-password"
+                                            <input type="password" name="confirm-password"
                                                 id="confirm-password"
                                                 placeholder="••••••••"
-                                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
                                         </div>
                                         <div className="flex items-start">
                                             <div className="flex items-center h-5">
                                                 <input id="terms" aria-describedby="terms" type="checkbox"
-                                                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                                                    className="w-4 h-4"
                                                 />
                                             </div>
                                             <div className="ml-3 ">
                                                 <label htmlFor="terms"
                                                     className="">Acepto <a
-                                                        className=""
+                                                        className="hover:underline"
                                                         href="#">Términos y condiciones</a></label>
                                             </div>
                                         </div>
                                         <button type="submit"
                                             className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">Registrarse
                                         </button>
-                                        <p className="">
-                                            ¿Ya tenes una cuenta? <a href="#"
-                                                className="hover:underline ">Logueate</a>
+                                        <p>
+                                            ¿Ya tenés una cuenta? <Link href={"/login"}
+                                                className="hover:underline ">Logueate</Link>
                                             o inicia sesión con:</p>
                                         <div>
 
@@ -272,7 +272,7 @@ export default function GerminarPage() {
                         <div
                             className="fixed bottom-8 left-1/2 transform -translate-x-3/4 wiggle border-b-2  border-b-[#EFE8D6]">
                             <FaArrowDown
-                                className="text-[#EFE8D6] text-4xl animate-bounce bg-[#275F08] rounded-full p-1"
+                                className="text-[#EFE8D6] text-4xl animate-bounce bg-[#275F08] rounded-full p-1 cursor-pointer"
                                 onClick={() => handleScrollToSection('identificar')} />
                         </div>
                     </>
@@ -297,12 +297,12 @@ export default function GerminarPage() {
             </main>
 
             <section id="propuesta">
-                <div className="flex flex-col md:flex-row items-center p-6 mb-4">
-                    <div className="md:w-1/2 px-20">
-                        <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} mb-4`}>Nuestra propuesta</h2>
+                <div className="flex flex-col md:flex-row items-center px-6 md:p-6 mb-4">
+                    <div className="md:w-1/2 md:px-20">
+                        <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} mb-0 md:mb-4`}>Nuestra propuesta</h2>
                         <p className="leading-relaxed">
-                            ¿Sueñas con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
-                            rincón de tu hogar en un jardín próspero. Olvídate de las limitaciones de espacio y la falta
+                            ¿Soñás con alimentos frescos directamente de tu casa? Nuestra aplicación transforma cada
+                            rincón de tu hogar en un jardín próspero. Olvidate de las limitaciones de espacio y la falta
                             de experiencia. Te guiaremos paso a paso para cultivar con éxito en balcones, terrazas y
                             hasta interiores.
                         </p>
@@ -310,11 +310,11 @@ export default function GerminarPage() {
                     <div className="md:w-1/2 flex justify-center md:pl-8 mb-4 md:mb-0">
                         <div className="max-w-full">
                             <Image
-                                className={`rounded-lg shadow-md`}
-                                src="/ecosistema.jpg"
+                                className={`rounded-lg shadow-md w-[500px]`}
+                                src="/ecosistema.jpeg"
                                 alt="Ecosistema"
-                                width="500"
-                                height="300"
+                                width="1700"
+                                height="1134"
                             />
                         </div>
                     </div>
@@ -323,77 +323,79 @@ export default function GerminarPage() {
 
             <section id="premium"
                 className={`bg-[#EFE8D6] grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-2 gap-6 justify-center px-10`}>
-                <div className={`flex flex-col sm:flex-row items-center flex justify-center gap-3 py-10`}>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
-                        <Image className={`${styles.imagenes}`} src="/calendario.jpg" alt="Ecosistema" width="200"
-                            height="200" />
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/calendario.jpg" alt="Calendario" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
-                        <div className={"relative"}>
-                                <h3 className={`${BalooBhaina2.className} w-3/5 text-wrap`}>Administra tus notificaciones</h3>
-                                <FaCrown size={60} className="absolute top-0 right-5"/>
+                        <div className={"relative flex flex-col gap-5"}>
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Administrá tus notificaciones</h3>
+                            <FaCrown size={60} className="absolute top-0 right-5" />
                             <p className={"w-full"}>
-                                Personaliza alertas para cuidar tus plantas. Configura recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
+                                Personalizá alertas para cuidar tus plantas. Configurá recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div className={`flex flex-col sm:flex-row flex justify-center gap-3 py-10`}>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
-                        <Image className={`${styles.imagenes}`} src="/seguimiento.jfif" alt="Ecosistema" width="200"
-                            height="200" />
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/seguimiento.jpeg" alt="Progreso" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
-                        <div className={"relative"}>
-                                <h3 className={`${BalooBhaina2.className} w-3/5 text-wrap`}>Haz un seguimiento de tu progreso</h3>
-                                <FaCrown size={60} className="absolute top-0 right-5" />
-                            <p className={"w-full"}>
-                                Registra tu experiencia de cultivo con nuestra función de seguimiento. Anota plantaciones, riegos y cosechas con recordatorios automáticos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={`flex flex-col sm:flex-row justify-center gap-3 py-10`}>
-                    <div>
-                        <Image className={`${styles.imagenes}`} src="/tutoriales.png" alt="Ecosistema" width="200"
-                            height="200" />
-                    </div>
-                    <div className="flex-1 flex items-center">
-                        <div className={"relative"}>
-                          
-                                <h3 className={`${BalooBhaina2.className} w-3/5 text-wrap`}>Busca y aprende de tutoriales</h3>
-                                <FaUser size={60} className="absolute top-0 right-5" />
-                          
-                            <p className={"w-full"}>
-                                Aprende horticultura urbana con nuestros tutoriales paso a paso. Cuida tus plantas, resuelve problemas y maximiza tus cosechas de manera fácil y accesible.</p>
-                        </div>
-                    </div>
-                </div>
-                <div className={`flex flex-col sm:flex-row flex justify-center gap-3 py-10`}>
-                    <div>
-                        <Image className={`${styles.imagenes}`} src="/ideal.png" alt="Ecosistema" width="200"
-                            height="200" />
-                    </div>
-                    <div className="flex-1 flex items-center">
-                        <div className={"relative"}>
-                            <h3 className={`${BalooBhaina2.className} w-3/5 text-wrap`}>Descubre tu planta ideal para tu jardín</h3>
+                        <div className={"relative flex flex-col gap-5"}>
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Llevá un control de tu progreso</h3>
                             <FaCrown size={60} className="absolute top-0 right-5" />
                             <p className={"w-full"}>
-                                Encuentra plantas perfectas para tu espacio con nuestra herramienta de recomendación personalizada.</p>
+                                Registrá tu experiencia de cultivo con nuestra función de seguimiento. Anotá plantaciones, riegos y cosechas con recordatorios automáticos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
+                    <div>
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/tutoriales.jpeg" alt="Tutorial" width="816" height="816" />
+                    </div>
+                    <div className="flex-1 flex items-center">
+                        <div className={"relative flex flex-col gap-5"}>
+
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Buscá y aprendé de tutoriales</h3>
+                            <FaUser size={60} className="absolute top-0 right-5" />
+
+                            <p className={"w-full"}>
+                                Aprendé con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
+                        </div>
+                    </div>
+                </div>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
+                    <div>
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/ideal.jpeg" alt="Jardín" width="816" height="816" />
+                    </div>
+                    <div className="flex-1 flex items-center">
+                        <div className={"relative flex flex-col gap-5"}>
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Descubrí la planta ideal para tu jardín</h3>
+                            <FaCrown size={60} className="absolute top-0 right-5" />
+                            <p className={"w-full"}>
+                                Encontrá plantas perfectas para tu espacio con nuestra herramienta de recomendación personalizada.</p>
                         </div>
                     </div>
                 </div>
             </section>
             <div className="flex items-center justify-center gap-2 py-5 flex-wrap bg-[#EFE8D6] shadow-lg mb-10">
-                <p className="font-bold">¿Quieres disfrutar de estos beneficios?</p>
-                <button
-                    className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
-                    Registrarse
-                </button>
-                <p className="font-bold">o</p>
-                <button
-                    className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
-                    Iniciar sesión
-                </button>
+                <p className="font-bold">¿Querés disfrutar de estos beneficios?</p>
+                <div className="flex gap-3 items-center">
+                    <button onClick={handleFormButtonClick}
+                        className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
+                        Registrarme
+                    </button>
+                    <p className="font-bold">o</p>
+                    <Link href={"/login"}
+                        className="bg-[#88BC43] mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75">
+                        Iniciar sesión
+                    </Link>
+                </div>
             </div>
         </>
     )
