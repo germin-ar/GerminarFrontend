@@ -119,7 +119,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("presentacion")}
-                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'presentacion' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Presentación
                                 </button>
@@ -127,14 +127,14 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("identificar")}
-                                    className={`rounded font-bold py-2 px-4  ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'identificar' ? ' bg-[#275F08] text-white' : ''}`}
                                 >Identificación
                                 </button>
                             </li>
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("herramientas")}
-                                    className={`rounded font-bold py-2 px-4   ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'herramientas' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Herramientas
                                 </button>
@@ -142,7 +142,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("propuesta")}
-                                    className={`rounded font-bold py-2 px-4    ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'propuesta' ? 'bg-[#275F08] text-white' : ''}`}
                                 >
                                     Nuestra Propuesta
                                 </button>
@@ -150,7 +150,7 @@ export default function GerminarPage() {
                             <li>
                                 <button
                                     onClick={() => handleScrollToSection("premium")}
-                                    className={`rounded font-bold   py-2 px-4 ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
+                                    className={`rounded font-bold py-2 px-4 hover:bg-[#275F08] hover:text-white ${activeSection === 'premium' ? ' bg-[#275F08] text-white' : ''}`}
                                 >
                                     Premium
                                 </button>
@@ -244,7 +244,7 @@ export default function GerminarPage() {
                                         <button type="submit"
                                             className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">Registrarse
                                         </button>
-                                        <p className="">
+                                        <p>
                                             ¿Ya tenés una cuenta? <Link href={"/login"}
                                                 className="hover:underline ">Logueate</Link>
                                             o inicia sesión con:</p>

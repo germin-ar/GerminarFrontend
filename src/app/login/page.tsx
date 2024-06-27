@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Login() {
 
     return (
@@ -22,23 +24,23 @@ export default function Login() {
                                     className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                 />
                             </div>
-                    
+
                             <button type="submit"
                                 className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
-                                    Iniciar sesión
+                                Iniciar sesión
                             </button>
                             <p>
                                 ¿No tenés cuenta todavía? <a href="#"
                                     className="hover:underline ">Registrarse</a></p>
-                            {/* <div>
+                            <div>
 
-                                           {/* <div className="flex items-center justify-center gap-10">
-                                                <Image src="/videolanding/google.png" alt="google" width="40"
-                                                    height="40" />
-                                                <Image src="/videolanding/facebook.png" alt="facebook" width="40"
-                                                    height="40" /> 
-                                            </div>
-                                        </div> */}
+                                <div className="flex items-center justify-center gap-10">
+                                    <Image src="/videolanding/google.png" alt="google" width="40"
+                                        height="40" />
+                                    <Image src="/videolanding/facebook.png" alt="facebook" width="40"
+                                        height="40" />
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
