@@ -30,6 +30,35 @@ export interface Photo {
 }
 
 export default function JardinPage() {
+    const gardens: Garden[] = [
+        {
+            id: null,
+            name: null,
+            plants: [
+                {
+                    id: 1,
+                    alias: "Tomate",
+                    creation_date: "2023-05-15",
+                    modification_date: "2023-06-10",
+                    is_favorite: true,
+                    photos: [
+                        { url: "" }
+                    ]
+                },
+                {
+                    id: 2,
+                    alias: "Albahaca",
+                    creation_date: "2023-05-20",
+                    modification_date: "2023-06-05",
+                    is_favorite: false,
+                    photos: [
+                        { url: "/recomendacion/albahaca.png" }
+                    ]
+                }
+            ]
+        }
+    ];
+
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -49,17 +78,19 @@ export default function JardinPage() {
 
     /****/
     const [popupVisible, setPopupVisible] = useState(false);
-    const [plantaSeleccionada, setPlantaSeleccionada] = useState<Plant | null>(null); //
+    const [plantaSeleccionada, setPlantaSeleccionada] = useState<Plant | null>(null);
+    const [jardinDePlanta, setJardinDePlanta] = useState<Garden | null>(null);
     const [cat, setCat] = useState(0);
 
-    const mostrarPopup = (planta: any, idPlanta: any) => {
+    const mostrarPopup = (planta: any, idPlanta: any, garden: Garden | null) => {
         setPopupVisible(true);
         setPlantaSeleccionada(planta);
         setCat(idPlanta);
+        setJardinDePlanta(garden || null);
         // console.log(planta)
     };
 
-    const [gardens, setGardens] = useState<Garden[]>([]);
+    /*const [gardens, setGardens] = useState<Garden[]>([]);
 
     const fetchGardens = async () => {
         try {
@@ -85,7 +116,7 @@ export default function JardinPage() {
 
     useEffect(() => {
         fetchGardens()
-    }, []);
+    }, []);*/
 
     const [mostrarJardin, setMostrarJardin] = useState(false);
 
@@ -300,7 +331,7 @@ export default function JardinPage() {
             console.log(plantaSeleccionada?.id);
 
 
-            await fetchGardens();
+            //await fetchGardens();
 
 
             setConfirmDelete(false);
@@ -312,16 +343,27 @@ export default function JardinPage() {
     };
 
     function formatDateString(dateString: string): string {
-        const date = new Date(dateString); // Crear objeto Date a partir de la cadena
-        const day = date.getDate().toString().padStart(2, '0'); // Día con dos dígitos
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Mes con dos dígitos (empezando desde 0)
-        const year = date.getFullYear(); // Año con cuatro dígitos
-        const hours = date.getHours().toString().padStart(2, '0'); // Horas con dos dígitos
-        const minutes = date.getMinutes().toString().padStart(2, '0'); // Minutos con dos dígitos
-        const seconds = date.getSeconds().toString().padStart(2, '0'); // Segundos con dos dígitos
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
 
-        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+        return `${day}/${month}/${year}`;
     }
+
+    const findGardenIdFromPlantId = (plantId: number): string | null => {
+        for (const garden of gardens) {
+            for (const plant of garden.plants) {
+                if (plant.id === plantId) {
+                    return garden.name;
+                }
+            }
+        }
+        return null;
+    };
 
     return (
         <>
@@ -594,15 +636,15 @@ export default function JardinPage() {
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.id)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.photos && plant.photos.length > 0 ? plant.photos[plant.photos.length - 1].url : ""} alt={plant.alias}
+                                                                <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
@@ -622,15 +664,15 @@ export default function JardinPage() {
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
-                                                <h3 className="text-lg font-semibold mb-2">{garden.name || "Sin nombre"}</h3>
+                                                <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
                                                     {garden.plants.map((plant, index) => (
                                                         <div key={index}
                                                             className="flex flex-row justify-between items-center cursor-pointer"
-                                                            onClick={() => mostrarPopup(plant, plant.id)}>
+                                                            onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
-                                                                <img src={plant.photos && plant.photos.length > 0 ? plant.photos[plant.photos.length - 1].url : ""} alt={plant.alias}
+                                                                <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
@@ -681,9 +723,9 @@ export default function JardinPage() {
                                             <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
                                                 <div
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.id)}>
+                                                    onClick={() => mostrarPopup(plant, plant.id, null)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.photos && plant.photos.length > 0 ? plant.photos[plant.photos.length - 1].url : ""} alt="plant.alias"
+                                                        <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
@@ -708,9 +750,9 @@ export default function JardinPage() {
                                             <div key={plant.id} className="border border-gray-200 p-4 rounded-lg lg:w-60 relative hover:shadow-lg">
                                                 <div
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
-                                                    onClick={() => mostrarPopup(plant, plant.id)}>
+                                                    onClick={() => mostrarPopup(plant, plant.id, null)}>
                                                     <div className="flex items-center">
-                                                        <img src={plant.photos && plant.photos.length > 0 ? plant.photos[plant.photos.length - 1].url : ""} alt="plant.alias"
+                                                        <img src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
@@ -758,7 +800,14 @@ export default function JardinPage() {
                                 <div className="flex flex-col items-center justify-around gap-4 bg-white p-8 rounded-lg w-[450px] h-96 relative">
                                     <div className="flex flex-col gap-2 items-center">
                                         <div className={"flex flex-col items-center absolute top-[-45px]"}>
-                                            <img src={plantaSeleccionada && plantaSeleccionada.photos.length > 0 ? plantaSeleccionada.photos[plantaSeleccionada.photos.length - 1].url : ""} alt={plantaSeleccionada.alias}
+                                            <img
+                                                src={
+                                                    plantaSeleccionada.photos &&
+                                                        plantaSeleccionada.photos.length > 0 &&
+                                                        plantaSeleccionada.photos[plantaSeleccionada.photos.length - 1].url !== ""
+                                                        ? plantaSeleccionada.photos[plantaSeleccionada.photos.length - 1].url
+                                                        : "/planta-sin-foto.jpg"
+                                                } alt={plantaSeleccionada.alias}
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
@@ -772,10 +821,10 @@ export default function JardinPage() {
                                                     <tbody>
                                                         <tr>
                                                             <th className={`p-4 border`}>Jardín</th>
-                                                            <td className={`p-4 border`}>Jardín</td>
+                                                            <td className={`p-4 border`}>{findGardenIdFromPlantId(plantaSeleccionada.id) || 'Sin Jardín'}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th className={`p-4 border`}>Creada el</th>
+                                                            <th className={`p-4 border`}>Guardada el</th>
                                                             <td className={`p-4 border`}>
                                                                 {formatDateString(plantaSeleccionada.creation_date)}
                                                             </td>
@@ -821,7 +870,7 @@ export default function JardinPage() {
                                         {confirmDelete && (
                                             <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
                                                 <div className="bg-white p-6 rounded shadow-lg">
-                                                    <p className="mb-4">¿Estás seguro de que quieres borrar esta planta?</p>
+                                                    <p className="mb-4">¿Estás seguro de que querés borrar esta planta?</p>
                                                     <div className="flex justify-end">
                                                         <button
                                                             onClick={handleConfirmDelete}
