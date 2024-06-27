@@ -41,7 +41,9 @@ export default function Header() {
                     </div>
                     <div className={`${stylesHeader.marca} flex-1`}>
                         <div className="w-32 sm:w-34 md:w-26 lg:w-48">
-                            <Image src="/logotipo.png" alt="Germin.ar" width={250} height={50} layout="responsive" />
+                            <Link href={"/"}>
+                                <Image src="/logotipo.png" alt="Germin.ar" width={250} height={50} layout="responsive" />
+                            </Link>
                         </div>
                     </div>
 

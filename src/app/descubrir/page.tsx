@@ -61,8 +61,8 @@ export default function DescubrirPage() {
         <>
             <section className={"m-10"}>
                 <div className={'flex flex-col justify-center items-start gap-4 mt-12'}>
-                    <h1 className={`${BalooBhaina2.className} text-[#88BC43] text-wrap w-3/4`}>
-                        Encontrá tu planta perfecta</h1>
+                    <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>
+                        Encontrá tu planta perfecta</h2>
 
                     <p className="text-justify">Utilizando tu ubicación real, nuestra aplicación
                         identifica la época en la que te encontrás y te proporciona recomendaciones personalizadas
@@ -103,9 +103,8 @@ export default function DescubrirPage() {
                         )}
                     </div>
                 </div>
-
-
             </section>
+
             <section className={"m-10"}>
                 <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Luz solar</h3>
                 <p>Seleccioná la cantidad de luz solar recibido (1 = poca luz, 10 = mucha luz)</p>
@@ -122,6 +121,7 @@ export default function DescubrirPage() {
                     <p>10</p>
                 </div>
             </section>
+
             <section className={"m-10"}>
                 <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Metros cuadrados</h3>
                 <p>Seleccioná los metros cuadrados de tu espacio</p>
@@ -138,6 +138,7 @@ export default function DescubrirPage() {
                     <p>10m²</p>
                 </div>
             </section>
+            
             <section className={"m-10"}>
                 <Link href={`/descubrir/busqueda?latitude=${locationData.latitude}&longitude=${locationData.longitude}&sun_exposure=${value}&square_meters=${valueLugar}&page=1`}
                     className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
