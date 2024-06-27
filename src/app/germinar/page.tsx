@@ -363,7 +363,7 @@ export default function GerminarPage() {
                             <FaUser size={60} className="absolute top-0 right-5" />
 
                             <p className={"w-full"}>
-                                Aprendé horticultura urbana con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
+                                Aprendé con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
                         </div>
                     </div>
                 </div>

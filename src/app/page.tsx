@@ -96,7 +96,7 @@ export default function Home() {
                             <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Buscá y aprendé de tutoriales</h3>
                             <div className="flex flex-col">
                                 <p className={"w-full"}>
-                                    Aprendé horticultura urbana con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
+                                    Aprendé con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
                                 <button
                                     className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                     Explorar
