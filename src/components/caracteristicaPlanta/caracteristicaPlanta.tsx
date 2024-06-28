@@ -95,46 +95,10 @@ interface PlantaSugerencia {
     harvest_time: string;
     plant_type: string | null;
     width: number;
+    image_url: string;
 }
 
 export default function CaracteristicaPlanta(props: IdentificarPlanta) {
-    const plantaSugerencia: PlantaSugerencia =
-    {
-        "id": 1,
-        "scientific_name": "Ocimum basilicum",
-        "description": "La albahaca es una hierba aromática que vive pocos años. El término “basílico” del nombre científico Ocinum basilicum proviene del latín y del griego, y significa “planta real”, quizás porque se tenía la creencia de que esta planta era empleada para fabricar perfumes “reales”.",
-        "slug_scientific_name": "ocimum-basilicum",
-        "genus": "Albahacas",
-        "family_name": "Lamiáceas",
-        "max_size": 1.5,
-        "fertilizer": "Los fertilizantes contienen altos niveles de nitrógeno, potasio y fósforo, junto con otros nutrientes esenciales como hierro, manganeso y zinc. Todos ellos son elementos necesarios que favorecen el crecimiento en Albahaca. Un abono equilibrado funciona bien para Albahaca. También puede elegir un abono más rico en nitrógeno que en otros nutrientes, como el abono de pescado.",
-        "watering_frecuency": "A la albahaca le va bien un medio de cultivo húmedo. Para mantener el sustrato de las plántulas húmedo es necesario riego frecuente. Las plantas asentadas deben regarse una vez cada 4-6 días en primavera y otoño, y cada 2-4 días en verano. En invierno, trasládelas adentro y reduzca el riego.",
-        "pruning": "La albahaca se pueden podar cuando alcanzan 20 cm de altura. Las hojas amarillas, una vez detectadas, se deben cortar de inmediato. Si la planta crece demasiado frondosa y se pierde el efecto ornamental, se pueden cortar las ramas sobrantes.",
-        "soil": "Arena, Marga, Arcilla, Franco-arenoso, Ácido, Neutro, Alcalino",
-        "insecticide": null,
-        "tips": "Puede ser difícil para una Albahaca obtener suficiente nitrógeno del suelo, por lo que muchos jardineros prefieren complementarlo alimentando Albahaca con una fuente de nitrógeno.",
-        "sun_light": "sombra",
-        "watering_care": "A la albahaca le va bien un medio de cultivo húmedo. Para mantener el sustrato de las plántulas húmedo es necesario riego frecuente. Las plantas asentadas deben regarse una vez cada 4-6 días en primavera y otoño, y cada 2-4 días en verano. En invierno, trasládelas adentro y reduzca el riego.",
-        "common_name": "Alhábega, Alfábega, Hierba de los reyes, Hierba de salitre",
-        "lifespan": "Anual, Perenne, Bianual",
-        "propagation": "Por semillas",
-        "fruit": "Frutas Verdes, Marrones Y Negras Listas Para Usar",
-        "edible": "Si",
-        "growth_rate": "Alto",
-        "maintenance": "Bajo",
-        "temperature_max": 38.0,
-        "temperature_min": 20.0,
-        "specie": "Albahaca",
-        "toxic": "No tóxico",
-        "repotting": "El mejor momento para trasplantar albahaca es a mediados o finales de la primavera o a mediados o finales del otoño, cuando las temperaturas son más suaves, lo que garantiza un crecimiento óptimo. Elija un lugar soleado y con buen drenaje para albahaca y tenga cuidado con sus delicadas raíces durante el proceso de trasplante.",
-        "dormancy": "Sin letargo",
-        "growth_season": "Verano",
-        "atmospheric_humidity": 5,
-        "planting_time": "Mediados de primavera, invierno Finales de primavera, Principios de verano",
-        "harvest_time": "Finales de invierno primavera, Mediados de verano, Finales de verano, Otoño",
-        "plant_type": null,
-        "width": 5.0
-    };
 
     const identificarPlanta: IdentificarPlanta = {
         planta: "Tomate",
@@ -211,11 +175,24 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 {/*<Image src={`${plantData?.image.url}`} alt="Albahaca-sana" width="500"
                                        height="500"/>*/}
-                                <img src={`${plantData?.image.url}`}
-                                    className="rounded-lg shadow-lg"
-                                    width="500"
-                                    height="500"
-                                    alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
+                                {
+                                    plantData && (
+                                        <img src={`${plantData?.image.url}`}
+                                            className="rounded-lg shadow-lg"
+                                            width="500"
+                                            height="500"
+                                            alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
+                                    )
+                                }
+                                {
+                                    plantaSugerencia && (
+                                        <img src={`${plantaSugerencia.image_url}`}
+                                            className="rounded-lg shadow-lg"
+                                            width="500"
+                                            height="500"
+                                            alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
+                                    )
+                                }
                                 {
                                     plantData && (
                                         <Link href={`/registro/${planta}`}
@@ -561,6 +538,28 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     }
                                 </div>
                             </div>
+
+
+                            {
+                                plantaSugerencia.toxic && (
+                                    <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                                        <div>
+                                            <Image className="max-w-[100px] min-w-[100px]" src="/resultado/toxicidad-icon.png" alt="toxicidad-icon" width="150"
+                                                height="150" />
+                                        </div>
+                                        <div className={'flex flex-col'}>
+                                            <h3 className={`${BalooBhaina2.className}`}>Toxicidad</h3>
+                                            {/*<p className={`${stylesResultado.texto}`}>Podar cada 15 días
+                                            aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
+                                            abundante.</p>*/}
+                                            {
+                                                <p>{plantaSugerencia.toxic}</p>
+                                            }
+                                        </div>
+                                    </div>
+                                )
+                            }
+
                         </div>
                     </div>
 
