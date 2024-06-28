@@ -60,7 +60,82 @@ interface IdentificarPlanta {
     sugerencia: string
 }
 
+interface PlantaSugerencia {
+    id: number;
+    scientific_name: string;
+    description: string;
+    slug_scientific_name: string;
+    genus: string;
+    family_name: string;
+    max_size: number;
+    fertilizer: string;
+    watering_frecuency: string;
+    pruning: string;
+    soil: string;
+    insecticide: string | null;
+    tips: string;
+    sun_light: string;
+    watering_care: string;
+    common_name: string;
+    lifespan: string;
+    propagation: string;
+    fruit: string;
+    edible: string;
+    growth_rate: string;
+    maintenance: string;
+    temperature_max: number;
+    temperature_min: number;
+    specie: string;
+    toxic: string;
+    repotting: string;
+    dormancy: string;
+    growth_season: string;
+    atmospheric_humidity: number;
+    planting_time: string;
+    harvest_time: string;
+    plant_type: string | null;
+    width: number;
+}
+
 export default function CaracteristicaPlanta(props: IdentificarPlanta) {
+    const plantaSugerencia: PlantaSugerencia =
+    {
+        "id": 1,
+        "scientific_name": "Ocimum basilicum",
+        "description": "La albahaca es una hierba aromática que vive pocos años. El término “basílico” del nombre científico Ocinum basilicum proviene del latín y del griego, y significa “planta real”, quizás porque se tenía la creencia de que esta planta era empleada para fabricar perfumes “reales”.",
+        "slug_scientific_name": "ocimum-basilicum",
+        "genus": "Albahacas",
+        "family_name": "Lamiáceas",
+        "max_size": 1.5,
+        "fertilizer": "Los fertilizantes contienen altos niveles de nitrógeno, potasio y fósforo, junto con otros nutrientes esenciales como hierro, manganeso y zinc. Todos ellos son elementos necesarios que favorecen el crecimiento en Albahaca. Un abono equilibrado funciona bien para Albahaca. También puede elegir un abono más rico en nitrógeno que en otros nutrientes, como el abono de pescado.",
+        "watering_frecuency": "A la albahaca le va bien un medio de cultivo húmedo. Para mantener el sustrato de las plántulas húmedo es necesario riego frecuente. Las plantas asentadas deben regarse una vez cada 4-6 días en primavera y otoño, y cada 2-4 días en verano. En invierno, trasládelas adentro y reduzca el riego.",
+        "pruning": "La albahaca se pueden podar cuando alcanzan 20 cm de altura. Las hojas amarillas, una vez detectadas, se deben cortar de inmediato. Si la planta crece demasiado frondosa y se pierde el efecto ornamental, se pueden cortar las ramas sobrantes.",
+        "soil": "Arena, Marga, Arcilla, Franco-arenoso, Ácido, Neutro, Alcalino",
+        "insecticide": null,
+        "tips": "Puede ser difícil para una Albahaca obtener suficiente nitrógeno del suelo, por lo que muchos jardineros prefieren complementarlo alimentando Albahaca con una fuente de nitrógeno.",
+        "sun_light": "sombra",
+        "watering_care": "A la albahaca le va bien un medio de cultivo húmedo. Para mantener el sustrato de las plántulas húmedo es necesario riego frecuente. Las plantas asentadas deben regarse una vez cada 4-6 días en primavera y otoño, y cada 2-4 días en verano. En invierno, trasládelas adentro y reduzca el riego.",
+        "common_name": "Alhábega, Alfábega, Hierba de los reyes, Hierba de salitre",
+        "lifespan": "Anual, Perenne, Bianual",
+        "propagation": "Por semillas",
+        "fruit": "Frutas Verdes, Marrones Y Negras Listas Para Usar",
+        "edible": "Si",
+        "growth_rate": "Alto",
+        "maintenance": "Bajo",
+        "temperature_max": 38.0,
+        "temperature_min": 20.0,
+        "specie": "Albahaca",
+        "toxic": "No tóxico",
+        "repotting": "El mejor momento para trasplantar albahaca es a mediados o finales de la primavera o a mediados o finales del otoño, cuando las temperaturas son más suaves, lo que garantiza un crecimiento óptimo. Elija un lugar soleado y con buen drenaje para albahaca y tenga cuidado con sus delicadas raíces durante el proceso de trasplante.",
+        "dormancy": "Sin letargo",
+        "growth_season": "Verano",
+        "atmospheric_humidity": 5,
+        "planting_time": "Mediados de primavera, invierno Finales de primavera, Principios de verano",
+        "harvest_time": "Finales de invierno primavera, Mediados de verano, Finales de verano, Otoño",
+        "plant_type": null,
+        "width": 5.0
+    };
+
     const identificarPlanta: IdentificarPlanta = {
         planta: "Tomate",
         espacio: "Jardín o huerto",
@@ -112,16 +187,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     if (loading) {
         return <Loading />;
     }
-
-    if (error) {
-        return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
-            <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
-            <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
-                height="200" />
-            <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
-        </div>
-    }
-
+    /*
+        if (error) {
+            return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
+                <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
+                <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
+                    height="200" />
+                <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
+            </div>
+        }
+    */
     return (
         <section className="max-w-[1300px] m-auto">
 
@@ -157,7 +232,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     sugerencia === 'si' && (
                                         <div className="flex items-center justify-between flex-row gap-2">
                                             <p> ¿Querés saber saber cómo plantar?</p>
-                                            <Link href={`/guia/${planta}`}
+                                            <Link href={`/biblioteca`}
                                                 className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                                 Empezar
                                             </Link>
@@ -171,23 +246,59 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 <tbody>
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Nombre científico</p></th>
-                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.scientific_name}</p></td>
+                                        {
+                                            plantData && (
+                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.scientific_name}</p></td>
+                                            )
+                                        }
+                                        {
+                                            plantaSugerencia && (
+                                                <td className={'p-10 border'}><p>{plantaSugerencia.scientific_name}</p></td>
+                                            )
+                                        }
                                     </tr>
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Nombres comunes</p></th>
-                                        <td className={'p-10 border'}>
-                                            {plantData?.candidates[0].specie.common_names.map((name, index) => (
-                                                <p key={index}>{name}</p>
-                                            ))}
-                                        </td>
+                                        {
+                                            plantData && (
+                                                <td className={'p-10 border'}>
+                                                    {plantData?.candidates[0].specie.common_names.map((name, index) => (
+                                                        <p key={index}>{name}</p>
+                                                    ))}
+                                                </td>
+                                            )
+                                        }
+                                        {
+                                            plantaSugerencia && (
+                                                <td className={'p-10 border'}><p>{plantaSugerencia.common_name}</p></td>
+                                            )
+                                        }
                                     </tr>
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Género</p></th>
-                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.genus_name}</p></td>
+                                        {
+                                            plantData && (
+                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.genus_name}</p></td>
+                                            )
+                                        }
+                                        {
+                                            plantaSugerencia && (
+                                                <td className={'p-10 border'}><p>{plantaSugerencia.genus}</p></td>
+                                            )
+                                        }
                                     </tr>
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Familia</p></th>
-                                        <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.family_name}</p></td>
+                                        {
+                                            plantData && (
+                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.family_name}</p></td>
+                                            )
+                                        }
+                                        {
+                                            plantaSugerencia && (
+                                                <td className={'p-10 border'}><p>{plantaSugerencia.family_name}</p></td>
+                                            )
+                                        }
                                     </tr>
                                 </tbody>
                             </table>
@@ -196,26 +307,40 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                 </section>
 
                 <section className={'flex flex-col gap-12'}>
-                    <div className={'bg-white rounded-lg shadow-lg p-6'}>
-                        <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
-                            salud</h2>
-                        <div className={`flex items-center gap-5`}>
-                            <div>
-                                <Image className={`w-14 sm:w-20`} src="/resultado/planta-sana-icon.png"
-                                    alt="Planta-sana-icon" width="80" height="80" />
-                            </div>
-                            <div>
-                                {plantData?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
 
+                    {
+                        plantData && (
+                            <div className={'bg-white rounded-lg shadow-lg p-6'}>
+                                <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
+                                    salud</h2>
+                                <div className={`flex items-center gap-5`}>
+                                    <div>
+                                        <Image className={`w-14 sm:w-20`} src="/resultado/planta-sana-icon.png"
+                                            alt="Planta-sana-icon" width="80" height="80" />
+                                    </div>
+                                    <div>
+                                        {plantData?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    }
 
                     <div className={'bg-white rounded-lg shadow-lg p-6'}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Descripción general</h2>
-                        <p className="text-justify">
-                            {plantData?.candidates[0].plant_data.description}
-                        </p>
+
+                        {
+                            plantData && (
+                                <p className="text-justify">
+                                    {plantData?.candidates[0].plant_data.description}
+                                </p>)
+                        }
+                        {
+                            plantaSugerencia && (
+                                <p className="text-justify">
+                                    {plantaSugerencia.description}
+                                </p>)
+                        }
                         {/*<p className={'text-justify'}>
                             La albahaca, conocida científicamente como Ocium Basilicum, es una hierba aromática
                             originaria de la India, Irán y de otras regiones de Asia, de intenso aroma y color. Además
@@ -233,11 +358,18 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                                 <div className={'flex flex-col items-start'}>
                                     <h3 className={`${BalooBhaina2.className}`}>Tamaño</h3>
-                                    <ul className={`${stylesResultado.texto}`}>
-                                        {/*<li>Tallo de 30 a 50 cm de altura</li>
+                                    {/*<li>Tallo de 30 a 50 cm de altura</li>
                                         <li>Hojas de 3 a 5 cm de longitud</li>*/}
-                                        <li>La altura máxima es de <span className="font-bold">{plantData?.candidates[0].plant_data.height}<span className="text-base">cm</span></span></li>
-                                    </ul>
+                                    {
+                                        plantData && (
+                                            <p>La altura máxima es de <span className="font-bold">{plantData?.candidates[0].plant_data.height}<span className="text-base">cm</span></span></p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>La altura máxima es de <span className="font-bold">{plantaSugerencia.max_size}<span className="text-base">cm</span></span></p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -250,7 +382,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Fertilizante</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Aplicar un fertilizante
                                         equilibrado una vez al mes durante la temporada de crecimiento.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.fertilizer}</p>
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.fertilizer}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.fertilizer}</p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -263,7 +404,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Riego</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Mantener el suelo ligeramente
                                         húmedo, evitando el encharcamiento.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.watering}</p>
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.watering}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.watering_frecuency}</p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -276,7 +426,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Tierra</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Requiere un suelo bien drenado y
                                         fértil, preferiblemente con un pH entre 6.0 y 7.5.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.soil}</p>
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.soil}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.soil}</p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -289,18 +448,18 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Exposición solar</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Luz solar directa por la mañana
                                         y sombra parcial por la tarde.</p>*/}
-                                    <p className="cursor-pointer">{plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 100 ? `${plantData && plantData?.candidates[0].plant_data.sun_exposure.slice(0, 100)}...` : plantData && plantData?.candidates[0].plant_data.sun_exposure}</p>
-                                    {plantData && plantData?.candidates[0].plant_data.sun_exposure?.length > 50 && <button className="mt-2 px-4 py-2 text-white rounded bg-[#88BC43] w-1/4" onClick={handleClick}>ver mas</button>}
-                                    {showPopup && (
-                                        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
-                                            <div className="bg-white p-4 rounded shadow-lg w-[800px]" >
-                                                <p>{plantData && plantData?.candidates[0].plant_data.sun_exposure}</p>
-                                                <button onClick={handleClick} className="mt-2 px-4 py-2  text-white rounded bg-[#88BC43]">
-                                                    Cerrar
-                                                </button>
-                                            </div>
-                                        </div>
-                                    )}
+
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.sun_exposure}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.sun_light}</p>
+                                        )
+                                    }
+
                                 </div>
                             </div>
 
@@ -313,7 +472,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Insecticida</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Controlar plagas con
                                         insecticidas naturales como jabón insecticida o aceite de neem.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.insecticide}</p>
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.insecticide}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.insecticide}</p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -326,7 +494,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <h3 className={`${BalooBhaina2.className}`}>Temperatura adecuada</h3>
                                     {/*<p className={`${stylesResultado.texto}`}>Prefiere temperaturas cálidas
                                         entre 18-25°C, evitando temperaturas extremadamente frías.</p>*/}
-                                    <p>Entre <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_min}°C</span> y <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_max}°C</span></p>
+                                    {
+                                        plantData && (
+                                            <p>Entre <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_min}°C</span> y <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_max}°C</span></p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>Entre <span className="font-bold">{plantaSugerencia.temperature_min}°C</span> y <span className="font-bold">{plantaSugerencia.temperature_max}°C</span></p>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -340,9 +517,24 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Se puede sembrar en primavera
                                         después de que haya pasado el
                                         riesgo de heladas.</p>*/}
-                                    <p><span className="font-bold">De siembra:</span> {plantData?.candidates[0].plant_data.planting_time}</p>
-                                    <p><span className="font-bold">De crecimiento:</span> {plantData?.candidates[0].plant_data.growth_season}</p>
-                                    <p><span className="font-bold">De cosecha:</span> {plantData?.candidates[0].plant_data.harvest_time}</p>
+                                    {
+                                        plantData && (
+                                            <>
+                                                <p><span className="font-bold">De siembra:</span> {plantData?.candidates[0].plant_data.planting_time}</p>
+                                                <p><span className="font-bold">De crecimiento:</span> {plantData?.candidates[0].plant_data.growth_season}</p>
+                                                <p><span className="font-bold">De cosecha:</span> {plantData?.candidates[0].plant_data.harvest_time}</p>
+                                            </>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <>
+                                                <p><span className="font-bold">De siembra:</span> {plantaSugerencia.planting_time}</p>
+                                                <p><span className="font-bold">De crecimiento:</span> {plantaSugerencia.growth_rate}</p>
+                                                <p><span className="font-bold">De cosecha:</span> {plantaSugerencia.harvest_time}</p>
+                                            </>
+                                        )
+                                    }
                                 </div>
                             </div>
 
@@ -357,13 +549,22 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Podar cada 15 días
                                         aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
                                         abundante.</p>*/}
-                                    <p>{plantData?.candidates[0].plant_data.pruning}</p>
+                                    {
+                                        plantData && (
+                                            <p>{plantData?.candidates[0].plant_data.pruning}</p>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <p>{plantaSugerencia.pruning}</p>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className={'bg-white rounded-lg shadow-lg p-6'}>
+                    <div className={'bg-white rounded-lg shadow-lg p-6 mb-2'}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Consejos</h2>
                         <ul className={`list-disc list-inside flex flex-col gap-8`}>
                             {/*<li>La albahaca es más aromática cuando se utiliza fresca, así que arranca las hojas justo
@@ -379,20 +580,33 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 recipiente hermético en la nevera durante unos días o congelarlas para usarlas más
                                 tarde.
                             </li>*/}
-                            <li>{plantData?.candidates[0].plant_data.tips}</li>
+                            {
+                                plantData && (
+                                    <li>{plantData?.candidates[0].plant_data.tips}</li>
+                                )
+                            }
+                            {
+                                plantaSugerencia && (
+                                    <li>{plantaSugerencia.tips}</li>
+                                )
+                            }
                         </ul>
 
                     </div>
-                    <div className={'flex justify-end mb-5'}>
-                        <Link href={`/registro/${planta}`}
-                            className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                            <div>
-                                <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                    height="20" />
+                    {
+                        plantData && (
+                            <div className={'flex justify-end mb-5'}>
+                                <Link href={`/registro/${planta}`}
+                                    className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                    <div>
+                                        <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
+                                            height="20" />
+                                    </div>
+                                    Guardar planta
+                                </Link>
                             </div>
-                            Guardar planta
-                        </Link>
-                    </div>
+                        )
+                    }
                 </section>
             </main>
         </section>

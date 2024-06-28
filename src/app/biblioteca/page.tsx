@@ -4,8 +4,8 @@ import {BalooBhaina2} from "@/app/ui/fonts";
 export default function BibliotecaPage() {
     return (
         <>
-            <div className={'flex justify-start gap-32'}>
-                <aside id="default-sidebar"
+            <div className={'flex justify-center'}>
+                {/* <aside id="default-sidebar"
                        className="text-lg top-0 left-0 z-40 w-80180 transition-transform -translate-x-full sm:translate-x-0"
                        aria-label="Sidebar">
                     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -57,7 +57,7 @@ export default function BibliotecaPage() {
                             </li>
                         </ul>
                     </div>
-                </aside>
+                </aside> */}
                 <section>
                     <div className={'my-10 flex flex-col gap-5'}>
 
@@ -71,7 +71,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/hLmOfHPRtfQ?si=QCAPwC4A4UnwHePk"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>
@@ -91,7 +91,7 @@ export default function BibliotecaPage() {
                                         height="235"
                                         src="https://www.youtube.com/embed/vuYW_OYvMQM?si=gzBM6N_026w6NVbK"
                                         title="YouTube video player"
-                                        frameBorder="0"
+                                        
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                         referrerPolicy="strict-origin-when-cross-origin"
                                         allowFullScreen
@@ -107,7 +107,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/kgVvbAjyKOk?si=3Dz7jnvSEmD2Drgu"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>
@@ -121,7 +121,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/KvbzErzd4Do?si=APY-0qQ-ouMW5gV3"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player" 
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>
@@ -135,7 +135,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/A-c80tWCBGI?si=GoUz7JpWyHg1DKkZ"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player" 
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>
@@ -149,7 +149,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/p0LlR55eu14?si=WHtYMejGYzlu4NUI"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player" 
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>
@@ -163,7 +163,7 @@ export default function BibliotecaPage() {
                                 <div>
                                     <iframe width="420" height="235"
                                             src="https://www.youtube.com/embed/5eScM-CldXE?si=sdx72HskERjYbUoJ"
-                                            title="YouTube video player" frameBorder="0"
+                                            title="YouTube video player" 
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
                                             allowFullScreen></iframe>

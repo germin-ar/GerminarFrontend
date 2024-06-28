@@ -54,7 +54,7 @@ export default function Header() {
                                     Jardín</Link>
                                 <div className={stylesHeader.underline}></div>
                             </li>
-                            <li><FaBell className={`${stylesHeader.campana} text-gray-900`} /></li>
+                            {/* <li><FaBell className={`${stylesHeader.campana} text-gray-900`} /></li> */}
                             {/*<li><a href="" className={`${stylesHeader.li} hover:text-gray-300 px-10`}>Ale</a></li>*/}
                             <div className="flex gap-2">
                                 <li className={`${stylesHeader.liUser} cursor-pointer`}
@@ -142,9 +142,9 @@ export default function Header() {
                                             <Link href="/biblioteca"
                                                 className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Biblioteca</Link>
                                         </li>
-                                        <li className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>
+                                        {/* <li className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>
                                             Notificaciones
-                                        </li>
+                                        </li> */}
                                         <li>
                                             <Link href="/jardin"
                                                 className={`${stylesHeader.li} block p-2 hover:bg-[#275F08] rounded text-white transition-colors duration-300 w-fit`}>Mi
