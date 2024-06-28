@@ -22,15 +22,15 @@ export default function BusquedaPage() {
     const searchParams = useSearchParams()
     const latitude = searchParams.get('latitude')
     const longitude = searchParams.get('longitude')
-    const sun_exposure = searchParams.get('sun_exposure')
-    const square_meters = searchParams.get('square_meters')
+    const sunExposure = searchParams.get('sunExposure')
+    const squareCentimeters = searchParams.get('squareCentimeters')
     const page = searchParams.get('page')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true)
-                const apiUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sun_exposure=${sun_exposure}&square_meters=${square_meters}&page=${currentPage}`;
+                const apiUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sunExposure=${sunExposure}&squareCentimeters=${squareCentimeters}&page=${currentPage}`;
 
                 const response = await fetch(apiUrl);
                 if (!response.ok) {
@@ -52,7 +52,7 @@ export default function BusquedaPage() {
 
         fetchData();
 
-    }, [latitude, longitude, sun_exposure, square_meters, currentPage]);
+    }, [latitude, longitude, sunExposure, squareCentimeters, currentPage]);
 
     const nextPage = () => {
         if (plantSuggestions.length === 20) {

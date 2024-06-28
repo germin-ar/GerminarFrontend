@@ -140,7 +140,7 @@ export default function DescubrirPage() {
             </section>
             
             <section className={"m-10"}>
-                <Link href={`/descubrir/busqueda?latitude=${locationData.latitude}&longitude=${locationData.longitude}&sun_exposure=${value}&square_meters=${valueLugar}&page=1`}
+                <Link href={`/descubrir/busqueda?latitude=${locationData.latitude}&longitude=${locationData.longitude}&sunExposure=${value}&squareCentimeters=${valueLugar}`}
                     className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                     Buscar
                 </Link>
