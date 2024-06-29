@@ -120,6 +120,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const [plantData, setPlantData] = useState<PlantData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [plantaSugerencia, setPlantaSugerencia] = useState<any>(null);
     useEffect(() => {
         if (sugerencia === "no") {
             setLoading(true);
