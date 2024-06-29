@@ -33,7 +33,7 @@ describe('home page', () => {
         expect(imagenElement).toBeInTheDocument();
 
 
-        const paginaTexts = screen.getAllByText(/Identifica tu planta/i);
+        const paginaTexts = screen.getAllByText(/Identificá tu planta/i);
         expect(paginaTexts.length).toBeGreaterThanOrEqual(2);
 
 
