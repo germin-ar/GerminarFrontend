@@ -64,6 +64,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
 
              */
             onResultadoRecibido("llegaaaa");
+            console.log("desde identificar")
         }
         if (props.imagen === "imagenIdentificar"){
         await fetch(
@@ -113,15 +114,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             .catch(err => console.error("Error", err))*/
     };
 
-        const [isDisabled, setIsDisabled] = useState(false);
 
-        const handleClick = () => {
-            setIsDisabled(true);
-
-            setTimeout(() => {
-                setIsDisabled(false);
-            }, 5000);
-        };
 
     return (
         <section className={`${styles[imagen]}`} ref={props.forwardRef}>
@@ -155,8 +148,6 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                         </label>
                     </div>
                     <button type="submit"
-                        onClick={handleClick}
-                        disabled={isDisabled}
                         className={`mb-10 bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75 disabled:bg-gray-500`}>
                         Identificar
                     </button>
