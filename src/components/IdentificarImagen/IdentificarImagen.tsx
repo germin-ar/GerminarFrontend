@@ -1,22 +1,31 @@
 "use client"
 import styles from "@/components/IdentificarImagen/identificarImagen.module.css";
 import Image from "next/image";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, forwardRef, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
+
+
 
 
 interface IdentificarImagenProps {
     imagen: string;
     pagina: string;
-    forwardRef?: React.RefObject<HTMLDivElement>
+    forwardRef?: React.RefObject<HTMLDivElement>;
+    onResultadoRecibido: (resultado: any) => void;
 }
 
 export default function IdentificarImagen(props: IdentificarImagenProps) {
-    const {imagen, pagina} = props;
+    const {imagen, pagina, onResultadoRecibido} = props;
     const [archivoSeleccionado, setArchivoSeleccionado] = useState<File | null>(
         null
     );
+
+
+    //const [ubicacion, setUbicacion] = useState("");
+
     const router = useRouter()
+
+
     const handleArchivoSeleccionado = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
             const archivo = event.target.files[0];
@@ -38,10 +47,25 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
 
         if (props.imagen === "imagenIdentificarEspacio") {
             // Si es igual a "imagenIdentificarEspacio", no hacer fetch
-            router.push("/espacio/recomendacion");
-            return;
-        }
+            /*await fetch(
+                `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/images`,
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            ).then(res => {
+                return res.json();
+            })
+                .then(json => {
+                    setUbicacion(json);
+                    onResultadoRecibido(json);
+                })
+                .catch(err => console.error("Error", err));
 
+             */
+            onResultadoRecibido("llegaaaa");
+        }
+        if (props.imagen === "imagenIdentificar"){
         await fetch(
             `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/images`,
             {
@@ -60,7 +84,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                 router.push(`/resultado/${json.id}`)
             })
             .catch(err => console.error("Error", err))
-
+        }
         /*await fetch(
             "http://127.0.0.1:5000/upload",
             {

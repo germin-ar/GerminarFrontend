@@ -4,14 +4,19 @@ import { BalooBhaina2 } from "@/app/ui/fonts";
 import Image from "next/image";
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
-import React, { useRef } from 'react';
+import React, {useRef, useState} from 'react';
+
 
 export default function Home() {
     const targetRef = useRef<HTMLDivElement>(null);
 
+    const handleResultado = (resultado: any) => {
+        console.log("Resultado recibido en el padre:", resultado);
+    };
+
     return (
         <>
-            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} />
+            <IdentificarImagen targetRef={targetRef} imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} onResultadoRecibido={handleResultado}/>
             <section className="flex justify-center items-center">
                 <div>
                     {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
