@@ -56,7 +56,6 @@ export default function EspacioPage() {
 
     return (
         <>
-            {resultado}
             <IdentificarImagen
                 imagen="imagenIdentificarEspacio"
                 pagina="espacio/recomendacion"
