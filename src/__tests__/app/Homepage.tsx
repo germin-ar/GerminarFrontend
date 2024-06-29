@@ -23,8 +23,9 @@ describe('home page', () => {
         render(
             <IdentificarImagen
                 imagen="imagenIdentificar"
-                pagina="resultado"
-            />
+                pagina="resultado" onResultadoRecibido={function (resultado: any): void {
+                    throw new Error('Function not implemented.');
+                } }            />
         );
 
 
