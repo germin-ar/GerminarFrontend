@@ -64,6 +64,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
 
              */
             onResultadoRecibido("llegaaaa");
+            console.log("desde identificar")
         }
         if (props.imagen === "imagenIdentificar"){
         await fetch(
@@ -113,12 +114,14 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             .catch(err => console.error("Error", err))*/
     };
 
+
+
     return (
         <section className={`${styles[imagen]}`} ref={props.forwardRef}>
             <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                 <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                     <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
-                           width="150" height="150" />
+                        width="150" height="150" />
                     {imagen === 'imagenIdentificarEspacio' ? (
                         <>
                             <h2 className="font-bold">Identificá tu espacio ¡Es gratis!</h2>
@@ -132,7 +135,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                     )}
                 </div>
                 <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
-                      onSubmit={handleIdentificarClick}>
+                    onSubmit={handleIdentificarClick}>
                     <h2 className={`font-bold`}>Subí o arrastrá tu foto</h2>
                     <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
                         <label htmlFor="archivoInput" className={"cursor-pointer flex flex-col sm:flex-row items-center"}>
@@ -140,12 +143,12 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                                 Seleccioná un archivo
                             </p>
                             <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
-                                   style={{display: 'none'}}/>
+                                style={{ display: 'none' }} />
                             <p className="text-lg bg-[#323331] py-2 px-4 ">{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                         </label>
                     </div>
                     <button type="submit"
-                            className={`mb-10 bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                        className={`mb-10 bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75 disabled:bg-gray-500`}>
                         Identificar
                     </button>
                 </form>

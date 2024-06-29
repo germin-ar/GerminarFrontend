@@ -1,5 +1,5 @@
 import styles from "@/app/home.module.css";
-import {BalooBhaina2} from "@/app/ui/fonts";
+import { BalooBhaina2 } from "@/app/ui/fonts";
 import Link from "next/link";
 
 interface ButtonScrollProps {
@@ -8,11 +8,11 @@ interface ButtonScrollProps {
 
 export default function HerramientasDeCultivo(props: ButtonScrollProps) {
     const { targetRef } = props;
-  const handleClick = () => {
-      if (targetRef.current) {
-          targetRef.current.scrollIntoView({ behavior: 'smooth'});
-      }
-  }
+    const handleClick = () => {
+        if (targetRef.current) {
+            targetRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
     return (
         <section className={`${styles.fondoCards} rounded-lg flex justify-center items-center flex-col gap-5 `}>
@@ -40,7 +40,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <Link href="/descubrir"
-                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Descubrir
                         </Link>
                     </div>
@@ -53,7 +53,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <Link href="/espacio"
-                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Analizar
                         </Link>
                     </div>
@@ -66,7 +66,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
                     </div>
                     <div className="flex-1 flex justify-center items-center w-full text-center">
                         <Link href={`/diagnosticar`}
-                              className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`${styles.botonCards} text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Diagnosticar
                         </Link>
                     </div>

@@ -16,7 +16,7 @@ export default function Home() {
 
     return (
         <>
-            <IdentificarImagen targetRef={targetRef} imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} onResultadoRecibido={handleResultado}/>
+            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} onResultadoRecibido={handleResultado}/>
             <section className="flex justify-center items-center">
                 <div>
                     {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
