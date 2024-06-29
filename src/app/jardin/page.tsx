@@ -94,14 +94,12 @@ export default function JardinPage() {
 
     const handleConfirmDelete = async () => {
         try {
-            const deletePlant = await plantService.deletePlant(plantaSeleccionada?.id);
+            await plantService.deletePlant(plantaSeleccionada?.id);
+            fetchGardens();
 
-            if (deletePlant) {
-                fetchGardens();
+            setConfirmDelete(false);
+            setPopupVisible(false);
 
-                setConfirmDelete(false);
-                setPopupVisible(false);
-            }
         } catch (error) {
             console.error(error);
         }

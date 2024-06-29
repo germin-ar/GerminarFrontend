@@ -154,21 +154,18 @@ export class PlantService {
     }
 
     // deletePlant
-    async deletePlant(id: number | any) {
+    async deletePlant(id: number | any): Promise<void> {
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 },
             });
 
             if (!response.ok) {
                 throw new Error(`HTTP error status: ${response.status}`);
-            } else {
-                return await response.json();
             }
         } catch (error) {
             console.error('Error deleting plant:', error);
