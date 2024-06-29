@@ -2,14 +2,9 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Image from "next/image";
 import styles from "@/app/estado/[id]/estado.module.css";
-import HomeStyles from "@/app/home.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-export interface Health {
-    is_healthy: boolean
-    candidates: Candidate[]
-}
+import { PlantService, PlantHealth } from "@/app/api/v1/plants/PlantService";
 
 export interface Candidate {
     name: string
@@ -67,53 +62,25 @@ export interface History {
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
-    const [plant, setPlant] = useState<Plant>();
-    const [plantaDiagnostico, setPlantaDiagnostico] = useState<Health>();
- 
-     const fetchPlants = async () => {
-         try {
-             const userId = 1;
-             const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}/health-status`, {
-                 headers: {
-                     'id-user': userId.toString(),
-                 },
-             });
-             if (!response.ok) {
-                 throw new Error('Failed to fetch gardens');
-             }
-             const data = await response.json();
-             console.log(data)
- 
-             console.log(data)
-             setPlantaDiagnostico(data);
-         } catch (error) {
-             console.error('Error fetching gardens:', error);
-         }
-     };
- 
-     useEffect(() => {
-         fetchPlants()
-         fetchPlantData()
-     }, []);
+    const [plant, setPlant] = useState<Plant | any>();
+    const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
-    const fetchPlantData = async () => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
-                headers: {
-                    'id-user': '1'
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch plant data');
+    useEffect(() => {
+        const fetchPlantHealthStatus = async () => {
+            try {
+                const dataHealthStatus = await plantService.getHealthPlantStatus(id);
+                setPlantaDiagnostico(dataHealthStatus);
+
+                const dataPlant = await plantService.getPlant(id);
+                setPlant(dataPlant);
+            } catch (error) {
+                console.error(error);
             }
-            const plant = await response.json();
-            setPlant(plant);
-            console.log(plant)
-        } catch (error) {
-            console.error('Error fetching plant data:', error);
-        }
-    };
-
+        };
+        fetchPlantHealthStatus();
+    }, []);
+ 
     return (
         <>
             <section>

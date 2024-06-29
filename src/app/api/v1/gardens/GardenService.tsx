@@ -33,12 +33,12 @@ export class GardenService {
     // getGardensByUser
     async getGardens(): Promise<Garden[]> {
         try {
-            const userId = 1;
+            const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'id-user': userId.toString()
+                    'id-user': idUser.toString()
                 }
             });
             if (!response.ok) {
@@ -53,7 +53,7 @@ export class GardenService {
     }
 
     // saveGarden
-    async saveGarden(body: GardenRequestBody): Promise<Garden> {
+    async saveGarden(body: GardenRequestBody) {
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'POST',
@@ -75,14 +75,14 @@ export class GardenService {
     }
 
     // getGarden
-    async getGarden(garden: Garden): Promise<Garden> {
+    async getGarden(): Promise<Garden> {
         try {
-            const userId = 1;
+            const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'id-user': userId.toString()
+                    'id-user': idUser.toString()
                 }
             });
 
@@ -98,14 +98,14 @@ export class GardenService {
     }
 
     // deleteGarden
-    async deleteGarden(id: number): Promise<void> {
+    async deleteGarden(id: number) {
         try {
-            const userId = 1
+            const idUser = 1
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
-                    'id-user': userId.toString()
+                    'id-user': idUser.toString()
                 }
             });
 
