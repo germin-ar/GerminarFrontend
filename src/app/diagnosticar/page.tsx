@@ -2,26 +2,7 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { GardenService } from '@/app/api/v1/gardens/GardenService'; 
-
-export interface Garden {
-    id: number | null;
-    name: string | null;
-    plants: Plant[];
-}
-
-export interface Plant {
-    id: number;
-    alias: string;
-    creation_date: string;
-    modification_date: string;
-    is_favorite: boolean;
-    photos: Photo[];
-}
-
-export interface Photo {
-    url: string;
-}
+import { GardenService, Garden } from '@/app/api/v1/gardens/GardenService'; 
 
 export default function IdentificarPlanta() {
 

@@ -1,3 +1,22 @@
+export interface Garden {
+    id: number | null;
+    name: string | null;
+    plants: Plant[];
+}
+
+export interface Plant {
+    id: number;
+    alias: string;
+    creation_date: string;
+    modification_date: string;
+    is_favorite: boolean;
+    photos: Photo[];
+}
+
+export interface Photo {
+    url: string;
+}
+
 export class GardenService {
     private apiHost: string;
 
@@ -5,7 +24,7 @@ export class GardenService {
         this.apiHost = apiHost;
     }
 
-    async getGardens() {
+    async getGardens(): Promise<Garden[]> {
         try {
             const userId = 1;
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
