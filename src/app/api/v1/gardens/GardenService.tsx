@@ -98,7 +98,7 @@ export class GardenService {
     }
 
     // deleteGarden
-    async deleteGarden(id: number) {
+    async deleteGarden(id: number): Promise<void>  {
         try {
             const idUser = 1
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
