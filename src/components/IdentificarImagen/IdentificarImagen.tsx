@@ -48,7 +48,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
 
         if (props.imagen === "imagenIdentificarEspacio") {
 
-            /*await fetch(
+            await fetch(
                 `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/space-planting`,
                 {
                     method: "POST",
@@ -66,8 +66,8 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                     onResultadoRecibido(json.space_name);
                 })
                 .catch(err => console.error("Error", err))
-        */
-            onResultadoRecibido("patio")
+
+            //onResultadoRecibido("patio")
             console.log("desde identificar")
         }
         if (props.imagen === "imagenIdentificar"){
