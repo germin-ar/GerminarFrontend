@@ -95,7 +95,7 @@ interface PlantaSugerencia {
     harvest_time: string;
     plant_type: string | null;
     width: number;
-    image_url: string;
+    url_image: string;
 }
 
 export default function CaracteristicaPlanta(props: IdentificarPlanta) {
@@ -204,7 +204,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 }
                                 {
                                     plantaSugerencia && (
-                                        <img src={`${plantaSugerencia.image_url}`}
+                                        <img src={`${plantaSugerencia.url_image}`}
                                             className="rounded-lg shadow-lg"
                                             width="500"
                                             height="500"
@@ -525,7 +525,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         plantaSugerencia && (
                                             <>
                                                 <p><span className="font-bold">De siembra:</span> {plantaSugerencia.planting_time}</p>
-                                                <p><span className="font-bold">De crecimiento:</span> {plantaSugerencia.growth_rate}</p>
+                                                <p><span className="font-bold">De crecimiento:</span> {plantaSugerencia.growth_season}</p>
                                                 <p><span className="font-bold">De cosecha:</span> {plantaSugerencia.harvest_time}</p>
                                             </>
                                         )
@@ -559,7 +559,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
 
                             {
-                                plantaSugerencia.toxic && (
+                               plantaSugerencia && plantaSugerencia.toxic && (
                                     <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                         <div>
                                             <Image className="max-w-[100px] min-w-[100px]" src="/resultado/toxicidad-icon.png" alt="toxicidad-icon" width="150"

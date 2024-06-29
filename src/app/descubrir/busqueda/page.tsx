@@ -8,7 +8,7 @@ import { BalooBhaina2 } from "@/app/ui/fonts";
 interface PlantSuggestion {
     common_name: string;
     scientific_name: string;
-    image_url: string;
+    url_image: string;
 }
 
 export default function BusquedaPage() {
@@ -116,8 +116,8 @@ export default function BusquedaPage() {
                                         <td className="border-b border-gray-200 px-6 py-4">{plant.scientific_name}</td>
                                         <td className="border-b border-gray-200 px-6 py-4 flex gap-2 justify-center items-center">
                                             <div className="max-w-[100px] max-h-[80px] overflow-hidden cursor-pointer"
-                                                onClick={() => openModal(plant.image_url)}>
-                                                <img src={plant.image_url} alt={plant.common_name}
+                                                onClick={() => openModal(plant.url_image)}>
+                                                <img src={plant.url_image} alt={plant.common_name}
                                                     className="object-cover h-24 max-w-full h-auto" />
                                             </div>
                                             <Link href={`/descubrir/busqueda/detalle/${plant.scientific_name.toLowerCase().replace(" ", "-")}`} className="bg-[#88BC43] rounded px-4 py-2 text-white">Ir a detalles

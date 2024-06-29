@@ -306,13 +306,13 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
-                    <h2 className="text-lg font-semibold mb-2">Historial de la planta</h2>
+                    <h2>Historial de: {plant.alias}</h2>
                     <ol className="relative border-s border-gray-200 dark:border-gray-700">
                         {orderedHistory.map((entry, index) => (
                             entry.alias === "imagen subida" ?
                                 <li key={index} className="mb-10 ms-6 flex">
                                     <div className="flex-1">
-                                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
+                                        <h3 className="flex items-center mb-1 text-lg font-semibold">
                                             {entry.alias}
                                         </h3>
                                         <time>Imagen subida el: {entry.modified_at.slice(0, 19)}</time>
@@ -327,9 +327,6 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                 :
                                 <li key={index} className="mb-10 ms-6 flex">
                                     <div className="flex-1">
-                                        <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                                            {entry.alias}
-                                        </h3>
                                         <time>Modificado: {entry.modified_at.slice(0, 19)}</time>
                                         <p>Alias: {entry.alias}</p>
                                         <p>Altura: {entry.height}</p>
