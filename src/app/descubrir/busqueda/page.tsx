@@ -120,7 +120,7 @@ export default function BusquedaPage() {
                                                 <img src={plant.url_image} alt={plant.common_name}
                                                     className="object-cover h-24 max-w-full h-auto" />
                                             </div>
-                                            <Link href={`/descubrir/busqueda/detalle/${plant.scientific_name.toLowerCase().replace(" ", "-")}`} className="bg-[#88BC43] rounded px-4 py-2 text-white">Ir a detalles
+                                            <Link href={`/descubrir/detalle/${plant.scientific_name.toLowerCase().replace(" ", "-")}`} className="bg-[#88BC43] rounded px-4 py-2 text-white">Ir a detalles
                                             </Link>
                                         </td>
                                     </tr>

@@ -9,11 +9,12 @@ import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
 import Link from "next/link";
 import {useRef, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function EspacioPage() {
 
     const [resultado, setResultado] = useState<String | null>(null);
-
+    const router = useRouter();
     const handleResultadoRecibido = (resultado: any) => {
         console.log("Resultado recibido en el padre:", resultado);
         setResultado(resultado);
@@ -47,6 +48,7 @@ export default function EspacioPage() {
             return;
         }
         console.log('Datos a enviar:', { luz, temporada , resultado});
+        router.push(`/espacio?luz=${luz}&temporada=${temporada}&espacio=${resultado}`);
 
     };
 
@@ -79,6 +81,7 @@ export default function EspacioPage() {
                                         </label>
                                         :
                                         <button
+                                            type="button"
                                             onClick={handleScrollToTop}
                                             className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             Identifica tu espacio
