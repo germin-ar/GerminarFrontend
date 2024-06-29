@@ -96,6 +96,10 @@ export default function GerminarPage() {
         setMenuOpen(!menuOpen);
     };
 
+    const handleResultado = (resultado: any) => {
+        console.log("Resultado recibido en el padre:", resultado);
+    };
+
     const myRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
     return (
         <>
@@ -289,7 +293,7 @@ export default function GerminarPage() {
                 )}
             </section>
             <section id="identificar">
-                <IdentificarImagen imagen="imagenIdentificar" pagina="/" />
+                <IdentificarImagen imagen="imagenIdentificar" pagina="/"  onResultadoRecibido={handleResultado}/>
             </section>
             <main id="herramientas" className="flex justify-center items-center">
                 {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
