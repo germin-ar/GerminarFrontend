@@ -644,7 +644,7 @@ export default function JardinPage() {
                                                             className="flex flex-row justify-between items-center cursor-pointer"
                                                             onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
-                                                                <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
+                                                                <img src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
