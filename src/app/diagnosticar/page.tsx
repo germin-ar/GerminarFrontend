@@ -72,7 +72,7 @@ export default function IdentificarPlanta() {
                             <h3 className={`${BalooBhaina2.className} mb-1`}>{garden.name}</h3>
                             <div className="flex flex-row justify-center sm:justify-start gap-y-5 flex-wrap mx-auto w-full">
                                 {garden.plants.map((plant) => (
-
+                                    <div key={plant.id}>
                                     <Link href={`estado/${plant.id}`} >
                                         <div className="rounded w-full cursor-pointer flex flex-col items-center">
                                             <img className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover object-center mb-2 hover:shadow-lg transform hover:scale-110 transition duration-300"
@@ -84,6 +84,7 @@ export default function IdentificarPlanta() {
                                             </div>
                                         </div>
                                     </Link>
+                                    </div>
 
                                 ))}
                             </div>

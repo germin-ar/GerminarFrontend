@@ -67,8 +67,8 @@ export interface History {
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
-    const [plant, setPlant] = useState<Plant[]>([]);
-    const [plantaDiagnostico, setPlantaDiagnostico] = useState<Health[]>([]);
+    const [plant, setPlant] = useState<Plant>();
+    const [plantaDiagnostico, setPlantaDiagnostico] = useState<Health>();
  
      const fetchPlants = async () => {
          try {
@@ -93,6 +93,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
  
      useEffect(() => {
          fetchPlants()
+         fetchPlantData()
      }, []);
 
     const fetchPlantData = async () => {
@@ -123,10 +124,12 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                             de tu planta</h1>
                         <div className={`flex-1 flex items-start flex-col gap-5`}>
                             <div>
-                                <img src={plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
+                                { plant &&
+                                <img src={ plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
                                     className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
                                     width="250"
                                     height="250" />
+                                }
                             </div>
                             <div className="flex w-full gap-5 justify-between">
                                 <Link href={`/jardin/${id}/editar`}
@@ -178,7 +181,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                         </div>
                         <div>
                             {
-                                !healthData.is_healthy ? <p>¡Tu planta necesita ayuda!</p> : <p>¡Tu planta parece sana!</p>
+                                !plantaDiagnostico?.is_healthy ? <p>¡Tu planta necesita ayuda!</p> : <p>¡Tu planta parece sana!</p>
                             }
 
                         </div>
@@ -187,14 +190,14 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
 
 
                 <div className="bg-white rounded-lg shadow-lg p-6">
-                    {healthData.candidates[0] && (
+                    {plantaDiagnostico?.candidates[0] && (
                         <>
                             <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Problema detectado</h2>
-                            <h3 className={`${BalooBhaina2.className} `}>Enfermedad de la {healthData.candidates[0].name}</h3>
+                            <h3 className={`${BalooBhaina2.className} `}>Enfermedad de la {plantaDiagnostico.candidates[0].name}</h3>
                             <p>
-                                Esta enfermedad también conocida como <span className="font-bold"> {healthData.candidates[0].common_name}</span> afecta a las plantas, siendo causada por el organismo <span className="font-bold"> {healthData.candidates[0].scientific_name_disease}</span>. Esta enfermedad es clasificada como <span className="font-bold"> {healthData.candidates[0].type}</span> y se encuentra dentro del reino <span className="font-bold"> {healthData.candidates[0].kingdom_taxonomy}</span>. Según su taxonomía, pertenece al filo <span className="font-bold"> {healthData.candidates[0].phylum_taxonomy}</span>, clase <span className="font-bold"> {healthData.candidates[0].class_taxonomy}</span>, orden <span className="font-bold"> {healthData.candidates[0].order_taxonomy}</span>, familia <span className="font-bold"> {healthData.candidates[0].family_taxonomy}</span> y género <span className="font-bold"> {healthData.candidates[0].genus_taxonomy}</span>.
+                                Esta enfermedad también conocida como <span className="font-bold"> {plantaDiagnostico.candidates[0].common_name}</span> afecta a las plantas, siendo causada por el organismo <span className="font-bold"> {plantaDiagnostico.candidates[0].scientific_name_disease}</span>. Esta enfermedad es clasificada como <span className="font-bold"> {plantaDiagnostico.candidates[0].type}</span> y se encuentra dentro del reino <span className="font-bold"> {plantaDiagnostico.candidates[0].kingdom_taxonomy}</span>. Según su taxonomía, pertenece al filo <span className="font-bold"> {plantaDiagnostico.candidates[0].phylum_taxonomy}</span>, clase <span className="font-bold"> {plantaDiagnostico.candidates[0].class_taxonomy}</span>, orden <span className="font-bold"> {plantaDiagnostico.candidates[0].order_taxonomy}</span>, familia <span className="font-bold"> {plantaDiagnostico.candidates[0].family_taxonomy}</span> y género <span className="font-bold"> {plantaDiagnostico.candidates[0].genus_taxonomy}</span>.
                             </p>
-                            <p>Para obtener más información detallada sobre esta enfermedad, podés consultar este <Link className="underline" href={`${healthData.candidates[0].wiki_urls}`} target="_blank">enlace</Link> a Wikipedia.</p>
+                            <p>Para obtener más información detallada sobre esta enfermedad, podés consultar este <Link className="underline" href={`${plantaDiagnostico.candidates[0].wiki_urls}`} target="_blank">enlace</Link> a Wikipedia.</p>
 
                         </>
                     )}
@@ -205,7 +208,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                     <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Posibles enfermedades</h2>
                     <p>Tené cuidado, estas son posibles enfermedades que pueden afectar tu planta: </p>
                     <ol>
-                        {healthData.candidates.map((candidate, index) => (
+                        {plantaDiagnostico && plantaDiagnostico.candidates.map((candidate, index) => (
                             <div key={index}>
                                 {index !== 0 && (
                                     <>
