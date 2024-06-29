@@ -120,7 +120,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const [plantData, setPlantData] = useState<PlantData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [plantaSugerencia, setPlantaSugerencia] = useState<any>(null);
+    const [plantaSugerencia, setPlantaSugerencia] = useState<PlantaSugerencia | null>(null);
     useEffect(() => {
         if (sugerencia === "no") {
             setLoading(true);
@@ -144,7 +144,24 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                 });
 
         } else if (sugerencia === 'si') {
-            setLoading(false)
+
+            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-catalog/${planta}`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data: PlantaSugerencia) => {
+                    setPlantaSugerencia(data);
+                    console.log(data);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    setError(error.message);
+                    setLoading(false);
+                });
+
         }
 
     }, [planta]);
@@ -152,16 +169,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     if (loading) {
         return <Loading />;
     }
-    /*
+    
         if (error) {
             return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
-                <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Intenta identificar la imagen de nuevo, por favor.</h3>
+                <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Volvé más tarde, por favor.</h3>
                 <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
                     height="200" />
                 <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
             </div>
         }
-    */
+    
     return (
         <section className="max-w-[1300px] m-auto">
 

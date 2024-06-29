@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: {
         template: "Germin.ar - %s",
-        default: "Germin.ar - Home",
+        default: "Germin.ar",
     },
 };
 
