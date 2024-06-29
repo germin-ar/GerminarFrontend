@@ -54,17 +54,7 @@ export default function BusquedaPage() {
 
     }, [latitude, longitude, sunExposure, squareCentimeters, currentPage]);
 
-    const nextPage = () => {
-        if (plantSuggestions.length === 20) {
-            setCurrentPage(prevPage => prevPage + 1);
-        }
-    };
 
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(prevPage => prevPage - 1);
-        }
-    };
 
     const openModal = (imageUrl: string) => {
         setModalImageUrl(imageUrl);
@@ -120,7 +110,7 @@ export default function BusquedaPage() {
                                                 <img src={plant.url_image} alt={plant.common_name}
                                                     className="object-cover h-24 max-w-full h-auto" />
                                             </div>
-                                            <Link href={`/descubrir/detalle/${plant.scientific_name.toLowerCase().replace(" ", "-")}`} className="bg-[#88BC43] rounded px-4 py-2 text-white">Ir a detalles
+                                            <Link href={`/descubrir/busqueda/${plant.scientific_name.toLowerCase().replace(" ", "-")}`} className="bg-[#88BC43] rounded px-4 py-2 text-white">Ir a detalles
                                             </Link>
                                         </td>
                                     </tr>
@@ -130,16 +120,7 @@ export default function BusquedaPage() {
                     </table>
                 </div>
 
-                <div className="flex justify-between mt-4">
-                    <button onClick={prevPage} disabled={currentPage === 1}
-                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
-                        Página anterior
-                    </button>
-                    <button onClick={nextPage}
-                        className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">
-                        Página siguiente
-                    </button>
-                </div>
+
 
 
                 {modalOpen && (

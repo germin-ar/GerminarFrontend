@@ -7,8 +7,7 @@ import {TbSunOff} from "react-icons/tb";
 import {BsCloudSun} from "react-icons/bs";
 import {BalooBhaina2} from "@/app/ui/fonts";
 import Image from "next/image";
-import Link from "next/link";
-import {useRef, useState} from "react";
+import { useState} from "react";
 import {useRouter} from "next/navigation";
 
 export default function EspacioPage() {
@@ -48,7 +47,7 @@ export default function EspacioPage() {
             return;
         }
         console.log('Datos a enviar:', { luz, temporada , resultado});
-        router.push(`/espacio?luz=${luz}&temporada=${temporada}&espacio=${resultado}`);
+        router.push(`/espacio/recomendacion?luz=${luz}&temporada=${temporada}&espacio=${resultado}`);
 
     };
 

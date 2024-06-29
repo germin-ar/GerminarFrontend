@@ -63,7 +63,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                 .catch(err => console.error("Error", err));
 
              */
-            onResultadoRecibido("llegaaaa");
+            onResultadoRecibido("patio");
             console.log("desde identificar")
         }
         if (props.imagen === "imagenIdentificar"){
