@@ -154,7 +154,7 @@ export class PlantService {
     }
 
     // deletePlant
-    async deletePlant(id: number) {
+    async deletePlant(id: number | any) {
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}`, {

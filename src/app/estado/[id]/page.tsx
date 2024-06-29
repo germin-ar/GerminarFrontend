@@ -26,7 +26,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
         };
         fetchPlantHealthStatus();
     }, []);
- 
+
     return (
         <>
             <section>
@@ -37,11 +37,11 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                             de tu planta</h1>
                         <div className={`flex-1 flex items-start flex-col gap-5`}>
                             <div>
-                                { plant &&
-                                <img src={ plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
-                                    className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
-                                    width="250"
-                                    height="250" />
+                                {plant &&
+                                    <img src={plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
+                                        className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
+                                        width="250"
+                                        height="250" />
                                 }
                             </div>
                             <div className="flex w-full gap-5 justify-between">
@@ -56,32 +56,6 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                             </div>
                         </div>
                     </div>
-
-
-                    {/*<div className={`${styles.tabla} flex-1  text-2xl`}>*/}
-                    {/*    <table className={'vertical-header-table'}>*/}
-                    {/*        <tbody>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Nombre científico</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Ocimum basilicum</td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Nombres comunes</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Albahaca, Alhábega, Alfábega,*/}
-                    {/*                Basílico*/}
-                    {/*            </td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Género</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Ocimum</td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Familia</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Lamiaceae</td>*/}
-                    {/*        </tr>*/}
-                    {/*        </tbody>*/}
-                    {/*    </table>*/}
-                    {/*</div>*/}
                 </div>
             </section>
             <section className={'flex flex-col gap-12 m-20'}>
@@ -121,7 +95,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                     <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Posibles enfermedades</h2>
                     <p>Tené cuidado, estas son posibles enfermedades que pueden afectar tu planta: </p>
                     <ol>
-                        {plantaDiagnostico && plantaDiagnostico.candidates.map((candidate, index) => (
+                        {plantaDiagnostico && plantaDiagnostico.candidates.map((candidate: any, index: any) => (
                             <div key={index}>
                                 {index !== 0 && (
                                     <>

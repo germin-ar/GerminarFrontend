@@ -75,10 +75,10 @@ export class GardenService {
     }
 
     // getGarden
-    async getGarden(): Promise<Garden> {
+    async getGarden(id: number): Promise<Garden> {
         try {
             const idUser = 1;
-            const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
+            const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

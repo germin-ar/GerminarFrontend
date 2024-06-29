@@ -9,25 +9,8 @@ import { PiPottedPlantFill } from "react-icons/pi";
 import { CiCalendar } from "react-icons/ci";
 import Image from "next/image";
 import { BalooBhaina2 } from "../ui/fonts";
-
-export interface Garden {
-    id: number | null;
-    name: string | null;
-    plants: Plant[];
-}
-
-export interface Plant {
-    id: number;
-    alias: string;
-    creation_date: string;
-    modification_date: string;
-    is_favorite: boolean;
-    photos: Photo[];
-}
-
-export interface Photo {
-    url: string;
-}
+import { GardenService, Garden, Plant } from "../api/v1/gardens/GardenService";
+import { PlantService } from "../api/v1/plants/PlantService";
 
 export default function JardinPage() {
 
@@ -62,44 +45,66 @@ export default function JardinPage() {
         // console.log(planta)
     };
 
-    const [gardens, setGardens] = useState<Garden[]>([]);
-
-    const fetchGardens = async () => {
-        try {
-            const userId = 1;
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
-                headers: {
-                    'id-user': userId.toString(),
-                },
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch gardens');
-            }
-            const data = await response.json();
-            console.log(data)
-
-            //data.sort((a:any, b:any) => a.name.localeCompare(b.name));
-            console.log(data)
-            setGardens(data);
-        } catch (error) {
-            console.error('Error fetching gardens:', error);
-        }
-    };
-
-    useEffect(() => {
-        fetchGardens()
-    }, []);
-
-    const [mostrarJardin, setMostrarJardin] = useState(false);
-
     const [filtro, setFiltro] = useState('');
     const [filtroPlantas, setFiltroPlantas] = useState(false);
     const [filtroPlantaFavorita, setFiltroPlantaFavorito] = useState(false);
     const [filtroPlantaTipo, setFiltroPlantaTipo] = useState('');
     const [filtroPlantaFechaReciente, setFiltroPlantaFechaReciente] = useState(false);
     const [filtroPlantaFechaAntiguo, setFiltroPlantaFechaAntiguo] = useState(false);
-    const [plantasFiltradas, setPlantasFiltradas] = useState<Plant[] | null>(null);
     const [buscador, setBuscador] = useState('');
+    const [gardens, setGardens] = useState<Garden[]>([]);
+    const [confirmDelete, setConfirmDelete] = useState(false);
+    const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
+    const handleCancelDelete = () => {
+        setConfirmDelete(false);
+    };
+    const handleDeleteClick = () => {
+        setConfirmDelete(true);
+    };
+
+    useEffect(() => {
+        fetchGardens();
+        
+        filtrarPlantasPorFiltro();
+
+        const handleScroll = () => {
+            if (window.scrollY > 700) {
+                setShowButton(true);
+            } else {
+                setShowButton(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [[filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]]);
+
+    const fetchGardens = async () => {
+        try {
+            const garden = await gardenService.getGardens();
+            setGardens(garden);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleConfirmDelete = async () => {
+        try {
+            await plantService.deletePlant(plantaSeleccionada?.id);
+
+            fetchGardens();
+
+            setConfirmDelete(false);
+            setPopupVisible(false);
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleFiltroChange = (e: any) => {
         setFiltro(e === 'todos' ? '' : e);
@@ -157,10 +162,6 @@ export default function JardinPage() {
         }
         filtradoJardin = gardens.filter(garden =>
             garden.name && garden.name.toLowerCase().includes(buscador.toLowerCase())
-            // ||
-            // garden.plants.some(plant =>
-            //     plant.alias.toLowerCase().includes(buscador.toLowerCase())
-            // )
         );
         filtradoPlantas = gardens.flatMap(garden => garden.plants).filter(plant =>
             plant.alias.toLowerCase().includes(buscador.toLowerCase())
@@ -192,13 +193,6 @@ export default function JardinPage() {
                     plantasFiltradas.push(plant);
                 }
             });
-            /*
-            } else if (filtroPlantaTipo != '' && !filtroPlantas && !filtroPlantaFavorita) {
-                plantasFiltradas = gardens.flatMap(garden => garden.plants).filter(plant =>
-                    plant.specie.toLowerCase().includes(filtroPlantaTipo.toLowerCase())
-                );
-            }
-            */
         } else if (filtroPlantaFechaReciente) {
             plantasFiltradas = gardens.flatMap(garden => garden.plants)
                 .sort((a, b) => {
@@ -218,10 +212,6 @@ export default function JardinPage() {
         return plantasFiltradas;
     };
 
-    useEffect(() => {
-        filtrarPlantasPorFiltro();
-    }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]);
-
     const resaltarTexto = (texto: any) => {
         if (!buscador) {
             return texto;
@@ -233,25 +223,9 @@ export default function JardinPage() {
         );
     };
 
-    //const uniqueSpecies = Array.from(new Set(gardens.flatMap(garden => garden.plants).map(plant => plant.specie)));
     const uniqueGardenNames = Array.from(new Set(gardens.flatMap(garden => garden.name)));
 
     const [showButton, setShowButton] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 700) {
-                setShowButton(true);
-            } else {
-                setShowButton(false);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
     const scrollToTop = () => {
         window.scrollTo({ top: 5, behavior: 'smooth' });
@@ -270,47 +244,6 @@ export default function JardinPage() {
     const scrollToGarden = () => {
         if (refGarden.current) {
             refGarden.current.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-    const [confirmDelete, setConfirmDelete] = useState(false);
-
-    const handleCancelDelete = () => {
-        setConfirmDelete(false);
-    };
-    const handleDeleteClick = () => {
-        setConfirmDelete(true);
-    };
-
-    const handleConfirmDelete = async () => {
-        try {
-            const deletePlant = async (id: any) => {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'id-user': '1'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                console.log(`Planta con ID ${id} eliminada correctamente`);
-            };
-
-            await deletePlant(plantaSeleccionada?.id);
-            console.log(plantaSeleccionada?.id);
-
-
-            await fetchGardens();
-
-
-            setConfirmDelete(false);
-            setPopupVisible(false);
-
-        } catch (error) {
-            console.error('Hubo un problema al eliminar la planta:', error);
         }
     };
 
@@ -616,7 +549,7 @@ export default function JardinPage() {
                                                             className="flex flex-row justify-between items-center cursor-pointer"
                                                             onClick={() => mostrarPopup(plant, plant.id, garden)}>
                                                             <div className={"flex items-center"}>
-                                                                <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
+                                                                <img src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                                     className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                                 <span>{resaltarTexto(plant.alias)}</span>
                                                             </div>
@@ -697,7 +630,7 @@ export default function JardinPage() {
                                                     className="flex flex-row flex-wrap gap-2 items-center justify-between h-full cursor-pointer"
                                                     onClick={() => mostrarPopup(plant, plant.id, null)}>
                                                     <div className="flex items-center">
-                                                        <img  src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
+                                                        <img src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"} alt={plant.alias}
                                                             className="w-8 h-8 lg:w-12 lg:h-12 mr-2 rounded-full" />
                                                         <span>{resaltarTexto(plant.alias)}</span>
                                                     </div>
