@@ -3,6 +3,7 @@ import styles from "@/components/IdentificarImagen/identificarImagen.module.css"
 import Image from "next/image";
 import React, {ChangeEvent, forwardRef, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
+import {json} from "node:stream/consumers";
 
 
 
@@ -46,24 +47,27 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         formData.append("image", archivoSeleccionado);
 
         if (props.imagen === "imagenIdentificarEspacio") {
-            // Si es igual a "imagenIdentificarEspacio", no hacer fetch
+
             /*await fetch(
-                `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/images`,
+                `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/space-planting`,
                 {
                     method: "POST",
                     body: formData,
+                    headers: {
+                        "id-user": "1"
+                    }
                 }
-            ).then(res => {
-                return res.json();
-            })
-                .then(json => {
-                    setUbicacion(json);
-                    onResultadoRecibido(json);
+            )
+                .then(res => {
+                    return res.json();
                 })
-                .catch(err => console.error("Error", err));
-
-             */
-            onResultadoRecibido("patio");
+                .then(json => {
+                    console.log(json)
+                    onResultadoRecibido(json.space_name);
+                })
+                .catch(err => console.error("Error", err))
+        */
+            onResultadoRecibido("patio")
             console.log("desde identificar")
         }
         if (props.imagen === "imagenIdentificar"){
@@ -86,32 +90,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             })
             .catch(err => console.error("Error", err))
         }
-        /*await fetch(
-            "http://127.0.0.1:5000/upload",
-            {
-                method: "POST",
-                body: formData,
-                /*headers:{
-                    "Content-Type": "multipart/form-data"
-                }
-            }
-        )
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                //router.push(`/resultado/${id}`);
-                //redirect()
-                console.log(json)
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    localStorage.setItem('imagen', reader.result as string);
-                };
-                reader.readAsDataURL(archivoSeleccionado);
-                router.push(`/resultado/${json.predictions[0].label}`)
 
-            })
-            .catch(err => console.error("Error", err))*/
     };
 
 
