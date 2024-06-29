@@ -129,8 +129,8 @@ export default function DescubrirPage() {
                     <p>{valueLugar}m²</p>
                     <input
                         type="range"
-                        min="1"
-                        max="10"
+                        min="30"
+                        max="2500"
                         value={valueLugar}
                         onChange={handleChangeLugar}
                         className="slider-thumb appearance-none w-full h-1 bg-gray-300 rounded-full outline-none appearance-none focus:outline-none"
