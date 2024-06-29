@@ -2,6 +2,7 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { GardenService } from '@/app/api/v1/gardens/GardenService'; 
 
 export interface Garden {
     id: number | null;
@@ -25,31 +26,19 @@ export interface Photo {
 export default function IdentificarPlanta() {
 
     const [gardens, setGardens] = useState<Garden[]>([]);
- 
-     const fetchGardens = async () => {
-         try {
-             const userId = 1;
-             const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
-                 headers: {
-                     'id-user': userId.toString(),
-                 },
-             });
-             if (!response.ok) {
-                 throw new Error('Failed to fetch gardens');
-             }
-             const data = await response.json();
-             console.log(data)
- 
-             console.log(data)
-             setGardens(data);
-         } catch (error) {
-             console.error('Error fetching gardens:', error);
-         }
-     };
- 
-     useEffect(() => {
-         fetchGardens()
-     }, []);
+    const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
+    useEffect(() => {
+        const fetchGardens = async () => {
+            try {
+                const data = await gardenService.getGardens();
+                setGardens(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchGardens();
+    }, []);
 
     return (
 
@@ -73,17 +62,17 @@ export default function IdentificarPlanta() {
                             <div className="flex flex-row justify-center sm:justify-start gap-y-5 flex-wrap mx-auto w-full">
                                 {garden.plants.map((plant) => (
                                     <div key={plant.id}>
-                                    <Link href={`estado/${plant.id}`} >
-                                        <div className="rounded w-full cursor-pointer flex flex-col items-center">
-                                            <img className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover object-center mb-2 hover:shadow-lg transform hover:scale-110 transition duration-300"
-                                                src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"}
-                                                alt={plant.alias}
-                                            />
-                                            <div>
-                                                <h2 className="text-lg text-[#275F08] font-bold title-font text-wrap text-center w-52">{plant.alias}</h2>
+                                        <Link href={`estado/${plant.id}`} >
+                                            <div className="rounded w-full cursor-pointer flex flex-col items-center">
+                                                <img className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full object-cover object-center mb-2 hover:shadow-lg transform hover:scale-110 transition duration-300"
+                                                    src={plant.photos && plant.photos.length > 0 && plant.photos[plant.photos.length - 1].url !== "" ? plant.photos[plant.photos.length - 1].url : "/planta-sin-foto.jpg"}
+                                                    alt={plant.alias}
+                                                />
+                                                <div>
+                                                    <h2 className="text-lg text-[#275F08] font-bold title-font text-wrap text-center w-52">{plant.alias}</h2>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
                                     </div>
 
                                 ))}
