@@ -4,61 +4,7 @@ import Image from "next/image";
 import styles from "@/app/estado/[id]/estado.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PlantService, PlantHealth } from "@/app/api/v1/plants/PlantService";
-
-export interface Candidate {
-    name: string
-    scientific_name_disease: string
-    type: string
-    common_name: string
-    kingdom_taxonomy: string
-    entity_id: string
-    class_taxonomy: string
-    genus_taxonomy: string
-    order_taxonomy: string
-    family_taxonomy: string
-    phylum_taxonomy: string
-    wiki_urls: string
-}
-
-export interface Plant {
-    id: number
-    alias: string
-    creation_date: string
-    modification_date: string
-    planting_date: string
-    description: string
-    favorite: boolean
-    height: number
-    sun_exposure: string
-    notes: string
-    name_garden: string
-    expo: string
-    id_garden: number
-    plant_catalog_family_name: string
-    plant_catalog_genus: string
-    plant_catalog_watering_frecuency: string
-    plant_catalog_description: string
-    plant_catalog_common_name: string
-    plant_catalog_scientific_name: string
-    images: Image[]
-    plant_catalog_sun_exposure: string
-    history: History[]
-}
-
-export interface Image {
-    url: string
-}
-
-export interface History {
-    id_plant: number
-    notes: string
-    height: number
-    alias: string
-    url_image: string
-    modified_at: string
-    id_diseases: number
-}
+import { PlantService, PlantHealth, Plant } from "@/app/api/v1/plants/PlantService";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
