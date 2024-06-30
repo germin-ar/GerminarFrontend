@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
 import { BalooBhaina2 } from "@/app/ui/fonts";
-import { PlantSuggestionService, PlantSuggestion } from "@/services/PlantSuggestionsService";
+import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
+import { PlantSuggestion } from "@/interfaces/index";
 
 export default function BusquedaPage() {
 

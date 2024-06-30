@@ -1,27 +1,4 @@
-export interface Garden {
-    id: number | null;
-    name: string | null;
-    plants: Plant[];
-}
-
-export interface Plant {
-    id: number;
-    alias: string;
-    creation_date: string;
-    modification_date: string;
-    is_favorite: boolean;
-    photos: Photo[];
-}
-
-export interface Photo {
-    url: string;
-}
-
-export interface GardenRequestBody {
-    user_id: number;
-    name: string;
-    is_active: boolean;
-}
+import { Garden, GardenRequestBody } from "@/interfaces/index";
 
 export class GardenService {
     private apiHost: string;
