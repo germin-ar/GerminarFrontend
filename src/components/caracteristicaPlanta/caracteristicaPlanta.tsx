@@ -6,96 +6,14 @@ import styles from "@/app/home.module.css";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Loading from "@/components/Spinner/Spinner";
-
-interface PlantData {
-    id: string;
-    language: string;
-    candidates: Candidate[];
-    image: Image;
-    health: Health;
-}
-
-interface Health {
-    is_healty: boolean
-}
-
-interface Candidate {
-    score: number;
-    specie: Species;
-    plant_data: PlantDataDetail;
-}
-
-interface Species {
-    scientific_name: string;
-    genus_name: string;
-    family_name: string;
-    common_names: string[];
-}
-
-interface PlantDataDetail {
-    description: string;
-    height: number | null;
-    fertilizer: string;
-    watering: string;
-    soil: string;
-    sun_exposure: string;
-    insecticide: string;
-    temperature_max: number | null;
-    temperature_min: number | null;
-    tips: string;
-    harvest_time: string;
-    growth_season: string;
-    planting_time: string;
-    pruning: string;
-}
-
-interface Image {
-    uuid: string;
-    url: string;
-}
+import { CandidatesService} from "@/services/CandidatesService";
+import { PlantCatalogService, PlantSuggestion } from "@/services/PlantCatalogService";
+import { PlantCaracts, Specie } from '@/interfaces/index';
 
 interface IdentificarPlanta {
     planta: string
     espacio: string
     sugerencia: string
-}
-
-interface PlantaSugerencia {
-    id: number;
-    scientific_name: string;
-    description: string;
-    slug_scientific_name: string;
-    genus: string;
-    family_name: string;
-    max_size: number;
-    fertilizer: string;
-    watering_frecuency: string;
-    pruning: string;
-    soil: string;
-    insecticide: string | null;
-    tips: string;
-    sun_light: string;
-    watering_care: string;
-    common_name: string;
-    lifespan: string;
-    propagation: string;
-    fruit: string;
-    edible: string;
-    growth_rate: string;
-    maintenance: string;
-    temperature_max: number;
-    temperature_min: number;
-    specie: string;
-    toxic: string;
-    repotting: string;
-    dormancy: string;
-    growth_season: string;
-    atmospheric_humidity: number;
-    planting_time: string;
-    harvest_time: string;
-    plant_type: string | null;
-    width: number;
-    url_image: string;
 }
 
 export default function CaracteristicaPlanta(props: IdentificarPlanta) {
@@ -106,8 +24,9 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
         sugerencia: "Asegúrese de proporcionar un buen drenaje y pleno sol para obtener una cosecha óptima."
     };
 
-    const { planta, espacio, sugerencia } = props
-    const defaultPlantData: Species = {
+    const { planta: planta, espacio, sugerencia } = props
+
+    const defaultPlantData: Specie = {
         scientific_name: '',
         genus_name: '',
         family_name: '',
@@ -117,51 +36,46 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const handleClick = () => {
         setShowPopup(!showPopup);
     };
-    const [plantData, setPlantData] = useState<PlantData | null>(null);
+    const [plantData, setPlantData] = useState<PlantCaracts | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [plantaSugerencia, setPlantaSugerencia] = useState<PlantSuggestion | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [plantaSugerencia, setPlantaSugerencia] = useState<PlantaSugerencia | null>(null);
+    const candidatesService = new CandidatesService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const plantCatalogService = new PlantCatalogService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
     useEffect(() => {
         if (sugerencia === "no") {
             setLoading(true);
             setError(null);
 
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/candidates/${planta}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data: PlantData) => {
+            const fetchGardens = async () => {
+                try {
+                    const data = await candidatesService.getCandidates(`${planta}`);
                     setPlantData(data);
-                    console.log(data);
                     setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
+                } catch (error) {
+                    console.error(error);
+                    setError("error");
                     setLoading(false);
-                });
+                }
+                setLoading(false);
+            };
+            fetchGardens();
 
         } else if (sugerencia === 'si') {
-
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-catalog/${planta}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data: PlantaSugerencia) => {
+            const fetchPlantCatalog = async () => {
+                try {
+                    const data = await plantCatalogService.getPlantCatalog(`${planta}`);
                     setPlantaSugerencia(data);
-                    console.log(data);
                     setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
+                } catch (error) {
+                    console.error(error);
+                    setError("error");
                     setLoading(false);
-                });
-
+                }
+                setLoading(false);
+            };
+            fetchPlantCatalog();
         }
 
     }, [planta]);
@@ -169,16 +83,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     if (loading) {
         return <Loading />;
     }
-    
-        if (error) {
-            return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
-                <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Volvé más tarde, por favor.</h3>
-                <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
-                    height="200" />
-                <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
-            </div>
-        }
-    
+
+    if (error) {
+        return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
+            <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Volvé más tarde, por favor.</h3>
+            <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
+                height="200" />
+            <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
+        </div>
+    }
+
     return (
         <section className="max-w-[1300px] m-auto">
 
@@ -559,7 +473,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
 
                             {
-                               plantaSugerencia && plantaSugerencia.toxic && (
+                                plantaSugerencia && plantaSugerencia.toxic && (
                                     <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                         <div>
                                             <Image className="max-w-[100px] min-w-[100px]" src="/resultado/toxicidad-icon.png" alt="toxicidad-icon" width="150"

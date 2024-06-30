@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
-import { PlantSuggestionService, PlantSuggestion } from "@/app/api/v1/plant-suggestion/PlantSuggestionsService";
+import { PlantSuggestionService, PlantSuggestion } from "@/services/PlantSuggestionsService";
 
 export default function RecomendacionPage() {
 

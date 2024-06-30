@@ -2,7 +2,7 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { GardenService, Garden } from '@/app/api/v1/gardens/GardenService'; 
+import { GardenService, Garden } from '@/services/GardenService'; 
 
 export default function IdentificarPlanta() {
 

@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "@/app/estado/[id]/estado.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PlantService, PlantHealth, Plant } from "@/app/api/v1/plants/PlantService";
+import { PlantService, PlantHealth, Plant } from "@/services/PlantService";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 

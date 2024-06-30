@@ -9,8 +9,8 @@ import { PiPottedPlantFill } from "react-icons/pi";
 import { CiCalendar } from "react-icons/ci";
 import Image from "next/image";
 import { BalooBhaina2 } from "../ui/fonts";
-import { GardenService, Garden, Plant } from "../api/v1/gardens/GardenService";
-import { PlantService } from "../api/v1/plants/PlantService";
+import { GardenService, Garden, Plant } from "../../services/GardenService";
+import { PlantService } from "../../services/PlantService";
 
 export default function JardinPage() {
 
