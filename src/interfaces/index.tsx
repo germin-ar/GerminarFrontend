@@ -184,3 +184,8 @@ export interface Photo {
     file_path: string
     is_public: boolean
 }
+
+export interface Space {
+    space_name: string
+  }
+  
