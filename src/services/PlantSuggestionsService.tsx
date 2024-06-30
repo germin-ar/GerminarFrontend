@@ -37,7 +37,7 @@ export class PlantSuggestionService {
             return await response.json();
         }
     } catch(error: any) {
-        console.error('Error fetching plant suggestions details:', error);
+        console.error('Error fetching plant suggestions place:', error);
         throw error;
     }
 }

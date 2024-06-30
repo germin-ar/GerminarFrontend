@@ -26,7 +26,7 @@ export class PlantService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error creating plant:', error);
+            console.error('Error saving plant:', error);
             throw error;
         }
     }
@@ -117,7 +117,7 @@ export class PlantService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error deleting plant:', error);
+            console.error('Error uploading photo:', error);
             throw error;
         }
     }
@@ -140,7 +140,7 @@ export class PlantService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error deleting plant:', error);
+            console.error('Error fetching health plant status:', error);
             throw error;
         }
     }

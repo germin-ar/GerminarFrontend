@@ -187,5 +187,28 @@ export interface Photo {
 
 export interface Space {
     space_name: string
+}
+
+export interface AuthRequestBody {
+    username: string
+    email: string
+    password: string
+}
+
+export interface AuthRegister {
+    email: string
+    isConfirmed: boolean
+    name: string
+}
+
+export interface AuthLogin {
+    id_token: string
+    access_token: string
+    refresh_token: string
+}
+
+export interface ConfirmBodyRequest {
+    email: string
+    confirmation_code: string
   }
   

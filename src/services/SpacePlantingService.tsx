@@ -26,7 +26,7 @@ export class SpacePlantingService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error fetching plant:', error);
+            console.error('Error fetching space planting:', error);
             throw error;
         }
     }

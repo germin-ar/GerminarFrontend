@@ -21,7 +21,7 @@ export class SpacePlantingService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error updating plant:', error);
+            console.error('Error saving image:', error);
             throw error;
         }
     }
