@@ -7,8 +7,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Loading from "@/components/Spinner/Spinner";
 import { CandidatesService} from "@/services/CandidatesService";
-import { PlantCatalogService, PlantSuggestion } from "@/services/PlantCatalogService";
-import { PlantCaracts, Specie } from '@/interfaces/index';
+import { PlantCatalogService } from "@/services/PlantCatalogService";
+import { PlantCaracts, Specie, PlantSuggestion } from '@/interfaces/index';
 
 interface IdentificarPlanta {
     planta: string

@@ -8,7 +8,7 @@ export class SpacePlantingService {
     }
 
     // saveImage
-    async saveImage(body: FormData): Promise<Photo> { //duda en respone application/json
+    async saveImage(body: FormData): Promise<Photo> { 
         try {
             const response = await fetch(`${this.apiHost}/api/v1/images`, {
                 method: 'POST',

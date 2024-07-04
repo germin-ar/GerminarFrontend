@@ -16,31 +16,17 @@ import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {BalooBhaina2} from "../../app/ui/fonts";
 import Loading from "@/components/Spinner/Spinner";
 import Link from "next/link";
+import { PlantService } from "@/services/PlantService";
+import { FormValues, FormValuesEdit, PlantEdit } from "@/interfaces";
 
 
 export async function generateStaticParams() {
     return [{id: '1'}]
 }
 
-interface FormValues {
-    alias: string;
-    height: number;
-    planting_date: Date;
-    id_garden: number | null;
-    is_favorite: boolean;
-    image_url: string;
-    notes: string;
-}
 
-interface FormValuesEdit {
-    alias: string | null;
-    height: number | null;
-    //planting_date: Date;
-    id_garden: number | null;
-    is_favorite: boolean | null;
-    image_url: string | null;
-    notes: string;
-}
+
+
 interface PlantData {
     id: string;
     language: string;
@@ -85,31 +71,7 @@ interface Image {
 
 
 
-interface PlantEdit {
-    id: number;
-    alias: string;
-    creation_date: string | null;
-    modification_date: string;
-    planting_date: string ;
-    description: string | null;
-    favorite: boolean | null;
-    height: number;
-    sun_exposure: string | null;
-    notes: string | null;
-    name_garden: string | null;
-    expo: string | null;
-    id_garden: number;
-    plant_catalog_family_name: string;
-    plant_catalog_genus: string;
-    plant_catalog_watering_frecuency: string;
-    plant_catalog_description: string;
-    plant_catalog_common_name: string;
-    plant_catalog_scientific_name: string;
-    plant_catalog_sun_exposure: string;
-    images: {
-        url: string;
-    }[];
-}
+
 
 interface IdentificarPlanta {
     id: string
@@ -151,7 +113,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
         height: 0,
-        planting_date: new Date('2024-06-12'),
+        planting_date: new Date(),
         id_garden: null,
         is_favorite: true,
         notes: "",
@@ -244,33 +206,15 @@ export default function Formulario(props: IdentificarPlanta) {
         submitForm()
     };
 
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const submitForm = async () => {
         if (editar === "si") {
             try {
-                /*const updatedFormValuesEdit = {
-                ...formValuesEdit,
-                        image_url: plantEdit?.images[0].url,
-                };*/
-                const idUsuario = 1;
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${plantEdit?.id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'id-user': idUsuario.toString()
-                    },
-                    body: JSON.stringify(formValuesEdit)
-                });
-                if (!response.ok) {
-                    console.log(formValuesEdit);
-                    throw new Error('Failed to update plant');
-
-                }
-
-                console.log(formValuesEdit);
+                plantService.updatePlant(plantEdit?.id, formValuesEdit)               
                 router.push(`/jardin`);
             } catch (error) {
-                console.error('Error updating plant:', error);
+                console.error(error);
             }
         }
         if (editar === "no") {
@@ -281,25 +225,14 @@ export default function Formulario(props: IdentificarPlanta) {
                     image_url: plantData?.image.url,
                     id_plant_catalog: plantData?.candidates[0].plant_data.id
                 };
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'id-user': "1"
-                    },
-                    body: JSON.stringify(updatedFormValues),
-
-                });
-                if (response.ok) {
-                    const responseData: PlantResponse = await response.json();
-                    console.log("Respuesta del servidor:", responseData);
-                    router.push(`/jardin/${responseData}`)
+                const response = plantService.savePlant(updatedFormValues);
+                if ((await response).ok) {
+                    router.push(`/jardin/${response}`)
                 } else {
                     console.log(JSON.stringify(updatedFormValues))
                 }
-            } catch (err) {
-                console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
-
+            } catch (error) {
+                console.error(error);
             }
         }
 

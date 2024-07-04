@@ -110,7 +110,7 @@ export interface GardenRequestBody {
 }
 
 export interface Plant {
-    id: number
+    id: number | any
     alias: string
     creation_date: string
     modification_date: string
@@ -171,11 +171,30 @@ export interface Candidate {
 export interface PlantRequestBody {
     alias: string
     height: number
-    planting_date: string
-    id_garden: number
+    planting_date: Date
+    id_garden: number | null
+    is_favorite: boolean
+    image_url: string | any
+    id_plant_catalog: number | any
+    notes: string
+}
+
+export interface FormValues {
+    alias: string
+    height: number
+    planting_date: Date
+    id_garden: number | null
     is_favorite: boolean
     image_url: string
-    id_plant_catalog: number
+    notes: string
+}
+
+export interface FormValuesEdit {
+    alias: string
+    height: number
+    id_garden: number | null
+    is_favorite: boolean
+    image_url: string
     notes: string
 }
 

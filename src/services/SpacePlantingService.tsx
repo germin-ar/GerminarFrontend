@@ -8,7 +8,7 @@ export class SpacePlantingService {
     }
 
     // getSpacePlanting
-    async getSpacePlanting(body: Image): Promise<Space>{ //duda sobre Image
+    async getSpacePlanting(body: Image): Promise<Space>{ 
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/space-planting`, {
