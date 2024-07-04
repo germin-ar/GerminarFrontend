@@ -109,7 +109,7 @@ export interface GardenRequestBody {
     is_active: boolean;
 }
 
-export interface Plant {
+export interface PlantEdit {
     id: number | any
     alias: string
     creation_date: string
