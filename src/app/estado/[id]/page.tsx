@@ -5,11 +5,11 @@ import styles from "@/app/estado/[id]/estado.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PlantService} from "@/services/PlantService";
-import { Plant, PlantHealth } from "@/interfaces/index";
+import { PlantEdit, PlantHealth } from "@/interfaces/index";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
-    const [plant, setPlant] = useState<Plant | any>();
+    const [plant, setPlant] = useState<PlantEdit | any>();
     const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
