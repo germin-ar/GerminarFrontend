@@ -83,10 +83,6 @@ interface Garden {
     name: string;
 }
 
-interface PlantResponse {
-    id: number;
-}
-
 interface PlantData {
     scientificName: string;
     genusName: string;
