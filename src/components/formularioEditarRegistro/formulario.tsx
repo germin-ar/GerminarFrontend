@@ -225,8 +225,8 @@ export default function Formulario(props: IdentificarPlanta) {
                     image_url: plantData?.image.url,
                     id_plant_catalog: plantData?.candidates[0].plant_data.id
                 };
-                const response = plantService.savePlant(updatedFormValues);
-                if ((await response).ok) {
+                const response = await plantService.savePlant(updatedFormValues);
+                if (response) {
                     router.push(`/jardin/${response}`)
                 } else {
                     console.log(JSON.stringify(updatedFormValues))

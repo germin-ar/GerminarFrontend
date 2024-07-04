@@ -198,6 +198,10 @@ export interface FormValuesEdit {
     notes: string
 }
 
+export interface PlantResponse {
+    id: number;
+}
+
 export interface Photo {
     id: string
     file_path: string
