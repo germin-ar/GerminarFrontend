@@ -1,4 +1,4 @@
-import { Garden, GardenRequestBody } from "@/interfaces/index";
+import { Garden } from "@/interfaces/index";
 
 export class GardenService {
     private apiHost: string;
