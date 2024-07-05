@@ -2,117 +2,31 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Image from "next/image";
 import styles from "@/app/estado/[id]/estado.module.css";
-import HomeStyles from "@/app/home.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-
-export interface Health {
-    is_healthy: boolean
-    candidates: Candidate[]
-}
-
-export interface Candidate {
-    name: string
-    scientific_name_disease: string
-    type: string
-    common_name: string
-    kingdom_taxonomy: string
-    entity_id: string
-    class_taxonomy: string
-    genus_taxonomy: string
-    order_taxonomy: string
-    family_taxonomy: string
-    phylum_taxonomy: string
-    wiki_urls: string
-}
-
-export interface Plant {
-    id: number
-    alias: string
-    creation_date: string
-    modification_date: string
-    planting_date: string
-    description: string
-    favorite: boolean
-    height: number
-    sun_exposure: string
-    notes: string
-    name_garden: string
-    expo: string
-    id_garden: number
-    plant_catalog_family_name: string
-    plant_catalog_genus: string
-    plant_catalog_watering_frecuency: string
-    plant_catalog_description: string
-    plant_catalog_common_name: string
-    plant_catalog_scientific_name: string
-    images: Image[]
-    plant_catalog_sun_exposure: string
-    history: History[]
-}
-
-export interface Image {
-    url: string
-}
-
-export interface History {
-    id_plant: number
-    notes: string
-    height: number
-    alias: string
-    url_image: string
-    modified_at: string
-    id_diseases: number
-}
+import { PlantService} from "@/services/PlantService";
+import { PlantEdit, PlantHealth } from "@/interfaces/index";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
-    const [plant, setPlant] = useState<Plant>();
-    const [plantaDiagnostico, setPlantaDiagnostico] = useState<Health>();
- 
-     const fetchPlants = async () => {
-         try {
-             const userId = 1;
-             const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}/health-status`, {
-                 headers: {
-                     'id-user': userId.toString(),
-                 },
-             });
-             if (!response.ok) {
-                 throw new Error('Failed to fetch gardens');
-             }
-             const data = await response.json();
-             console.log(data)
- 
-             console.log(data)
-             setPlantaDiagnostico(data);
-         } catch (error) {
-             console.error('Error fetching gardens:', error);
-         }
-     };
- 
-     useEffect(() => {
-         fetchPlants()
-         fetchPlantData()
-     }, []);
+    const [plant, setPlant] = useState<PlantEdit | any>();
+    const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
-    const fetchPlantData = async () => {
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
-                headers: {
-                    'id-user': '1'
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Failed to fetch plant data');
+    useEffect(() => {
+        const fetchPlantHealthStatus = async () => {
+            try {
+                const dataHealthStatus = await plantService.getHealthPlantStatus(id);
+                setPlantaDiagnostico(dataHealthStatus);
+
+                const dataPlant = await plantService.getPlant(id);
+                setPlant(dataPlant);
+            } catch (error) {
+                console.error(error);
             }
-            const plant = await response.json();
-            setPlant(plant);
-            console.log(plant)
-        } catch (error) {
-            console.error('Error fetching plant data:', error);
-        }
-    };
+        };
+        fetchPlantHealthStatus();
+    }, []);
 
     return (
         <>
@@ -124,11 +38,11 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                             de tu planta</h1>
                         <div className={`flex-1 flex items-start flex-col gap-5`}>
                             <div>
-                                { plant &&
-                                <img src={ plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
-                                    className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
-                                    width="250"
-                                    height="250" />
+                                {plant &&
+                                    <img src={plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
+                                        className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
+                                        width="250"
+                                        height="250" />
                                 }
                             </div>
                             <div className="flex w-full gap-5 justify-between">
@@ -143,32 +57,6 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                             </div>
                         </div>
                     </div>
-
-
-                    {/*<div className={`${styles.tabla} flex-1  text-2xl`}>*/}
-                    {/*    <table className={'vertical-header-table'}>*/}
-                    {/*        <tbody>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Nombre científico</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Ocimum basilicum</td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Nombres comunes</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Albahaca, Alhábega, Alfábega,*/}
-                    {/*                Basílico*/}
-                    {/*            </td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Género</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Ocimum</td>*/}
-                    {/*        </tr>*/}
-                    {/*        <tr>*/}
-                    {/*            <th className={`${styles.tablaCampos} p-10 border`}>Familia</th>*/}
-                    {/*            <td className={`${styles.tablaCampos} p-10 border`}>Lamiaceae</td>*/}
-                    {/*        </tr>*/}
-                    {/*        </tbody>*/}
-                    {/*    </table>*/}
-                    {/*</div>*/}
                 </div>
             </section>
             <section className={'flex flex-col gap-12 m-20'}>
@@ -208,7 +96,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                     <h2 className={`${BalooBhaina2.className} text-[#88BC43]`}>Posibles enfermedades</h2>
                     <p>Tené cuidado, estas son posibles enfermedades que pueden afectar tu planta: </p>
                     <ol>
-                        {plantaDiagnostico && plantaDiagnostico.candidates.map((candidate, index) => (
+                        {plantaDiagnostico && plantaDiagnostico.candidates.map((candidate: any, index: any) => (
                             <div key={index}>
                                 {index !== 0 && (
                                     <>

@@ -4,6 +4,8 @@ import Image from "next/image";
 import React, {ChangeEvent, forwardRef, useRef, useState} from "react";
 import {useRouter} from "next/navigation";
 import {json} from "node:stream/consumers";
+import { SpacePlantingService } from "@/services/SpacePlantingService";
+import { ImageService } from "@/services/ImageService";
 
 
 
@@ -34,6 +36,9 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         }
     };
 
+    const spacePlantingService = new SpacePlantingService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const imageService = new ImageService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
     const handleIdentificarClick = async (event?: React.FormEvent<HTMLFormElement>) => {
         if (event) {
             event.preventDefault();
@@ -47,50 +52,26 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         formData.append("image", archivoSeleccionado);
 
         if (props.imagen === "imagenIdentificarEspacio") {
-
-            /*await fetch(
-                `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/space-planting`,
-                {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "id-user": "1"
-                    }
+            try {
+                const response = await spacePlantingService.getSpacePlanting(formData);
+                if (response) {
+                    onResultadoRecibido(response.space_name);
                 }
-            )
-                .then(res => {
-                    return res.json();
-                })
-                .then(json => {
-                    console.log(json)
-                    onResultadoRecibido(json.space_name);
-                })
-                .catch(err => console.error("Error", err))
-        */
-            onResultadoRecibido("patio")
-            console.log("desde identificar")
-        }
-        if (props.imagen === "imagenIdentificar"){
-        await fetch(
-            `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/images`,
-            {
-                method: "POST",
-                body: formData,
-                /*headers:{
-                    "Content-Type": "multipart/form-data"
-                }*/
+            } catch (error) {
+                console.error(error);
             }
-        )
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                //redirect()
-                router.push(`/resultado/${json.id}`)
-            })
-            .catch(err => console.error("Error", err))
         }
 
+        if (props.imagen === "imagenIdentificar"){
+            try {
+                const response = await imageService.saveImage(formData);
+                if (response) {
+                    router.push(`/resultado/${response.id}`)
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
     };
 
 

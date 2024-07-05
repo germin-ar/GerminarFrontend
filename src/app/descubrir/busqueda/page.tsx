@@ -4,12 +4,8 @@ import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
 import { BalooBhaina2 } from "@/app/ui/fonts";
-
-interface PlantSuggestion {
-    common_name: string;
-    scientific_name: string;
-    url_image: string;
-}
+import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
+import { PlantSuggestion } from "@/interfaces/index";
 
 export default function BusquedaPage() {
 
@@ -19,42 +15,28 @@ export default function BusquedaPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState("");
 
-    const searchParams = useSearchParams()
-    const latitude = searchParams.get('latitude')
-    const longitude = searchParams.get('longitude')
-    const sunExposure = searchParams.get('sunExposure')
-    const squareCentimeters = searchParams.get('squareCentimeters')
-    const page = searchParams.get('page')
+    const searchParams = useSearchParams();
+    const latitude = searchParams.get('latitude');
+    const longitude = searchParams.get('longitude');
+    const sunExposure = searchParams.get('sunExposure');
+    const squareCentimeters = searchParams.get('squareCentimeters');
+  
+    const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)
-                const apiUrl = `${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sunExposure=${sunExposure}&squareCentimeters=${squareCentimeters}&page=${currentPage}`;
-
-                const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error('No se pudo obtener la lista de sugerencias de plantas.');
-                }
-
-
-                const data = await response.json();
-
-                console.log(data)
+                const data = await plantSuggestionService.getPlantsSuggestion(latitude, longitude, sunExposure, squareCentimeters);
                 setPlantSuggestions(data);
             } catch (error) {
-                console.error('Error al obtener datos:', error);
-
+                console.error(error);
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchData();
-
+        fetchPlantSuggestions();
     }, [latitude, longitude, sunExposure, squareCentimeters, currentPage]);
-
-
 
     const openModal = (imageUrl: string) => {
         setModalImageUrl(imageUrl);

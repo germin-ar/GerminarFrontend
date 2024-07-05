@@ -6,96 +6,14 @@ import styles from "@/app/home.module.css";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Loading from "@/components/Spinner/Spinner";
-
-interface PlantData {
-    id: string;
-    language: string;
-    candidates: Candidate[];
-    image: Image;
-    health: Health;
-}
-
-interface Health {
-    is_healty: boolean
-}
-
-interface Candidate {
-    score: number;
-    specie: Species;
-    plant_data: PlantDataDetail;
-}
-
-interface Species {
-    scientific_name: string;
-    genus_name: string;
-    family_name: string;
-    common_names: string[];
-}
-
-interface PlantDataDetail {
-    description: string;
-    height: number | null;
-    fertilizer: string;
-    watering: string;
-    soil: string;
-    sun_exposure: string;
-    insecticide: string;
-    temperature_max: number | null;
-    temperature_min: number | null;
-    tips: string;
-    harvest_time: string;
-    growth_season: string;
-    planting_time: string;
-    pruning: string;
-}
-
-interface Image {
-    uuid: string;
-    url: string;
-}
+import { CandidatesService} from "@/services/CandidatesService";
+import { PlantCatalogService } from "@/services/PlantCatalogService";
+import { PlantCaracts, Specie, PlantSuggestion } from '@/interfaces/index';
 
 interface IdentificarPlanta {
     planta: string
     espacio: string
     sugerencia: string
-}
-
-interface PlantaSugerencia {
-    id: number;
-    scientific_name: string;
-    description: string;
-    slug_scientific_name: string;
-    genus: string;
-    family_name: string;
-    max_size: number;
-    fertilizer: string;
-    watering_frecuency: string;
-    pruning: string;
-    soil: string;
-    insecticide: string | null;
-    tips: string;
-    sun_light: string;
-    watering_care: string;
-    common_name: string;
-    lifespan: string;
-    propagation: string;
-    fruit: string;
-    edible: string;
-    growth_rate: string;
-    maintenance: string;
-    temperature_max: number;
-    temperature_min: number;
-    specie: string;
-    toxic: string;
-    repotting: string;
-    dormancy: string;
-    growth_season: string;
-    atmospheric_humidity: number;
-    planting_time: string;
-    harvest_time: string;
-    plant_type: string | null;
-    width: number;
-    url_image: string;
 }
 
 export default function CaracteristicaPlanta(props: IdentificarPlanta) {
@@ -106,8 +24,9 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
         sugerencia: "Asegúrese de proporcionar un buen drenaje y pleno sol para obtener una cosecha óptima."
     };
 
-    const { planta, espacio, sugerencia } = props
-    const defaultPlantData: Species = {
+    const { planta: planta, espacio, sugerencia } = props
+
+    const defaultPlantData: Specie = {
         scientific_name: '',
         genus_name: '',
         family_name: '',
@@ -117,51 +36,46 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const handleClick = () => {
         setShowPopup(!showPopup);
     };
-    const [plantData, setPlantData] = useState<PlantData | null>(null);
+    const [plantCaracts, setPlantCaracts] = useState<PlantCaracts | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [plantaSugerencia, setPlantaSugerencia] = useState<PlantSuggestion | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [plantaSugerencia, setPlantaSugerencia] = useState<PlantaSugerencia | null>(null);
+    const candidatesService = new CandidatesService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const plantCatalogService = new PlantCatalogService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
     useEffect(() => {
         if (sugerencia === "no") {
             setLoading(true);
             setError(null);
 
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/candidates/${planta}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data: PlantData) => {
-                    setPlantData(data);
-                    console.log(data);
+            const fetchGardens = async () => {
+                try {
+                    const data = await candidatesService.getCandidates(`${planta}`);
+                    setPlantCaracts(data);
                     setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
+                } catch (error) {
+                    console.error(error);
+                    setError("error");
                     setLoading(false);
-                });
+                }
+                setLoading(false);
+            };
+            fetchGardens();
 
         } else if (sugerencia === 'si') {
-
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plant-catalog/${planta}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data: PlantaSugerencia) => {
+            const fetchPlantCatalog = async () => {
+                try {
+                    const data = await plantCatalogService.getPlantCatalog(`${planta}`);
                     setPlantaSugerencia(data);
-                    console.log(data);
                     setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
+                } catch (error) {
+                    console.error(error);
+                    setError("error");
                     setLoading(false);
-                });
-
+                }
+                setLoading(false);
+            };
+            fetchPlantCatalog();
         }
 
     }, [planta]);
@@ -169,16 +83,16 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     if (loading) {
         return <Loading />;
     }
-    
-        if (error) {
-            return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
-                <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Volvé más tarde, por favor.</h3>
-                <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
-                    height="200" />
-                <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
-            </div>
-        }
-    
+
+    if (error) {
+        return <div className="md:h-[453px] flex items-center justify-center flex-col gap-2 my-3">
+            <h3 className={"text-gray-700"}>¡Oh no! Algo salió mal. Volvé más tarde, por favor.</h3>
+            <Image src="/algo-salio-mal.png" alt="mas-icon" width="300"
+                height="200" />
+            <Link href="/" className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>Reintentar</Link>
+        </div>
+    }
+
     return (
         <section className="max-w-[1300px] m-auto">
 
@@ -189,17 +103,17 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
 
                         <div className={'flex flex-col items-center gap-10'}>
-                            <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{plantData?.candidates[0].specie.scientific_name}</h2>
+                            <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>{plantCaracts?.candidates[0].specie.scientific_name}</h2>
                             <div className="flex-1 flex items-start flex-col gap-5">
                                 {/*<Image src={`${plantData?.image.url}`} alt="Albahaca-sana" width="500"
                                        height="500"/>*/}
                                 {
-                                    plantData && (
-                                        <img src={`${plantData?.image.url}`}
+                                    plantCaracts && (
+                                        <img src={`${plantCaracts?.image.url}`}
                                             className="rounded-lg shadow-lg"
                                             width="500"
                                             height="500"
-                                            alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
+                                            alt={`${plantCaracts?.candidates[0].specie.common_names[0]}`} />
                                     )
                                 }
                                 {
@@ -208,11 +122,11 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                             className="rounded-lg shadow-lg"
                                             width="500"
                                             height="500"
-                                            alt={`${plantData?.candidates[0].specie.common_names[0]}`} />
+                                            alt={`${plantaSugerencia.url_image}`} />
                                     )
                                 }
                                 {
-                                    plantData && (
+                                    plantCaracts && (
                                         <Link href={`/registro/${planta}`}
                                             className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             <div>
@@ -242,8 +156,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Nombre científico</p></th>
                                         {
-                                            plantData && (
-                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.scientific_name}</p></td>
+                                            plantCaracts && (
+                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.scientific_name}</p></td>
                                             )
                                         }
                                         {
@@ -255,9 +169,9 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Nombres comunes</p></th>
                                         {
-                                            plantData && (
+                                            plantCaracts && (
                                                 <td className={'p-10 border'}>
-                                                    {plantData?.candidates[0].specie.common_names.map((name, index) => (
+                                                    {plantCaracts?.candidates[0].specie.common_names.map((name, index) => (
                                                         <p key={index}>{name}</p>
                                                     ))}
                                                 </td>
@@ -272,8 +186,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Género</p></th>
                                         {
-                                            plantData && (
-                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.genus_name}</p></td>
+                                            plantCaracts && (
+                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.genus_name}</p></td>
                                             )
                                         }
                                         {
@@ -285,8 +199,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     <tr>
                                         <th className={'p-10 border text-nowrap'}><p>Familia</p></th>
                                         {
-                                            plantData && (
-                                                <td className={'p-10 border'}><p>{plantData?.candidates[0].specie.family_name}</p></td>
+                                            plantCaracts && (
+                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.family_name}</p></td>
                                             )
                                         }
                                         {
@@ -304,7 +218,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                 <section className={'flex flex-col gap-12'}>
 
                     {
-                        plantData && (
+                        plantCaracts && (
                             <div className={'bg-white rounded-lg shadow-lg p-6'}>
                                 <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
                                     salud</h2>
@@ -314,7 +228,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                             alt="Planta-sana-icon" width="80" height="80" />
                                     </div>
                                     <div>
-                                        {plantData?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
+                                        {plantCaracts?.health.is_healty ? <p>¡Tu planta parece sana!</p> : <p>¡Tu planta necesita ayuda!</p>}
                                     </div>
                                 </div>
                             </div>
@@ -325,9 +239,9 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Descripción general</h2>
 
                         {
-                            plantData && (
+                            plantCaracts && (
                                 <p className="text-justify">
-                                    {plantData?.candidates[0].plant_data.description}
+                                    {plantCaracts?.candidates[0].plant_data.description}
                                 </p>)
                         }
                         {
@@ -356,8 +270,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<li>Tallo de 30 a 50 cm de altura</li>
                                         <li>Hojas de 3 a 5 cm de longitud</li>*/}
                                     {
-                                        plantData && (
-                                            <p>La altura máxima es de <span className="font-bold">{plantData?.candidates[0].plant_data.height}<span className="text-base">cm</span></span></p>
+                                        plantCaracts && (
+                                            <p>La altura máxima es de <span className="font-bold">{plantCaracts?.candidates[0].plant_data.height}<span className="text-base">cm</span></span></p>
                                         )
                                     }
                                     {
@@ -378,8 +292,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Aplicar un fertilizante
                                         equilibrado una vez al mes durante la temporada de crecimiento.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.fertilizer}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.fertilizer}</p>
                                         )
                                     }
                                     {
@@ -400,8 +314,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Mantener el suelo ligeramente
                                         húmedo, evitando el encharcamiento.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.watering}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.watering}</p>
                                         )
                                     }
                                     {
@@ -422,8 +336,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Requiere un suelo bien drenado y
                                         fértil, preferiblemente con un pH entre 6.0 y 7.5.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.soil}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.soil}</p>
                                         )
                                     }
                                     {
@@ -445,8 +359,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         y sombra parcial por la tarde.</p>*/}
 
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.sun_exposure}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.sun_exposure}</p>
                                         )
                                     }
                                     {
@@ -468,8 +382,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Controlar plagas con
                                         insecticidas naturales como jabón insecticida o aceite de neem.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.insecticide}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.insecticide}</p>
                                         )
                                     }
                                     {
@@ -490,8 +404,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                     {/*<p className={`${stylesResultado.texto}`}>Prefiere temperaturas cálidas
                                         entre 18-25°C, evitando temperaturas extremadamente frías.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>Entre <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_min}°C</span> y <span className="font-bold">{plantData?.candidates[0].plant_data.temperature_max}°C</span></p>
+                                        plantCaracts && (
+                                            <p>Entre <span className="font-bold">{plantCaracts?.candidates[0].plant_data.temperature_min}°C</span> y <span className="font-bold">{plantCaracts?.candidates[0].plant_data.temperature_max}°C</span></p>
                                         )
                                     }
                                     {
@@ -513,11 +427,11 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         después de que haya pasado el
                                         riesgo de heladas.</p>*/}
                                     {
-                                        plantData && (
+                                        plantCaracts && (
                                             <>
-                                                <p><span className="font-bold">De siembra:</span> {plantData?.candidates[0].plant_data.planting_time}</p>
-                                                <p><span className="font-bold">De crecimiento:</span> {plantData?.candidates[0].plant_data.growth_season}</p>
-                                                <p><span className="font-bold">De cosecha:</span> {plantData?.candidates[0].plant_data.harvest_time}</p>
+                                                <p><span className="font-bold">De siembra:</span> {plantCaracts?.candidates[0].plant_data.planting_time}</p>
+                                                <p><span className="font-bold">De crecimiento:</span> {plantCaracts?.candidates[0].plant_data.growth_season}</p>
+                                                <p><span className="font-bold">De cosecha:</span> {plantCaracts?.candidates[0].plant_data.harvest_time}</p>
                                             </>
                                         )
                                     }
@@ -545,8 +459,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         aproximadamente, para conseguir un mayor crecimiento y que la recolecta sea más
                                         abundante.</p>*/}
                                     {
-                                        plantData && (
-                                            <p>{plantData?.candidates[0].plant_data.pruning}</p>
+                                        plantCaracts && (
+                                            <p>{plantCaracts?.candidates[0].plant_data.pruning}</p>
                                         )
                                     }
                                     {
@@ -559,7 +473,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
 
                             {
-                               plantaSugerencia && plantaSugerencia.toxic && (
+                                plantaSugerencia && plantaSugerencia.toxic && (
                                     <div className={'mt-16 flex items-center gap-8 w-2/4'}>
                                         <div>
                                             <Image className="max-w-[100px] min-w-[100px]" src="/resultado/toxicidad-icon.png" alt="toxicidad-icon" width="150"
@@ -598,8 +512,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 tarde.
                             </li>*/}
                             {
-                                plantData && (
-                                    <li>{plantData?.candidates[0].plant_data.tips}</li>
+                                plantCaracts && (
+                                    <li>{plantCaracts?.candidates[0].plant_data.tips}</li>
                                 )
                             }
                             {
@@ -611,7 +525,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
                     </div>
                     {
-                        plantData && (
+                        plantCaracts && (
                             <div className={'flex justify-end mb-5'}>
                                 <Link href={`/registro/${planta}`}
                                     className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
