@@ -55,7 +55,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             try {
                 const response = await spacePlantingService.getSpacePlanting(formData);
                 if (response) {
-                    onResultadoRecibido(response);
+                    onResultadoRecibido(response.space_name);
                 }
             } catch (error) {
                 console.error(error);
