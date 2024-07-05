@@ -1,6 +1,6 @@
 import { Photo } from "@/interfaces/index";
 
-export class SpacePlantingService {
+export class ImageService {
     private apiHost: string;
 
     constructor(apiHost: string) {

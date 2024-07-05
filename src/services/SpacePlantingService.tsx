@@ -1,4 +1,4 @@
-import { Image, Space } from "@/interfaces";
+import { Space } from "@/interfaces";
 
 export class SpacePlantingService {
     private apiHost: string;
@@ -8,16 +8,16 @@ export class SpacePlantingService {
     }
 
     // getSpacePlanting
-    async getSpacePlanting(body: Image): Promise<Space>{ 
+    async getSpacePlanting(body: FormData): Promise<Space>{ 
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/space-planting`, {
-                method: 'POST', //es un POST o un GET ?
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 },
-                body: JSON.stringify(body)
+                body: body
             });
 
             if (!response.ok) {
