@@ -32,8 +32,8 @@ export class GardenService {
     // saveGarden
     async saveGarden(gardenName: string, id: number) {
         const gardenData = {
-            gardenName: gardenName,
-            id: id
+            name: gardenName,
+            user_id: id
           };
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
