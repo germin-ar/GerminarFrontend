@@ -241,7 +241,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
         try {
             const response = await gardenService.saveGarden(gardenName, 1);
-            if (response.ok) {
+            if (response) {
                 alert('Jardín creado exitosamente');
                 closePopup();
                 await fetchUbicaciones()
