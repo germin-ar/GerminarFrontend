@@ -105,7 +105,6 @@ export class PlantService {
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}/photo`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 },
                 body: image
