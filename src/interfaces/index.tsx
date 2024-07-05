@@ -103,12 +103,6 @@ export interface Photo {
     url: string;
 }
 
-export interface GardenRequestBody {
-    user_id: number;
-    name: string;
-    is_active: boolean;
-}
-
 export interface PlantEdit {
     id: number | any
     alias: string
@@ -132,10 +126,6 @@ export interface PlantEdit {
     images: Image[]
     plant_catalog_sun_exposure: string
     history: History[]
-}
-
-export interface Image {
-    url: string
 }
 
 export interface History {

@@ -1,4 +1,4 @@
-import { Plant, Image, PlantHealth, PlantRequestBody, Photo, FormValuesEdit, PlantResponse } from "@/interfaces/index";
+import { Image, PlantHealth, PlantRequestBody, Photo, FormValuesEdit, PlantResponse, PlantEdit } from "@/interfaces/index";
 
 export class PlantService {
     private apiHost: string;
@@ -32,7 +32,7 @@ export class PlantService {
     }
 
     // getPlant
-    async getPlant(id: number): Promise<Plant[]> {
+    async getPlant(id: number | string): Promise<PlantEdit> {
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}`, {
@@ -99,7 +99,7 @@ export class PlantService {
     }
 
     // uploadPhoto
-    async uploadPhoto(id: number, image: Image): Promise<Photo[]> {
+    async uploadPhoto(id: number, image: FormData): Promise<Photo[]> {
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}/photo`, {
@@ -108,7 +108,7 @@ export class PlantService {
                     'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 },
-                body: JSON.stringify(image)
+                body: image
             });
 
             if (!response.ok) {
