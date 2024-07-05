@@ -16,99 +16,13 @@ import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {BalooBhaina2} from "../../app/ui/fonts";
 import Loading from "@/components/Spinner/Spinner";
 import Link from "next/link";
-
+import { PlantService } from "@/services/PlantService";
+import { FormValues, FormValuesEdit, PlantCaracts, PlantData, PlantEdit } from "@/interfaces";
+import { CandidatesService } from "@/services/CandidatesService";
+import { GardenService } from "@/services/GardenService";
 
 export async function generateStaticParams() {
     return [{id: '1'}]
-}
-
-interface FormValues {
-    alias: string;
-    height: number;
-    planting_date: Date;
-    id_garden: number | null;
-    is_favorite: boolean;
-    image_url: string;
-    notes: string;
-}
-
-interface FormValuesEdit {
-    alias: string | null;
-    height: number | null;
-    //planting_date: Date;
-    id_garden: number | null;
-    is_favorite: boolean | null;
-    image_url: string | null;
-    notes: string;
-}
-interface PlantData {
-    id: string;
-    language: string;
-    candidates: Candidate[];
-    image: Image;
-}
-
-interface Candidate {
-    score: number;
-    specie: Species;
-    plant_data: PlantDataDetail;
-}
-interface Species {
-    scientific_name: string;
-    genus_name: string;
-    family_name: string;
-    common_names: string[];
-}
-interface PlantDataDetail {
-    id: number;
-    description: string;
-    height: number;
-    fertilizer: string;
-    watering: string;
-    soil: string;
-    sun_exposure: string | null;
-    insecticide: string;
-    temperature_max: number | null;
-    temperature_min: number | null;
-    tips: string;
-    harvest_time: string;
-    growth_season: string;
-    planting_time: string;
-    pruning:string;
-}
-
-interface Image {
-    uuid: string;
-    url: string;
-}
-
-
-
-
-interface PlantEdit {
-    id: number;
-    alias: string;
-    creation_date: string | null;
-    modification_date: string;
-    planting_date: string ;
-    description: string | null;
-    favorite: boolean | null;
-    height: number;
-    sun_exposure: string | null;
-    notes: string | null;
-    name_garden: string | null;
-    expo: string | null;
-    id_garden: number;
-    plant_catalog_family_name: string;
-    plant_catalog_genus: string;
-    plant_catalog_watering_frecuency: string;
-    plant_catalog_description: string;
-    plant_catalog_common_name: string;
-    plant_catalog_scientific_name: string;
-    plant_catalog_sun_exposure: string;
-    images: {
-        url: string;
-    }[];
 }
 
 interface IdentificarPlanta {
@@ -116,33 +30,16 @@ interface IdentificarPlanta {
     editar: string
 }
 
-interface Garden {
-    id: number;
-    name: string;
-}
-
-interface PlantResponse {
-    id: number;
-}
-
-interface PlantData {
-    scientificName: string;
-    genusName: string;
-    familyName: string;
-    score: number;
-    commonNames: string[];
-}
 
 export default function Formulario(props: IdentificarPlanta) {
     const {id, editar} = props
     const router = useRouter();
 
-    const [plantData, setPlantData] = useState<PlantData | null>(null);
+    const [plantData, setPlantData] = useState<PlantCaracts | null>(null);
     const [plantEdit, setPlantEdit] = useState<PlantEdit | null>(null);
-    const [datosPlanta, setDatosPlanta] = useState<PlantData[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [ubicaciones, setUbicaciones] = useState<{ id: number; name: string; }[]>([]);
+    const [ubicaciones, setUbicaciones] = useState<{ id: number | null; name: string | null; }[]>([]);
 
 
     const [selectedFile, setSelectedFile] = useState(null);
@@ -151,7 +48,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [formValues, setFormValues] = useState<FormValues>({
         alias: "",
         height: 0,
-        planting_date: new Date('2024-06-12'),
+        planting_date: new Date(),
         id_garden: null,
         is_favorite: true,
         notes: "",
@@ -244,33 +141,17 @@ export default function Formulario(props: IdentificarPlanta) {
         submitForm()
     };
 
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const candidatesService = new CandidatesService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const submitForm = async () => {
         if (editar === "si") {
             try {
-                /*const updatedFormValuesEdit = {
-                ...formValuesEdit,
-                        image_url: plantEdit?.images[0].url,
-                };*/
-                const idUsuario = 1;
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${plantEdit?.id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'id-user': idUsuario.toString()
-                    },
-                    body: JSON.stringify(formValuesEdit)
-                });
-                if (!response.ok) {
-                    console.log(formValuesEdit);
-                    throw new Error('Failed to update plant');
-
-                }
-
-                console.log(formValuesEdit);
+                plantService.updatePlant(plantEdit?.id, formValuesEdit)               
                 router.push(`/jardin`);
             } catch (error) {
-                console.error('Error updating plant:', error);
+                console.error(error);
             }
         }
         if (editar === "no") {
@@ -281,25 +162,14 @@ export default function Formulario(props: IdentificarPlanta) {
                     image_url: plantData?.image.url,
                     id_plant_catalog: plantData?.candidates[0].plant_data.id
                 };
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'id-user': "1"
-                    },
-                    body: JSON.stringify(updatedFormValues),
-
-                });
-                if (response.ok) {
-                    const responseData: PlantResponse = await response.json();
-                    console.log("Respuesta del servidor:", responseData);
-                    router.push(`/jardin/${responseData}`)
+                const response = await plantService.savePlant(updatedFormValues);
+                if (response) {
+                    router.push(`/jardin/${response}`)
                 } else {
                     console.log(JSON.stringify(updatedFormValues))
                 }
-            } catch (err) {
-                console.error(`Ocurrió un error al conectar con el servidor: ${err}`);
-
+            } catch (error) {
+                console.error(error);
             }
         }
 
@@ -309,49 +179,36 @@ export default function Formulario(props: IdentificarPlanta) {
 
     useEffect(() => {
         if (editar === "no") {
-            fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/candidates/${id}`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then((data: PlantData) => {
+            const fetchCandidates = async () => {
+                try {
+                    const data = await candidatesService.getCandidates(id);
                     setPlantData(data);
-                    console.log(data);
                     setLoading(false);
-                })
-                .catch((error) => {
-                    setError(error.message);
+                } catch (error) {
+                    console.error(error);
                     setLoading(false);
-                });
+                }
+            };
+            fetchCandidates();
 
         } else if (editar === "si") {
             const fetchPlantData = async () => {
                 try {
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
-                        headers: {
-                            'id-user': '1'
-                        }
-                    });
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch plant data');
-                    }
-                    const plant = await response.json();
-                    setPlantEdit(plant);
-                    setRelleno(plant.favorite)
+                    const data = await plantService.getPlant(id);
+                    setPlantEdit(data);
+                    setRelleno(data.favorite)
                     setFormValuesEdit({
-                        alias: plant.alias ?? '',
-                        height: plant.height ?? 0,
-                        id_garden: plant.id_garden ?? null,
-                        is_favorite: plant.favorite ?? false,
-                        image_url: plant.images.length > 0 ? plant.images[0].url : '',
-                        notes: plant.notes ?? ''
+                        alias: data.alias ?? '',
+                        height: data.height ?? 0,
+                        id_garden: data.id_garden ?? null,
+                        is_favorite: data.favorite ?? false,
+                        image_url: data.images.length > 0 ? data.images[0].url : '',
+                        notes: data.notes ?? ''
                     });
-                    console.log(plant)
                     setFileUpload(false)
                 } catch (error) {
-                    console.error('Error fetching plant data:', error);
+                    console.error(error);
+                    setLoading(false);
                 }
             };
 
@@ -360,54 +217,37 @@ export default function Formulario(props: IdentificarPlanta) {
                 setLoading(false);
             }
         }
-
-
-
+        
         fetchUbicaciones();
         console.log(ubicaciones);
     }, [id, fileUpload]);
+   
     const fetchUbicaciones = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
-                headers: {
-                    'id-user': '1'
-                }
-            });
-            const data: Garden[] = await response.json();
-            console.log(data)
+            const data = await gardenService.getGardens();
             setUbicaciones(data.map(garden => ({id: garden.id, name: garden.name})));
         } catch (error) {
-            console.error('Error al obtener las ubicaciones:', error);
+            console.error(error);
         }
     };
+
     const [gardenName, setGardenName] = useState('');
     const handleInputChangeGardenName = (event: any) => {
         setGardenName(event.target.value);
     };
+
     const handleSubmitGarden = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/gardens`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    user_id: '1',
-                    name: gardenName,
-                }),
-            });
-
-            if (response.ok) {
+            const response = await gardenService.saveGarden(gardenName, 1);
+            if (response) {
                 alert('Jardín creado exitosamente');
                 closePopup();
                 await fetchUbicaciones()
-            } else {
-                console.error('Error al crear el jardín');
             }
         } catch (error) {
-            console.error('Error al conectar con el servidor:', error);
+            console.error(error);
         }
     }
 
@@ -444,24 +284,13 @@ export default function Formulario(props: IdentificarPlanta) {
         formData.append('image', selectedFile);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${plantEdit?.id}/photo`, {
-                method: 'POST',
-                headers: {
-                    'id-user': '1',
-                },
-                body: formData,
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Imagen subida correctamente:', data);
+            const response = await plantService.uploadPhoto(plantEdit?.id, formData);
+            if (response) {
                 setFileUpload(true);
                 setSelectedFile(null);
-            } else {
-                console.error('Error al subir imagen:', response.statusText);
             }
         } catch (error) {
-            console.error('Error en la solicitud:', error);
+            console.error(error);
         }
     };
 

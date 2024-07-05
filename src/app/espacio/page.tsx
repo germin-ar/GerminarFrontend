@@ -31,6 +31,7 @@ export default function EspacioPage() {
     const [temporada, setTemporada] = useState('otoño');
 
 
+
     const handleLuzChange = (event: any) => {
         setLuz(event.target.value);
     };
@@ -45,7 +46,7 @@ export default function EspacioPage() {
             alert("Cargar uno foto antes de continuar");
             return;
         }
-        console.log('Datos a enviar:', {luz, temporada, resultado});
+        console.log('Datos a enviar:', { luz, temporada, resultado });
         router.push(`/espacio/recomendacion?luz=${luz}&temporada=${temporada}&espacio=${resultado}`);
 
     };
