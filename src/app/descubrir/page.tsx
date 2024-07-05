@@ -126,7 +126,7 @@ export default function DescubrirPage() {
                 <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Metros cuadrados</h3>
                 <p>Seleccioná los metros cuadrados de tu espacio</p>
                 <div className="flex items-center w-[80%] mx-auto gap-5 mt-2">
-                    <p>{valueLugar}m²</p>
+                    <p>{valueLugar}cm</p>
                     <input
                         type="range"
                         min="30"
@@ -135,7 +135,7 @@ export default function DescubrirPage() {
                         onChange={handleChangeLugar}
                         className="slider-thumb appearance-none w-full h-1 bg-gray-300 rounded-full outline-none appearance-none focus:outline-none"
                     />
-                    <p>10m²</p>
+                    <p>2500cm</p>
                 </div>
             </section>
             
