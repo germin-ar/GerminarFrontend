@@ -224,4 +224,3 @@ export interface ConfirmBodyRequest {
     email: string
     confirmation_code: string
   }
-  

@@ -30,14 +30,18 @@ export class GardenService {
     }
 
     // saveGarden
-    async saveGarden(body: string) {
+    async saveGarden(gardenName: string, id: number) {
+        const gardenData = {
+            gardenName: gardenName,
+            id: id
+          };
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(body)
+                body: JSON.stringify(gardenData)
             });
 
             if (!response.ok) {

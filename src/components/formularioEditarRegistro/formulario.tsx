@@ -17,7 +17,7 @@ import {BalooBhaina2} from "../../app/ui/fonts";
 import Loading from "@/components/Spinner/Spinner";
 import Link from "next/link";
 import { PlantService } from "@/services/PlantService";
-import { FormValues, FormValuesEdit, PlantCaracts, PlantData, PlantEdit } from "@/interfaces";
+import { FormValues, FormValuesEdit, GardenRequestBody, PlantCaracts, PlantData, PlantEdit } from "@/interfaces";
 import { CandidatesService } from "@/services/CandidatesService";
 import { GardenService } from "@/services/GardenService";
 
@@ -231,7 +231,7 @@ export default function Formulario(props: IdentificarPlanta) {
         }
     };
 
-    const [gardenName, setGardenName] = useState('');
+    const [gardenName, setGardenName] = useState<GardenRequestBody>();
     const handleInputChangeGardenName = (event: any) => {
         setGardenName(event.target.value);
     };
