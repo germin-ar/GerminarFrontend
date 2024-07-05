@@ -17,7 +17,7 @@ import {BalooBhaina2} from "../../app/ui/fonts";
 import Loading from "@/components/Spinner/Spinner";
 import Link from "next/link";
 import { PlantService } from "@/services/PlantService";
-import { FormValues, FormValuesEdit, GardenRequestBody, PlantCaracts, PlantData, PlantEdit } from "@/interfaces";
+import { FormValues, FormValuesEdit, PlantCaracts, PlantData, PlantEdit } from "@/interfaces";
 import { CandidatesService } from "@/services/CandidatesService";
 import { GardenService } from "@/services/GardenService";
 
@@ -231,7 +231,7 @@ export default function Formulario(props: IdentificarPlanta) {
         }
     };
 
-    const [gardenName, setGardenName] = useState<GardenRequestBody>();
+    const [gardenName, setGardenName] = useState('');
     const handleInputChangeGardenName = (event: any) => {
         setGardenName(event.target.value);
     };
@@ -240,7 +240,7 @@ export default function Formulario(props: IdentificarPlanta) {
         event.preventDefault();
 
         try {
-            const response = await gardenService.saveGarden(gardenName);
+            const response = await gardenService.saveGarden(gardenName, 1);
             if (response.ok) {
                 alert('Jardín creado exitosamente');
                 closePopup();
