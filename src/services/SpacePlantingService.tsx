@@ -14,7 +14,6 @@ export class SpacePlantingService {
             const response = await fetch(`${this.apiHost}/api/v1/space-planting`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 },
                 body: body
