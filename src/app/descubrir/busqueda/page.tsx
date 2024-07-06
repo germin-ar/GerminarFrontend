@@ -6,6 +6,7 @@ import Link from "next/link";
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
+import {number} from "prop-types";
 
 export default function BusquedaPage() {
 
@@ -22,7 +23,7 @@ export default function BusquedaPage() {
     const squareCentimeters = searchParams.get('squareCentimeters');
   
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const [season, setSeason] = useState('');
     useEffect(() => {
         const fetchPlantSuggestions = async () => {
             try {
@@ -36,6 +37,44 @@ export default function BusquedaPage() {
                 setLoading(false);
             }
         };
+        const determineSeason = () => {
+            if (latitude != null) {
+                const lat = parseInt(latitude);
+
+            const hemisphere = lat < 0 ? 'southern' : 'northern';
+            const date = new Date();
+            const month = date.getMonth();
+
+
+            switch (month) {
+                case 11:
+                case 0:
+                case 1:
+                    setSeason('Verano');
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                    setSeason('Otoño');
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                    setSeason('Invierno');
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                    setSeason('Primavera');
+                    break;
+                default:
+                    setSeason('Season cannot be determined');
+                    break;
+            }
+            }
+        };
+
+        determineSeason();
         fetchPlantSuggestions();
     }, [latitude, longitude, sunExposure, squareCentimeters, currentPage]);
 
@@ -53,7 +92,7 @@ export default function BusquedaPage() {
         <>
             <section className="container mx-auto mt-8">
                 <div className="flex justify-between items-center ">
-                    <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas</h3>
+                    <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas para la temporada: {season}</h3>
                     <span>Hacé click en la imagen para expandir...</span>
                 </div>
 

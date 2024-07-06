@@ -9,6 +9,7 @@ import Loading from "@/components/Spinner/Spinner";
 import { CandidatesService} from "@/services/CandidatesService";
 import { PlantCatalogService } from "@/services/PlantCatalogService";
 import { PlantCaracts, Specie, PlantSuggestion } from '@/interfaces/index';
+import {useRouter} from "next/navigation";
 
 interface IdentificarPlanta {
     planta: string
@@ -25,13 +26,8 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     };
 
     const { planta: planta, espacio, sugerencia } = props
+    const router = useRouter();
 
-    const defaultPlantData: Specie = {
-        scientific_name: '',
-        genus_name: '',
-        family_name: '',
-        common_names: [],
-    };
     const [showPopup, setShowPopup] = useState(false);
     const handleClick = () => {
         setShowPopup(!showPopup);
@@ -93,11 +89,19 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
         </div>
     }
 
+    const handleGoBack = () => {
+        router.back();
+    };
     return (
         <section className="max-w-[1300px] m-auto">
 
-            <main className={`${styles.contenedor}`}>
+            <section className={`${styles.contenedor}`}>
+
                 <section className={"m-10"}>
+                    <button
+                        className={`${styles.botonCards}  w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
+                        onClick={handleGoBack}>Atrás
+                    </button>
                     <div
                         className={`flex flex-col sm:flex-col md:flex-col lg:flex-row justify-center items-center m-12 gap-12`}>
 
@@ -110,28 +114,28 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 {
                                     plantCaracts && (
                                         <img src={`${plantCaracts?.image.url}`}
-                                            className="rounded-lg shadow-lg"
-                                            width="500"
-                                            height="500"
-                                            alt={`${plantCaracts?.candidates[0].specie.common_names[0]}`} />
+                                             className="rounded-lg shadow-lg"
+                                             width="500"
+                                             height="500"
+                                             alt={`${plantCaracts?.candidates[0].specie.common_names[0]}`}/>
                                     )
                                 }
                                 {
                                     plantaSugerencia && (
                                         <img src={`${plantaSugerencia.url_image}`}
-                                            className="rounded-lg shadow-lg"
-                                            width="500"
-                                            height="500"
-                                            alt={`${plantaSugerencia.url_image}`} />
+                                             className="rounded-lg shadow-lg"
+                                             width="500"
+                                             height="500"
+                                             alt={`${plantaSugerencia.url_image}`}/>
                                     )
                                 }
                                 {
                                     plantCaracts && (
                                         <Link href={`/registro/${planta}`}
-                                            className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                              className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                             <div>
                                                 <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                                    height="20" />
+                                                       height="20"/>
                                             </div>
                                             Guardar planta
                                         </Link>
@@ -142,7 +146,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         <div className="flex items-center justify-between flex-row gap-2">
                                             <p> ¿Querés saber saber cómo plantar?</p>
                                             <Link href={`/biblioteca`}
-                                                className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                                  className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                                 Empezar
                                             </Link>
                                         </div>
@@ -153,62 +157,66 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                         <div className={'table-container'}>
                             <table className={'vertical-header-table'}>
                                 <tbody>
-                                    <tr>
-                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombre científico</p></th>
-                                        {
-                                            plantCaracts && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.scientific_name}</p></td>
-                                            )
-                                        }
-                                        {
-                                            plantaSugerencia && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.scientific_name}</p></td>
-                                            )
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombres comunes</p></th>
-                                        {
-                                            plantCaracts && (
-                                                <td className={'md:p-10 p-2 border'}>
-                                                    {plantCaracts?.candidates[0].specie.common_names.map((name, index) => (
-                                                        <p key={index}>{name}</p>
-                                                    ))}
-                                                </td>
-                                            )
-                                        }
-                                        {
-                                            plantaSugerencia && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.common_name}</p></td>
-                                            )
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Género</p></th>
-                                        {
-                                            plantCaracts && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.genus_name}</p></td>
-                                            )
-                                        }
-                                        {
-                                            plantaSugerencia && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.genus}</p></td>
-                                            )
-                                        }
-                                    </tr>
-                                    <tr>
-                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Familia</p></th>
-                                        {
-                                            plantCaracts && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.family_name}</p></td>
-                                            )
-                                        }
-                                        {
-                                            plantaSugerencia && (
-                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.family_name}</p></td>
-                                            )
-                                        }
-                                    </tr>
+                                <tr>
+                                    <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombre científico</p></th>
+                                    {
+                                        plantCaracts && (
+                                            <td className={'md:p-10 p-2 border'}>
+                                                <p>{plantCaracts?.candidates[0].specie.scientific_name}</p></td>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.scientific_name}</p>
+                                            </td>
+                                        )
+                                    }
+                                </tr>
+                                <tr>
+                                    <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombres comunes</p></th>
+                                    {
+                                        plantCaracts && (
+                                            <td className={'md:p-10 p-2 border'}>
+                                                {plantCaracts?.candidates[0].specie.common_names.map((name, index) => (
+                                                    <p key={index}>{name}</p>
+                                                ))}
+                                            </td>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.common_name}</p></td>
+                                        )
+                                    }
+                                </tr>
+                                <tr>
+                                    <th className={'md:p-10 p-2 border text-nowrap'}><p>Género</p></th>
+                                    {
+                                        plantCaracts && (
+                                            <td className={'md:p-10 p-2 border'}>
+                                                <p>{plantCaracts?.candidates[0].specie.genus_name}</p></td>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.genus}</p></td>
+                                        )
+                                    }
+                                </tr>
+                                <tr>
+                                    <th className={'md:p-10 p-2 border text-nowrap'}><p>Familia</p></th>
+                                    {
+                                        plantCaracts && (
+                                            <td className={'md:p-10 p-2 border'}>
+                                                <p>{plantCaracts?.candidates[0].specie.family_name}</p></td>
+                                        )
+                                    }
+                                    {
+                                        plantaSugerencia && (
+                                            <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.family_name}</p></td>
+                                        )
+                                    }
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -539,7 +547,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                         )
                     }
                 </section>
-            </main>
+            </section>
         </section>
     )
 }
