@@ -34,11 +34,14 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         if (event.target.files && event.target.files.length > 0) {
             const archivo = event.target.files[0];
             setArchivoSeleccionado(archivo);
+            setIsButtonDisabled(false);
         }
     };
 
     const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
+
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
     const spacePlantingService = new SpacePlantingService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const imageService = new ImageService(`${process.env.NEXT_PUBLIC_API_HOST}`);
@@ -52,6 +55,8 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
             setShowToastWarning(true);
             return;
         }
+
+        setIsButtonDisabled(true);
 
         const formData = new FormData();
         formData.append("image", archivoSeleccionado);
@@ -121,7 +126,9 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                                 <p className="text-lg bg-[#323331] py-2 px-4 ">{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
                             </label>
                         </div>
-                        <button type="submit"
+                        <button
+                            type="submit"
+                            disabled={isButtonDisabled}
                             className={`mb-10 bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75 disabled:bg-gray-500`}>
                             Identificar
                         </button>
