@@ -149,7 +149,7 @@ export default function Formulario(props: IdentificarPlanta) {
         if (editar === "si") {
             try {
                 plantService.updatePlant(plantEdit?.id, formValuesEdit)               
-                router.push(`/jardin`);
+                router.push(`/jardin/${plantEdit?.id}`);
             } catch (error) {
                 console.error(error);
             }
@@ -491,7 +491,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </div>
 
                             </div>
-                            <div>
+                            {/*<div>
                                 <div className="flex gap-2 items-center">
                                     <MdOutlineHealthAndSafety className={`${stylesDescriptionPlants.iconos}`}/>
                                     <h3 className={`${BalooBhaina2.className}`}>Estado
@@ -499,18 +499,11 @@ export default function Formulario(props: IdentificarPlanta) {
                                         salud:</h3>
                                 </div>
                                 <div className="flex items-center">
-                                    {/*<input
-                                    type="text"
-                                    name="estadoSalud"
-                                    value={formValues.estadoSalud}
-                                    onChange={handleInputChange}
-                                    className="text-[24px] pl-9 border-b-2 border-gray-300 rounded"
-                                />
-                                <LuPencilLine className="w-[25px] h-[25px] text-[#88BC43]"/>*/}
+
                                     <p className=" pl-9">Estado de salud</p>
                                 </div>
 
-                            </div>
+                            </div>*/}
                             <div>
                                 <div className="flex gap-2 items-center">
                                     <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`}/>

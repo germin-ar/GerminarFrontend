@@ -184,7 +184,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                             </div>
                             <p className="text-[24px] pl-9">{plant.plant_catalog_family_name}</p>
                         </div>
-                        <div>
+                        {/*<div>
                             <div className="flex gap-2">
                                 <MdOutlineHealthAndSafety className={`${stylesDescriptionPlants.iconos}`}/>
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Estado
@@ -192,7 +192,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                     salud:</p>
                             </div>
                             <p className="text-[24px] pl-9">a</p>
-                        </div>
+                        </div>*/}
                         <div>
                             <div className="flex gap-2">
                                 <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`}/>
@@ -332,7 +332,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                         <p>Altura: {entry.height}</p>
                                         <p>Notas: {entry.notes}</p>
                                         {/* TODO: Mapear enfermedades si es necesario */}
-                                        {entry.id_diseases ? <p>Estado de salud: {entry.id_diseases}</p> : <p>-</p>}
+                                        {/*entry.id_diseases ? <p>Estado de salud: {entry.id_diseases}</p> : <p>-</p>*/}
                                     </div>
                                     <div className="flex-1 flex items-center justify-center">
                                         {entry.url_image && entry.url_image === "buildear" ? (
@@ -349,12 +349,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     </ol>
                 </section>
             </section>
-            <div className="m-10">
+            <div className="m-10 inline-block">
 
-                <button className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
+                <Link href={`/jardin/${id}/editar`} className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
                     <LuPencilLine className="w-[15px] h-[15px] "/>
                     Editar
-                </button>
+                </Link>
             </div>
         </section>
 
