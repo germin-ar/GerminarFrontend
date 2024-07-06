@@ -154,23 +154,23 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                             <table className={'vertical-header-table'}>
                                 <tbody>
                                     <tr>
-                                        <th className={'p-10 border text-nowrap'}><p>Nombre científico</p></th>
+                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombre científico</p></th>
                                         {
                                             plantCaracts && (
-                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.scientific_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.scientific_name}</p></td>
                                             )
                                         }
                                         {
                                             plantaSugerencia && (
-                                                <td className={'p-10 border'}><p>{plantaSugerencia.scientific_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.scientific_name}</p></td>
                                             )
                                         }
                                     </tr>
                                     <tr>
-                                        <th className={'p-10 border text-nowrap'}><p>Nombres comunes</p></th>
+                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Nombres comunes</p></th>
                                         {
                                             plantCaracts && (
-                                                <td className={'p-10 border'}>
+                                                <td className={'md:p-10 p-2 border'}>
                                                     {plantCaracts?.candidates[0].specie.common_names.map((name, index) => (
                                                         <p key={index}>{name}</p>
                                                     ))}
@@ -179,33 +179,33 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                         }
                                         {
                                             plantaSugerencia && (
-                                                <td className={'p-10 border'}><p>{plantaSugerencia.common_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.common_name}</p></td>
                                             )
                                         }
                                     </tr>
                                     <tr>
-                                        <th className={'p-10 border text-nowrap'}><p>Género</p></th>
+                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Género</p></th>
                                         {
                                             plantCaracts && (
-                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.genus_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.genus_name}</p></td>
                                             )
                                         }
                                         {
                                             plantaSugerencia && (
-                                                <td className={'p-10 border'}><p>{plantaSugerencia.genus}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.genus}</p></td>
                                             )
                                         }
                                     </tr>
                                     <tr>
-                                        <th className={'p-10 border text-nowrap'}><p>Familia</p></th>
+                                        <th className={'md:p-10 p-2 border text-nowrap'}><p>Familia</p></th>
                                         {
                                             plantCaracts && (
-                                                <td className={'p-10 border'}><p>{plantCaracts?.candidates[0].specie.family_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantCaracts?.candidates[0].specie.family_name}</p></td>
                                             )
                                         }
                                         {
                                             plantaSugerencia && (
-                                                <td className={'p-10 border'}><p>{plantaSugerencia.family_name}</p></td>
+                                                <td className={'md:p-10 p-2 border'}><p>{plantaSugerencia.family_name}</p></td>
                                             )
                                         }
                                     </tr>
@@ -260,7 +260,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                     <div className={'bg-white rounded-lg shadow-lg p-6'}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Características</h2>
                         <div className={'flex flex-wrap'}>
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tamaño-icon.png" alt="tamaño-icon" width="150"
                                         height="150" />
@@ -282,7 +282,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/fertilizante-icon.png" alt="fertilizante-icon" width="150"
                                         height="150" />
@@ -304,7 +304,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/riego-icon.png" alt="riego-icon" width="150"
                                         height="150" />
@@ -326,7 +326,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/tierra-icon.png" alt="tierra-icon" width="150"
                                         height="150" />
@@ -348,7 +348,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/exposolar-icon.png" alt="exposolar-icon" width="150"
                                         height="150" />
@@ -372,7 +372,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/insecticida-icon.png" alt="insecticida-icon" width="150"
                                         height="150" />
@@ -394,7 +394,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temperatura-icon.png" alt="temperatura-icon" width="150"
                                         height="150" />
@@ -416,7 +416,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/temporada-icon.png" alt="temporada-icon" width="150"
                                         height="150" />
@@ -448,7 +448,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                             </div>
 
 
-                            <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                            <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                 <div>
                                     <Image className="max-w-[100px] min-w-[100px]" src="/resultado/podado-icon.png" alt="podado-icon" width="150"
                                         height="150" />
@@ -474,7 +474,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
                             {
                                 plantaSugerencia && plantaSugerencia.toxic && (
-                                    <div className={'mt-16 flex items-center gap-8 w-2/4'}>
+                                    <div className={'mt-16 flex items-center gap-8 md:w-2/4'}>
                                         <div>
                                             <Image className="max-w-[100px] min-w-[100px]" src="/resultado/toxicidad-icon.png" alt="toxicidad-icon" width="150"
                                                 height="150" />
