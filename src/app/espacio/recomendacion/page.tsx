@@ -6,6 +6,7 @@ import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
 import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 export default function RecomendacionPage() {
 

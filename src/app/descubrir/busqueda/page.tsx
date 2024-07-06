@@ -6,7 +6,8 @@ import Link from "next/link";
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
-import {number} from "prop-types";
+import { number } from "prop-types";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 export default function BusquedaPage() {
 
@@ -21,7 +22,7 @@ export default function BusquedaPage() {
     const longitude = searchParams.get('longitude');
     const sunExposure = searchParams.get('sunExposure');
     const squareCentimeters = searchParams.get('squareCentimeters');
-  
+
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const [season, setSeason] = useState('');
     useEffect(() => {
@@ -41,36 +42,36 @@ export default function BusquedaPage() {
             if (latitude != null) {
                 const lat = parseInt(latitude);
 
-            const hemisphere = lat < 0 ? 'southern' : 'northern';
-            const date = new Date();
-            const month = date.getMonth();
+                const hemisphere = lat < 0 ? 'southern' : 'northern';
+                const date = new Date();
+                const month = date.getMonth();
 
 
-            switch (month) {
-                case 11:
-                case 0:
-                case 1:
-                    setSeason('Verano');
-                    break;
-                case 2:
-                case 3:
-                case 4:
-                    setSeason('Otoño');
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                    setSeason('Invierno');
-                    break;
-                case 8:
-                case 9:
-                case 10:
-                    setSeason('Primavera');
-                    break;
-                default:
-                    setSeason('Season cannot be determined');
-                    break;
-            }
+                switch (month) {
+                    case 11:
+                    case 0:
+                    case 1:
+                        setSeason('Verano');
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                        setSeason('Otoño');
+                        break;
+                    case 5:
+                    case 6:
+                    case 7:
+                        setSeason('Invierno');
+                        break;
+                    case 8:
+                    case 9:
+                    case 10:
+                        setSeason('Primavera');
+                        break;
+                    default:
+                        setSeason('Season cannot be determined');
+                        break;
+                }
             }
         };
 
@@ -91,8 +92,12 @@ export default function BusquedaPage() {
     return (
         <>
             <section className="container mx-auto mt-8">
-                <div className="flex justify-between items-center ">
-                    <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas para la temporada: {season}</h3>
+                <div className="flex justify-between items-center">
+                    <div className="flex gap-2">
+                        <FaRegCheckCircle className={`w-6 h-6 text-[#275F08] mb-1`} />
+                        <p className={`${BalooBhaina2.className}`}>Aquí
+                            tienes algunas opciones para sembrar en <span className={"text-green-800"}>{season}</span></p>
+                    </div>
                     <span>Hacé click en la imagen para expandir...</span>
                 </div>
 

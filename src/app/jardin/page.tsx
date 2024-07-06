@@ -93,11 +93,15 @@ export default function JardinPage() {
         }
     };
 
+    const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [message, setMessage] = useState('');
+
     const handleConfirmDelete = async () => {
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
             fetchGardens();
-
+            setMessage("Planta borrada exitosamente.");
+            setShowToastSuccess(true);
             setConfirmDelete(false);
             setPopupVisible(false);
 
