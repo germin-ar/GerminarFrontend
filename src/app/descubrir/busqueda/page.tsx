@@ -69,7 +69,7 @@ export default function BusquedaPage() {
                         setSeason('Primavera');
                         break;
                     default:
-                        setSeason('Season cannot be determined');
+                        setSeason('No se pudo determinar la estación');
                         break;
                 }
             }

@@ -12,6 +12,7 @@ import { BalooBhaina2 } from "../ui/fonts";
 import { GardenService } from "../../services/GardenService";
 import { PlantService } from "../../services/PlantService";
 import { Garden, Plant } from "@/interfaces/index";
+import ToastSuccess from "@/components/Toasts/ToastSuccess";
 
 export default function JardinPage() {
 
@@ -286,6 +287,16 @@ export default function JardinPage() {
             )}
 
             <section>
+                <div className="relative">
+                    <div className="fixed right-10 z-10">
+                        {showToastSuccess && (
+                            <ToastSuccess
+                                message={`${message}`}
+                                onClose={() => setShowToastSuccess(false)}
+                            />
+                        )}
+                    </div>
+                </div>
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
