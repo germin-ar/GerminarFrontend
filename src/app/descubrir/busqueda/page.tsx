@@ -28,6 +28,7 @@ export default function BusquedaPage() {
             try {
                 setLoading(true)
                 const data = await plantSuggestionService.getPlantsSuggestion(latitude, longitude, sunExposure, squareCentimeters);
+                console.log(data)
                 setPlantSuggestions(data);
             } catch (error) {
                 console.error(error);
