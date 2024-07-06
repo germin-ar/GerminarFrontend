@@ -654,6 +654,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 <button
                                     type="button"
+                                    data-testid="popup-button"
                                     onClick={openPopup}
                                     className="  flex items-center gap-2 font-bold my-3 py-2 px-4 rounded text-white bg-[#88BC43] "
                                 >
@@ -786,6 +787,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </button>
                                 <button
                                     type="submit"
+                                    data-testid="submit-button"
                                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                 >
                                     Confirmar
