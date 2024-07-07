@@ -12,7 +12,7 @@ import { FaUser } from "react-icons/fa";
 import Link from "next/link";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { schema } from '@/utils/validationSchema';
+import { registerSchema } from '@/utils/validationSchema';
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 
 interface IFormInput {
@@ -115,7 +115,7 @@ export default function GerminarPage() {
     const [message, setMessage] = useState('');
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
-        resolver: yupResolver(schema),
+        resolver: yupResolver(registerSchema),
     });
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
@@ -133,7 +133,7 @@ export default function GerminarPage() {
                             message={`${message}`}
                             onClose={() => setShowToastSuccess(false)}
                         />
-                    )}                   
+                    )}
                 </div>
             </div>
 
@@ -268,14 +268,16 @@ export default function GerminarPage() {
                                             />
                                             {errors.confirm_password && <span className="text-red-800">{errors.confirm_password.message}</span>}
                                         </div>
-                                        <button type="submit"
-                                            className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
-                                            Registrarse
-                                        </button>
-                                        <p>
-                                            ¿Ya tenés una cuenta? <Link href={"/login"}
-                                                className="hover:underline font-bold">Iniciar sesión</Link>
-                                        </p>
+                                        <div className="flex flex-col gap-1">
+                                            <button type="submit"
+                                                className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                                Registrarse
+                                            </button>
+                                            <span>
+                                                ¿Ya tenés una cuenta? <Link href={"/login"}
+                                                    className="hover:underline font-bold">Iniciar sesión</Link>
+                                            </span>
+                                        </div>
                                     </form>
 
                                 </div>
