@@ -34,7 +34,7 @@ export class GardenService {
         const gardenData = {
             name: gardenName,
             user_id: id
-          };
+        };
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'POST',
@@ -79,13 +79,12 @@ export class GardenService {
     }
 
     // deleteGarden
-    async deleteGarden(id: number): Promise<void>  {
+    async deleteGarden(id: number): Promise<void> {
         try {
             const idUser = 1
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
                     'id-user': idUser.toString()
                 }
             });
