@@ -13,9 +13,12 @@ import {FiAlertCircle} from "react-icons/fi";
 import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
 import {LuPencilLine} from "react-icons/lu";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import Loading from "@/components/Spinner/Spinner";
+import {PlantService} from "@/services/PlantService";
+import ToastSuccess from "@/components/Toasts/ToastSuccess";
+import ToastWarning from "@/components/Toasts/ToastWarning";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
@@ -72,11 +75,18 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
     const [orderedHistory, setOrderedHistory] = useState<PlantHistory[]>([]);
     const [order, setOrder] = useState(false);
 
+    const [popUps, setPopUps] = useState(false);
 
     const [showAll, setShowAll] = useState(false);
     const handleShowAllImages = () => {
         setShowAll(!showAll);
     };
+    const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
+    const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [showToastWarning, setShowToastWarning] = useState(false);
+    const [message, setMessage] = useState('');
+
 
     useEffect(() => {
         const fetchPlant = async () => {
@@ -114,6 +124,28 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
         setOrderedHistory(reversedHistory);
     };
 
+    const handleClick = () =>{
+        setPopUps(true);
+    }
+
+    const handleCancelDelete = () => {
+        setPopUps(false);
+    }
+
+    const handleConfirmDelete = async () => {
+        try {
+            await plantService.deletePlant(plant?.id)
+            setMessage("Planta borrada exitosamente.")
+            setShowToastSuccess(true);
+            router.push("/jardin");
+        } catch (e){
+            setMessage("No se pudo borrar la planta.");
+            setShowToastWarning(true);
+        }
+    }
+
+
+
     if (!plant) {
         return <Loading/>
     }
@@ -123,6 +155,22 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
 
     return (
         <section className={`${stylesDescriptionPlants.contenedor}`}>
+            <div className="relative">
+                <div className="fixed right-10 z-10">
+                    {showToastSuccess && (
+                        <ToastSuccess
+                            message={`${message}`}
+                            onClose={() => setShowToastSuccess(false)}
+                        />
+                    )}
+                    {showToastWarning && (
+                        <ToastWarning
+                            message={`${message}`}
+                            onClose={() => setShowToastWarning(false)}
+                        />
+                    )}
+                </div>
+            </div>
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
@@ -135,6 +183,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                             Editar
                         </Link>
                         <button
+                            onClick={handleClick}
                             className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#BC4388]">
                             <FaTrash className="w-[15px] h-[15px] "/>
                             Borrar
@@ -143,6 +192,27 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                               className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
                             Volver al jardín
                         </Link>
+                        {popUps && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                                <div className="bg-white p-6 rounded shadow-lg">
+                                    <p className="mb-4">¿Estás seguro de que querés borrar esta planta?</p>
+                                    <div className="flex justify-end">
+                                        <button
+                                            onClick={handleConfirmDelete}
+                                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                        >
+                                            Sí
+                                        </button>
+                                        <button
+                                            onClick={handleCancelDelete}
+                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                        >
+                                            No
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className={`${stylesDescriptionPlants.planta} mt-4`}>
@@ -152,7 +222,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                height="200"/>*/}
 
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''} alt={`${id}`} width="450"
+                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                             alt={`${id}`} width="450"
                              height="200"/>
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
@@ -268,24 +339,27 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
                                height="200"/>*/}
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''} alt={`${id}`} width="450"
+                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                             alt={`${id}`} width="450"
                              height="200"/>
                     </div>
-                    <button onClick={handleShowAllImages} className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas</button>
+                    <button onClick={handleShowAllImages}
+                            className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas
+                    </button>
                     <div className="flex items-center p-2 gap-2 ">
-                    {showAll &&(
+                        {showAll && (
 
-                         plant.images.map((img, index) => (
-                            <img
-                                key={index}
-                                src={img.url}
-                                alt={`Image ${index}`}
-                                className="chat-image"
-                                width="200"
-                                height="200"
-                            />
-                        ))
-                    )}
+                            plant.images.map((img, index) => (
+                                <img
+                                    key={index}
+                                    src={img.url}
+                                    alt={`Image ${index}`}
+                                    className="chat-image"
+                                    width="200"
+                                    height="200"
+                                />
+                            ))
+                        )}
                     </div>
                 </div>
                 <div className="flex-1 flex gap-2 flex-col">
@@ -302,7 +376,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             <section className="m-10">
                 <button onClick={toggleOrder}
                         className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Cambiar Orden: { order ?
+                    Cambiar Orden: {order ?
                     `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
@@ -338,7 +412,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                         {entry.url_image && entry.url_image === "buildear" ? (
                                                 <p>-</p>
 
-                                        ) :
+                                            ) :
                                             (
                                                 <img src={entry.url_image} alt="Plant Image"
                                                      className="h-32 w-auto object-cover rounded-lg"/>
@@ -351,7 +425,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             </section>
             <div className="m-10 inline-block">
 
-                <Link href={`/jardin/${id}/editar`} className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
+                <Link href={`/jardin/${id}/editar`}
+                      className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
                     <LuPencilLine className="w-[15px] h-[15px] "/>
                     Editar
                 </Link>
