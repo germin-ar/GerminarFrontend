@@ -10,7 +10,7 @@ export class PlantSuggestionService {
     // getPlantsSuggestion
     async getPlantsSuggestion(latitude: string | null, longitude: string | null, sunExposure: string | null, squareCentimeters: string | null): Promise<PlantSuggestion[]> {
         try {
-            const response = await fetch(`${this.apiHost}/api/v1/plant-suggestion?latitude=${latitude}&longitude=${longitude}&sunExposure=${sunExposure}&squareCentimeters=${squareCentimeters}`, {
+            const response = await fetch(`${this.apiHost}/api/v1/plant-suggestion?latitude=${latitude}&longitud=${longitude}&sunExposure=${sunExposure}&squareCentimeters=${squareCentimeters}`, {
                 method: 'GET'
             });
 

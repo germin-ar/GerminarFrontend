@@ -1,11 +1,13 @@
 "use client"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
+import { number } from "prop-types";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 export default function BusquedaPage() {
 
@@ -20,14 +22,15 @@ export default function BusquedaPage() {
     const longitude = searchParams.get('longitude');
     const sunExposure = searchParams.get('sunExposure');
     const squareCentimeters = searchParams.get('squareCentimeters');
-  
-    const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
+    const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const [season, setSeason] = useState('');
     useEffect(() => {
         const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)
                 const data = await plantSuggestionService.getPlantsSuggestion(latitude, longitude, sunExposure, squareCentimeters);
+                console.log(data)
                 setPlantSuggestions(data);
             } catch (error) {
                 console.error(error);
@@ -35,6 +38,44 @@ export default function BusquedaPage() {
                 setLoading(false);
             }
         };
+        const determineSeason = () => {
+            if (latitude != null) {
+                const lat = parseInt(latitude);
+
+                const hemisphere = lat < 0 ? 'southern' : 'northern';
+                const date = new Date();
+                const month = date.getMonth();
+
+
+                switch (month) {
+                    case 11:
+                    case 0:
+                    case 1:
+                        setSeason('Verano');
+                        break;
+                    case 2:
+                    case 3:
+                    case 4:
+                        setSeason('Otoño');
+                        break;
+                    case 5:
+                    case 6:
+                    case 7:
+                        setSeason('Invierno');
+                        break;
+                    case 8:
+                    case 9:
+                    case 10:
+                        setSeason('Primavera');
+                        break;
+                    default:
+                        setSeason('No se pudo determinar la estación');
+                        break;
+                }
+            }
+        };
+
+        determineSeason();
         fetchPlantSuggestions();
     }, [latitude, longitude, sunExposure, squareCentimeters, currentPage]);
 
@@ -48,11 +89,25 @@ export default function BusquedaPage() {
         setModalOpen(false);
     };
 
+    const router = useRouter();
+
+    const handleGoBack = () => {
+        router.back();
+    };
+
     return (
         <>
             <section className="container mx-auto mt-8">
-                <div className="flex justify-between items-center ">
-                    <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas</h3>
+                <button
+                    className={`bg-[#88BC43] my-4 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
+                    onClick={handleGoBack}>Volver
+                </button>
+                <div className="flex justify-between items-center">
+                    <div className="flex gap-2">
+                        <FaRegCheckCircle className={`w-6 h-6 text-[#275F08] mb-1`} />
+                        <p className={`${BalooBhaina2.className}`}>Aquí
+                            tienes algunas opciones para sembrar en <span className={"text-green-800"}>{season}</span></p>
+                    </div>
                     <span>Hacé click en la imagen para expandir...</span>
                 </div>
 

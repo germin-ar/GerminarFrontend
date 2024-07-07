@@ -107,7 +107,7 @@ export default function DescubrirPage() {
 
             <section className={"m-10"}>
                 <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Luz solar</h3>
-                <p>Seleccioná la cantidad de luz solar recibido (1 = poca luz, 10 = mucha luz)</p>
+                <p>Seleccioná la cantidad de luz solar que recibirá (1 = poca luz, 10 = mucha luz)</p>
                 <div className="flex items-center w-[80%] mx-auto gap-5 mt-2">
                     <p>{value}</p>
                     <input
@@ -123,10 +123,10 @@ export default function DescubrirPage() {
             </section>
 
             <section className={"m-10"}>
-                <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Metros cuadrados</h3>
-                <p>Seleccioná los metros cuadrados de tu espacio</p>
+                <h3 className={`${BalooBhaina2.className} text-[#88BC43]`}>Espacio disponible</h3>
+                <p>Seleccioná las dimensiones de tu espacio</p>
                 <div className="flex items-center w-[80%] mx-auto gap-5 mt-2">
-                    <p>{valueLugar}cm</p>
+                    <p>{valueLugar}cm²</p>
                     <input
                         type="range"
                         min="30"
@@ -135,7 +135,7 @@ export default function DescubrirPage() {
                         onChange={handleChangeLugar}
                         className="slider-thumb appearance-none w-full h-1 bg-gray-300 rounded-full outline-none appearance-none focus:outline-none"
                     />
-                    <p>2500cm</p>
+                    <p>2500cm²</p>
                 </div>
             </section>
             

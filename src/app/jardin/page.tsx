@@ -12,6 +12,8 @@ import { BalooBhaina2 } from "../ui/fonts";
 import { GardenService } from "../../services/GardenService";
 import { PlantService } from "../../services/PlantService";
 import { Garden, Plant } from "@/interfaces/index";
+import ToastSuccess from "@/components/Toasts/ToastSuccess";
+import ToastWarning from "@/components/Toasts/ToastWarning";
 
 export default function JardinPage() {
 
@@ -55,14 +57,22 @@ export default function JardinPage() {
     const [buscador, setBuscador] = useState('');
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
+    const [idGardenDelete, setIdGardenDelete] = useState<number|any>();
+    const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
+        setConfirmDeleteGarden(false);
     };
     const handleDeleteClick = () => {
         setConfirmDelete(true);
+    };
+
+    const handleDeleteGardenClick = (garden: Garden) => {
+        setConfirmDeleteGarden(true);
+        setIdGardenDelete(garden.id);
     };
 
     useEffect(() => {
@@ -93,16 +103,36 @@ export default function JardinPage() {
         }
     };
 
+    const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [showToastWarning, setShowToastWarning] = useState(false);
+    const [message, setMessage] = useState('');
+
     const handleConfirmDelete = async () => {
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
             fetchGardens();
-
+            setMessage("Planta borrada exitosamente.");
+            setShowToastSuccess(true);
             setConfirmDelete(false);
             setPopupVisible(false);
 
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const handleConfirmDeleteGarden = async () => {
+        try {
+            await gardenService.deleteGarden(idGardenDelete);
+            fetchGardens();
+            setMessage("Jardín borrado exitosamente.");
+            setShowToastSuccess(true);
+            setConfirmDeleteGarden(false);
+            setPopupVisible(false);
+        } catch (error) {
+            setMessage("Tu Jardín tiene plantas.");
+            setConfirmDeleteGarden(false);
+            setShowToastWarning(true);
         }
     };
 
@@ -282,26 +312,25 @@ export default function JardinPage() {
             )}
 
             <section>
+                <div className="relative">
+                    <div className="fixed right-10 z-10">
+                        {showToastSuccess && (
+                            <ToastSuccess
+                                message={`${message}`}
+                                onClose={() => setShowToastSuccess(false)}
+                            />
+                        )}
+                         {showToastWarning && (
+                            <ToastWarning
+                                message={`${message}`}
+                                onClose={() => setShowToastWarning(false)}
+                            />
+                        )}
+                    </div>
+                </div>
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
-                        <div className="flex-1 flex justify-center items-center gap-5">
-                            <button
-                                className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                        height="20" />
-                                </div>
-                                Añadir nueva planta
-                            </button>
-                            <button
-                                className={`${styles.botonCards} flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <CiCalendar className={`${stylesJardin.iconos}`} />
-                                </div>
-                                Calendario
-                            </button>
-                        </div>
                         <div className="flex-1 w-96">
                             <input
                                 type="text"
@@ -426,58 +455,6 @@ export default function JardinPage() {
                                 <button
                                     type="button"
                                     className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
-                                    onClick={() => { toggleTipo(); }}
-                                >
-                                    <FaLeaf size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
-                                    <span
-                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Tipo planta
-                                    </span>
-                                    <svg
-                                        className={`w-3 h-3 transition-transform duration-300 ${tipoVisible ? 'rotate-180' : ''
-                                            }`}
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 10 6"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="m1 1 4 4 4-4"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-                            {/* <ul
-                                className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${tipoVisible ? 'max-h-60' : 'max-h-0'
-                                    }`}
-                            >
-                                {uniqueSpecies.map(specie => (
-                                    <li
-                                        key={specie}
-                                        className="cursor-pointer"
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={() => { handleFiltroPlantaChange(specie); scrollToPlant(); }}
-                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
-                                        >
-                                            <span
-                                                className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
-                                                {specie.charAt(0).toUpperCase() + specie.slice(1)}
-                                            </span>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul> */}
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-1 ">
-                                <button
-                                    type="button"
-                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
                                     onClick={toggleAntiguedad}
                                 >
                                     <FaClock size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
@@ -540,7 +517,10 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                { garden.id && <FaTrash
+                                                    onClick={() => handleDeleteGardenClick(garden)}
+                                                    color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                }
                                                 <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
@@ -568,7 +548,11 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                { garden.id &&
+                                                <FaTrash
+                                                    onClick={() => handleDeleteGardenClick(garden)}
+                                                    color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                }
                                                 <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
@@ -716,11 +700,7 @@ export default function JardinPage() {
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
-                                        <div>
-                                            {/*plantaSeleccionada.isHealthy*/}
-                                            <div className="flex justify-center mt-2">
-                                                <p className={"w-fit my-3"}>¡Tu planta está sana!</p>
-                                            </div>
+                                        <div>                                   
                                             <div>
                                                 <table className="vertical-header-table rounded w-80 border-collapse">
                                                     <tbody>
@@ -793,6 +773,7 @@ export default function JardinPage() {
                                                 </div>
                                             </div>
                                         )}
+
                                         {/* <span
                                             className={`absolute top-1 right-1 bg-[#333333] text-white font-bold px-2 w-fit h-fit rounded transition duration-300 ease-in-out transform hover:bg-[#555555] active:bg-[#1f1f1f] active:scale-75 cursor-pointer`}
                                             onClick={() => setPopupVisible(false)}>
@@ -802,6 +783,27 @@ export default function JardinPage() {
                                 </div>
                             </div>
                         </>
+                    )}
+                    {confirmDeleteGarden && idGardenDelete && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                            <div className="bg-white p-6 rounded shadow-lg">
+                                <p className="mb-4">¿Estás seguro de que querés borrar este jardín?</p>
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={handleConfirmDeleteGarden}
+                                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                    >
+                                        Sí
+                                    </button>
+                                    <button
+                                        onClick={handleCancelDelete}
+                                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                    >
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     )}
                 </section>
             </div>
