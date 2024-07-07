@@ -171,7 +171,7 @@ export default function EspacioPage() {
                                                     className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
                                                     <div className={`${stylesEspacio.ubicacion}`}>
                                                         <h4>Balcón</h4>
-                                                        <input onChange={() => handleChange('balcon')} className="peer/baño sr-only" type="radio" id="balcon"
+                                                        <input onChange={() => handleChange('balcón')} className="peer/baño sr-only" type="radio" id="balcon"
                                                             name="balcon" />
                                                     </div>
                                                 </label>

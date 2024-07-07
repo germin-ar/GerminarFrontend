@@ -331,23 +331,6 @@ export default function JardinPage() {
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
-                        <div className="flex-1 flex justify-center items-center gap-5">
-                            <button
-                                className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                        height="20" />
-                                </div>
-                                Añadir nueva planta
-                            </button>
-                            <button
-                                className={`${styles.botonCards} flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <CiCalendar className={`${stylesJardin.iconos}`} />
-                                </div>
-                                Calendario
-                            </button>
-                        </div>
                         <div className="flex-1 w-96">
                             <input
                                 type="text"
@@ -466,58 +449,6 @@ export default function JardinPage() {
                                         }}>Favoritos</span>
                                 </button>
                             </div>
-                        </div>
-                        <div>
-                            <div className="flex items-center gap-1 ">
-                                <button
-                                    type="button"
-                                    className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
-                                    onClick={() => { toggleTipo(); }}
-                                >
-                                    <FaLeaf size={25} className={"hidden sm:block sm:w-6 sm:h-6"} />
-                                    <span
-                                        className="flex-1 mx-1 ms:ms-3 text-left rtl:text-right whitespace-nowrap text-ms ms:text-lg font-bold">Tipo planta
-                                    </span>
-                                    <svg
-                                        className={`w-3 h-3 transition-transform duration-300 ${tipoVisible ? 'rotate-180' : ''
-                                            }`}
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 10 6"
-                                    >
-                                        <path
-                                            stroke="currentColor"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth="2"
-                                            d="m1 1 4 4 4-4"
-                                        />
-                                    </svg>
-                                </button>
-                            </div>
-                            {/* <ul
-                                className={`md:pl-5 overflow-hidden transition-max-height duration-500 ease-in-out ${tipoVisible ? 'max-h-60' : 'max-h-0'
-                                    }`}
-                            >
-                                {uniqueSpecies.map(specie => (
-                                    <li
-                                        key={specie}
-                                        className="cursor-pointer"
-                                    >
-                                        <button
-                                            type="button"
-                                            onClick={() => { handleFiltroPlantaChange(specie); scrollToPlant(); }}
-                                            className="flex items-center w-full p-2 text-base transition duration-75 rounded-lg group text-gray-900 hover:bg-[#275F08] hover:text-white"
-                                        >
-                                            <span
-                                                className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap font-bold">
-                                                {specie.charAt(0).toUpperCase() + specie.slice(1)}
-                                            </span>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul> */}
                         </div>
                         <div>
                             <div className="flex items-center gap-1 ">
@@ -769,11 +700,7 @@ export default function JardinPage() {
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
-                                        <div>
-                                            {/*plantaSeleccionada.isHealthy*/}
-                                            <div className="flex justify-center mt-2">
-                                                <p className={"w-fit my-3"}>¡Tu planta está sana!</p>
-                                            </div>
+                                        <div>                                   
                                             <div>
                                                 <table className="vertical-header-table rounded w-80 border-collapse">
                                                     <tbody>

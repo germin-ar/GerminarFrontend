@@ -60,8 +60,15 @@ export default function RecomendacionPage() {
                     className={`bg-[#88BC43] my-4 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
                     onClick={handleGoBack}>Volver
                 </button>
-                <div className="flex justify-between items-center ">
-                    <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas</h3>
+                <div className="flex justify-between items-center">
+                    <div className="flex gap-2">
+                        <FaRegCheckCircle className={`w-6 h-6 text-[#275F08] mb-1`} />
+                        <p className={`${BalooBhaina2.className}`}>Aquí
+                            tienes algunas opciones para sembrar en<span className={"text-green-800"}> {espacio} </span>
+                            durante <span className={"text-green-800"}> {temporada} </span>
+                            con <span className={"text-green-800"}>{luz === 'sin-luz' ? 'sombra' : luz === 'sol-pleno' ? 'sol pleno' : luz === 'mas-4hs-sol' ? 'sol parcial' : luz}</span>.
+                        </p>
+                    </div>
                     <span>Hacé click en la imagen para expandir...</span>
                 </div>
 

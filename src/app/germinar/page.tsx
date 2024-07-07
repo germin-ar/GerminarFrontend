@@ -2,22 +2,32 @@
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import styles from "@/app/home.module.css";
 import stylesVideoSection from "@/app/germinar/germinar.module.css";
-
 import Image from "next/image";
 import { RefObject, useEffect, useRef, useState } from "react";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import { FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
-
 import { FaArrowDown, FaBars, FaCrown, FaTimes } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import Link from "next/link";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { registerSchema } from '@/utils/validationSchema';
+import ToastSuccess from "@/components/Toasts/ToastSuccess";
+
+interface IFormInput {
+    email: string;
+    password: string;
+    confirm_password: string;
+}
 
 export default function GerminarPage() {
     const [showForm, setShowForm] = useState(false);
     const [videoEnded, setVideoEnded] = useState(false);
+
     const handleFormButtonClick = () => {
         setShowForm(true);
+        setMessage('');
     };
 
     const handleCloseFormButtonClick = () => {
@@ -61,7 +71,6 @@ export default function GerminarPage() {
                     if (currentSection !== 'presentacion' && video) {
                         setAudioEnabled(false);
                     }
-                    console.log(currentSection)
                 }
             });
 
@@ -101,9 +110,32 @@ export default function GerminarPage() {
     };
 
     const myRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+
+    const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [message, setMessage] = useState('');
+
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
+        resolver: yupResolver(registerSchema),
+    });
+
+    const onSubmit: SubmitHandler<IFormInput> = data => {
+        setMessage("¡Registro exitoso!");
+        setShowToastSuccess(true);
+        setShowForm(false);
+    };
+
     return (
         <>
-
+            <div className="relative">
+                <div className="fixed right-10 z-10">
+                    {showToastSuccess && (
+                        <ToastSuccess
+                            message={`${message}`}
+                            onClose={() => setShowToastSuccess(false)}
+                        />
+                    )}
+                </div>
+            </div>
 
             <div className={`{relative flex h-screen}`}>
                 <div
@@ -196,7 +228,7 @@ export default function GerminarPage() {
 
                     <div className="fixed inset-0 flex items-center justify-center z-10">
 
-                        <section>
+                        <div>
                             <div
                                 className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 relative">
                                 <div className="text-end">
@@ -206,60 +238,45 @@ export default function GerminarPage() {
                                     </button>
                                 </div>
                                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                                    <form className="space-y-4 md:space-y-6" action="#">
+                                    <form
+                                        onSubmit={handleSubmit(onSubmit)}
+                                        className="space-y-4 md:space-y-6">
                                         <div>
                                             <label htmlFor="email"
                                                 className="">Email</label>
-                                            <input type="email" name="email" id="email"
+                                            <input {...register('email')}
                                                 className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                                 placeholder="Ingresá un correo" />
+                                            {errors.email && <span className="text-red-800">{errors.email.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="password"
                                                 className="">Contraseña</label>
-                                            <input type="password" name="password" id="password"
+                                            <input type="password" {...register('password')}
                                                 placeholder="••••••••"
                                                 className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
+                                            {errors.password && <span className="text-red-800">{errors.password.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="confirm-password"
                                                 className="block ">Confirmar
                                                 contraseña</label>
-                                            <input type="password" name="confirm-password"
-                                                id="confirm-password"
+                                            <input type="password" {...register('confirm_password')}
                                                 placeholder="••••••••"
                                                 className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
+                                            {errors.confirm_password && <span className="text-red-800">{errors.confirm_password.message}</span>}
                                         </div>
-                                        <div className="flex items-start">
-                                            <div className="flex items-center h-5">
-                                                <input id="terms" aria-describedby="terms" type="checkbox"
-                                                    className="w-4 h-4"
-                                                />
-                                            </div>
-                                            <div className="ml-3 ">
-                                                <label htmlFor="terms"
-                                                    className="">Acepto <a
-                                                        className="hover:underline"
-                                                        href="#">Términos y condiciones</a></label>
-                                            </div>
-                                        </div>
-                                        <button type="submit"
-                                            className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">Registrarse
-                                        </button>
-                                        <p>
-                                            ¿Ya tenés una cuenta? <Link href={"/login"}
-                                                className="hover:underline ">Logueate</Link>
-                                            o inicia sesión con:</p>
-                                        <div>
-
-                                            <div className="flex items-center justify-center gap-10">
-                                                <Image src="/videolanding/google.png" alt="google" width="40"
-                                                    height="40" />
-                                                <Image src="/videolanding/facebook.png" alt="facebook" width="40"
-                                                    height="40" />
-                                            </div>
+                                        <div className="flex flex-col gap-1">
+                                            <button type="submit"
+                                                className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                                Registrarse
+                                            </button>
+                                            <span>
+                                                ¿Ya tenés una cuenta? <Link href={"/login"}
+                                                    className="hover:underline font-bold">Iniciar sesión</Link>
+                                            </span>
                                         </div>
                                     </form>
 
@@ -268,7 +285,7 @@ export default function GerminarPage() {
                             </div>
 
 
-                        </section>
+                        </div>
                     </div>
                 )}
                 {!showNavbar && (
@@ -293,7 +310,7 @@ export default function GerminarPage() {
                 )}
             </section>
             <section id="identificar">
-                <IdentificarImagen imagen="imagenIdentificar" pagina="/"  onResultadoRecibido={handleResultado}/>
+                <IdentificarImagen imagen="imagenIdentificar" pagina="/" onResultadoRecibido={handleResultado} />
             </section>
             <main id="herramientas" className="flex justify-center items-center">
                 {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
