@@ -1,5 +1,5 @@
 "use client"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import Link from "next/link";
@@ -89,9 +89,19 @@ export default function BusquedaPage() {
         setModalOpen(false);
     };
 
+    const router = useRouter();
+
+    const handleGoBack = () => {
+        router.back();
+    };
+
     return (
         <>
             <section className="container mx-auto mt-8">
+                <button
+                    className={`bg-[#88BC43] my-4 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
+                    onClick={handleGoBack}>Volver
+                </button>
                 <div className="flex justify-between items-center">
                     <div className="flex gap-2">
                         <FaRegCheckCircle className={`w-6 h-6 text-[#275F08] mb-1`} />

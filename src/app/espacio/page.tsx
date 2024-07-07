@@ -63,7 +63,7 @@ export default function EspacioPage() {
 
     return (
         <>
-             <div className="fixed right-10 z-10">
+            <div className="fixed right-10 z-10">
                 {showToastWarning && (
                     <ToastWarning
                         message={`${message}`}
@@ -77,9 +77,9 @@ export default function EspacioPage() {
                 pagina="espacio/recomendacion"
                 onResultadoRecibido={handleResultadoRecibido}
             />
-            <section className={`${stylesEspacio.contenedorEspacio}`}>
+            <section className={`${stylesEspacio.contenedorEspacio} shadow-lg`}>
                 <form onSubmit={handleSubmit}>
-                    <section>
+                    <section className="w-[1000px]">
                         <div className="flex-1">
                             <div>
                                 <h2 className={`${BalooBhaina2.className} text-[#88BC43] text-center`}>
@@ -91,11 +91,12 @@ export default function EspacioPage() {
                                 <div
                                     className={`${stylesEspacio.ubicacionResp} flex flex-wrap gap-5 justify-center items-center pt-10 font-bold`}>
                                     {resultado ?
-                                        <label htmlFor="baño"
-                                            className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-4 has-[:checked]:border-green-800 rounded-xl`}>
+                                        <label htmlFor="resultado"
+                                            className={`${stylesEspacio.botonUbicacion} relative cursor-pointer ${resultado ? 'border-4 border-green-800' : ''} rounded-xl`}>
                                             <div className={`${stylesEspacio.ubicacion}`}>
-                                                <h4>{resultado}</h4>
-                                                <input className="peer/baño sr-only" type="radio" id="baño"
+                                                <h4> {resultado.charAt(0).toUpperCase() + resultado.slice(1)}</h4>
+                                                <input className="peer/baño sr-only" type="radio" id="resultado"
+                                                    onClick={() => setResultado(null)}
                                                     name="ubicacion" />
                                             </div>
                                         </label>
@@ -105,7 +106,7 @@ export default function EspacioPage() {
                                                 type="button"
                                                 onClick={handleScrollToTop}
                                                 className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                                Identifica tu espacio
+                                                Identificar espacio
                                             </button>
 
                                             <div
@@ -113,7 +114,7 @@ export default function EspacioPage() {
                                                 <label htmlFor="comedor"
                                                     className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
                                                     <div className={`${stylesEspacio.ubicacion}`}>
-                                                        <h4>comedor</h4>
+                                                        <h4>Comedor</h4>
                                                         <input onChange={() => handleChange('comedor')} className="peer/baño sr-only" type="radio" id="comedor"
                                                             name="comedor" />
                                                     </div>
@@ -193,7 +194,7 @@ export default function EspacioPage() {
                                                 <label htmlFor="cuarto"
                                                     className={`${stylesEspacio.botonUbicacion} cursor-pointer has-[:checked]:border-2 has-[:checked]:border-green-800 rounded-xl`}>
                                                     <div className={`${stylesEspacio.ubicacion}`}>
-                                                        <h4>cuarto</h4>
+                                                        <h4>Cuarto</h4>
                                                         <input onChange={() => handleChange('cuarto')} className="peer/baño sr-only" type="radio" id="cuarto"
                                                             name="cuarto" />
                                                     </div>
@@ -272,9 +273,9 @@ export default function EspacioPage() {
                             </div>
                         </div>
                     </section>
-                    <div className={`${stylesEspacio.botonContenedor}`}>
+                    <div className="mt-10 text-end">
                         <button type="submit"
-                            className={`${styles.botonCards} bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                            className={`bg-[#88BC43] text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Analizar
                         </button>
                     </div>

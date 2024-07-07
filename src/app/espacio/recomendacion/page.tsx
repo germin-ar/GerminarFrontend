@@ -7,6 +7,7 @@ import Link from "next/link";
 import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 export default function RecomendacionPage() {
 
@@ -47,9 +48,18 @@ export default function RecomendacionPage() {
         setModalOpen(false);
     };
 
+    const router = useRouter();
+    const handleGoBack = () => {
+        router.back();
+    };
+
     return (
         <>
             <section className="container mx-auto mt-8">
+                <button
+                    className={`bg-[#88BC43] my-4 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
+                    onClick={handleGoBack}>Volver
+                </button>
                 <div className="flex justify-between items-center ">
                     <h3 className={`${BalooBhaina2.className} mb-4 w-4/5 md:w-4/5 text-wrap`}>Sugerencias de plantas</h3>
                     <span>Hacé click en la imagen para expandir...</span>
