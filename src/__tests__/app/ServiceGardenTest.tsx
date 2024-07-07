@@ -118,14 +118,14 @@ describe('SaveGarden', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-    
+
         mockSaveGarden = jest.fn();
         (GardenService as jest.Mock).mockImplementation(() => {
             return {
                 saveGarden: mockSaveGarden
             };
         });
-     
+
     });
 
     it('should save garden successfully in Formulario', async () => {
@@ -148,5 +148,59 @@ describe('SaveGarden', () => {
         await waitFor(() => {
             expect(mockSaveGarden).toHaveBeenCalledTimes(0);
         });
+    });
+});
+
+describe('DeleteGarden', () => {
+    const mockGardens = [
+        { id: 1, name: 'Test Garden', plants: [] },
+        { id: 2, name: 'Test Garden 2', plants: [{ id: "1", alias: 'Test Plant' }] }
+    ];
+    const mockPlant = { id: "1", alias: 'Test Plant', images: [{ url: 'url' }], planting_date: "2024-07-05T12:00:00Z", modification_date: "2024-07-05T12:00:00Z" };
+
+    let mockGetGardens: jest.Mock;
+    let mockDeleteGarden: jest.Mock;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+
+        mockGetGardens = jest.fn();
+        mockDeleteGarden = jest.fn();
+        (GardenService as jest.Mock).mockImplementation(() => {
+            return {
+                getGardens: mockGetGardens,
+                deleteGarden: mockDeleteGarden
+            };
+        });
+
+    });
+
+    it('should delete garden successfully in Jardin when 0 plants', async () => {
+        mockGetGardens.mockResolvedValueOnce(mockGardens);
+        render(<Jardin />);
+        await waitFor(() => {
+            const elementsWithText = screen.queryAllByText('Test Garden');
+            expect(elementsWithText.length).toBeGreaterThan(0);
+        });
+
+        fireEvent.click(screen.getByTestId('popup-button-1'));
+        fireEvent.click(screen.getByTestId('delete-button'));
+
+        expect(mockDeleteGarden).toHaveBeenCalledWith(mockGardens[0].id);
+    });
+
+    it('should handle errors when delete garden in Jardin when plant', async () => {
+        mockGetGardens.mockResolvedValueOnce(mockGardens);
+        render(<Jardin />);
+        await waitFor(() => {
+            const elementsWithText = screen.queryAllByText('Test Garden');
+            expect(elementsWithText.length).toBeGreaterThan(0);
+        });
+
+        fireEvent.click(screen.getByTestId('popup-button-2'));
+        fireEvent.click(screen.getByTestId('delete-button'));
+
+        const elementsWithText = screen.queryAllByText('Test Garden');
+        expect(elementsWithText.length).toBeGreaterThan(0);
     });
 });

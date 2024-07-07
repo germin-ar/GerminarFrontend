@@ -57,7 +57,7 @@ export default function JardinPage() {
     const [buscador, setBuscador] = useState('');
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [idGardenDelete, setIdGardenDelete] = useState<number|any>();
+    const [idGardenDelete, setIdGardenDelete] = useState<number | any>();
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
@@ -320,7 +320,7 @@ export default function JardinPage() {
                                 onClose={() => setShowToastSuccess(false)}
                             />
                         )}
-                         {showToastWarning && (
+                        {showToastWarning && (
                             <ToastWarning
                                 message={`${message}`}
                                 onClose={() => setShowToastWarning(false)}
@@ -517,7 +517,7 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                { garden.id && <FaTrash
+                                                {garden.id && <FaTrash
                                                     onClick={() => handleDeleteGardenClick(garden)}
                                                     color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                                 }
@@ -548,10 +548,11 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                { garden.id &&
-                                                <FaTrash
-                                                    onClick={() => handleDeleteGardenClick(garden)}
-                                                    color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                {garden.id &&
+                                                    <FaTrash
+                                                        data-testid={`popup-button-${garden.id}`}
+                                                        onClick={() => handleDeleteGardenClick(garden)}
+                                                        color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                                 }
                                                 <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
@@ -700,7 +701,7 @@ export default function JardinPage() {
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
-                                        <div>                                   
+                                        <div>
                                             <div>
                                                 <table className="vertical-header-table rounded w-80 border-collapse">
                                                     <tbody>
@@ -790,6 +791,7 @@ export default function JardinPage() {
                                 <p className="mb-4">¿Estás seguro de que querés borrar este jardín?</p>
                                 <div className="flex justify-end">
                                     <button
+                                        data-testid="delete-button"
                                         onClick={handleConfirmDeleteGarden}
                                         className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
                                     >
