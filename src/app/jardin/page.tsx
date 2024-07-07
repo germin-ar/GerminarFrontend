@@ -12,6 +12,8 @@ import { BalooBhaina2 } from "../ui/fonts";
 import { GardenService } from "../../services/GardenService";
 import { PlantService } from "../../services/PlantService";
 import { Garden, Plant } from "@/interfaces/index";
+import ToastSuccess from "@/components/Toasts/ToastSuccess";
+import ToastWarning from "@/components/Toasts/ToastWarning";
 
 export default function JardinPage() {
 
@@ -55,14 +57,22 @@ export default function JardinPage() {
     const [buscador, setBuscador] = useState('');
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
+    const [idGardenDelete, setIdGardenDelete] = useState<number|any>();
+    const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
+        setConfirmDeleteGarden(false);
     };
     const handleDeleteClick = () => {
         setConfirmDelete(true);
+    };
+
+    const handleDeleteGardenClick = (garden: Garden) => {
+        setConfirmDeleteGarden(true);
+        setIdGardenDelete(garden.id);
     };
 
     useEffect(() => {
@@ -93,16 +103,36 @@ export default function JardinPage() {
         }
     };
 
+    const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [showToastWarning, setShowToastWarning] = useState(false);
+    const [message, setMessage] = useState('');
+
     const handleConfirmDelete = async () => {
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
             fetchGardens();
-
+            setMessage("Planta borrada exitosamente.");
+            setShowToastSuccess(true);
             setConfirmDelete(false);
             setPopupVisible(false);
 
         } catch (error) {
             console.error(error);
+        }
+    };
+
+    const handleConfirmDeleteGarden = async () => {
+        try {
+            await gardenService.deleteGarden(idGardenDelete);
+            fetchGardens();
+            setMessage("Jardín borrado exitosamente.");
+            setShowToastSuccess(true);
+            setConfirmDeleteGarden(false);
+            setPopupVisible(false);
+        } catch (error) {
+            setMessage("Tu Jardín tiene plantas.");
+            setConfirmDeleteGarden(false);
+            setShowToastWarning(true);
         }
     };
 
@@ -282,6 +312,22 @@ export default function JardinPage() {
             )}
 
             <section>
+                <div className="relative">
+                    <div className="fixed right-10 z-10">
+                        {showToastSuccess && (
+                            <ToastSuccess
+                                message={`${message}`}
+                                onClose={() => setShowToastSuccess(false)}
+                            />
+                        )}
+                         {showToastWarning && (
+                            <ToastWarning
+                                message={`${message}`}
+                                onClose={() => setShowToastWarning(false)}
+                            />
+                        )}
+                    </div>
+                </div>
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
@@ -540,7 +586,10 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                { garden.id && <FaTrash
+                                                    onClick={() => handleDeleteGardenClick(garden)}
+                                                    color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                }
                                                 <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
@@ -568,7 +617,11 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorFiltro().map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                <FaTrash color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                { garden.id &&
+                                                <FaTrash
+                                                    onClick={() => handleDeleteGardenClick(garden)}
+                                                    color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
+                                                }
                                                 <h3 className="text-lg font-semibold mb-2">{garden.name}</h3>
                                                 <div
                                                     className="flex flex-wrap gap-2 justify-between grid sm:grid-cols-2 sm:gap-y-4 sm:gap-x-10">
@@ -793,6 +846,7 @@ export default function JardinPage() {
                                                 </div>
                                             </div>
                                         )}
+
                                         {/* <span
                                             className={`absolute top-1 right-1 bg-[#333333] text-white font-bold px-2 w-fit h-fit rounded transition duration-300 ease-in-out transform hover:bg-[#555555] active:bg-[#1f1f1f] active:scale-75 cursor-pointer`}
                                             onClick={() => setPopupVisible(false)}>
@@ -802,6 +856,27 @@ export default function JardinPage() {
                                 </div>
                             </div>
                         </>
+                    )}
+                    {confirmDeleteGarden && idGardenDelete && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                            <div className="bg-white p-6 rounded shadow-lg">
+                                <p className="mb-4">¿Estás seguro de que querés borrar este jardín?</p>
+                                <div className="flex justify-end">
+                                    <button
+                                        onClick={handleConfirmDeleteGarden}
+                                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                    >
+                                        Sí
+                                    </button>
+                                    <button
+                                        onClick={handleCancelDelete}
+                                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
+                                    >
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     )}
                 </section>
             </div>
