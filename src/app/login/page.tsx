@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { BalooBhaina2 } from '../ui/fonts';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface IFormInput {
     email: string;
@@ -22,9 +23,13 @@ export default function Login() {
         resolver: yupResolver(loginSchema),
     });
 
+    const router = useRouter();
+
     const onSubmit: SubmitHandler<IFormInput> = data => {
         setMessage("¡Login exitoso!");
         setShowToastSuccess(true);
+        setTimeout(() =>  router.push("/"), 2000);
+
     };
 
     return (

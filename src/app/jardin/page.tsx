@@ -331,23 +331,6 @@ export default function JardinPage() {
                 <div className={"flex flex-col items-center my-12"}>
                     {/*<h1 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Mi jardín</h1>*/}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-10">
-                        <div className="flex-1 flex justify-center items-center gap-5">
-                            <button
-                                className={`${styles.botonCards} w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <Image src="/resultado/mas-icon.png" alt="mas-icon" width="20"
-                                        height="20" />
-                                </div>
-                                Añadir nueva planta
-                            </button>
-                            <button
-                                className={`${styles.botonCards} flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                <div>
-                                    <CiCalendar className={`${stylesJardin.iconos}`} />
-                                </div>
-                                Calendario
-                            </button>
-                        </div>
                         <div className="flex-1 w-96">
                             <input
                                 type="text"
