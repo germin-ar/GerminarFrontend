@@ -1,6 +1,9 @@
 import { Space } from "@/interfaces";
 
 export class SpacePlantingService {
+    
+    accessToken = localStorage.getItem('access_token');
+    
     private apiHost: string;
 
     constructor(apiHost: string) {
@@ -10,17 +13,21 @@ export class SpacePlantingService {
     // getSpacePlanting
     async getSpacePlanting(body: FormData): Promise<Space>{ 
         try {
-            const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/space-planting`, {
                 method: 'POST',
                 headers: {
-                    'id-user': idUser.toString()
+                    'Authorization': `Bearer ${this.accessToken}`
                 },
                 body: body
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }

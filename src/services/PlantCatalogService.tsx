@@ -10,7 +10,6 @@ export class PlantCatalogService {
     // getPlantCatalog
     async getPlantCatalog(scientificName: string): Promise<PlantSuggestion> {
         try {
-            const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/plant-catalog/${scientificName}`, {
                 method: 'GET'                
             });

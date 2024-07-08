@@ -10,7 +10,7 @@ export class AuthenticationService {
     // signUp
     async signUp(body: AuthRequestBody): Promise<AuthRegister> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/signup`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export class AuthenticationService {
     // login
     async login(body: LoginRequestBody): Promise<AuthLogin> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/login`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export class AuthenticationService {
     // confirmSignUp
     async confirmSignUp(body: ConfirmBodyRequest): Promise<AuthRegister> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/confirm-signup`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/confirm-signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

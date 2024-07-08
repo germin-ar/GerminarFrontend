@@ -8,7 +8,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { BalooBhaina2 } from '../../ui/fonts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import {AuthenticationService} from "@/services/AuthenticationService";
+import { AuthenticationService } from "@/services/AuthenticationService";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 
 interface IFormInput {
@@ -30,26 +30,26 @@ export default function Login() {
     const userService = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const router = useRouter();
-    const saveToLocalStorage = (key:string, value:string) => {
+    const saveToLocalStorage = (key: string, value: string) => {
         localStorage.setItem(key, value);
     };
     const onSubmit: SubmitHandler<IFormInput> = async data => {
 
         try {
             const response = await userService.login(data);
-            if(response){
+            if (response) {
                 setMessage("¡Login exitoso!");
                 setShowToastSuccess(true);
                 saveToLocalStorage("access_token", response.access_token);
                 setTimeout(() => router.push("/"), 2000);
-            } else{
+            } else {
                 console.log(data);
             }
 
-        } catch (e:any) {
-                setMessage("¡Error!")
-                setShowToastWarning(true);
-                console.error(e)
+        } catch (e: any) {
+            setMessage("¡Error!")
+            setShowToastWarning(true);
+            console.error(e)
 
         }
 

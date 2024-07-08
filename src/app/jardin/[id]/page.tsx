@@ -1,22 +1,22 @@
 "use client"
 import stylesDescriptionPlants from "@/app/jardin/[id]/descripcion.module.css";
-import {BalooBhaina2} from "@/app/ui/fonts";
+import { BalooBhaina2 } from "@/app/ui/fonts";
 
 
-import {FaImages, FaRegIdCard, FaTrash} from "react-icons/fa";
-import {RiPlantLine} from "react-icons/ri";
-import {GiPlantRoots} from "react-icons/gi";
-import {MdOutlineHealthAndSafety, MdOutlineWaterDrop} from "react-icons/md";
-import {IoSunnyOutline} from "react-icons/io5";
-import {CiCalendar, CiRuler} from "react-icons/ci";
-import {FiAlertCircle} from "react-icons/fi";
-import {FaLocationDot, FaRegNoteSticky} from "react-icons/fa6";
-import {LuPencilLine} from "react-icons/lu";
+import { FaImages, FaRegIdCard, FaTrash } from "react-icons/fa";
+import { RiPlantLine } from "react-icons/ri";
+import { GiPlantRoots } from "react-icons/gi";
+import { MdOutlineHealthAndSafety, MdOutlineWaterDrop } from "react-icons/md";
+import { IoSunnyOutline } from "react-icons/io5";
+import { CiCalendar, CiRuler } from "react-icons/ci";
+import { FiAlertCircle } from "react-icons/fi";
+import { FaLocationDot, FaRegNoteSticky } from "react-icons/fa6";
+import { LuPencilLine } from "react-icons/lu";
 import Link from "next/link";
-import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Loading from "@/components/Spinner/Spinner";
-import {PlantService} from "@/services/PlantService";
+import { PlantService } from "@/services/PlantService";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 
@@ -59,17 +59,17 @@ interface Plant {
     }[];
 }
 
-interface PlantHistory{
-        id_plant: number;
-        notes: string;
-        height: number;
-        alias: string;
-        url_image: string;
-        modified_at: string;
-        id_diseases: number;
+interface PlantHistory {
+    id_plant: number;
+    notes: string;
+    height: number;
+    alias: string;
+    url_image: string;
+    modified_at: string;
+    id_diseases: number;
 }
 
-export default function JardinPage({params: {id}}: { params: { id: number } }) {
+export default function JardinPage({ params: { id } }: { params: { id: number } }) {
     const router = useRouter();
     const [plant, setPlant] = useState<Plant | null>(null);
     const [orderedHistory, setOrderedHistory] = useState<PlantHistory[]>([]);
@@ -124,7 +124,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
         setOrderedHistory(reversedHistory);
     };
 
-    const handleClick = () =>{
+    const handleClick = () => {
         setPopUps(true);
     }
 
@@ -138,16 +138,20 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             setMessage("Planta borrada exitosamente.")
             setShowToastSuccess(true);
             router.push("/jardin");
-        } catch (e){
-            setMessage("No se pudo borrar la planta.");
-            setShowToastWarning(true);
+        } catch (error: any) {
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("No se pudo borrar tu planta.");
+                setShowToastWarning(true);
+            }
         }
     }
 
 
 
     if (!plant) {
-        return <Loading/>
+        return <Loading />
     }
 
 
@@ -178,18 +182,18 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
                         <Link href={`/jardin/${id}/editar`}
-                              className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
-                            <LuPencilLine className="w-[15px] h-[15px] "/>
+                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
+                            <LuPencilLine className="w-[15px] h-[15px] " />
                             Editar
                         </Link>
                         <button
                             onClick={handleClick}
                             className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#BC4388]">
-                            <FaTrash className="w-[15px] h-[15px] "/>
+                            <FaTrash className="w-[15px] h-[15px] " />
                             Borrar
                         </button>
                         <Link href={`/jardin`}
-                              className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
+                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
                             Volver al jardín
                         </Link>
                         {popUps && (
@@ -222,35 +226,35 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                height="200"/>*/}
 
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
-                             alt={`${id}`} width="450"
-                             height="200"/>
+                            src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                            alt={`${id}`} width="450"
+                            height="200" />
                     </div>
                     <div className={`${stylesDescriptionPlants.item2}`}>
                         <div>
                             <div className="flex gap-2">
-                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
+                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold  text-[#1F2325]`}>Alias:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.alias}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`}/>
+                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Nombre:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.plant_catalog_scientific_name}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <RiPlantLine className={`${stylesDescriptionPlants.iconos}`}/>
+                                <RiPlantLine className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Género:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.plant_catalog_genus}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <GiPlantRoots className={`${stylesDescriptionPlants.iconos}`}/>
+                                <GiPlantRoots className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Familia:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.plant_catalog_family_name}</p>
@@ -266,7 +270,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         </div>*/}
                         <div>
                             <div className="flex gap-2">
-                                <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`}/>
+                                <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Exposición
                                     solar:</p>
                             </div>
@@ -275,7 +279,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`}/>
+                                <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
                                     de riego:</p>
                             </div>
@@ -285,14 +289,14 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     <div className={`${stylesDescriptionPlants.item3}`}>
                         <div>
                             <div className="flex gap-2">
-                                <CiRuler className={`${stylesDescriptionPlants.iconos}`}/>
+                                <CiRuler className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Altura:</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.height}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
+                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
                                     última modificación:</p>
                             </div>
@@ -300,7 +304,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`}/>
+                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
                                     plantación:</p>
                             </div>
@@ -312,7 +316,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                     <div className={`${stylesDescriptionPlants.item4}`}>
                         <div>
                             <div className="flex gap-2">
-                                <FiAlertCircle className={`${stylesDescriptionPlants.iconos}`}/>
+                                <FiAlertCircle className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Descripción
                                     general</p>
                             </div>
@@ -320,7 +324,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                         </div>
                         <div>
                             <div className="flex gap-2 mt-4">
-                                <FaLocationDot className={`${stylesDescriptionPlants.iconos}`}/>
+                                <FaLocationDot className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
                             </div>
                             <p className="text-[24px] pl-9">{plant.id_garden == null ? "-" : plant.name_garden}</p>
@@ -331,7 +335,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             <section className="m-10 flex flex-col md:flex-row gap-5">
                 <div className="flex-1">
                     <div className="flex gap-2">
-                        <FaImages className={`${stylesDescriptionPlants.iconos}`}/>
+                        <FaImages className={`${stylesDescriptionPlants.iconos}`} />
                         <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Imágenes</p>
                     </div>
                     <div className={`${stylesDescriptionPlants.item1}`}>
@@ -339,12 +343,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
                                height="200"/>*/}
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                             src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
-                             alt={`${id}`} width="450"
-                             height="200"/>
+                            src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                            alt={`${id}`} width="450"
+                            height="200" />
                     </div>
                     <button onClick={handleShowAllImages}
-                            className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas
+                        className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas
                     </button>
                     <div className="flex items-center p-2 gap-2 ">
                         {showAll && (
@@ -364,7 +368,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                 </div>
                 <div className="flex-1 flex gap-2 flex-col">
                     <div className="flex gap-2">
-                        <FaRegNoteSticky className={`${stylesDescriptionPlants.iconos}`}/>
+                        <FaRegNoteSticky className={`${stylesDescriptionPlants.iconos}`} />
                         <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Notas
                             adicionales</p>
                     </div>
@@ -375,9 +379,9 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             </section>
             <section className="m-10">
                 <button onClick={toggleOrder}
-                        className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    className="mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Cambiar Orden: {order ?
-                    `Más nuevo primero` : `Más viejo primero`}
+                        `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
                     <h2>Historial de: {plant.alias}</h2>
@@ -394,7 +398,7 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                     <div className="flex-1 flex items-center justify-center">
                                         {entry.url_image && (
                                             <img src={entry.url_image} alt="Plant Image"
-                                                 className="h-32 w-auto object-cover rounded-lg"/>
+                                                className="h-32 w-auto object-cover rounded-lg" />
                                         )}
                                     </div>
                                 </li>
@@ -410,12 +414,12 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
                                     </div>
                                     <div className="flex-1 flex items-center justify-center">
                                         {entry.url_image && entry.url_image === "buildear" ? (
-                                                <p>-</p>
+                                            <p>-</p>
 
-                                            ) :
+                                        ) :
                                             (
                                                 <img src={entry.url_image} alt="Plant Image"
-                                                     className="h-32 w-auto object-cover rounded-lg"/>
+                                                    className="h-32 w-auto object-cover rounded-lg" />
                                             )}
                                     </div>
                                 </li>
@@ -426,8 +430,8 @@ export default function JardinPage({params: {id}}: { params: { id: number } }) {
             <div className="m-10 inline-block">
 
                 <Link href={`/jardin/${id}/editar`}
-                      className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
-                    <LuPencilLine className="w-[15px] h-[15px] "/>
+                    className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
+                    <LuPencilLine className="w-[15px] h-[15px] " />
                     Editar
                 </Link>
             </div>
