@@ -175,7 +175,7 @@ describe('DeleteGarden', () => {
 
     });
 
-    it('should delete garden successfully in Jardin when 0 plants', async () => {
+    it('should delete garden successfully in Jardin when garden has 0 plants', async () => {
         mockGetGardens.mockResolvedValueOnce(mockGardens);
         render(<Jardin />);
         await waitFor(() => {
@@ -189,7 +189,7 @@ describe('DeleteGarden', () => {
         expect(mockDeleteGarden).toHaveBeenCalledWith(mockGardens[0].id);
     });
 
-    it('should handle errors when delete garden in Jardin when plant', async () => {
+    it('should handle errors when delete garden in Jardin when garden has plants', async () => {
         mockGetGardens.mockResolvedValueOnce(mockGardens);
         render(<Jardin />);
         await waitFor(() => {
@@ -200,6 +200,7 @@ describe('DeleteGarden', () => {
         fireEvent.click(screen.getByTestId('popup-button-2'));
         fireEvent.click(screen.getByTestId('delete-button'));
 
+        expect(mockDeleteGarden).toHaveBeenCalledWith(mockGardens[1].id);
         const elementsWithText = screen.queryAllByText('Test Garden');
         expect(elementsWithText.length).toBeGreaterThan(0);
     });

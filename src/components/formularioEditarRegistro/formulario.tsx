@@ -338,7 +338,8 @@ export default function Formulario(props: IdentificarPlanta) {
                             {editar === 'no' ? 'Registrar Planta' : 'Editar Planta'}
                         </h1>
                         <div className="flex-1 flex justify-end items-center gap-3 ">
-                            <button
+                            <button    
+                            data-testid="guardar-button"                                                     
                                 className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
                                 <LuPencilLine className="w-[15px] h-[15px] " />
                                 Guardar
