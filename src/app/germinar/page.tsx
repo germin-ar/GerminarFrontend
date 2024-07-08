@@ -17,6 +17,7 @@ import ToastSuccess from "@/components/Toasts/ToastSuccess";
 
 interface IFormInput {
     email: string;
+    user_name: string;
     password: string;
     confirm_password: string;
 }
@@ -242,40 +243,52 @@ export default function GerminarPage() {
                                         onSubmit={handleSubmit(onSubmit)}
                                         className="space-y-4 md:space-y-6">
                                         <div>
+                                            <label htmlFor="user-name"
+                                                   className="">Usuario</label>
+                                            <input {...register('user_name')}
+                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                   placeholder="Ingresá un nombre de usuario"/>
+                                            {errors.user_name &&
+                                                <span className="text-red-800">{errors.user_name.message}</span>}
+                                        </div>
+                                        <div>
                                             <label htmlFor="email"
-                                                className="">Email</label>
+                                                   className="">Email</label>
                                             <input {...register('email')}
-                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
-                                                placeholder="Ingresá un correo" />
-                                            {errors.email && <span className="text-red-800">{errors.email.message}</span>}
+                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                   placeholder="Ingresá un correo"/>
+                                            {errors.email &&
+                                                <span className="text-red-800">{errors.email.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="password"
-                                                className="">Contraseña</label>
+                                                   className="">Contraseña</label>
                                             <input type="password" {...register('password')}
-                                                placeholder="••••••••"
-                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                   placeholder="••••••••"
+                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
-                                            {errors.password && <span className="text-red-800">{errors.password.message}</span>}
+                                            {errors.password &&
+                                                <span className="text-red-800">{errors.password.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="confirm-password"
-                                                className="block ">Confirmar
+                                                   className="block ">Confirmar
                                                 contraseña</label>
                                             <input type="password" {...register('confirm_password')}
-                                                placeholder="••••••••"
-                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                   placeholder="••••••••"
+                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
-                                            {errors.confirm_password && <span className="text-red-800">{errors.confirm_password.message}</span>}
+                                            {errors.confirm_password &&
+                                                <span className="text-red-800">{errors.confirm_password.message}</span>}
                                         </div>
                                         <div className="flex flex-col gap-1">
                                             <button type="submit"
-                                                className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                                    className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
                                                 Registrarse
                                             </button>
                                             <span>
                                                 ¿Ya tenés una cuenta? <Link href={"/login"}
-                                                    className="hover:underline font-bold">Iniciar sesión</Link>
+                                                                            className="hover:underline font-bold">Iniciar sesión</Link>
                                             </span>
                                         </div>
                                     </form>

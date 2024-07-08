@@ -1,6 +1,6 @@
-import { AuthRegister, AuthRequestBody, AuthLogin, ConfirmBodyRequest } from "@/interfaces/index";
+import {AuthRegister, AuthRequestBody, AuthLogin, ConfirmBodyRequest, LoginRequestBody} from "@/interfaces/index";
 
-export class SpacePlantingService {
+export class AuthenticationService {
     private apiHost: string;
 
     constructor(apiHost: string) {
@@ -49,7 +49,7 @@ export class SpacePlantingService {
     }
 
     // login
-    async login(body: AuthRequestBody): Promise<AuthLogin> {
+    async login(body: LoginRequestBody): Promise<AuthLogin> {
         try {
             const response = await fetch(`${this.apiHost}/api/auth/login`, {
                 method: 'POST',
