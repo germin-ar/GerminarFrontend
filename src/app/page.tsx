@@ -4,7 +4,8 @@ import { BalooBhaina2 } from "@/app/ui/fonts";
 import Image from "next/image";
 import IdentificarImagen from "@/components/IdentificarImagen/IdentificarImagen";
 import HerramientasDeCultivo from "@/components/HerramientasDeCultivo/HerramientasDeCultivo";
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
+import Link from "next/link";
 
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
 
     return (
         <>
-            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} onResultadoRecibido={handleResultado}/>
+            <IdentificarImagen imagen="imagenIdentificar" pagina="resultado" forwardRef={targetRef} onResultadoRecibido={handleResultado} />
             <section className="flex justify-center items-center">
                 <div>
                     {/*<img src="/trastornos-y-enfermedades-tomate-scaled.webp" alt="tomate" width="1000"/>*/}
@@ -55,26 +56,6 @@ export default function Home() {
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
                         <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
-                            src="/calendario.jpg" alt="Calendario" width="816" height="816" />
-                    </div>
-                    <div className="flex-1 flex items-center">
-                        <div className={"relative flex flex-col gap-5"}>
-                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Administrá tus notificaciones</h3>
-                            <div className="flex flex-col">
-                                <p className={"w-full"}>
-                                    Personalizá alertas para cuidar tus plantas. Configurá recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
-                                </p>
-                                <button
-                                    className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                    Configurar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
-                    <div>
-                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
                             src="/seguimiento.jpeg" alt="Progreso" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
@@ -83,29 +64,11 @@ export default function Home() {
                             <div className="flex flex-col">
                                 <p className={"w-full"}>
                                     Registrá tu experiencia de cultivo con nuestra función de seguimiento. Anotá plantaciones, riegos y cosechas con recordatorios automáticos.</p>
-                                <button
+                                <Link
+                                    href={'/jardin'}
                                     className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                    Seguir
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
-                    <div>
-                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
-                            src="/tutoriales.jpeg" alt="Tutorial" width="816" height="816" />
-                    </div>
-                    <div className="flex-1 flex items-center">
-                        <div className={"relative flex flex-col gap-5"}>
-                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Buscá y aprendé de tutoriales</h3>
-                            <div className="flex flex-col">
-                                <p className={"w-full"}>
-                                    Aprendé con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
-                                <button
-                                    className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
-                                    Explorar
-                                </button>
+                                    Mi jardín
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -121,9 +84,49 @@ export default function Home() {
                             <div className="flex flex-col">
                                 <p className={"w-full"}>
                                     Encontrá plantas perfectas para tu espacio con nuestra herramienta de recomendación personalizada.</p>
-                                <button
+                                <Link
+                                    href={'/espacio'}
                                     className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                     Descubrir
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
+                    <div>
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/clima-alerta.jpg" alt="Tutorial" width="816" height="816" />
+                    </div>
+                    <div className="flex-1 flex items-center">
+                        <div className={"relative flex flex-col gap-5"}>
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Gestión de alertas metereológicas</h3>
+                            <div className="flex flex-col">
+                                <p className={"w-full"}>
+                                    Protegé tus plantas configurando alertas sobre condiciones climáticas adversas como lluvias intensas, heladas y olas de calor, adaptadas a tus necesidades.</p>
+                                <button
+                                    className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                    Proximamente
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
+                    <div>
+                        <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
+                            src="/calendario.jpg" alt="Calendario" width="816" height="816" />
+                    </div>
+                    <div className="flex-1 flex items-center">
+                        <div className={"relative flex flex-col gap-5"}>
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Administrá tus notificaciones</h3>
+                            <div className="flex flex-col">
+                                <p className={"w-full"}>
+                                    Personalizá recordatorios para cuidar tus plantas. Configurá recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
+                                </p>
+                                <button
+                                    className={`${styles.botonCards} mt-2 w-fit text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                    Proximamente
                                 </button>
                             </div>
                         </div>
