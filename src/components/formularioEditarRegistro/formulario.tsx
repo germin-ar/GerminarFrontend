@@ -267,7 +267,7 @@ export default function Formulario(props: IdentificarPlanta) {
         auth.validateLogged()
         try {
 
-            const response = await gardenService.saveGarden(gardenName, 1);
+            const response = await gardenService.saveGarden(gardenName);
             if (response) {
                 closePopup();
                 setMessage("Jardín creado exitosamente.");
