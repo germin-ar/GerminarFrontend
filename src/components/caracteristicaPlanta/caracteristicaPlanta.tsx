@@ -42,7 +42,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
 
 
         if (sugerencia === "no") {
@@ -64,7 +64,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
             fetchGardens();
 
         } else if (sugerencia === 'si') {
-            auth.isLogging()
+            auth.validateLogged()
             const fetchPlantCatalog = async () => {
                 try {
                     const data = await plantCatalogService.getPlantCatalog(`${planta}`);

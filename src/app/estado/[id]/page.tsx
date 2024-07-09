@@ -18,7 +18,7 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
     const router = useRouter();
 
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
         const fetchPlantHealthStatus = async () => {
             try {
                 const dataHealthStatus = await plantService.getHealthPlantStatus(id);

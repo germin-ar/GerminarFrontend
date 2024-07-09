@@ -48,7 +48,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
     const imageService = new ImageService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const handleIdentificarClick = async (event?: React.FormEvent<HTMLFormElement>) => {
-        auth.isLogging()
+        auth.validateLogged()
         if (event) {
             event.preventDefault();
         }
@@ -79,7 +79,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         }
 
         if (props.imagen === "imagenIdentificar") {
-            auth.isLogging()
+            auth.validateLogged()
             try {
                 const response = await imageService.saveImage(formData);
                 if (response) {

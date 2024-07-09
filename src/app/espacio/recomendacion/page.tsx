@@ -25,7 +25,7 @@ export default function RecomendacionPage() {
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
         const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)

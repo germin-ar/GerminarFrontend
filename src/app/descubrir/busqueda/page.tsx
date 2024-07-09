@@ -27,7 +27,7 @@ export default function BusquedaPage() {
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const [season, setSeason] = useState('');
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
         const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)

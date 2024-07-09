@@ -9,12 +9,12 @@ export class AuthenticationService {
         this.apiHost = apiHost;
     }
 
-    isLogging(){
+    validateLogged(){
         const isLog = localStorage.getItem('access_token')
         if (!isLog){
             this.router.push("/login");
+            return;
         }
-        return true;
     }
 
     // signUp

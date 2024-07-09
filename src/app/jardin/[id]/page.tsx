@@ -90,9 +90,7 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
-        if(!auth.isLogging()){
-            return;
-        }
+        auth.validateLogged()
         const fetchPlant = async () => {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
@@ -138,7 +136,7 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     }
 
     const handleConfirmDelete = async () => {
-        auth.isLogging()
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plant?.id)
             setMessage("Planta borrada exitosamente.")

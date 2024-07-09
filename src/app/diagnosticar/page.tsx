@@ -14,7 +14,7 @@ export default function IdentificarPlanta() {
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const router = useRouter();
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
         const fetchGardens = async () => {
             try {
                 const data = await gardenService.getGardens();

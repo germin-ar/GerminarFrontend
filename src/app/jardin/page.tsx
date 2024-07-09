@@ -79,7 +79,7 @@ export default function JardinPage() {
     };
 
     useEffect(() => {
-        auth.isLogging()
+        auth.validateLogged()
         fetchGardens();
 
         filtrarPlantasPorFiltro();
@@ -101,7 +101,7 @@ export default function JardinPage() {
     const router = useRouter();
 
     const fetchGardens = async () => {
-        auth.isLogging()
+        auth.validateLogged()
         try {
             const garden = await gardenService.getGardens();
             setGardens(garden);
@@ -119,7 +119,7 @@ export default function JardinPage() {
     const [message, setMessage] = useState('');
 
     const handleConfirmDelete = async () => {
-        auth.isLogging()
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
 
@@ -142,7 +142,7 @@ export default function JardinPage() {
     };
 
     const handleConfirmDeleteGarden = async () => {
-        auth.isLogging()
+        auth.validateLogged()
         try {
             await gardenService.deleteGarden(idGardenDelete);
             fetchGardens();
