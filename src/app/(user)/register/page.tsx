@@ -66,7 +66,7 @@ export default function RegisterPage(){
                 setShowToastWarning(true);
                 setTimeout(() => setUserConfirm(true), 2000);
             }else {
-                setMessage("¡Error!")
+                setMessage("Error al iniciar sesión")
                 setShowToastWarning(true);
                 console.error(e)
             }
@@ -87,14 +87,14 @@ export default function RegisterPage(){
         try {
             const response = await userService.confirmSignUp(formData);
             if (response) {
-                setMessage("¡Codigo confirmado correctamente!");
+                setMessage("Codigo confirmado correctamente");
                 setShowToastSuccess(true);
                 setTimeout(() => setUserConfirm(false), 2000);
             } else {
                 console.log(formData)
             }
         } catch (e: any) {
-            setMessage("¡Error!")
+            setMessage("Error al confirmar código")
             setShowToastWarning(true);
             console.error(e)
         }
