@@ -8,6 +8,7 @@ import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function RecomendacionPage() {
 
@@ -20,10 +21,11 @@ export default function RecomendacionPage() {
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalImageUrl, setModalImageUrl] = useState("");
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
+        auth.validateLogged()
         const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)

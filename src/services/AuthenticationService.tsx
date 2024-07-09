@@ -1,10 +1,20 @@
 import {AuthRegister, AuthRequestBody, AuthLogin, ConfirmBodyRequest, LoginRequestBody} from "@/interfaces/index";
+import {useRouter} from "next/navigation";
 
 export class AuthenticationService {
     private apiHost: string;
+    router = useRouter()
 
     constructor(apiHost: string) {
         this.apiHost = apiHost;
+    }
+
+    validateLogged(){
+        const isLog = localStorage.getItem('access_token')
+        if (!isLog){
+            this.router.push("/login");
+            return;
+        }
     }
 
     // signUp

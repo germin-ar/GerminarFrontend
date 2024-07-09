@@ -7,16 +7,18 @@ import Link from "next/link";
 import { PlantService } from "@/services/PlantService";
 import { PlantEdit, PlantHealth } from "@/interfaces/index";
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
     const [plant, setPlant] = useState<PlantEdit | any>();
     const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const router = useRouter();
 
     useEffect(() => {
+        auth.validateLogged()
         const fetchPlantHealthStatus = async () => {
             try {
                 const dataHealthStatus = await plantService.getHealthPlantStatus(id);

@@ -10,6 +10,7 @@ import { CandidatesService } from "@/services/CandidatesService";
 import { PlantCatalogService } from "@/services/PlantCatalogService";
 import { PlantCaracts, Specie, PlantSuggestion } from '@/interfaces/index';
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 interface IdentificarPlanta {
     planta: string
@@ -38,8 +39,12 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
     const [error, setError] = useState<string | null>(null);
     const candidatesService = new CandidatesService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantCatalogService = new PlantCatalogService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
+        auth.validateLogged()
+
+
         if (sugerencia === "no") {
             setLoading(true);
             setError(null);
@@ -59,6 +64,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
             fetchGardens();
 
         } else if (sugerencia === 'si') {
+            auth.validateLogged()
             const fetchPlantCatalog = async () => {
                 try {
                     const data = await plantCatalogService.getPlantCatalog(`${planta}`);
