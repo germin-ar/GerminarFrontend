@@ -8,6 +8,7 @@ import { PlantSuggestionService } from "@/services/PlantSuggestionsService";
 import { PlantSuggestion } from "@/interfaces/index";
 import { number } from "prop-types";
 import { FaRegCheckCircle } from "react-icons/fa";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function BusquedaPage() {
 
@@ -22,10 +23,11 @@ export default function BusquedaPage() {
     const longitude = searchParams.get('longitude');
     const sunExposure = searchParams.get('sunExposure');
     const squareCentimeters = searchParams.get('squareCentimeters');
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantSuggestionService = new PlantSuggestionService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const [season, setSeason] = useState('');
     useEffect(() => {
+        auth.isLogging()
         const fetchPlantSuggestions = async () => {
             try {
                 setLoading(true)

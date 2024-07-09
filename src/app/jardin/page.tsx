@@ -15,6 +15,7 @@ import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
@@ -62,6 +63,7 @@ export default function JardinPage() {
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
@@ -77,6 +79,7 @@ export default function JardinPage() {
     };
 
     useEffect(() => {
+        auth.isLogging()
         fetchGardens();
 
         filtrarPlantasPorFiltro();
@@ -98,6 +101,7 @@ export default function JardinPage() {
     const router = useRouter();
 
     const fetchGardens = async () => {
+        auth.isLogging()
         try {
             const garden = await gardenService.getGardens();
             setGardens(garden);
@@ -115,6 +119,7 @@ export default function JardinPage() {
     const [message, setMessage] = useState('');
 
     const handleConfirmDelete = async () => {
+        auth.isLogging()
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
 
@@ -137,6 +142,7 @@ export default function JardinPage() {
     };
 
     const handleConfirmDeleteGarden = async () => {
+        auth.isLogging()
         try {
             await gardenService.deleteGarden(idGardenDelete);
             fetchGardens();

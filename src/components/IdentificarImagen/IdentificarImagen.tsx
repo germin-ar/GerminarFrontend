@@ -7,6 +7,7 @@ import { json } from "node:stream/consumers";
 import { SpacePlantingService } from "@/services/SpacePlantingService";
 import { ImageService } from "@/services/ImageService";
 import ToastWarning from "../Toasts/ToastWarning";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 
 
@@ -45,8 +46,9 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
 
     const spacePlantingService = new SpacePlantingService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const imageService = new ImageService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const handleIdentificarClick = async (event?: React.FormEvent<HTMLFormElement>) => {
+        auth.isLogging()
         if (event) {
             event.preventDefault();
         }
@@ -77,6 +79,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
         }
 
         if (props.imagen === "imagenIdentificar") {
+            auth.isLogging()
             try {
                 const response = await imageService.saveImage(formData);
                 if (response) {

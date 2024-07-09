@@ -5,14 +5,16 @@ import { useState, useEffect } from "react";
 import { GardenService } from '@/services/GardenService';
 import { Garden } from "@/interfaces/index";
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function IdentificarPlanta() {
 
     const [gardens, setGardens] = useState<Garden[]>([]);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const router = useRouter();
     useEffect(() => {
+        auth.isLogging()
         const fetchGardens = async () => {
             try {
                 const data = await gardenService.getGardens();
