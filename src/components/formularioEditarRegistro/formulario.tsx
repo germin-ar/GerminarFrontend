@@ -307,12 +307,17 @@ export default function Formulario(props: IdentificarPlanta) {
         return <Loading />;
     }
 
+    const handleGoBack = () => {
+        router.back();
+    };
+
     if (error) {
         return <div className="flex items-center justify-center flex-col">
-            <h1 className="text-center">Algo ha salido mal. Vuelve a identificar la imagen.</h1>
-            <Link href="/" className="bg-[#88BC43] text-white py-2 px-4 rounded">Volver a identificar</Link>
+            <h1 className="text-center">¡Oh no! Algo ha salido mal. Vuelve a intentar.</h1>
+            <button onClick={handleGoBack} className="bg-[#88BC43] text-white py-2 px-4 rounded">Reintentar</button>
         </div>;
     }
+
     return (
         <div className="relative">
             <div className="fixed right-10 z-10">
@@ -610,7 +615,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                             className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${formValues.id_garden === ubicacion.id ? 'bg-gray-200' : ''
                                                 }`}
                                         >
-                                            {ubicacion.id === null ? "sin jardin" : ubicacion.name}
+                                            {ubicacion.id === null ? "Sin jardín" : ubicacion.name}
                                         </div>
                                     ))}
 
@@ -625,7 +630,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                                 className={`py-2 px-4 rounded border border-gray-300 cursor-pointer select-none ${formValuesEdit.id_garden === ubicacion.id ? 'bg-gray-200' : ''
                                                     }`}
                                             >
-                                                {ubicacion.id === null ? "sin jardin" : ubicacion.name}
+                                                {ubicacion.id === null ? "Sin jardín" : ubicacion.name}
                                             </div>
                                         ))
 
@@ -646,13 +651,13 @@ export default function Formulario(props: IdentificarPlanta) {
                             <div className={`${stylesDescriptionPlants.item1}`}>
                                 <div className="overflow-hidden flex items-center justify-center">
                                     <img src={plantEdit && plantEdit.images.length > 0 ? plantEdit.images[plantEdit.images.length - 1].url : ''} className="object-cover max-w-full max-h-full"
-                                        alt="Albahaca-sana" width="400"
+                                        alt={plantEdit?.alias} width="400"
                                         height="400" />
                                 </div>
 
                             </div>
                             <div className="flex gap-2 items-center justify-center flex-wrap">
-                                <input type="file" onChange={handleFileChange} />
+                                <input type="file" onChange={handleFileChange} className="cursor-pointer" />
                                 <button
                                     onClick={handleUploadImage}
                                     className={`bg-[#88BC43] w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}
@@ -671,7 +676,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                 adicionales</p>
 
                         </div>
-                        <div className={`${stylesDescriptionPlants.efectoHoja} overflow-hidden bg-[#EFE8D6]`}>
+                        <div className={`${stylesDescriptionPlants.efectoHoja} ${stylesDescriptionPlants.sombraImagen} overflow-hidden bg-[#EFE8D6]`}>
                             {plantData ? (<>
                                 <textarea
                                     name="notes"
