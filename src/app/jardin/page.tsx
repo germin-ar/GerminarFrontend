@@ -13,7 +13,7 @@ import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 import { useRouter } from "next/navigation";
-import {AuthenticationService} from "@/services/AuthenticationService";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
@@ -783,7 +783,7 @@ export default function JardinPage() {
                                                     <div className="flex justify-end">
                                                         <button
                                                             onClick={handleConfirmDelete}
-                                                            className="bg-red-500 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
+                                                            className="bg-red-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                                         >
                                                             Sí
                                                         </button>
@@ -815,7 +815,7 @@ export default function JardinPage() {
                                     <button
                                         data-testid="delete-button"
                                         onClick={handleConfirmDeleteGarden}
-                                        className="bg-red-500 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
+                                        className="bg-red-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                     >
                                         Sí
                                     </button>

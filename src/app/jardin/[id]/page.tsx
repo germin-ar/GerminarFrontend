@@ -16,7 +16,7 @@ import { PlantEdit, History } from "@/interfaces";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlineWaterDrop } from "react-icons/md";
 import Loading from "@/components/Spinner/Spinner";
-import {AuthenticationService} from "@/services/AuthenticationService";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
