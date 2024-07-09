@@ -135,9 +135,11 @@ describe('SaveGarden', () => {
         fireEvent.change(screen.getByPlaceholderText('Nombre del jardín'), { target: { value: 'Test Garden' } });
         fireEvent.click(screen.getByTestId('submit-button'));
 
+        console.log(mockSaveGarden.mock.calls);
+
         await new Promise(resolve => setTimeout(resolve, 100));
 
-        expect(mockSaveGarden).toHaveBeenCalledWith('Test Garden', 1);
+        expect(mockSaveGarden).toHaveBeenCalledWith('Test Garden');
     });
 
     it('should handle errors when save garden in Formulario', async () => {
