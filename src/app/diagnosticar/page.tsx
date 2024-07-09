@@ -2,21 +2,30 @@
 import { BalooBhaina2 } from "@/app/ui/fonts";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { GardenService } from '@/services/GardenService'; 
+import { GardenService } from '@/services/GardenService';
 import { Garden } from "@/interfaces/index";
+import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function IdentificarPlanta() {
 
     const [gardens, setGardens] = useState<Garden[]>([]);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const router = useRouter();
     useEffect(() => {
+        auth.validateLogged()
         const fetchGardens = async () => {
             try {
                 const data = await gardenService.getGardens();
                 setGardens(data);
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                console.log(localStorage.getItem("access_token"))
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         };
         fetchGardens();

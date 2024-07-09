@@ -16,6 +16,7 @@ import { PlantEdit, History } from "@/interfaces";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { MdOutlineWaterDrop } from "react-icons/md";
 import Loading from "@/components/Spinner/Spinner";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
@@ -39,14 +40,16 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     const [showToastSuccess, setShowToastSuccess] = useState(false);
     const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
+        auth.validateLogged()
         const fetchPlant = async () => {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
                     headers: {
-                        'id-user': '1'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                     }
                 });
                 if (!response.ok) {
@@ -86,14 +89,19 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     }
 
     const handleConfirmDelete = async () => {
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plant?.id)
             setMessage("Planta borrada exitosamente.")
             setShowToastSuccess(true);
             router.push("/jardin");
-        } catch (e) {
-            setMessage("No se pudo borrar la planta.");
-            setShowToastWarning(true);
+        } catch (error: any) {
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("No se pudo borrar tu planta.");
+                setShowToastWarning(true);
+            }
         }
     }
 

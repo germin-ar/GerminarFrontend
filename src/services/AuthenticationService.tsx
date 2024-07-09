@@ -1,16 +1,26 @@
-import { AuthRegister, AuthRequestBody, AuthLogin, ConfirmBodyRequest } from "@/interfaces/index";
+import {AuthRegister, AuthRequestBody, AuthLogin, ConfirmBodyRequest, LoginRequestBody} from "@/interfaces/index";
+import {useRouter} from "next/navigation";
 
-export class SpacePlantingService {
+export class AuthenticationService {
     private apiHost: string;
+    router = useRouter()
 
     constructor(apiHost: string) {
         this.apiHost = apiHost;
     }
 
+    validateLogged(){
+        const isLog = localStorage.getItem('access_token')
+        if (!isLog){
+            this.router.push("/login");
+            return;
+        }
+    }
+
     // signUp
     async signUp(body: AuthRequestBody): Promise<AuthRegister> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/signup`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,9 +59,9 @@ export class SpacePlantingService {
     }
 
     // login
-    async login(body: AuthRequestBody): Promise<AuthLogin> {
+    async login(body: LoginRequestBody): Promise<AuthLogin> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/login`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +83,7 @@ export class SpacePlantingService {
     // confirmSignUp
     async confirmSignUp(body: ConfirmBodyRequest): Promise<AuthRegister> {
         try {
-            const response = await fetch(`${this.apiHost}/api/auth/confirm-signup`, {
+            const response = await fetch(`${this.apiHost}/api/v1/auth/confirm-signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -19,6 +19,7 @@ import ToastWarning from "../Toasts/ToastWarning";
 import { PiPlantBold } from "react-icons/pi";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import Loading from "../Spinner/Spinner";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 export async function generateStaticParams() {
     return [{ id: '1' }]
@@ -41,7 +42,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [error, setError] = useState(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number | null; name: string | null; }[]>([]);
 
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileUpload, setFileUpload] = useState(false);
 
@@ -146,16 +147,21 @@ export default function Formulario(props: IdentificarPlanta) {
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const submitForm = async () => {
+        auth.validateLogged()
         if (editar === "si") {
             try {
                 plantService.updatePlant(plantEdit?.id, formValuesEdit)
                 router.push(`/jardin/${plantEdit?.id}`);
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         }
         if (editar === "no") {
-
+            auth.validateLogged()
             try {
                 const updatedFormValues = {
                     ...formValues,
@@ -168,8 +174,12 @@ export default function Formulario(props: IdentificarPlanta) {
                 } else {
                     console.log(JSON.stringify(updatedFormValues))
                 }
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         }
 
@@ -178,6 +188,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
 
     useEffect(() => {
+        auth.validateLogged()
         if (editar === "no") {
             const fetchCandidates = async () => {
                 try {
@@ -192,6 +203,7 @@ export default function Formulario(props: IdentificarPlanta) {
             fetchCandidates();
 
         } else if (editar === "si") {
+            auth.validateLogged()
             const fetchPlantData = async () => {
                 try {
                     const data = await plantService.getPlant(id);
@@ -206,9 +218,12 @@ export default function Formulario(props: IdentificarPlanta) {
                         notes: data.notes ?? ''
                     });
                     setFileUpload(false)
-                } catch (error) {
-                    console.error(error);
-                    setLoading(false);
+                } catch (e: any) {
+                    if (e.code === 'NotAuthorizedException') {
+                        router.push('/login');
+                    } else {
+                        console.error(e);
+                    }
                 }
             };
 
@@ -223,11 +238,16 @@ export default function Formulario(props: IdentificarPlanta) {
     }, [id, fileUpload]);
 
     const fetchUbicaciones = async () => {
+        auth.validateLogged()
         try {
             const data = await gardenService.getGardens();
             setUbicaciones(data.map(garden => ({ id: garden.id, name: garden.name })));
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 
@@ -242,8 +262,9 @@ export default function Formulario(props: IdentificarPlanta) {
 
     const handleSubmitGarden = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        auth.validateLogged()
         try {
+
             const response = await gardenService.saveGarden(gardenName, 1);
             if (response) {
                 closePopup();
@@ -277,6 +298,7 @@ export default function Formulario(props: IdentificarPlanta) {
     };
 
     const handleUploadImage = async (event: any) => {
+        auth.validateLogged()
         if (event) {
             event.preventDefault();
         }
@@ -297,8 +319,12 @@ export default function Formulario(props: IdentificarPlanta) {
                 setFileUpload(true);
                 setSelectedFile(null);
             }
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 
@@ -601,6 +627,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 <button
                                     type="button"
+                                    data-testid="popup-button"
                                     onClick={openPopup}
                                     className={`bg-[#88BC43] mt-3 ml-9 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                     Crear Jardín
@@ -726,6 +753,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     Cancelar
                                 </button>
                                 <button
+                                    data-testid="submit-button"
                                     type="submit"
                                     className="bg-blue-400 w-full text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-blue-600 active:bg-blue-700 active:scale-75">
                                     Confirmar

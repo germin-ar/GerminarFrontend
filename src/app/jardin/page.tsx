@@ -12,6 +12,8 @@ import { PlantService } from "../../services/PlantService";
 import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
+import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
@@ -59,6 +61,7 @@ export default function JardinPage() {
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
@@ -74,6 +77,7 @@ export default function JardinPage() {
     };
 
     useEffect(() => {
+        auth.validateLogged()
         fetchGardens();
 
         filtrarPlantasPorFiltro();
@@ -92,12 +96,19 @@ export default function JardinPage() {
         };
     }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]);
 
+    const router = useRouter();
+
     const fetchGardens = async () => {
+        auth.validateLogged()
         try {
             const garden = await gardenService.getGardens();
             setGardens(garden);
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 
@@ -106,20 +117,30 @@ export default function JardinPage() {
     const [message, setMessage] = useState('');
 
     const handleConfirmDelete = async () => {
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
+
             fetchGardens();
             setMessage("Planta borrada exitosamente.");
             setShowToastSuccess(true);
             setConfirmDelete(false);
             setPopupVisible(false);
 
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error('Error deleting plant:', error);
+
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("No se pudo borrar tu planta.");
+                setShowToastWarning(true);
+            }
         }
     };
 
     const handleConfirmDeleteGarden = async () => {
+        auth.validateLogged()
         try {
             await gardenService.deleteGarden(idGardenDelete);
             fetchGardens();
@@ -127,10 +148,14 @@ export default function JardinPage() {
             setShowToastSuccess(true);
             setConfirmDeleteGarden(false);
             setPopupVisible(false);
-        } catch (error) {
-            setMessage("Tu Jardín tiene plantas.");
-            setConfirmDeleteGarden(false);
-            setShowToastWarning(true);
+        } catch (error: any) {
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("Tu Jardín tiene plantas.");
+                setConfirmDeleteGarden(false);
+                setShowToastWarning(true);
+            }
         }
     };
 
@@ -548,6 +573,7 @@ export default function JardinPage() {
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
                                                 {garden.id &&
                                                     <FaTrash
+                                                        data-testid={`popup-button-${garden.id}`}
                                                         onClick={() => handleDeleteGardenClick(garden)}
                                                         color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                                 }
@@ -787,6 +813,7 @@ export default function JardinPage() {
                                 <p className="mb-4">¿Estás seguro de que querés borrar este jardín?</p>
                                 <div className="flex justify-end">
                                     <button
+                                        data-testid="delete-button"
                                         onClick={handleConfirmDeleteGarden}
                                         className="bg-red-500 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                     >
