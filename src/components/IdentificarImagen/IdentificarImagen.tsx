@@ -110,7 +110,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                             width="150" height="150" />
                         {imagen === 'imagenIdentificarEspacio' ? (
                             <>
-                                <h2 className="font-bold">Identificá tu espacio ¡Es gratis!</h2>
+                                <h2 className="font-bold">Identificá tu espacio ¡Es muy fácil!</h2>
                             </>
                         ) : (
                             <>

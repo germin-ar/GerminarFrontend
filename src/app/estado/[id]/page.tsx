@@ -8,34 +8,48 @@ import { PlantService } from "@/services/PlantService";
 import { PlantEdit, PlantHealth } from "@/interfaces/index";
 import { useRouter } from "next/navigation";
 import {AuthenticationService} from "@/services/AuthenticationService";
+import Loading from "@/components/Spinner/Spinner";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
     const [plant, setPlant] = useState<PlantEdit | any>();
     const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
+
+    const [loading, setLoading] = useState<boolean>(true);
+
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+  
     const router = useRouter();
 
     useEffect(() => {
+        setLoading(true);
+
         auth.validateLogged()
         const fetchPlantHealthStatus = async () => {
             try {
                 const dataHealthStatus = await plantService.getHealthPlantStatus(id);
                 setPlantaDiagnostico(dataHealthStatus);
+                setLoading(false);
 
                 const dataPlant = await plantService.getPlant(id);
                 setPlant(dataPlant);
             } catch (e: any) {
+                setLoading(false);
                 if (e.code === 'NotAuthorizedException') {
                     router.push('/login');
                 } else {
                     console.error(e);
                 }
             }
+            setLoading(false);
         };
         fetchPlantHealthStatus();
     }, []);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <>

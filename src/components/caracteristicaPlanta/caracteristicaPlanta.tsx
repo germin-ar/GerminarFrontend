@@ -232,7 +232,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
 
                 <section className={'flex flex-col gap-12'}>
 
-                    {
+                    {/* {
                         plantCaracts && (
                             <div className={'bg-white rounded-lg shadow-lg p-6'}>
                                 <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Estado de
@@ -248,7 +248,7 @@ export default function CaracteristicaPlanta(props: IdentificarPlanta) {
                                 </div>
                             </div>
                         )
-                    }
+                    } */}
 
                     <div className={'bg-white rounded-lg shadow-lg p-6'}>
                         <h2 className={`${BalooBhaina2.className} text-[#88BC43] font-bold`}>Descripción general</h2>
