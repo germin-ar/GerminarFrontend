@@ -13,10 +13,33 @@ import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 import { useRouter } from "next/navigation";
-import { AuthenticationService } from "@/services/AuthenticationService";
+// import { AuthenticationService } from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
+    const gardens: Garden[] = [{
+        id: 1,
+        name: 'My Beautiful Garden',
+        plants: [
+            {
+                id: 101,
+                alias: 'Tomato Plant',
+                creation_date: '2024-07-01',
+                modification_date: '2024-07-08',
+                is_favorite: true,
+                photos: [
+                    {
+                        id: "1001",
+                        url: 'recomendacion/tomate.png',
+                        file_path: "",
+                        is_public: true
+                    }                    
+                ]
+            }
+           
+        ]
+    }];
+    
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
     const [tipoVisible, setTipoVisible] = useState(false);
@@ -55,13 +78,13 @@ export default function JardinPage() {
     const [filtroPlantaFechaReciente, setFiltroPlantaFechaReciente] = useState(false);
     const [filtroPlantaFechaAntiguo, setFiltroPlantaFechaAntiguo] = useState(false);
     const [buscador, setBuscador] = useState('');
-    const [gardens, setGardens] = useState<Garden[]>([]);
+    // const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [idGardenDelete, setIdGardenDelete] = useState<number | any>();
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    // const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
@@ -77,7 +100,7 @@ export default function JardinPage() {
     };
 
     useEffect(() => {
-        auth.validateLogged()
+        // auth.validateLogged()
         fetchGardens();
 
         filtrarPlantasPorFiltro();
@@ -99,10 +122,10 @@ export default function JardinPage() {
     const router = useRouter();
 
     const fetchGardens = async () => {
-        auth.validateLogged()
+        // auth.validateLogged()
         try {
             const garden = await gardenService.getGardens();
-            setGardens(garden);
+            // setGardens(garden);
         } catch (e: any) {
             if (e.code === 'NotAuthorizedException') {
                 router.push('/login');
@@ -117,7 +140,7 @@ export default function JardinPage() {
     const [message, setMessage] = useState('');
 
     const handleConfirmDelete = async () => {
-        auth.validateLogged()
+        // auth.validateLogged()
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
 
@@ -140,7 +163,7 @@ export default function JardinPage() {
     };
 
     const handleConfirmDeleteGarden = async () => {
-        auth.validateLogged()
+        // auth.validateLogged()
         try {
             await gardenService.deleteGarden(idGardenDelete);
             fetchGardens();
@@ -710,8 +733,8 @@ export default function JardinPage() {
                     {popupVisible && plantaSeleccionada && (
                         <>
                             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                                <div className="flex flex-col items-center justify-around gap-4 bg-white p-8 rounded-lg w-[450px] h-96 relative">
-                                    <div className="flex flex-col gap-2 items-center">
+                                <div className="flex flex-col items-center justify-around bg-white p-8 rounded-lg w-[450px] h-[490px] relative">
+                                    <div className="flex flex-col gap-2 items-center mt-7">
                                         <div className={"flex flex-col items-center absolute top-[-45px]"}>
                                             <img
                                                 src={
@@ -726,14 +749,14 @@ export default function JardinPage() {
                                         </div>
                                         <div>
                                             <div>
-                                                <table className="vertical-header-table rounded w-80 border-collapse">
+                                                <table className="vertical-header-table rounded w-80 border-collapse h-64">
                                                     <tbody>
                                                         <tr>
                                                             <th className={`p-4 border`}>Jardín</th>
                                                             <td className={`p-4 border`}>{findGardenIdFromPlantId(plantaSeleccionada.id) || 'Sin Jardín'}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th className={`p-4 border`}>Guardada el</th>
+                                                            <th className={`p-4 border text-nowrap`}>Guardada el</th>
                                                             <td className={`p-4 border`}>
                                                                 {formatDateString(plantaSeleccionada.creation_date)}
                                                             </td>
