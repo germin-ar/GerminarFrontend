@@ -185,7 +185,7 @@ export default function RegisterPage(){
 
                 }
                 {
-                    !userConfirm && userEmail &&
+                    !userConfirm &&
                     <div
                         className="max-w-[500px] h-full bg-white rounded-r-lg shadow dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700 relative">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
