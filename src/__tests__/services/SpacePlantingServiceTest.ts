@@ -34,7 +34,7 @@ describe("SpacePlantingServiceTest", () => {
 
     it('test get from space with error response', async () => {
         global.fetch = jest.fn(() =>
-            Promise.reject({
+            Promise.resolve({
                 json: () => Promise.resolve({message: 'pasó algo'}),
                 status: 401,
                 ok: false

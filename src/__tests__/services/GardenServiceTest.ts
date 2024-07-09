@@ -70,7 +70,7 @@ describe("GardenServiceTest", () => {
 
     it('test get from garden with error response', async () => {
         global.fetch = jest.fn(() =>
-        Promise.reject({
+        Promise.resolve({
             json: () => Promise.resolve({message: 'error al obtener jardines'}),
             status: 401,
             ok: false
@@ -110,7 +110,7 @@ describe("GardenServiceTest", () => {
 
 
         global.fetch = jest.fn(() =>
-            Promise.reject({
+            Promise.resolve({
                 json: () => Promise.resolve("error"),
                 status: 500,
                 ok: false

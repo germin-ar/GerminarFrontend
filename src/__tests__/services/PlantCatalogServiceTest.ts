@@ -66,7 +66,7 @@ describe("PlantCatalogServiceTest", () => {
 
     it('test get from plant catalog with error response', async () => {
         global.fetch = jest.fn(() =>
-            Promise.reject({
+            Promise.resolve({
                 json: () => Promise.resolve({message: 'pasó algo'}),
                 status: 401,
                 ok: false

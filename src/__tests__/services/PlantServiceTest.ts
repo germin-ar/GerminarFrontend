@@ -79,7 +79,7 @@ describe("PlantServiceTest", () => {
             image_url: "",
             id_plant_catalog: 2,
             notes: ""
-        }        
+        }
 
         global.fetch = jest.fn(() =>
             Promise.resolve({
@@ -97,7 +97,7 @@ describe("PlantServiceTest", () => {
     })
 
     it('test save from plant with error response', async () => {
-        
+
         const requestBody: PlantRequestBody = {
             alias: "plant",
             height: 2,
@@ -107,8 +107,8 @@ describe("PlantServiceTest", () => {
             image_url: "",
             id_plant_catalog: 2,
             notes: "",
-        }         
-       
+        }
+
         global.fetch = jest.fn(() =>
             Promise.reject({
                 json: () => Promise.resolve({message: 'pasó algo'}),
@@ -137,7 +137,7 @@ describe("PlantServiceTest", () => {
             image_url: "",
             id_plant_catalog: 2,
             notes: "",
-        }         
+        }
 
         global.fetch = jest.fn(() =>
             Promise.resolve({
@@ -155,7 +155,7 @@ describe("PlantServiceTest", () => {
     })
 
     it('test update from plant with error response', async () => {
-        
+
         const requestBody: PlantRequestBody = {
             alias: "plant",
             height: 2,
@@ -165,8 +165,8 @@ describe("PlantServiceTest", () => {
             image_url: "",
             id_plant_catalog: 2,
             notes: ""
-        } 
-       
+        }
+
         global.fetch = jest.fn(() =>
             Promise.reject({
                 json: () => Promise.resolve({message: 'pasó algo'}),
@@ -199,13 +199,13 @@ describe("PlantServiceTest", () => {
         const service: PlantService = new PlantService("")
 
         const result = await service.deletePlant(3);
-        
+
         expect(result).toBeUndefined();
         expect(fetchJestFn).toHaveBeenCalledTimes(1);
     })
 
     it('test delete from plant with error response', async () => {
-        
+
         const requestBody: PlantRequestBody = {
             alias: "plant",
             height: 2,
@@ -215,10 +215,10 @@ describe("PlantServiceTest", () => {
             image_url: "",
             id_plant_catalog: 2,
             notes: ""
-        } 
-       
+        }
+
         global.fetch = jest.fn(() =>
-            Promise.reject({
+            Promise.resolve({
                 json: () => Promise.resolve({message: 'pasó algo'}),
                 status: 401,
                 ok: false
@@ -239,7 +239,7 @@ describe("PlantServiceTest", () => {
             is_public: true
         }]
 
-        const photo: FormData = new FormData();   
+        const photo: FormData = new FormData();
 
         global.fetch = jest.fn(() =>
             Promise.resolve({
@@ -257,9 +257,9 @@ describe("PlantServiceTest", () => {
     })
 
     it('test upload photo from plant with error response', async () => {
-        
-        const photo: FormData = new FormData();   
-       
+
+        const photo: FormData = new FormData();
+
         global.fetch = jest.fn(() =>
             Promise.reject({
                 json: () => Promise.resolve({message: 'pasó algo'}),
