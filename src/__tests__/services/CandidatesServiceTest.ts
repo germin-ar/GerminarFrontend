@@ -1,4 +1,3 @@
-import {PlantCatalogService} from "@/services/PlantCatalogService";
 import {PlantSuggestion} from "@/interfaces";
 import { CandidatesService } from "@/services/CandidatesService";
 
@@ -31,7 +30,6 @@ describe("CandidatesServiceTest", () => {
         expect(result.id).toBe("1")
         expect(result.scientific_name).toBe("Thymus vulgaris")
     })
-
 
     it('test get from candidates with error response', async () => {
         global.fetch = jest.fn(() =>

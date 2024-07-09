@@ -1,13 +1,9 @@
 import { Image, PlantHealth, PlantRequestBody, Photo, FormValuesEdit, PlantResponse, PlantEdit } from "@/interfaces/index";
-import {router} from "next/client";
-import {useRouter} from "next/navigation";
 
 export class PlantService {
 
-
-
     private apiHost: string;
-    router = useRouter();
+
     constructor(apiHost: string) {
         this.apiHost = apiHost;
     }
