@@ -4,19 +4,21 @@ import Image from "next/image";
 import styles from "@/app/estado/[id]/estado.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PlantService} from "@/services/PlantService";
+import { PlantService } from "@/services/PlantService";
 import { PlantEdit, PlantHealth } from "@/interfaces/index";
 import { useRouter } from "next/navigation";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
     const [plant, setPlant] = useState<PlantEdit | any>();
     const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const router = useRouter();
 
     useEffect(() => {
+        auth.validateLogged()
         const fetchPlantHealthStatus = async () => {
             try {
                 const dataHealthStatus = await plantService.getHealthPlantStatus(id);
@@ -46,7 +48,9 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
                         <div className={`flex-1 flex items-start flex-col gap-5`}>
                             <div>
                                 {plant &&
-                                    <img src={plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
+                                    <img
+                                        data-testid="img"
+                                        src={plant.images && plant.images.length > 0 && plant.images[plant.images.length - 1].url !== "" ? plant.images[plant.images.length - 1].url : ""}
                                         className={`sm:w-96 rounded shadow-lg border-2 border-green-800`}
                                         width="250"
                                         height="250" />

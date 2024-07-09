@@ -19,6 +19,7 @@ import Loading from "@/components/Spinner/Spinner";
 import { PlantService } from "@/services/PlantService";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
@@ -86,9 +87,10 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     const [showToastSuccess, setShowToastSuccess] = useState(false);
     const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     useEffect(() => {
+        auth.validateLogged()
         const fetchPlant = async () => {
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
@@ -134,6 +136,7 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
     }
 
     const handleConfirmDelete = async () => {
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plant?.id)
             setMessage("Planta borrada exitosamente.")

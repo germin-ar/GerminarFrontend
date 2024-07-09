@@ -22,6 +22,7 @@ import { CandidatesService } from "@/services/CandidatesService";
 import { GardenService } from "@/services/GardenService";
 import ToastSuccess from "../Toasts/ToastSuccess";
 import ToastWarning from "../Toasts/ToastWarning";
+import {AuthenticationService} from "@/services/AuthenticationService";
 
 export async function generateStaticParams() {
     return [{ id: '1' }]
@@ -43,7 +44,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [error, setError] = useState(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number | null; name: string | null; }[]>([]);
 
-
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileUpload, setFileUpload] = useState(false);
 
@@ -148,6 +149,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const submitForm = async () => {
+        auth.validateLogged()
         if (editar === "si") {
             try {
                 plantService.updatePlant(plantEdit?.id, formValuesEdit)
@@ -161,7 +163,7 @@ export default function Formulario(props: IdentificarPlanta) {
             }
         }
         if (editar === "no") {
-
+            auth.validateLogged()
             try {
                 const updatedFormValues = {
                     ...formValues,
@@ -188,6 +190,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
 
     useEffect(() => {
+        auth.validateLogged()
         if (editar === "no") {
             const fetchCandidates = async () => {
                 try {
@@ -202,6 +205,7 @@ export default function Formulario(props: IdentificarPlanta) {
             fetchCandidates();
 
         } else if (editar === "si") {
+            auth.validateLogged()
             const fetchPlantData = async () => {
                 try {
                     const data = await plantService.getPlant(id);
@@ -236,6 +240,7 @@ export default function Formulario(props: IdentificarPlanta) {
     }, [id, fileUpload]);
 
     const fetchUbicaciones = async () => {
+        auth.validateLogged()
         try {
             const data = await gardenService.getGardens();
             setUbicaciones(data.map(garden => ({ id: garden.id, name: garden.name })));
@@ -259,8 +264,9 @@ export default function Formulario(props: IdentificarPlanta) {
 
     const handleSubmitGarden = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
+        auth.validateLogged()
         try {
+
             const response = await gardenService.saveGarden(gardenName, 1);
             if (response) {
                 closePopup();
@@ -294,6 +300,7 @@ export default function Formulario(props: IdentificarPlanta) {
     };
 
     const handleUploadImage = async (event: any) => {
+        auth.validateLogged()
         if (event) {
             event.preventDefault();
         }
@@ -357,7 +364,8 @@ export default function Formulario(props: IdentificarPlanta) {
                             {editar === 'no' ? 'Registrar Planta' : 'Editar Planta'}
                         </h1>
                         <div className="flex-1 flex justify-end items-center gap-3 ">
-                            <button
+                            <button    
+                            data-testid="guardar-button"                                                     
                                 className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">
                                 <LuPencilLine className="w-[15px] h-[15px] " />
                                 Guardar
@@ -690,6 +698,7 @@ export default function Formulario(props: IdentificarPlanta) {
 
                                 <button
                                     type="button"
+                                    data-testid="popup-button"
                                     onClick={openPopup}
                                     className="  flex items-center gap-2 font-bold my-3 py-2 px-4 rounded text-white bg-[#88BC43] "
                                 >
@@ -820,6 +829,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                 </button>
                                 <button
                                     type="submit"
+                                    data-testid="submit-button"
                                     className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                 >
                                     Confirmar
