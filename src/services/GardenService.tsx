@@ -41,7 +41,7 @@ export class GardenService {
     }
     //todo ver id usuario
     // saveGarden
-    async saveGarden(gardenName: string, id: number) {
+    async saveGarden(gardenName: string) {
         const gardenData = {
             name: gardenName
         };

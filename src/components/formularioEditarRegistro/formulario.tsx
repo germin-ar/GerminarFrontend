@@ -39,7 +39,7 @@ export default function Formulario(props: IdentificarPlanta) {
     const [plantData, setPlantData] = useState<PlantCaracts | null>(null);
     const [plantEdit, setPlantEdit] = useState<PlantEdit | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<null | boolean>(null);
     const [ubicaciones, setUbicaciones] = useState<{ id: number | null; name: string | null; }[]>([]);
 
     const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
@@ -198,6 +198,7 @@ export default function Formulario(props: IdentificarPlanta) {
                 } catch (error) {
                     console.error(error);
                     setLoading(false);
+                    setError(true)
                 }
             };
             fetchCandidates();
@@ -222,7 +223,7 @@ export default function Formulario(props: IdentificarPlanta) {
                     if (e.code === 'NotAuthorizedException') {
                         router.push('/login');
                     } else {
-                        console.error(e);
+                        setError(true)
                     }
                 }
             };
@@ -265,7 +266,7 @@ export default function Formulario(props: IdentificarPlanta) {
         auth.validateLogged()
         try {
 
-            const response = await gardenService.saveGarden(gardenName, 1);
+            const response = await gardenService.saveGarden(gardenName);
             if (response) {
                 closePopup();
                 setMessage("Jardín creado exitosamente.");
