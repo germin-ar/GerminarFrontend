@@ -13,44 +13,16 @@ import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 import { useRouter } from "next/navigation";
-// import { AuthenticationService } from "@/services/AuthenticationService";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
-    const gardens: Garden[] = [{
-        id: 1,
-        name: 'My Beautiful Garden',
-        plants: [
-            {
-                id: 101,
-                alias: 'Tomato Plant',
-                creation_date: '2024-07-01',
-                modification_date: '2024-07-08',
-                is_favorite: true,
-                photos: [
-                    {
-                        id: "1001",
-                        url: 'recomendacion/tomate.png',
-                        file_path: "",
-                        is_public: true
-                    }                    
-                ]
-            }
-           
-        ]
-    }];
-    
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
-    const [tipoVisible, setTipoVisible] = useState(false);
     const [antiguedadVisible, setAntiguedadVisible] = useState(false);
 
     const toggleUbicacion = () => {
         setUbicacionVisible(!ubicacionVisible);
-    };
-
-    const toggleTipo = () => {
-        setTipoVisible(!tipoVisible);
     };
 
     const toggleAntiguedad = () => {
@@ -78,13 +50,13 @@ export default function JardinPage() {
     const [filtroPlantaFechaReciente, setFiltroPlantaFechaReciente] = useState(false);
     const [filtroPlantaFechaAntiguo, setFiltroPlantaFechaAntiguo] = useState(false);
     const [buscador, setBuscador] = useState('');
-    // const [gardens, setGardens] = useState<Garden[]>([]);
+    const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [idGardenDelete, setIdGardenDelete] = useState<number | any>();
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
-    // const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+    const auth = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const handleCancelDelete = () => {
         setConfirmDelete(false);
@@ -100,7 +72,7 @@ export default function JardinPage() {
     };
 
     useEffect(() => {
-        // auth.validateLogged()
+        auth.validateLogged()
         fetchGardens();
 
         filtrarPlantasPorFiltro();
@@ -122,10 +94,10 @@ export default function JardinPage() {
     const router = useRouter();
 
     const fetchGardens = async () => {
-        // auth.validateLogged()
+        auth.validateLogged()
         try {
             const garden = await gardenService.getGardens();
-            // setGardens(garden);
+            setGardens(garden);
         } catch (e: any) {
             if (e.code === 'NotAuthorizedException') {
                 router.push('/login');
@@ -140,7 +112,7 @@ export default function JardinPage() {
     const [message, setMessage] = useState('');
 
     const handleConfirmDelete = async () => {
-        // auth.validateLogged()
+        auth.validateLogged()
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
 
@@ -163,7 +135,7 @@ export default function JardinPage() {
     };
 
     const handleConfirmDeleteGarden = async () => {
-        // auth.validateLogged()
+        auth.validateLogged()
         try {
             await gardenService.deleteGarden(idGardenDelete);
             fetchGardens();
