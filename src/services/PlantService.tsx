@@ -1,11 +1,13 @@
 import { Image, PlantHealth, PlantRequestBody, Photo, FormValuesEdit, PlantResponse, PlantEdit } from "@/interfaces/index";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 
 export class PlantService {
 
-    accessToken = localStorage.getItem('access_token');
+
 
     private apiHost: string;
-
+    router = useRouter();
     constructor(apiHost: string) {
         this.apiHost = apiHost;
     }
@@ -17,7 +19,7 @@ export class PlantService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: JSON.stringify(body)
             });
@@ -45,7 +47,7 @@ export class PlantService {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
 
@@ -72,7 +74,7 @@ export class PlantService {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: JSON.stringify(body)
             });
@@ -99,7 +101,7 @@ export class PlantService {
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
             });
 
@@ -111,6 +113,7 @@ export class PlantService {
                     throw new Error(`HTTP error status: ${response.status}`);
                 }
             }
+
         } catch (error) {
             console.error('Error deleting plant:', error);
             throw error;
@@ -123,7 +126,7 @@ export class PlantService {
             const response = await fetch(`${this.apiHost}/api/v1/plants/${id}/photo`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: image
             });
@@ -151,7 +154,7 @@ export class PlantService {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
             });
 

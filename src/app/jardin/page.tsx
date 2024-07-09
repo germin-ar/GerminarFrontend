@@ -117,6 +117,7 @@ export default function JardinPage() {
     const handleConfirmDelete = async () => {
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
+
             fetchGardens();
             setMessage("Planta borrada exitosamente.");
             setShowToastSuccess(true);
@@ -124,6 +125,8 @@ export default function JardinPage() {
             setPopupVisible(false);
 
         } catch (error: any) {
+            console.error('Error deleting plant:', error);
+
             if (error.code === 'NotAuthorizedException') {
                 router.push('/login');
             } else {

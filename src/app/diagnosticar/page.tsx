@@ -12,13 +12,13 @@ export default function IdentificarPlanta() {
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
     const router = useRouter();
-
     useEffect(() => {
         const fetchGardens = async () => {
             try {
                 const data = await gardenService.getGardens();
                 setGardens(data);
             } catch (e: any) {
+                console.log(localStorage.getItem("access_token"))
                 if (e.code === 'NotAuthorizedException') {
                     router.push('/login');
                 } else {

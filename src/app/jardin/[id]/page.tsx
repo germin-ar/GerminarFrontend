@@ -93,7 +93,8 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
             try {
                 const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/v1/plants/${id}`, {
                     headers: {
-                        'id-user': '1'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                     }
                 });
                 if (!response.ok) {

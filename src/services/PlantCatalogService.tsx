@@ -11,10 +11,19 @@ export class PlantCatalogService {
     async getPlantCatalog(scientificName: string): Promise<PlantSuggestion> {
         try {
             const response = await fetch(`${this.apiHost}/api/v1/plant-catalog/${scientificName}`, {
-                method: 'GET'                
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                }
             });
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }

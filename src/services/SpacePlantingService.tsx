@@ -2,7 +2,7 @@ import { Space } from "@/interfaces";
 
 export class SpacePlantingService {
     
-    accessToken = localStorage.getItem('access_token');
+
     
     private apiHost: string;
 
@@ -16,7 +16,7 @@ export class SpacePlantingService {
             const response = await fetch(`${this.apiHost}/api/v1/space-planting`, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: body
             });

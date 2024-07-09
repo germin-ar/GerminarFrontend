@@ -1,23 +1,27 @@
 import { Garden } from "@/interfaces/index";
+import {useRouter} from "next/navigation";
 
 export class GardenService {
 
-    accessToken = localStorage.getItem('access_token');
+
+    router = useRouter()
 
     private apiHost: string;
 
     constructor(apiHost: string) {
         this.apiHost = apiHost;
+
     }
 
     // getGardensByUser
     async getGardens(): Promise<Garden[]> {
         try {
+
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
             if (!response.ok) {
@@ -39,20 +43,25 @@ export class GardenService {
     // saveGarden
     async saveGarden(gardenName: string, id: number) {
         const gardenData = {
-            name: gardenName,
-            user_id: id
+            name: gardenName
         };
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: JSON.stringify(gardenData)
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }
@@ -69,7 +78,7 @@ export class GardenService {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
 
@@ -95,7 +104,7 @@ export class GardenService {
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${this.accessToken}`
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
 
