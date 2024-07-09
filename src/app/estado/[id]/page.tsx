@@ -6,12 +6,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { PlantService } from "@/services/PlantService";
 import { PlantEdit, PlantHealth } from "@/interfaces/index";
+import { useRouter } from "next/navigation";
 
 export default function EstadoPage({ params: { id } }: { params: { id: number } }) {
 
     const [plant, setPlant] = useState<PlantEdit | any>();
     const [plantaDiagnostico, setPlantaDiagnostico] = useState<PlantHealth | any>();
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
+    const router = useRouter();
 
     useEffect(() => {
         const fetchPlantHealthStatus = async () => {
@@ -21,8 +24,12 @@ export default function EstadoPage({ params: { id } }: { params: { id: number } 
 
                 const dataPlant = await plantService.getPlant(id);
                 setPlant(dataPlant);
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         };
         fetchPlantHealthStatus();

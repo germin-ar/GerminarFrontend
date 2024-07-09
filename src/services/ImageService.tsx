@@ -12,11 +12,19 @@ export class ImageService {
         try {
             const response = await fetch(`${this.apiHost}/api/v1/images`, {
                 method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                },
                 body: body
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }

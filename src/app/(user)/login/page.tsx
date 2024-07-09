@@ -5,9 +5,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { BalooBhaina2 } from '../ui/fonts';
+import { BalooBhaina2 } from '../../ui/fonts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { AuthenticationService } from "@/services/AuthenticationService";
+import ToastWarning from "@/components/Toasts/ToastWarning";
 
 interface IFormInput {
     email: string;
@@ -17,18 +19,39 @@ interface IFormInput {
 export default function Login() {
 
     const [showToastSuccess, setShowToastSuccess] = useState(false);
+    const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
+
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
         resolver: yupResolver(loginSchema),
     });
 
-    const router = useRouter();
+    const userService = new AuthenticationService(`${process.env.NEXT_PUBLIC_API_HOST}`);
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        setMessage("¡Login exitoso!");
-        setShowToastSuccess(true);
-        setTimeout(() =>  router.push("/"), 2000);
+    const router = useRouter();
+    const saveToLocalStorage = (key: string, value: string) => {
+        localStorage.setItem(key, value);
+    };
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
+
+        try {
+            const response = await userService.login(data);
+            if (response) {
+                setMessage("¡Login exitoso!");
+                setShowToastSuccess(true);
+                saveToLocalStorage("access_token", response.access_token);
+                setTimeout(() => router.push("/"), 2000);
+            } else {
+                console.log(data);
+            }
+
+        } catch (e: any) {
+            setMessage("¡Error!")
+            setShowToastWarning(true);
+            console.error(e)
+
+        }
 
     };
 
@@ -40,6 +63,12 @@ export default function Login() {
                         <ToastSuccess
                             message={`${message}`}
                             onClose={() => setShowToastSuccess(false)}
+                        />
+                    )}
+                    {showToastWarning && (
+                        <ToastWarning
+                            message={`${message}`}
+                            onClose={() => setShowToastWarning(false)}
                         />
                     )}
                 </div>

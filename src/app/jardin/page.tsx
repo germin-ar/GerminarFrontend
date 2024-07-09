@@ -14,6 +14,7 @@ import { PlantService } from "../../services/PlantService";
 import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
+import { useRouter } from "next/navigation";
 
 export default function JardinPage() {
 
@@ -57,7 +58,7 @@ export default function JardinPage() {
     const [buscador, setBuscador] = useState('');
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [idGardenDelete, setIdGardenDelete] = useState<number | any>();
+    const [idGardenDelete, setIdGardenDelete] = useState<number|any>();
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
@@ -94,12 +95,18 @@ export default function JardinPage() {
         };
     }, [filtroPlantas, filtroPlantaFavorita, filtroPlantaTipo, filtroPlantaFechaReciente, filtroPlantaFechaAntiguo]);
 
+    const router = useRouter();
+
     const fetchGardens = async () => {
         try {
             const garden = await gardenService.getGardens();
             setGardens(garden);
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 
@@ -110,14 +117,22 @@ export default function JardinPage() {
     const handleConfirmDelete = async () => {
         try {
             await plantService.deletePlant(plantaSeleccionada?.id);
+
             fetchGardens();
             setMessage("Planta borrada exitosamente.");
             setShowToastSuccess(true);
             setConfirmDelete(false);
             setPopupVisible(false);
 
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            console.error('Error deleting plant:', error);
+
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("No se pudo borrar tu planta.");
+                setShowToastWarning(true);
+            }
         }
     };
 
@@ -129,10 +144,14 @@ export default function JardinPage() {
             setShowToastSuccess(true);
             setConfirmDeleteGarden(false);
             setPopupVisible(false);
-        } catch (error) {
-            setMessage("Tu Jardín tiene plantas.");
-            setConfirmDeleteGarden(false);
-            setShowToastWarning(true);
+        } catch (error: any) {
+            if (error.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                setMessage("Tu Jardín tiene plantas.");
+                setConfirmDeleteGarden(false);
+                setShowToastWarning(true);
+            }
         }
     };
 
@@ -517,7 +536,7 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                {garden.id && <FaTrash
+                                                { garden.id && <FaTrash
                                                     onClick={() => handleDeleteGardenClick(garden)}
                                                     color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                                 }
@@ -701,7 +720,7 @@ export default function JardinPage() {
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
-                                        <div>
+                                        <div>                                   
                                             <div>
                                                 <table className="vertical-header-table rounded w-80 border-collapse">
                                                     <tbody>

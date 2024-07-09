@@ -152,8 +152,12 @@ export default function Formulario(props: IdentificarPlanta) {
             try {
                 plantService.updatePlant(plantEdit?.id, formValuesEdit)
                 router.push(`/jardin/${plantEdit?.id}`);
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         }
         if (editar === "no") {
@@ -170,8 +174,12 @@ export default function Formulario(props: IdentificarPlanta) {
                 } else {
                     console.log(JSON.stringify(updatedFormValues))
                 }
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         }
 
@@ -208,9 +216,12 @@ export default function Formulario(props: IdentificarPlanta) {
                         notes: data.notes ?? ''
                     });
                     setFileUpload(false)
-                } catch (error) {
-                    console.error(error);
-                    setLoading(false);
+                } catch (e: any) {
+                    if (e.code === 'NotAuthorizedException') {
+                        router.push('/login');
+                    } else {
+                        console.error(e);
+                    }
                 }
             };
 
@@ -228,8 +239,12 @@ export default function Formulario(props: IdentificarPlanta) {
         try {
             const data = await gardenService.getGardens();
             setUbicaciones(data.map(garden => ({ id: garden.id, name: garden.name })));
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 
@@ -299,8 +314,12 @@ export default function Formulario(props: IdentificarPlanta) {
                 setFileUpload(true);
                 setSelectedFile(null);
             }
-        } catch (error) {
-            console.error(error);
+        } catch (e: any) {
+            if (e.code === 'NotAuthorizedException') {
+                router.push('/login');
+            } else {
+                console.error(e);
+            }
         }
     };
 

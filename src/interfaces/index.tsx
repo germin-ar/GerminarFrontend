@@ -208,6 +208,12 @@ export interface AuthRequestBody {
     password: string
 }
 
+export interface LoginRequestBody {
+    email: string
+    password: string
+}
+
+
 export interface AuthRegister {
     email: string
     isConfirmed: boolean
@@ -221,6 +227,6 @@ export interface AuthLogin {
 }
 
 export interface ConfirmBodyRequest {
-    email: string
+    email: string | null
     confirmation_code: string
   }
