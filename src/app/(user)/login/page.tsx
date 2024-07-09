@@ -22,7 +22,6 @@ export default function Login() {
     const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
 
-
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
         resolver: yupResolver(loginSchema),
     });
@@ -47,12 +46,10 @@ export default function Login() {
             }
 
         } catch (e: any) {
-            setMessage("¡Error!")
+            setMessage("Error al iniciar sesión")
             setShowToastWarning(true);
             console.error(e)
-
         }
-
     };
 
     return (

@@ -18,7 +18,6 @@ interface IFormInput {
     confirm_password: string;
 }
 
-
 export default function RegisterPage(){
 
     const [showToastSuccess, setShowToastSuccess] = useState(false);
@@ -26,18 +25,11 @@ export default function RegisterPage(){
     const [message, setMessage] = useState('');
     const [userEmail, setUserEmail] = useState<string | null>("mariano_ariel_97@outlook.com");
 
-
-
     const [userConfirm, setUserConfirm] = useState(true);
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>({
         resolver: yupResolver(registerSchema),
     });
-
-
-
-
-
 
     const router = useRouter();
 
@@ -66,14 +58,11 @@ export default function RegisterPage(){
                 setShowToastWarning(true);
                 setTimeout(() => setUserConfirm(true), 2000);
             }else {
-                setMessage("Error al iniciar sesión")
+                setMessage("Error al registrarse")
                 setShowToastWarning(true);
                 console.error(e)
             }
-
-
         }
-
     };
 
     const [formData, setFormData] = useState({
@@ -100,8 +89,6 @@ export default function RegisterPage(){
         }
 
         console.log(formData);
-
-        // Aquí podrías realizar más acciones, como enviar los datos a un servidor
     };
 
     const handleChangeConfirm = (e:any) => {
@@ -111,10 +98,6 @@ export default function RegisterPage(){
             [name]: value
         });
     };
-
-
-
-
 
     return (
         <>
