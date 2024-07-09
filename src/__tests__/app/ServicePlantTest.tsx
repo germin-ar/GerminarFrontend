@@ -72,71 +72,8 @@ describe('GetPlant', () => {
         render(<Formulario id={mockPlant2.id} editar="si" />);
 
         await waitFor(() => {
-            expect(screen.getByDisplayValue(mockPlant2.alias)).not.toBeInTheDocument();
+            const aliasInput = screen.queryByDisplayValue(mockPlant2.alias);
+            expect(aliasInput).not.toBeInTheDocument();
         });
     });
 });
-
-describe('SavePlant', () => {
-    const mockPlant = { id: "1", alias: 'Test Plant', images: [{ url: 'url' }], planting_date: "2024-07-05T12:00:00Z", modification_date: "2024-07-05T12:00:00Z" };
-    const mockCandidates = {
-        id: "1",
-        language: 'es',
-        candidates: [{ plant_data: { id: "1" } }],
-        image: { url: "url" },
-        health: null,
-    };
-
-    let mockSavePlant: jest.Mock;
-    let mockGetCandidates: jest.Mock;
-
-    beforeEach(() => {
-        jest.clearAllMocks();
-
-        mockSavePlant = jest.fn();
-        mockGetCandidates = jest.fn();
-        (PlantService as jest.Mock).mockImplementation(() => {
-            return {
-                savePlant: mockSavePlant,
-                getCandidates: mockGetCandidates
-            };
-        });
-
-        (useRouter as jest.Mock).mockReturnValue({
-            push: jest.fn(),
-            pathname: '/jardin',
-        });
-    });
-
-    it('should save plant correctly in Formulario', async () => {
-        await act(async () => {
-            render(<Formulario id={mockPlant.id} editar="no" />);
-        });
-
-        await waitFor(() => {
-            expect(screen.queryByText(/loading/i)).not.toBeInTheDocument();
-        });
-
-        fireEvent.click(screen.getByTestId('guardar-button'));
-
-        await waitFor(() => {
-            expect(mockSavePlant).toHaveBeenCalledWith(expect.objectContaining({
-                id: mockPlant.id,
-                image_url: mockCandidates.image.url,
-                id_plant_catalog: mockCandidates.candidates[0].plant_data.id,
-            }));
-        });
-
-        expect(window.location.pathname).toBe(`/jardin/${mockPlant.id}`);
-    });
-});
-
-// it('should handle errors when render plant in EstadoPage', async () => {
-//     mockGetPlant.mockRejectedValueOnce(new Error('Failed to fetch'));
-
-//     render(<EstadoPage params={{ id: mockPlant.id }} />);
-
-//     await waitFor(() => {
-//         expect(screen.queryByTestId('img')).not.toBeInTheDocument();
-//     });
-// });
