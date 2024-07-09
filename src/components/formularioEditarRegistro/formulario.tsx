@@ -633,7 +633,7 @@ export default function Formulario(props: IdentificarPlanta) {
                                     className={`bg-[#88BC43] mt-3 ml-9 w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                                     Crear Jardín
                                 </button>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-2 mt-3">
 
                                     {plantData && ubicaciones.map((ubicacion, index) => (
 
