@@ -24,7 +24,7 @@ export default function RegisterPage(){
     const [showToastSuccess, setShowToastSuccess] = useState(false);
     const [showToastWarning, setShowToastWarning] = useState(false);
     const [message, setMessage] = useState('');
-    const [userEmail, setUserEmail] = useState<string | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>("mariano_ariel_97@outlook.com");
 
 
 
