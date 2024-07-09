@@ -1,25 +1,36 @@
 import { Garden } from "@/interfaces/index";
+import {useRouter} from "next/navigation";
 
 export class GardenService {
+
+
+    router = useRouter()
+
     private apiHost: string;
 
     constructor(apiHost: string) {
         this.apiHost = apiHost;
+
     }
 
     // getGardensByUser
     async getGardens(): Promise<Garden[]> {
         try {
-            const idUser = 1;
+
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'id-user': idUser.toString()
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }
@@ -28,24 +39,29 @@ export class GardenService {
             throw error;
         }
     }
-
+    //todo ver id usuario
     // saveGarden
     async saveGarden(gardenName: string, id: number) {
         const gardenData = {
-            name: gardenName,
-            user_id: id
+            name: gardenName
         };
         try {
             const response = await fetch(`${this.apiHost}/api/v1/gardens`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 },
                 body: JSON.stringify(gardenData)
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }
@@ -58,17 +74,21 @@ export class GardenService {
     // getGarden
     async getGarden(id: number): Promise<Garden> {
         try {
-            const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'id-user': idUser.toString()
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }
@@ -81,16 +101,20 @@ export class GardenService {
     // deleteGarden
     async deleteGarden(id: number): Promise<void> {
         try {
-            const idUser = 1
             const response = await fetch(`${this.apiHost}/api/v1/gardens/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'id-user': idUser.toString()
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
                 }
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             }
         } catch (error) {
             console.error('Error deleting garden:', error);

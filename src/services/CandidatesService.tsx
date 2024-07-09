@@ -10,10 +10,18 @@ export class CandidatesService {
         try {
             const idUser = 1;
             const response = await fetch(`${this.apiHost}/api/v1/candidates/${id}`, {
-                method: 'GET'                
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+                }
             });
             if (!response.ok) {
-                throw new Error(`HTTP error status: ${response.status}`);
+                const error = await response.json();
+                if (response.status === 401) {
+                    throw { code: 'NotAuthorizedException', message: error.message };
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
             } else {
                 return await response.json();
             }

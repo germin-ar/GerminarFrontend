@@ -67,8 +67,12 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                 if (response) {
                     onResultadoRecibido(response.space_name);
                 }
-            } catch (error) {
-                console.error(error);
+            } catch (e: any) {
+                if (e.code === 'NotAuthorizedException') {
+                    router.push('/login');
+                } else {
+                    console.error(e);
+                }
             }
         }
 
