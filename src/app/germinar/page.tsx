@@ -244,51 +244,51 @@ export default function GerminarPage() {
                                         className="space-y-4 md:space-y-6">
                                         <div>
                                             <label htmlFor="user-name"
-                                                   className="">Usuario</label>
+                                                className="">Usuario</label>
                                             <input {...register('user_name')}
-                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
-                                                   placeholder="Ingresá un nombre de usuario"/>
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                placeholder="Ingresá un nombre de usuario" />
                                             {errors.user_name &&
                                                 <span className="text-red-800">{errors.user_name.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="email"
-                                                   className="">Email</label>
+                                                className="">Email</label>
                                             <input {...register('email')}
-                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
-                                                   placeholder="Ingresá un correo"/>
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                placeholder="Ingresá un correo" />
                                             {errors.email &&
                                                 <span className="text-red-800">{errors.email.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="password"
-                                                   className="">Contraseña</label>
+                                                className="">Contraseña</label>
                                             <input type="password" {...register('password')}
-                                                   placeholder="••••••••"
-                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                placeholder="••••••••"
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
                                             {errors.password &&
                                                 <span className="text-red-800">{errors.password.message}</span>}
                                         </div>
                                         <div>
                                             <label htmlFor="confirm-password"
-                                                   className="block ">Confirmar
+                                                className="block ">Confirmar
                                                 contraseña</label>
                                             <input type="password" {...register('confirm_password')}
-                                                   placeholder="••••••••"
-                                                   className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
+                                                placeholder="••••••••"
+                                                className="rounded-lg px-4 py-2 w-full border border-gray-300 focus:outline-none focus:border-[#639122]"
                                             />
                                             {errors.confirm_password &&
                                                 <span className="text-red-800">{errors.confirm_password.message}</span>}
                                         </div>
                                         <div className="flex flex-col gap-1">
                                             <button type="submit"
-                                                    className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
+                                                className="bg-[#EFE8D6] mt-2 w-fit text-black font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#DED1B3] active:bg-[#CCBEA0] active:scale-75">
                                                 Registrarse
                                             </button>
                                             <span>
                                                 ¿Ya tenés una cuenta? <Link href={"/login"}
-                                                                            className="hover:underline font-bold">Iniciar sesión</Link>
+                                                    className="hover:underline font-bold">Iniciar sesión</Link>
                                             </span>
                                         </div>
                                     </form>
@@ -360,15 +360,16 @@ export default function GerminarPage() {
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
                         <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
-                            src="/calendario.jpg" alt="Calendario" width="816" height="816" />
+                            src="/planta.jpg" alt="Tutorial" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
                         <div className={"relative flex flex-col gap-5"}>
-                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Administrá tus notificaciones</h3>
-                            <FaCrown size={60} className="absolute top-0 right-5" />
+
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}> Conocé cada detalle de tu planta</h3>
+                            <FaUser size={60} className="absolute top-0 right-5" />
+
                             <p className={"w-full"}>
-                                Personalizá alertas para cuidar tus plantas. Configurá recordatorios para riego, fertilización, poda y más según tu horario y preferencias.
-                            </p>
+                                Obtené información detallada sobre la especie, cuidados necesarios y más, todo adaptado a tus necesidades específicas.                                </p>
                         </div>
                     </div>
                 </div>
@@ -389,23 +390,22 @@ export default function GerminarPage() {
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
                         <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
-                            src="/tutoriales.jpeg" alt="Tutorial" width="816" height="816" />
+                            src="/hoy.jpg" alt="Calendario" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
                         <div className={"relative flex flex-col gap-5"}>
-
-                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Buscá y aprendé de tutoriales</h3>
-                            <FaUser size={60} className="absolute top-0 right-5" />
-
+                            <h3 className={`${BalooBhaina2.className} text-2xl sm:text-3xl w-4/5 md:w-4/5 text-wrap`}>Descubrí qué plantar hoy en tu jardín</h3>
+                            <FaCrown size={60} className="absolute top-0 right-5" />
                             <p className={"w-full"}>
-                                Aprendé con nuestros tutoriales paso a paso. Cuidá tus plantas, resolvé problemas y maximizá tus cosechas de manera fácil y accesible.</p>
+                                Considerá la temporada, tu ubicación y tus preferencias para encontrar las mejores opciones y empezar a cultivar de manera inteligente.
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div className={`flex flex-col-reverse sm:flex-row items-center flex justify-center gap-3 py-10`}>
                     <div>
                         <Image className="rounded-tr-[50px] rounded-bl-[50px] w-64 h-64"
-                            src="/ideal.jpeg" alt="Jardín" width="816" height="816" />
+                            src="/espacio.jpg" alt="Jardín" width="816" height="816" />
                     </div>
                     <div className="flex-1 flex items-center">
                         <div className={"relative flex flex-col gap-5"}>

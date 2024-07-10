@@ -1,79 +1,32 @@
 "use client"
 import stylesDescriptionPlants from "@/app/jardin/[id]/descripcion.module.css";
 import { BalooBhaina2 } from "@/app/ui/fonts";
-
-
-import { FaImages, FaRegIdCard, FaTrash } from "react-icons/fa";
-import { RiPlantLine } from "react-icons/ri";
-import { GiPlantRoots } from "react-icons/gi";
-import { MdOutlineHealthAndSafety, MdOutlineWaterDrop } from "react-icons/md";
-import { IoSunnyOutline } from "react-icons/io5";
-import { CiCalendar, CiRuler } from "react-icons/ci";
-import { FiAlertCircle } from "react-icons/fi";
+import { FaImages, FaTrash } from "react-icons/fa";
+import { RiIdCardLine, RiPlantLine } from "react-icons/ri";
+import { FiSun } from "react-icons/fi";
 import { FaLocationDot, FaRegNoteSticky } from "react-icons/fa6";
-import { LuPencilLine } from "react-icons/lu";
+import { LuCalendarDays, LuLeaf, LuPencilLine, LuRuler } from "react-icons/lu";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@/components/Spinner/Spinner";
 import { PlantService } from "@/services/PlantService";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
-import {AuthenticationService} from "@/services/AuthenticationService";
+import { PlantEdit, History } from "@/interfaces";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+import { MdOutlineWaterDrop } from "react-icons/md";
+import Loading from "@/components/Spinner/Spinner";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 /*export async function generateStaticParams(){
     return[{id: '1'}]
 }*/
 
-interface Plant {
-    id: number;
-    alias: string;
-    creation_date: string | null;
-    modification_date: string;
-    planting_date: string | null;
-    description: string | null;
-    favorite: boolean | null;
-    height: number | null;
-    sun_exposure: string | null;
-    notes: string | null;
-    name_garden: string | null;
-    expo: string | null;
-    id_garden: number;
-    plant_catalog_family_name: string;
-    plant_catalog_genus: string;
-    plant_catalog_watering_frecuency: string;
-    plant_catalog_description: string;
-    plant_catalog_common_name: string;
-    plant_catalog_scientific_name: string;
-    plant_catalog_sun_exposure: string;
-    images: {
-        url: string;
-    }[];
-    history: {
-        id_plant: number;
-        notes: string;
-        height: number;
-        alias: string;
-        url_image: string;
-        modified_at: string;
-        id_diseases: number;
-    }[];
-}
-
-interface PlantHistory {
-    id_plant: number;
-    notes: string;
-    height: number;
-    alias: string;
-    url_image: string;
-    modified_at: string;
-    id_diseases: number;
-}
-
 export default function JardinPage({ params: { id } }: { params: { id: number } }) {
     const router = useRouter();
-    const [plant, setPlant] = useState<Plant | null>(null);
-    const [orderedHistory, setOrderedHistory] = useState<PlantHistory[]>([]);
+
+    const [plant, setPlant] = useState<PlantEdit | null>(null);
+    const [orderedHistory, setOrderedHistory] = useState<History[]>([]);
     const [order, setOrder] = useState(false);
 
     const [popUps, setPopUps] = useState(false);
@@ -152,14 +105,9 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
         }
     }
 
-
-
     if (!plant) {
         return <Loading />
     }
-
-
-
 
     return (
         <section className={`${stylesDescriptionPlants.contenedor}`}>
@@ -182,22 +130,25 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
             <section className="m-10">
                 <div className="flex justify-between flex-col md:flex-row md:gap-3">
                     <div className="flex-1">
-                        <h1 className={`${BalooBhaina2.className} text-[50px] text-[#88BC43]`}>{plant.alias}</h1>
+                        <h1 className={`${BalooBhaina2.className} text-[#88BC43]`}>{plant && plant.alias}</h1>
                     </div>
                     <div className="flex-1 flex justify-end items-center gap-3 ">
-                        <Link href={`/jardin/${id}/editar`}
-                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
-                            <LuPencilLine className="w-[15px] h-[15px] " />
-                            Editar
-                        </Link>
+                        <div className="flex gap-5 justify-between">
+                            <Link href={`/jardin/${id}/editar`}
+                                className={`bg-[#88BC43] w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                                <LuPencilLine />
+                                Editar
+                            </Link>
+                        </div>
                         <button
                             onClick={handleClick}
-                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#BC4388]">
-                            <FaTrash className="w-[15px] h-[15px] " />
+                            className="flex gap-2 items-center bg-[#BC4388] text-white px-4 py-2 rounded transition duration-300 ease-in-out transform hover:bg-[#9A326E] active:bg-[#7A2455] active:scale-75">
+                            <FaTrash />
                             Borrar
                         </button>
+
                         <Link href={`/jardin`}
-                            className="py-2 px-4 flex items-center gap-2 font-bold  rounded text-white bg-[#88BC43]">
+                            className={`bg-[#88BC43] w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
                             Volver al jardín
                         </Link>
                         {popUps && (
@@ -207,14 +158,13 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                                     <div className="flex justify-end">
                                         <button
                                             onClick={handleConfirmDelete}
-                                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                            className="bg-red-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                         >
                                             Sí
                                         </button>
                                         <button
                                             onClick={handleCancelDelete}
-                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-                                        >
+                                            className="bg-gray-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-gray-600 active:bg-gray-700 active:scale-75">
                                             No
                                         </button>
                                     </div>
@@ -230,38 +180,38 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                                height="200"/>*/}
 
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                            src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
-                            alt={`${id}`} width="450"
+                            src={plant && plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                            alt={`${plant?.alias}`} width="450"
                             height="200" />
                     </div>
-                    <div className={`${stylesDescriptionPlants.item2}`}>
+                    <div className={`${stylesDescriptionPlants.item2} flex flex-col gap-5`}>
                         <div>
                             <div className="flex gap-2">
-                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`} />
+                                <RiIdCardLine className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold  text-[#1F2325]`}>Alias:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.alias}</p>
+                            <p className="pl-9">{plant && plant.alias}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <FaRegIdCard className={`${stylesDescriptionPlants.iconos}`} />
+                                <RiIdCardLine className={`${stylesDescriptionPlants.iconos}`} />
                                 <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Nombre:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_scientific_name}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_scientific_name}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
                                 <RiPlantLine className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Género:</p>
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Género:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_genus}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_genus}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <GiPlantRoots className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Familia:</p>
+                                <LuLeaf className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Familia:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_family_name}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_family_name}</p>
                         </div>
                         {/*<div>
                             <div className="flex gap-2">
@@ -274,90 +224,91 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                         </div>*/}
                         <div>
                             <div className="flex gap-2">
-                                <IoSunnyOutline className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Exposición
+                                <FiSun className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Exposición
                                     solar:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_sun_exposure}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_sun_exposure}</p>
 
                         </div>
                         <div>
                             <div className="flex gap-2">
                                 <MdOutlineWaterDrop className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Frecuencia
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Frecuencia
                                     de riego:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_watering_frecuency}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_watering_frecuency}</p>
                         </div>
                     </div>
-                    <div className={`${stylesDescriptionPlants.item3}`}>
+                    <div className={`${stylesDescriptionPlants.item3} flex flex-col gap-5`}>
                         <div>
                             <div className="flex gap-2">
-                                <CiRuler className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Altura:</p>
+                                <LuRuler className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Altura:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.height}</p>
+                            <p className="pl-9">{plant && plant.height}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
+                                <LuCalendarDays className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Fecha de
                                     última modificación:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.modification_date.replace("T", " ").replace("Z", "")}</p>
+                            <p className="pl-9">{plant && plant.modification_date.replace("T", " ").replace("Z", "")}</p>
                         </div>
                         <div>
                             <div className="flex gap-2">
-                                <CiCalendar className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Fecha de
+                                <LuCalendarDays className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Fecha de
                                     plantación:</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.planting_date?.slice(0, 10)}</p>
+                            <p className="pl-9">{plant && plant.planting_date?.slice(0, 10)}</p>
                         </div>
 
                     </div>
 
-                    <div className={`${stylesDescriptionPlants.item4}`}>
+                    <div className={`${stylesDescriptionPlants.item4} flex flex-col gap-5`}>
                         <div>
                             <div className="flex gap-2">
-                                <FiAlertCircle className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Descripción
+                                <IoMdInformationCircleOutline className={`${stylesDescriptionPlants.iconos}`} />
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Descripción
                                     general</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.plant_catalog_description}</p>
+                            <p className="pl-9">{plant && plant.plant_catalog_description}</p>
                         </div>
                         <div>
-                            <div className="flex gap-2 mt-4">
+                            <div className="flex gap-2">
                                 <FaLocationDot className={`${stylesDescriptionPlants.iconos}`} />
-                                <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Ubicación</p>
+                                <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Jardín</p>
                             </div>
-                            <p className="text-[24px] pl-9">{plant.id_garden == null ? "-" : plant.name_garden}</p>
+                            <p className="pl-9">{plant && plant.id_garden == null ? "-" : plant && plant.name_garden}</p>
                         </div>
                     </div>
                 </div>
             </section>
             <section className="m-10 flex flex-col md:flex-row gap-5">
-                <div className="flex-1">
+                <div className="flex-1 flex flex-col gap-3">
                     <div className="flex gap-2">
                         <FaImages className={`${stylesDescriptionPlants.iconos}`} />
-                        <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Imágenes</p>
+                        <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Imágenes</p>
                     </div>
                     <div className={`${stylesDescriptionPlants.item1}`}>
                         {/*<Image className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
                                src={`/recomendacion/${id}.png`} alt={`${id}`} width="450"
                                height="200"/>*/}
                         <img className={`${stylesDescriptionPlants.sombraImagen} rounded-[5px]`}
-                            src={plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
-                            alt={`${id}`} width="450"
+                            src={plant && plant.images.length > 0 ? plant.images[plant.images.length - 1].url : ''}
+                            alt={`${plant?.alias}`} width="450"
                             height="200" />
                     </div>
                     <button onClick={handleShowAllImages}
-                        className="font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43;]">Ver todas
+                        className={`bg-[#88BC43] w-max mt-5 flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                        Ver todas
                     </button>
                     <div className="flex items-center p-2 gap-2 ">
                         {showAll && (
 
-                            plant.images.map((img, index) => (
+                            plant && plant.images.map((img, index) => (
                                 <img
                                     key={index}
                                     src={img.url}
@@ -373,11 +324,11 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                 <div className="flex-1 flex gap-2 flex-col">
                     <div className="flex gap-2">
                         <FaRegNoteSticky className={`${stylesDescriptionPlants.iconos}`} />
-                        <p className={`${BalooBhaina2.className} font-bold text-[25px] text-[#1F2325]`}>Notas
+                        <p className={`${BalooBhaina2.className} font-bold text-[#1F2325]`}>Notas
                             adicionales</p>
                     </div>
-                    <div className={`${stylesDescriptionPlants.efectoHoja} bg-[#EFE8D6]`}>
-                        <p className="text-[24px] p-8 rounded">{plant.notes}</p>
+                    <div className={`${stylesDescriptionPlants.efectoHoja} ${stylesDescriptionPlants.sombraImagen} bg-[#EFE8D6]`}>
+                        <p className="p-8 rounded">{plant && plant.notes}</p>
                     </div>
                 </div>
             </section>
@@ -388,7 +339,7 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                         `Más nuevo primero` : `Más viejo primero`}
                 </button>
                 <section>
-                    <h2>Historial de: {plant.alias}</h2>
+                    <h3 className="text-[#1F2325]">Historial de tu planta: {plant && plant.alias}</h3>
                     <ol className="relative border-s border-gray-200 dark:border-gray-700">
                         {orderedHistory.map((entry, index) => (
                             entry.alias === "imagen subida" ?
@@ -431,11 +382,10 @@ export default function JardinPage({ params: { id } }: { params: { id: number } 
                     </ol>
                 </section>
             </section>
-            <div className="m-10 inline-block">
-
+            <div className="flex w-full gap-5 justify-between m-10 inline-block">
                 <Link href={`/jardin/${id}/editar`}
-                    className="flex items-center gap-2 font-bold mt-3 py-2 px-4 rounded text-white bg-[#88BC43]">
-                    <LuPencilLine className="w-[15px] h-[15px] " />
+                    className={`bg-[#88BC43] w-max flex items-center gap-2 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out transform hover:bg-[#76A832] active:bg-[#639122] active:scale-75`}>
+                    <LuPencilLine />
                     Editar
                 </Link>
             </div>

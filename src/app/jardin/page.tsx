@@ -6,8 +6,6 @@ import Link from "next/link";
 import { IoIosHome } from "react-icons/io";
 import { FaClock, FaHeart, FaLeaf, FaTrash } from "react-icons/fa";
 import { PiPottedPlantFill } from "react-icons/pi";
-import { CiCalendar } from "react-icons/ci";
-import Image from "next/image";
 import { BalooBhaina2 } from "../ui/fonts";
 import { GardenService } from "../../services/GardenService";
 import { PlantService } from "../../services/PlantService";
@@ -15,21 +13,16 @@ import { Garden, Plant } from "@/interfaces/index";
 import ToastSuccess from "@/components/Toasts/ToastSuccess";
 import ToastWarning from "@/components/Toasts/ToastWarning";
 import { useRouter } from "next/navigation";
-import {AuthenticationService} from "@/services/AuthenticationService";
+import { AuthenticationService } from "@/services/AuthenticationService";
 
 export default function JardinPage() {
 
     /**sidebar**/
     const [ubicacionVisible, setUbicacionVisible] = useState(false);
-    const [tipoVisible, setTipoVisible] = useState(false);
     const [antiguedadVisible, setAntiguedadVisible] = useState(false);
 
     const toggleUbicacion = () => {
         setUbicacionVisible(!ubicacionVisible);
-    };
-
-    const toggleTipo = () => {
-        setTipoVisible(!tipoVisible);
     };
 
     const toggleAntiguedad = () => {
@@ -59,7 +52,7 @@ export default function JardinPage() {
     const [buscador, setBuscador] = useState('');
     const [gardens, setGardens] = useState<Garden[]>([]);
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [idGardenDelete, setIdGardenDelete] = useState<number|any>();
+    const [idGardenDelete, setIdGardenDelete] = useState<number | any>();
     const [confirmDeleteGarden, setConfirmDeleteGarden] = useState(false);
     const gardenService = new GardenService(`${process.env.NEXT_PUBLIC_API_HOST}`);
     const plantService = new PlantService(`${process.env.NEXT_PUBLIC_API_HOST}`);
@@ -542,7 +535,7 @@ export default function JardinPage() {
                                     <div className="flex flex-col sm:grid sm:grid-cols-1 gap-4 md:grid-cols-2">
                                         {filtrarPorBuscador().filtradoJardin.map(garden => (
                                             <div key={garden.id} className={`border border-gray-200 p-4 rounded-lg relative hover:shadow-lg max-h-[100px] lg:max-h-[148px] overflow-y-auto ${stylesJardin.customScrollbar} overflow-x-hidden`}>
-                                                { garden.id && <FaTrash
+                                                {garden.id && <FaTrash
                                                     onClick={() => handleDeleteGardenClick(garden)}
                                                     color={"#d3d3d3"} size={20} className={"absolute top-0 right-0 m-2 cursor-pointer"} />
                                                 }
@@ -712,8 +705,8 @@ export default function JardinPage() {
                     {popupVisible && plantaSeleccionada && (
                         <>
                             <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                                <div className="flex flex-col items-center justify-around gap-4 bg-white p-8 rounded-lg w-[450px] h-96 relative">
-                                    <div className="flex flex-col gap-2 items-center">
+                                <div className="flex flex-col items-center justify-around bg-white p-8 rounded-lg w-[450px] h-[490px] relative">
+                                    <div className="flex flex-col gap-2 items-center mt-7">
                                         <div className={"flex flex-col items-center absolute top-[-45px]"}>
                                             <img
                                                 src={
@@ -726,16 +719,16 @@ export default function JardinPage() {
                                                 className="w-20 h-20 rounded-full" />
                                             <h3 className="text-lg font-semibold">{plantaSeleccionada.alias}</h3>
                                         </div>
-                                        <div>                                   
+                                        <div>
                                             <div>
-                                                <table className="vertical-header-table rounded w-80 border-collapse">
+                                                <table className="vertical-header-table rounded w-80 border-collapse h-64">
                                                     <tbody>
                                                         <tr>
                                                             <th className={`p-4 border`}>Jardín</th>
                                                             <td className={`p-4 border`}>{findGardenIdFromPlantId(plantaSeleccionada.id) || 'Sin Jardín'}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th className={`p-4 border`}>Guardada el</th>
+                                                            <th className={`p-4 border text-nowrap`}>Guardada el</th>
                                                             <td className={`p-4 border`}>
                                                                 {formatDateString(plantaSeleccionada.creation_date)}
                                                             </td>
@@ -785,14 +778,13 @@ export default function JardinPage() {
                                                     <div className="flex justify-end">
                                                         <button
                                                             onClick={handleConfirmDelete}
-                                                            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                                            className="bg-red-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                                         >
                                                             Sí
                                                         </button>
                                                         <button
                                                             onClick={handleCancelDelete}
-                                                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-                                                        >
+                                                            className="bg-gray-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-gray-600 active:bg-gray-700 active:scale-75">
                                                             No
                                                         </button>
                                                     </div>
@@ -818,14 +810,13 @@ export default function JardinPage() {
                                     <button
                                         data-testid="delete-button"
                                         onClick={handleConfirmDeleteGarden}
-                                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 mr-2 rounded"
+                                        className="bg-red-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-red-600 active:bg-red-700 active:scale-75"
                                     >
                                         Sí
                                     </button>
                                     <button
                                         onClick={handleCancelDelete}
-                                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded"
-                                    >
+                                        className="bg-gray-500 w-14 text-white px-4 py-2 mr-2 rounded transition duration-300 ease-in-out transform hover:bg-gray-600 active:bg-gray-700 active:scale-75">
                                         No
                                     </button>
                                 </div>

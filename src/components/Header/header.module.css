@@ -63,15 +63,10 @@
 }
 
 /**Responsive**/
-@media (max-width: 1500px) {
+@media (max-width: 1000px) {
     .container {
 
         padding: 5px;
-    }
-
-    .lista {
-
-
     }
 
     .usuario {
@@ -87,23 +82,26 @@
         display: flex;
     }
 
-
     .menuLateral {
         position: fixed;
         top: 0;
         right: 0;
         height: 100%;
-        width: 64px; /* Ancho del menú, ajusta según sea necesario */
-        background-color: #333; /* Color de fondo del menú */
+        width: 64px;
+        /* Ancho del menú, ajusta según sea necesario */
+        background-color: #333;
+        /* Color de fondo del menú */
         z-index: 50;
     }
 
     /* Estilo del contenido del menú */
     .menuContenido {
-        background-color: #fff; /* Color de fondo del contenido */
+        background-color: #fff;
+        /* Color de fondo del contenido */
         padding: 20px;
         border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        /* Sombra */
     }
 
     /* Animación de deslizamiento para abrir el menú */
@@ -120,17 +118,17 @@
 
 }
 
-@media (max-width: 475px) {
-
-}
+@media (max-width: 475px) {}
 
 .underline {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 0.25rem; /* h-1 */
-    background-color: #275F08; /* bg-green-500 */
+    height: 0.25rem;
+    /* h-1 */
+    background-color: #275F08;
+    /* bg-green-500 */
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
