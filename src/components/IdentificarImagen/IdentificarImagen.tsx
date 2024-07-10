@@ -114,9 +114,9 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                             </>
                         ) : (
                             <>
-                                <h2 className={`${styles.textoPrimario} font-bold text-center`}>Identificá tu planta y su estado de salud ¡Es
+                                <h2 className={`${styles.textoPrimario} font-bold text-center`}>Identificá tu planta ¡Es
                                     gratis!</h2>
-                                <h2 className={`${styles.textoSecundario} font-bold text-center`}>Identificá tu planta y su estado ¡Gratis!</h2>
+                                <h2 className={`${styles.textoSecundario} font-bold text-center`}>Identificá tu planta ¡Gratis!</h2>
                             </>
                         )}
                     </div>
