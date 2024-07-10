@@ -4,7 +4,7 @@ import {useRouter} from "next/navigation";
 export class GardenService {
 
 
-    router = useRouter()
+
 
     private apiHost: string;
 
@@ -35,13 +35,12 @@ export class GardenService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error fetching gardens:', error);
             throw error;
         }
     }
     //todo ver id usuario
     // saveGarden
-    async saveGarden(gardenName: string, id: number) {
+    async saveGarden(gardenName: string) {
         const gardenData = {
             name: gardenName
         };
@@ -66,7 +65,6 @@ export class GardenService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error creating garden:', error);
             throw error;
         }
     }
@@ -117,7 +115,6 @@ export class GardenService {
                 }
             }
         } catch (error) {
-            console.error('Error deleting garden:', error);
             throw error;
         }
     }

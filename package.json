@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "test:imageService": "jest src/__tests__/services/ImageServiceTest.ts"
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
