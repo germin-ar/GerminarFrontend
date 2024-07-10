@@ -229,4 +229,4 @@ export interface AuthLogin {
 export interface ConfirmBodyRequest {
     email: string | null
     confirmation_code: string
-  }
+}

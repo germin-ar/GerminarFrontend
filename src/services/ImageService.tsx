@@ -29,7 +29,7 @@ export class ImageService {
                 return await response.json();
             }
         } catch (error) {
-            console.error('Error saving image:', error);
+            //console.error('Error saving image:', error);
             throw error;
         }
     }
