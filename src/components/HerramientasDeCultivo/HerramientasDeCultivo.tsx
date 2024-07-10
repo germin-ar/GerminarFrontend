@@ -15,7 +15,7 @@ export default function HerramientasDeCultivo(props: ButtonScrollProps) {
     }
 
     return (
-        <section className={`${styles.fondoCards} rounded-lg bg-gradient-to-t from-[#f1dac7] to-[#efe8d6] flex justify-center items-center flex-col gap-5 `}>
+        <section className={`${styles.fondoCards} rounded-lg bg-gradient-to-t from-[#f1dac7] to-[#efe8d6] flex justify-center items-center flex-col gap-5 shadow`}>
             <h2 className={`${styles.tituloSecundario} ${BalooBhaina2.className} text-center sm:text-start`}>Herramientas de cultivo
                 inteligentes</h2>
 
