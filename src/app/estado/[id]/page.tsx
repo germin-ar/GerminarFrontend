@@ -79,8 +79,16 @@ export default function EstadoPage({params: {id}}: { params: { id: number } }) {
                         salud</h2>
                     <div className={`flex items-center gap-5`}>
                         <div>
-                            <Image className={`w-14 sm:w-20`} src="/estado/planta.png" alt="estado" width="100"
-                                   height="100"/>
+                            {
+                                !plantaDiagnostico?.is_healthy ? (
+                                    <Image className={`w-14 sm:w-20`} src="/estado/planta.png" alt="estado" width="100"
+                                           height="100"/>
+                                ) : (
+                                    <Image className={`w-14 sm:w-20`} src="/resultado/planta-sana-icon.png" alt="estado" width="100"
+                                           height="100"/>
+                                )
+                            }
+
                         </div>
                         <div>
                             {
