@@ -1,15 +1,13 @@
 "use client"
 import styles from "@/components/IdentificarImagen/identificarImagen.module.css";
 import Image from "next/image";
-import React, { ChangeEvent, forwardRef, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import { json } from "node:stream/consumers";
-import { SpacePlantingService } from "@/services/SpacePlantingService";
-import { ImageService } from "@/services/ImageService";
+import React, {ChangeEvent, useState} from "react";
+import {useRouter} from "next/navigation";
+import {SpacePlantingService} from "@/services/SpacePlantingService";
+import {ImageService} from "@/services/ImageService";
 import ToastWarning from "../Toasts/ToastWarning";
 import {AuthenticationService} from "@/services/AuthenticationService";
-
-
+import {IoMdInformationCircleOutline} from "react-icons/io";
 
 
 interface IdentificarImagenProps {
@@ -20,7 +18,7 @@ interface IdentificarImagenProps {
 }
 
 export default function IdentificarImagen(props: IdentificarImagenProps) {
-    const { imagen, pagina, onResultadoRecibido } = props;
+    const {imagen, pagina, onResultadoRecibido} = props;
     const [archivoSeleccionado, setArchivoSeleccionado] = useState<File | null>(
         null
     );
@@ -92,7 +90,6 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
     };
 
 
-
     return (
         <>
             <section className={`${styles[imagen]} relative`} ref={props.forwardRef}>
@@ -107,7 +104,7 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                 <div className={`${styles.contenidoIdentificar} flex flex-col items-center justify-center`}>
                     <div className={`${styles.logoIdentificar} flex-1 flex items-center justify-center md:px-4`}>
                         <Image className={`${styles.marca} `} src={`/isotipo-fondo-claro.png`} alt="usuario prueba"
-                            width="150" height="150" />
+                               width="150" height="150"/>
                         {imagen === 'imagenIdentificarEspacio' ? (
                             <>
                                 <h2 className="font-bold">Identificá tu espacio ¡Es muy fácil!</h2>
@@ -116,22 +113,31 @@ export default function IdentificarImagen(props: IdentificarImagenProps) {
                             <>
                                 <h2 className={`${styles.textoPrimario} font-bold text-center`}>Identificá tu planta ¡Es
                                     gratis!</h2>
-                                <h2 className={`${styles.textoSecundario} font-bold text-center`}>Identificá tu planta ¡Gratis!</h2>
+                                <h2 className={`${styles.textoSecundario} font-bold text-center`}>Identificá tu planta
+                                    ¡Gratis!</h2>
                             </>
                         )}
                     </div>
                     <form className={`${styles.form} flex-1 flex items-center flex-col gap-16 w-[90%]`}
-                        onSubmit={handleIdentificarClick}>
+                          onSubmit={handleIdentificarClick}>
                         <h2 className={`font-bold`}>Subí tu foto</h2>
-                        <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
-                            <label htmlFor="archivoInput" className={"cursor-pointer flex flex-col sm:flex-row items-center"}>
-                                <p className={`${styles.seleccionarIdentificar} text-lg bg-[#d9d9d9] py-2 px-4 w-full sm:w-60`}>
-                                    Seleccioná un archivo
-                                </p>
-                                <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
-                                    style={{ display: 'none' }} />
-                                <p className="text-lg bg-[#323331] py-2 px-4 ">{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
-                            </label>
+                        <div className={"flex flex-col gap-3 items-center"}>
+                            <div className={`${styles.subirIdentificar} flex gap-8 items-center justify-center`}>
+                                <label htmlFor="archivoInput"
+                                       className={"cursor-pointer flex flex-col sm:flex-row items-center"}>
+                                    <p className={`${styles.seleccionarIdentificar} text-lg bg-[#d9d9d9] py-2 px-4 w-full sm:w-60`}>
+                                        Seleccioná un archivo
+                                    </p>
+                                    <input type="file" id="archivoInput" onChange={handleArchivoSeleccionado}
+                                           style={{display: 'none'}}/>
+                                    <p className="text-lg bg-[#323331] py-2 px-4 ">{archivoSeleccionado ? archivoSeleccionado.name : "Sin archivo seleccionado"}</p>
+                                </label>
+                            </div>
+                            <div className={"bg-white shadow flex gap-3 items-center p-2 rounded-lg w-fit"}>
+                                <IoMdInformationCircleOutline className={"text-yellow-300 w-7 h-7"}/>
+                                <span
+                                    className={"text-[#1F2325] cursor-default"}>La imagen debe estar en formato <span className={"font-bold"}>&apos;.jpg&apos;</span></span>
+                            </div>
                         </div>
                         <button
                             type="submit"
